@@ -1,0 +1,28 @@
+{
+  "name": "yammieshoppers",
+  "version": "1.0.0",
+  "description": "online shopping platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XamuelUG/yammieshoppers.git"
+  },
+  "keywords": [
+    "online",
+    "shop",
+    "in",
+    "uganda"
+  ],
+  "author": "yammie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/XamuelUG/yammieshoppers/issues"
+  },
+  "homepage": "https://github.com/XamuelUG/yammieshoppers#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
