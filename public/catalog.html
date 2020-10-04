@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./resources/cartlink.png" />
+    <link rel="stylesheet" href="./styles/footer2.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/catalog.css" />
+    <link rel="stylesheet" href="./styles/products.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <title id="title">Shop &commat; Yammie</title>
+  </head>
+  <body>
+    <!--add c popup-->
+    <div id="pop-up-overlay"></div>
+    <div class="popup">
+      <button class="close-pp" onclick="imageDialogClose()">&times;</button>
+      <div class="pp-content">
+        <h2 id="text-add">Item added to your Cart.</h2>
+        <div id="text-add-m">
+          Thank You.
+          <br />
+          Click Check Cart to Continue OR continue Shopping
+        </div>
+        <a href="./cart/cart.html">
+          <button class="check-ct">Check Cart</button>
+        </a>
+        <button class="cont" onclick="imageDialogClose()">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+    <!--add c popup-->
+    <div class="search-nav">
+      <div class="logo">
+        <div class="menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <a href="./index.html">
+          <img
+            src="./resources/yammie.png"
+            alt="YAMMIE"
+            width="200"
+            height="95%"
+          />
+        </a>
+      </div>
+      <div class="search">
+        <form
+          id="f-search"
+          autocomplete="off"
+          action="./catalog.html"
+          method="GET"
+        >
+          <input
+            type="text"
+            name="q"
+            placeholder="Search Groceries...."
+            class="navsearch"
+            id="v-search"
+          />
+          <button type="submit" id="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+      <div class="cart-login">
+        <a class="login" id="login" href="">
+          <img src="./resources/person.svg" alt="" />
+          <span class="h-greeting">Good Morning,</span>
+          <span class="login-text">My Account</span>
+        </a>
+        <a class="cart" href="./cart/cart.html">
+          <img src="./resources/shopping-cart.svg" alt="" />
+          <span class="cart-number" id="cartNumberItems"></span>
+          <span class="cart-text">Cart</span>
+        </a>
+      </div>
+      <div id="sideNav">
+        <ul class="s-n-1">
+          <h3 class="sn-categories">Categories</h3>
+          <li class="n-l-itm">
+            <a href="./easy-market.html">
+              <i class="fas fa-shopping-basket ctg-icon"></i>
+              EasyMarket with Yammie
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./quick-foods.html">
+              <i class="fas fa-pizza-slice ctg-icon"></i>
+              Fast Foods &amp; Drinks
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./phones.html">
+              <i class="fas fa-headphones-alt ctg-icon"></i>
+              Phones &amp; Accessories
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./electronics.html">
+              <i class="fas fa-charging-station ctg-icon"></i>
+              Electronics
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./computing.html">
+              <i class="fas fa-desktop ctg-icon"></i>
+              Computing &amp; Accessories
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./stationery.html">
+              <i class="fas fa-paperclip ctg-icon"></i>
+              Stationery
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./clothing.html">
+              <i class="fas fa-tshirt ctg-icon"></i>
+              Clothes &amp; Shoes
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./kitchen.html">
+              <i class="fas fa-utensils ctg-icon"></i>
+              Kitchen Staff &amp; Utensils
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./kids.html">
+              <i class="fas fa-child ctg-icon"></i>
+              Kid's Section
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="./diy.html">
+              <img src="./resources/clean-hands.png" alt="" />
+              Cleaning, Healthy &amp; Beauty
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="">
+              <i class="fas fa-layer-group ctg-icon"></i>
+              All Items
+            </a>
+          </li>
+        </ul>
+        <ul class="s-n-4">
+          <h3>My Account</h3>
+          <li>
+            <i class="fas fa-user"></i>
+            <span>My Profile</span>
+          </li>
+          <li>
+            <i class="fas fa-box"></i>
+            <span>My Orders</span>
+          </li>
+
+          <li>
+            <i class="fas fa-dolly-flatbed"></i>
+            <span>Pending Orders</span>
+          </li>
+          <li>
+            <i class="fas fa-thumbs-up"></i>
+            <span><a href="#">Liked Items</a></span>
+          </li>
+          <li>
+            <i class="fas fa-address-card"></i>
+            <span>My Address</span>
+          </li>
+          <li>
+            <i class="fas fa-user-edit"></i>
+            <span>Edit My Profile</span>
+          </li>
+          <button class="s-n-logout">LOG OUT</button>
+        </ul>
+        <ul class="s-n-2">
+          <h3 class="s-n-how">Products &amp; Groceries</h3>
+          <li><a href="#">Special Order</a></li>
+          <li><a href="#">Delivery Time</a></li>
+          <li><a href="#">Payment Methods</a></li>
+          <li><a href="#">Request An Item</a></li>
+          <li><a href="#">Report an Item</a></li>
+          <li><a href="#">Return Policy</a></li>
+        </ul>
+        <ul class="s-n-3">
+          <h3 class="s-n-how">Explore Yammie</h3>
+          <li><a href="#">About Yammie</a></li>
+          <li><a href="#">How to Order</a></li>
+          <li><a href="#">Our Partners</a></li>
+          <li><a href="#">Terms &amp; Conditions For Use</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <div class="ftr-down">
+          <div class="ftr-official">
+            &copy; 2020 Yammie. All rights reserved
+            <div class="social-icons">
+              <a href="" class="icon-button"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
+              <a href="" class="icon-button"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+              <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ctlg-m-ctr" id="ctlg-m-ctr">
+      <div class="ctlg-nav-panel">
+        <a href="index.html">Home</a> &gt;
+        <a href="./easy-market.html">Easy Market</a> &gt; "Lato"
+      </div>
+      <div class="ctlg-ctr" id="ctlg-ctr">
+        <div class="ctlg-itm-ctr">
+          <div class="a-search">
+            <span class="items-got">10235 Products Got</span>
+            <span class="search-input">
+              You searched for : "<span id="s-word"></span>"
+            </span>
+          </div>
+          <div class="itms-ctr" id="s-itms-ctr"></div>
+        </div>
+        <div class="ctlg-sort" id="ctlg-sort">
+          <h3>Sort By Price</h3>
+          <form action="#" method="POST" class="price-form">
+            <div class="price-slide">
+              <input
+                type="range"
+                name=""
+                id="input-slide-left"
+                min="0"
+                max="100"
+                value="0"
+                title="Slide to Set Price"
+              />
+              <input
+                type="range"
+                name=""
+                id="input-slide-right"
+                min="0"
+                max="100"
+                value="100"
+                title="Slide to Set Price"
+              />
+              <div class="slider">
+                <div class="track"></div>
+                <div class="range"></div>
+                <div class="thumb left"></div>
+                <div class="thumb right"></div>
+              </div>
+            </div>
+            <div class="display-price">
+              <input type="text" id="lower-p" value="0" />
+              <input type="text" id="higher-p" />
+            </div>
+            <button class="sort-btn" type="submit">Apply</button>
+          </form>
+          <h3>Sort By Discount</h3>
+          <form action="" method="POST">
+            <ul class="sort-list">
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="discount"> &lt; 10%</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="discount">10% - 20%</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="discount">20% - 30%</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="discount">30% - 40%</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="discount">40% - 50%</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="discount"> &gt; 50%</label>
+              </li>
+            </ul>
+            <button class="sort-btn">Apply</button>
+          </form>
+          <h3>Sort By Brand</h3>
+          <form action="#" method="POST">
+            <ul class="sort-list">
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="brand">SkyWorth</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="brand">Hisense</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="brand">Acer</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="brand">GlobalStar</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="brand">Sky</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="brand">Sumsung</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="brand">Startimes</label>
+              </li>
+            </ul>
+            <button class="sort-btn">Apply</button>
+          </form>
+          <h3>Sort By Seller Location</h3>
+          <form action="#" method="POST" style="border: none">
+            <ul class="sort-list">
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="seller-location">Lira Campus</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="seller-location">Lira</label>
+              </li>
+              <li class="input-field">
+                <input type="checkbox" name="" id="" />
+                <label for="seller-location">Kampala</label>
+              </li>
+            </ul>
+            <button class="sort-btn">Apply</button>
+          </form>
+        </div>
+      </div>
+      <div class="category">
+        <div class="see-all">
+          <span>You May Also Like</span>
+          <span>
+            Check
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="items-container" id="tp-s"></div>
+      </div>
+      <div class="category">
+        <div class="see-all">
+          <span>You May Also Like</span>
+          <span>
+            Check
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="items-container" id="tp-s"></div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="ftr-sm-s">
+        <span> Terms &amp; Conditions </span>
+        <span> Help Center </span>
+        <span> Contact Us </span>
+      </div>
+      <div class="ftr-up">
+        <div class="ftr-u-first">
+          <div class="ftr-logo">
+            <img
+              src="./resources/yammie.png"
+              alt="YAMMIE"
+              width="250px"
+              height="100px"
+            />
+          </div>
+          <div class="ftr-message">
+            <p>
+              Your online Market Store For Groceries, <br />
+              Food Items, Clothings, Gadgets And Many More.
+            </p>
+          </div>
+          <div class="ftr-app">
+            <h3>Get the Yammie App On . . . .</h3>
+            <div class="ftr-app-stores" style="margin-top: 15px">
+              <a href="">
+                <img
+                  src="./resources/play-store-3.jpg"
+                  alt=""
+                  height="45"
+                  width="150"
+                  style="margin-right: 5px"
+                />
+              </a>
+              <a href="">
+                <img
+                  src="./resources/apple-store.jpg"
+                  alt=""
+                  height="45"
+                  width="150"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="ftr-u-second">
+          <h4 class="footer-h4">Explore Yammie</h4>
+          <ul class="footer-list">
+            <li><a href="#">About Yammie</a></li>
+            <li><a href="#">How to Order</a></li>
+            <li><a href="#">Help &amp; FAQs</a></li>
+            <li><a href="#">Our Partners</a></li>
+            <li><a href="#">Terms &amp; Conditions For Use</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="ftr-u-third">
+          <h4 class="footer-h4">Contact Us</h4>
+          <ul class="footer-list">
+            <li class="second-list">
+              <a href="">
+                <i class="fas fa-shopping-cart"></i>
+                Yammie Shoppers
+              </a>
+            </li>
+            <li class="second-list">
+              <a href="mailto:#">
+                <i class="fas fa-envelope"></i>
+                customer@yammie.com
+              </a>
+            </li>
+            <li class="second-list">
+              <a href="#">
+                <i class="fas fa-map-marker-alt"></i>
+                Lira Campus
+              </a>
+            </li>
+          </ul>
+          <form action="#">
+            <input
+              type="text"
+              name=""
+              id="comment"
+              placeholder="Leave a Comment"
+            />
+            <br />
+            <input
+              type="text"
+              name=""
+              id="customer-email"
+              placeholder="Email or Phone Number(Optional)"
+            />
+            <br />
+            <button class="footer-form-button">submit</button>
+          </form>
+        </div>
+        <div class="ftr-u-fourth">
+          <h4 class="footer-h4">Products &amp; Groceries</h4>
+          <ul class="footer-list">
+            <li><a href="#">Special Order</a></li>
+            <li><a href="#">Delivery Time</a></li>
+            <li><a href="#">Payment Methods</a></li>
+            <li><a href="#">Request An Item</a></li>
+            <li><a href="#">Report an Item</a></li>
+            <li><a href="#">Return Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ftr-down">
+        <div class="ftr-official">
+          &copy; 2020 Yammie. All rights reserved
+          <div class="social-icons">
+            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--scripts-->
+    <script>
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
+      //price slider
+      let inputLeft = document.getElementById("input-slide-left");
+      let inputRight = document.getElementById("input-slide-right");
+
+      let thumbLeft = document.querySelector(".slider > .thumb.left");
+      let thumbRight = document.querySelector(".slider > .thumb.right");
+      let range = document.querySelector(".slider > .range");
+
+      //Prices
+      let maxPrice = 800000;
+      let higherPrice = document.getElementById("higher-p");
+      higherPrice.value = maxPrice;
+      //Prices End
+
+      inputLeft.addEventListener("input", () => {
+        let _this = inputLeft,
+          min = parseInt(_this.min),
+          max = parseInt(_this.max);
+        _this.value = Math.min(
+          parseInt(_this.value),
+          parseInt(inputRight.value) - 1
+        );
+        let percent = ((_this.value - min) / (max - min)) * 100;
+        thumbLeft.style.left = percent + "%";
+        range.style.left = percent + "%";
+        let lowerPrice = document.getElementById("lower-p");
+        lowerPrice.value = parseInt((maxPrice / 100) * percent);
+      });
+      inputRight.addEventListener("input", () => {
+        let _this = inputRight,
+          min = parseInt(_this.min),
+          max = parseInt(_this.max);
+        _this.value = Math.max(
+          parseInt(_this.value),
+          parseInt(inputLeft.value) + 1
+        );
+        let percent = ((_this.value - min) / (max - min)) * 100;
+        thumbRight.style.right = 100 - percent + "%";
+        range.style.right = 100 - percent + "%";
+        higherPrice.value = parseInt((maxPrice / 100) * percent);
+      });
+      inputLeft.addEventListener("mouseover", () => {
+        thumbLeft.classList.add("hover");
+      });
+      inputLeft.addEventListener("mouseout", () => {
+        thumbLeft.classList.remove("hover");
+      });
+      inputLeft.addEventListener("mousedown", () => {
+        thumbLeft.classList.add("active");
+      });
+      inputLeft.addEventListener("mouseup", () => {
+        thumbLeft.classList.remove("active");
+      });
+      inputRight.addEventListener("mouseover", () => {
+        thumbRight.classList.add("hover");
+      });
+      inputRight.addEventListener("mouseout", () => {
+        thumbRight.classList.remove("hover");
+      });
+      inputRight.addEventListener("mousedown", () => {
+        thumbRight.classList.add("active");
+      });
+      inputRight.addEventListener("mouseup", () => {
+        thumbRight.classList.remove("active");
+      });
+      //price slider end
+      //search
+      let urlParams = new URLSearchParams(window.location.search);
+      let v_search = urlParams.get("q");
+      let validSearch = v_search.length > 0 ? v_search : "all";
+      let trial = /^[a-z]+$/i.test(validSearch);
+
+      // if (trial) {
+      //   console.log("true");
+      // } else {
+      //   console.log("not true");
+      // }
+
+      document.getElementById("s-word").innerHTML = validSearch;
+      xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let searchData = JSON.parse(xhr.responseText);
+          if (searchData.length === 0) {
+            let noData = `<div class="no-itms">
+              <img
+                src="./resources/undraw_blank_canvas_3rbb.svg"
+                width="50%"
+                height="50%"
+                alt=""
+              />
+                <span>Sorry, '${validSearch}' did not match any item.
+                <br/>
+                Try Requesting Your Item.
+                </span>
+                <button id="ctlg-rq-btn">Make A Request</button>
+            </div>`;
+            document.getElementById("ctlg-ctr").innerHTML = noData;
+            document.getElementById("ctlg-ctr").style.justifyContent = "center";
+            document.getElementById("ctlg-ctr").style.justifyContent = "center";
+            document.getElementById("title").innerHTML = "No Items Got";
+          } else {
+            let itmsSearched = "";
+            searchData.forEach((itm) => {
+              itmsSearched += `
+              <article class="itm-searched" data-name="">
+              <div class="a-s-discount">
+                <span class="d">
+                  ${itm.item_discount !== null ? itm.item_discount + "%" : ""}
+                </span>
+              </div>
+              <div class="itm-s-img">
+                <img
+                  src="./resources/phone5.png"
+                  alt="Lato Milk 0.5kg Tin packed"
+                  width="80%"
+                  height="80%"
+                />
+              </div>
+              <div class="itm-s-dtl">
+                <div class="seller">
+                  <b>Seller:</b> Yammie Shoppers
+                </div>
+                <div class="itm-name" style="font-size:16px;">
+                  ${itm.item_name} - ${itm.item_qty_description}
+                </div>
+                <div class="price-current">${
+                  "UGX " +
+                  (itm.item_discount
+                    ? (itm.item_price * (100 - itm.item_discount)) / 100
+                    : itm.item_price)
+                }</div>
+                <div class="price-prev">${
+                  itm.item_discount
+                    ? "UGX " + (itm.item_price * itm.item_discount) / 100
+                    : ""
+                }</div>
+                <div class="location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Lira</span>
+                </div>
+                <div class="delivery-by">
+                  <i class="fab fa-telegram-plane"></i>
+                  Yammie Delivery
+                </div>
+                <div class="a-t-c add-to-c"
+                  data-id=${itm.item_id}
+                  data-name=${itm.item_name.replace(/ /g, "_")}
+                  data-price=${itm.item_price}
+                  data-description=${itm.item_qty_description.replace(
+                    / /g,
+                    "_"
+                  )}
+                  data-discount=${itm.item_discount}
+                >
+                  <img
+                    src="./resources/shopping_cart_add_white.svg"
+                    alt=""
+                    width="25px"
+                    height="25px"
+                    data-id=${itm.item_id}
+                    data-name=${itm.item_name.replace(/ /g, "_")}
+                    data-price=${itm.item_price}
+                    data-description=${itm.item_qty_description.replace(
+                      / /g,
+                      "_"
+                    )}
+                    data-discount=${itm.item_discount}
+                  />
+                  Add to Cart
+                </div>
+              </div>
+            </article>`;
+            });
+            document.getElementById("s-itms-ctr").innerHTML = itmsSearched;
+            document.getElementById(
+              "title"
+            ).innerHTML = `${validSearch} &commat; Yammie. Online Shopping for Groceries`;
+
+            let btns = document.querySelectorAll(".add-to-c");
+            btns.forEach((btn) => {
+              btn.addEventListener("click", (e) => {
+                let cartItem = {
+                  name: e.target.dataset.name,
+                  price: e.target.dataset.price,
+                  discount: parseInt(e.target.dataset.discount),
+                  cartItemAdded: e.target.dataset.id,
+                  description: e.target.dataset.description,
+                  inCartNumber: 0,
+                };
+                cartNumbers(cartItem);
+                wait();
+              });
+            });
+            function wait() {
+              let popUp = document.querySelector(".popup");
+              let pContent = popUp.innerHTML;
+              popUp.innerHTML = `
+              <div>
+              <div id="cartLoader"></div>
+              <br />
+              <div>Adding to Cart . . .
+              </div>
+              </div>`;
+              setTimeout(() => {
+                popUp.innerHTML = pContent;
+              }, 2000);
+            }
+            function cartNumbers(item) {
+              let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+              if (cartNumber) {
+                localStorage.setItem("cartNumber", cartNumber + 1);
+                document.querySelector("#cartNumberItems").textContent =
+                  cartNumber + 1;
+              } else {
+                localStorage.setItem("cartNumber", 1);
+                document.querySelector("#cartNumberItems").textContent = 1;
+              }
+              setItem(item);
+            }
+            function setItem(item) {
+              let cartItems = localStorage.getItem("cartItems");
+              cartItems = JSON.parse(cartItems);
+              if (cartItems != null) {
+                if (cartItems[item.cartItemAdded] == undefined) {
+                  cartItems = {
+                    ...cartItems,
+                    [item.cartItemAdded]: item,
+                  };
+                }
+                cartItems[item.cartItemAdded].inCartNumber += 1;
+              } else {
+                item.inCartNumber = 1;
+                cartItems = {
+                  [item.cartItemAdded]: item,
+                };
+              }
+              localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+              document.querySelector("#pop-up-overlay").classList.add("active");
+              document.querySelector(".popup").classList.add("pp-active");
+            }
+          }
+        }
+      };
+      xhr.open(
+        "GET",
+        `http://localhost:3000/api/search?q=${validSearch}`,
+        true
+      );
+      // xhr.setRequestHeader("Content-type", "application/json");
+      xhr.send();
+
+      //search end
+    </script>
+    <script>
+      function waitClose() {
+        let popUp = document.querySelector(".popup");
+        let pContent = popUp.innerHTML;
+        popUp.innerHTML = `
+              <div>
+              <div id="cartLoader"></div>
+              <br />
+              <div>Please Wait. . .
+              </div>
+              </div>`;
+      }
+      function imageDialogClose() {
+        document.querySelector(".popup").classList.remove("pp-active");
+        document.querySelector("#pop-up-overlay").classList.remove("active");
+      }
+      //cart Display
+      cartNumbersDisplay();
+      function cartNumbersDisplay() {
+        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+        document.querySelector("#cartNumberItems").textContent = cartNumber
+          ? cartNumber
+          : 0;
+      }
+    </script>
+    <script>
+      let yammieUsr = "";
+      if (yammie) {
+        let xhr1 = new XMLHttpRequest();
+        xhr1.onreadystatechange = () => {
+          if (xhr1.readyState == 4 && xhr1.status == 200) {
+            [yammieUsr] = JSON.parse(xhr1.responseText);
+            let greeting = document.querySelector(".h-greeting");
+            let account = document.querySelector(".login-text");
+            greeting.classList.add("g-active");
+            account.innerHTML = yammieUsr.c_first_name.toUpperCase();
+            account.style.marginRight = "75px";
+          }
+        };
+        xhr1.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+        xhr1.send();
+      }
+    </script>
+    <!--scripts-->
+  </body>
+</html>

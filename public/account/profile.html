@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/resources/cartlink.png" />
+    <link rel="stylesheet" href="/styles/footer2.css" />
+    <link rel="stylesheet" href="/styles/header.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/font-awesome/css/all.css" />
+    <title>Samuel Josh &commat; Yammie | online Store</title>
+    <style>
+      .pf-ctr {
+        width: 65vw;
+        margin: 30px auto;
+        display: flex;
+        height: 60vh;
+      }
+      .left {
+        flex: 1;
+        background-color: #fff;
+        margin-right: 10px;
+        border-radius: 5px;
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .left > li {
+        padding: 10px 30px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .left > li:hover {
+        background-color: #c3c3c3;
+      }
+      .left > li.active {
+        background-color: #ffbb00;
+        color: white;
+      }
+      .left > li > .fas {
+        margin-right: 5px;
+      }
+      .right {
+        flex: 3;
+        background-color: #fff;
+        margin-left: 10px;
+        border-radius: 10px;
+        position: relative;
+      }
+      .right > h2 {
+        border-bottom: 1px solid #e5e5e5;
+        padding: 10px 20px;
+      }
+
+      #logout {
+        padding: 10px 5px;
+        width: 90%;
+        font-size: 17px;
+        border: none;
+        outline: none;
+        background-color: #ffbb00;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px #c3c3c3;
+        transform: translateY(-4px);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+      #logout:hover {
+        transform: translateY(-7px);
+        box-shadow: 5px 5px 7px #c3c3c3;
+      }
+      .pf-start-spg {
+        padding: 15px 5px;
+        width: 100%;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: #ffbb00;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px #c3c3c3;
+        transform: translateY(-4px);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+      .pf-start-spg:hover {
+        transform: translateY(-7px);
+        box-shadow: 5px 5px 7px #c3c3c3;
+      }
+      .pf-details-ctr {
+        padding: 10px 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        column-gap: 1.5rem;
+        row-gap: 2rem;
+      }
+      .-pdf-h {
+        padding: 5px;
+        font-weight: bold;
+        border-bottom: 1px solid #e5e5e5;
+      }
+      .-pfd {
+        border: 1px solid #e5e5e5;
+        border-radius: 5px;
+        height: 200px;
+      }
+      .pf-d {
+        padding: 5px 10px;
+        margin-bottom: 10px;
+      }
+      .myorders {
+        display: none;
+      }
+      #p-in-name,
+      #p-in-email,
+      #p-in-phone {
+        border: 0;
+        outline: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        font-size: 17px;
+      }
+      @media screen and (max-width: 1024px) {
+        .pf-ctr {
+          width: 85vw;
+          margin: 30px auto;
+          display: flex;
+          height: fit-content;
+        }
+        .left {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-nav">
+      <div class="logo">
+        <div class="menu">
+          <div class="line1"></div>
+          <div class="line2"></div>
+          <div class="line3"></div>
+        </div>
+        <a href="/index.html">
+          <img
+            src="/resources/yammie.png"
+            alt="YAMMIE"
+            width="200"
+            height="95%"
+          />
+        </a>
+      </div>
+      <div class="search">
+        <form
+          id="f-search"
+          autocomplete="off"
+          action="/catalog.html"
+          method="GET"
+        >
+          <input
+            type="text"
+            name="q"
+            placeholder="Search Groceries...."
+            class="navsearch"
+            id="v-search"
+          />
+          <button type="submit" id="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+      <div class="cart-login">
+        <a class="login" id="login" href="">
+          <img src="/resources/person.svg" alt="" />
+          <span class="h-greeting">Good Morning,</span>
+          <span class="login-text">My Account</span>
+        </a>
+        <a class="cart" href="/cart/cart.html">
+          <img src="/resources/shopping-cart.svg" alt="" />
+          <span class="cart-number" id="cartNumberItems">11</span>
+          <span class="cart-text">Cart</span>
+        </a>
+      </div>
+      <div id="sideNav">
+        <ul class="s-n-1">
+          <h3 class="sn-categories">Categories</h3>
+          <li class="n-l-itm">
+            <a href="/easy-market.html">
+              <i class="fas fa-shopping-basket ctg-icon"></i>
+              EasyMarket with Yammie
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="/quick-foods.html">
+              <i class="fas fa-pizza-slice ctg-icon"></i>
+              Fast Foods &amp; Drinks
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="phones.html">
+              <i class="fas fa-headphones-alt ctg-icon"></i>
+              Phones &amp; Accessories
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="/electronics.html">
+              <i class="fas fa-charging-station ctg-icon"></i>
+              Electronics
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="/computing.html">
+              <i class="fas fa-desktop ctg-icon"></i>
+              Computing &amp; Accessories
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="/stationery.html">
+              <i class="fas fa-paperclip ctg-icon"></i>
+              Stationery
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="/clothing.html">
+              <i class="fas fa-tshirt ctg-icon"></i>
+              Clothes &amp; Shoes
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="/kitchen.html">
+              <i class="fas fa-utensils ctg-icon"></i>
+              Kitchen Staff &amp; Utensils
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="/kids.html">
+              <i class="fas fa-child ctg-icon"></i>
+              Kid's Section
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="/diy.html">
+              <img src="/resources/clean-hands.png" alt="" />
+              Cleaning, Healthy &amp; Beauty
+            </a>
+          </li>
+          <li class="n-l-itm">
+            <a href="">
+              <i class="fas fa-layer-group ctg-icon"></i>
+              All Items
+            </a>
+          </li>
+        </ul>
+        <ul class="s-n-4">
+          <h3>My Account</h3>
+          <li>
+            <i class="fas fa-user"></i>
+            <span>My Profile</span>
+          </li>
+          <li>
+            <i class="fas fa-box"></i>
+            <span>My Orders</span>
+          </li>
+
+          <li>
+            <i class="fas fa-dolly-flatbed"></i>
+            <span>Pending Orders</span>
+          </li>
+          <li>
+            <i class="fas fa-thumbs-up"></i>
+            <span><a href="#">Liked Items</a></span>
+          </li>
+          <li>
+            <i class="fas fa-address-card"></i>
+            <span>My Address</span>
+          </li>
+          <li>
+            <i class="fas fa-user-edit"></i>
+            <span>Edit My Profile</span>
+          </li>
+          <button class="s-n-logout">LOG OUT</button>
+        </ul>
+        <ul class="s-n-2">
+          <h3 class="s-n-how">Products &amp; Groceries</h3>
+          <li><a href="#">Special Order</a></li>
+          <li><a href="#">Delivery Time</a></li>
+          <li><a href="#">Payment Methods</a></li>
+          <li><a href="#">Request An Item</a></li>
+          <li><a href="#">Report an Item</a></li>
+          <li><a href="#">Return Policy</a></li>
+        </ul>
+        <ul class="s-n-3">
+          <h3 class="s-n-how">Explore Yammie</h3>
+          <li><a href="#">About Yammie</a></li>
+          <li><a href="#">How to Order</a></li>
+          <li><a href="#">Our Partners</a></li>
+          <li><a href="#">Terms &amp; Conditions For Use</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+        <div class="ftr-down">
+          <div class="ftr-official">
+            &copy; 2020 Yammie. All rights reserved
+            <div class="social-icons">
+              <a href="" class="icon-button"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
+              <a href="" class="icon-button"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+              <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pf-m-ctr">
+      <div class="pf-ctr">
+        <ul class="left">
+          <li id="pf" class="active">
+            <i class="fas fa-user"></i>
+            <span>My Profile</span>
+          </li>
+          <li id="pf-orders">
+            <i class="fas fa-box"></i>
+            <span>My Orders</span>
+          </li>
+          <li id="pf-cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span><a href="#">My Cart</a></span>
+          </li>
+          <li id="pf-pending">
+            <i class="fas fa-dolly-flatbed"></i>
+            <span>Pending Orders</span>
+          </li>
+          <li id="pf-likes">
+            <i class="fas fa-thumbs-up"></i>
+            <span><a href="#">Liked Items</a></span>
+          </li>
+          <li id="pf-address">
+            <i class="fas fa-address-card"></i>
+            <span>My Address</span>
+          </li>
+          <li id="pf-edit">
+            <i class="fas fa-user-edit"></i>
+            <span>Edit My Profile</span>
+          </li>
+          <button id="logout">LOG OUT</button>
+        </ul>
+        <div class="right profile-1">
+          <h2 class="-pdf-h">Profile</h2>
+          <div class="pf-details-ctr">
+            <div class="pf-details -pfd">
+              <div class="-pdf-h pf-d">Your Account</div>
+              <div class="pf-name pf-d">Samuel Joshua</div>
+              <div class="pf-email pf-d">sam@gmail.com</div>
+              <div class="pf-phone pf-d">0789654356</div>
+            </div>
+            <div class="pf-address-dt -pfd">
+              <div class="-pdf-h">Default Address</div>
+              <div class="pf-d">Samuel Josh</div>
+              <div class="pf-d">Pioneer Hostel</div>
+              <div class="pf-d">Management Sciences</div>
+              <div class="pf-d">0789654356</div>
+            </div>
+            <div class="pf-address-dt">
+              <button class="pf-start-spg">
+                <a href="/index.html"> START SHOPPING </a>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="right myorders">
+          <h2 class="-pdf-h">My Orders</h2>
+          <div class="pf-details-ctr">
+            <div class="pf-details -pfd">
+              <div class="-pdf-h pf-d">Your Account</div>
+              <div class="pf-name pf-d">Samuel Joshua</div>
+              <div class="pf-email pf-d">sam@gmail.com</div>
+              <div class="pf-phone pf-d">0789654356</div>
+            </div>
+            <div class="pf-address-dt -pfd">
+              <div class="-pdf-h">Default Address</div>
+              <div class="pf-d">Samuel Josh</div>
+              <div class="pf-d">Pioneer Hostel</div>
+              <div class="pf-d">Management Sciences</div>
+              <div class="pf-d">0789654356</div>
+            </div>
+            <div class="pf-address-dt">
+              <button class="pf-start-spg">START SHOPPING</button>
+            </div>
+          </div>
+        </div>
+        <div class="right pending">
+          <h2 class="-pdf-h">Pending Orders</h2>
+          <div class="pf-details-ctr">
+            <div class="pf-details -pfd">
+              <div class="-pdf-h pf-d">Your Account</div>
+              <div class="pf-name pf-d">Samuel Joshua</div>
+              <div class="pf-email pf-d">sam@gmail.com</div>
+              <div class="pf-phone pf-d">0789654356</div>
+            </div>
+            <div class="pf-address-dt -pfd">
+              <div class="-pdf-h">Default Address</div>
+              <div class="pf-d">Samuel Josh</div>
+              <div class="pf-d">Pioneer Hostel</div>
+              <div class="pf-d">Management Sciences</div>
+              <div class="pf-d">0789654356</div>
+            </div>
+            <div class="pf-address-dt">
+              <button class="pf-start-spg">START SHOPPING</button>
+            </div>
+          </div>
+        </div>
+        <div class="right address">
+          <h2 class="-pdf-h">My Pick Up Addresses</h2>
+          <div class="pf-details-ctr">
+            <div class="pf-details -pfd">
+              <div class="-pdf-h pf-d">Your Account</div>
+              <div class="pf-name pf-d">Samuel Joshua</div>
+              <div class="pf-email pf-d">sam@gmail.com</div>
+              <div class="pf-phone pf-d">0789654356</div>
+            </div>
+            <div class="pf-address-dt -pfd">
+              <div class="-pdf-h">Default Address</div>
+              <div class="pf-d">Samuel Josh</div>
+              <div class="pf-d">Pioneer Hostel</div>
+              <div class="pf-d">Management Sciences</div>
+              <div class="pf-d">0789654356</div>
+            </div>
+            <div class="pf-address-dt">
+              <button class="pf-start-spg">START SHOPPING</button>
+            </div>
+          </div>
+        </div>
+        <div class="right edit">
+          <h2 class="-pdf-h">Edit Profile</h2>
+          <div class="pf-details-ctr">
+            <div class="pf-details -pfd">
+              <div class="-pdf-h pf-d">Contact Info.</div>
+              <div class="pf-name pf-d">
+                <label for="name">Name :</label>
+                <input type="text" id="p-in-name" value="Samuel Josh" />
+              </div>
+              <div class="pf-email pf-d">
+                <label for="name">E-mail :</label>
+                <input type="text" id="p-in-email" value="sam@gmail.com" />
+              </div>
+              <div class="pf-phone pf-d">
+                <label for="name">Mobile :</label>
+                <input type="text" id="p-in-phone" value="0789654356" />
+              </div>
+            </div>
+            <div class="pf-address-dt -pfd">
+              <div class="-pdf-h">Personal.</div>
+              <div class="pf-name pf-d">
+                <label for="gender">Gender :</label>
+                <input type="text" id="p-in-gender" value="Samuel Josh" />
+              </div>
+              <div class="pf-email pf-d">
+                <label for="name">E-mail :</label>
+                <input type="text" id="p-in-o" value="sam@gmail.com" />
+              </div>
+              <div class="pf-phone pf-d">
+                <label for="name">Mobile :</label>
+                <input type="text" id="p-in-" value="0789654356" />
+              </div>
+            </div>
+            <div class="pf-address-dt">
+              <button class="pf-start-spg">START SHOPPING</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="ftr-sm-s">
+        <span> Terms &amp; Conditions </span>
+        <span> Help Center </span>
+        <span> Contact Us </span>
+      </div>
+      <div class="ftr-up">
+        <div class="ftr-u-first">
+          <div class="ftr-logo">
+            <img
+              src="/resources/yammie.png"
+              alt="YAMMIE"
+              width="250px"
+              height="100px"
+            />
+          </div>
+          <div class="ftr-message">
+            <p>
+              Your online Market Store For Groceries, <br />
+              Food Items, Clothings, Gadgets And Many More.
+            </p>
+          </div>
+          <div class="ftr-app">
+            <h3>Get the Yammie App On . . . .</h3>
+            <div class="ftr-app-stores" style="margin-top: 15px">
+              <a href="">
+                <img
+                  src="/resources/play-store-3.jpg"
+                  alt=""
+                  height="45"
+                  width="150"
+                  style="margin-right: 5px"
+                />
+              </a>
+              <a href="">
+                <img
+                  src="/resources/apple-store.jpg"
+                  alt=""
+                  height="45"
+                  width="150"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="ftr-u-second">
+          <h4 class="footer-h4">Explore Yammie</h4>
+          <ul class="footer-list">
+            <li><a href="#">About Yammie</a></li>
+            <li><a href="#">How to Order</a></li>
+            <li><a href="#">Help &amp; FAQs</a></li>
+            <li><a href="#">Our Partners</a></li>
+            <li><a href="#">Terms &amp; Conditions For Use</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="ftr-u-third">
+          <h4 class="footer-h4">Contact Us</h4>
+          <ul class="footer-list">
+            <li class="second-list">
+              <a href="">
+                <i class="fas fa-shopping-cart"></i>
+                Yammie Shoppers
+              </a>
+            </li>
+            <li class="second-list">
+              <a href="mailto:#">
+                <i class="fas fa-envelope"></i>
+                customer@yammie.com
+              </a>
+            </li>
+            <li class="second-list">
+              <a href="#">
+                <i class="fas fa-map-marker-alt"></i>
+                Lira Campus
+              </a>
+            </li>
+          </ul>
+          <form action="#">
+            <input
+              type="text"
+              name=""
+              id="comment"
+              placeholder="Leave a Comment"
+            />
+            <br />
+            <input
+              type="text"
+              name=""
+              id="customer-email"
+              placeholder="Email or Phone Number(Optional)"
+            />
+            <br />
+            <button class="footer-form-button">submit</button>
+          </form>
+        </div>
+        <div class="ftr-u-fourth">
+          <h4 class="footer-h4">Products &amp; Groceries</h4>
+          <ul class="footer-list">
+            <li><a href="#">Special Order</a></li>
+            <li><a href="#">Delivery Time</a></li>
+            <li><a href="#">Payment Methods</a></li>
+            <li><a href="#">Request An Item</a></li>
+            <li><a href="#">Report an Item</a></li>
+            <li><a href="#">Return Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ftr-down">
+        <div class="ftr-official">
+          &copy; 2020 Yammie. All rights reserved
+          <div class="social-icons">
+            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!--scripts-->
+    <script>
+      //profile
+      let profile = document.querySelector(".profile-1");
+      let profileClick = document.querySelector("#pf");
+      //profile
+      //my orders
+      let myOrders = document.querySelector(".myorders");
+      let myOrdersClick = document.querySelector("#pf-orders");
+      //my orders
+      //pending
+      let pending = document.querySelector(".pending");
+      let pendingClick = document.querySelector("#pf-pending");
+      //pending
+      //address
+      let address = document.querySelector(".address");
+      let addressClick = document.querySelector("#pf-address");
+      //address
+      //edit
+      let edit = document.querySelector(".edit");
+      let editClick = document.querySelector("#pf-edit");
+      //edit
+
+      //beforeSelf nav
+      profile.style.display = "block";
+      myOrders.style.display = "none";
+      pending.style.display = "none";
+      address.style.display = "none";
+      edit.style.display = "none";
+      //beforeSelf nav
+
+      profileClick.addEventListener("click", () => {
+        profile.style.display = "block";
+        myOrders.style.display = "none";
+        pending.style.display = "none";
+        address.style.display = "none";
+        edit.style.display = "none";
+        myOrdersClick.classList.remove("active");
+        profileClick.classList.add("active");
+        pendingClick.classList.remove("active");
+        addressClick.classList.remove("active");
+        editClick.classList.remove("active");
+      });
+      myOrdersClick.addEventListener("click", () => {
+        profile.style.display = "none";
+        myOrders.style.display = "block";
+        pending.style.display = "none";
+        address.style.display = "none";
+        edit.style.display = "none";
+        myOrdersClick.classList.add("active");
+        profileClick.classList.remove("active");
+        pendingClick.classList.remove("active");
+        addressClick.classList.remove("active");
+        editClick.classList.remove("active");
+      });
+      pendingClick.addEventListener("click", () => {
+        profile.style.display = "none";
+        myOrders.style.display = "none";
+        pending.style.display = "block";
+        address.style.display = "none";
+        edit.style.display = "none";
+        myOrdersClick.classList.remove("active");
+        profileClick.classList.remove("active");
+        pendingClick.classList.add("active");
+        addressClick.classList.remove("active");
+        editClick.classList.remove("active");
+      });
+      addressClick.addEventListener("click", () => {
+        profile.style.display = "none";
+        myOrders.style.display = "none";
+        pending.style.display = "none";
+        address.style.display = "block";
+        edit.style.display = "none";
+        myOrdersClick.classList.remove("active");
+        profileClick.classList.remove("active");
+        pendingClick.classList.remove("active");
+        addressClick.classList.add("active");
+        editClick.classList.remove("active");
+      });
+      editClick.addEventListener("click", () => {
+        profile.style.display = "none";
+        myOrders.style.display = "none";
+        pending.style.display = "none";
+        address.style.display = "none";
+        edit.style.display = "block";
+        myOrdersClick.classList.remove("active");
+        profileClick.classList.remove("active");
+        pendingClick.classList.remove("active");
+        addressClick.classList.remove("active");
+        editClick.classList.add("active");
+      });
+      //profile
+    </script>
+    <script>
+      // animate menu  bars
+      const menu = document.querySelector(".menu");
+      const sideNav = document.querySelector("#sideNav");
+      const menuLine1 = document.querySelector(".line1");
+      const menuLine2 = document.querySelector(".line2");
+      const menuLine3 = document.querySelector(".line3");
+
+      menu.addEventListener("click", () => {
+        sideNav.classList.toggle("activeSideNav");
+        menuLine1.classList.toggle("rotateLine1");
+        menuLine2.classList.toggle("rotateLine2");
+        menuLine3.classList.toggle("rotateLine3");
+      });
+
+      let yammieUsr = "";
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
+      if (yammie) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            [yammieUsr] = JSON.parse(xhr.responseText);
+            console.log(yammieUsr);
+            let greeting = document.querySelector(".h-greeting");
+            let account = document.querySelector(".login-text");
+            greeting.classList.add("g-active");
+            account.innerHTML = yammieUsr.c_first_name.toUpperCase();
+            account.style.marginRight = "75px";
+          }
+        };
+        xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+        xhr.send();
+      }
+      cartNumbersDisplay();
+      function cartNumbersDisplay() {
+        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+        document.querySelector("#cartNumberItems").textContent = cartNumber
+          ? cartNumber
+          : 0;
+      }
+    </script>
+    <!--scripts-->
+  </body>
+</html>

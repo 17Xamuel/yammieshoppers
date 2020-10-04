@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./resources/cartlink.png" />
+    <link rel="stylesheet" href="./styles/footer2.css" />
+    <link rel="stylesheet" href="./styles/items.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/products.css" />
+    <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <title>Yammie | Thanks for your order</title>
+
+    <style>
+      .f-order-ctr {
+        display: flex;
+        justify-content: center;
+        width: 70vw;
+        margin: 2% auto;
+      }
+      .-f-order-l {
+        margin: 20px;
+      }
+      .-f-order-r {
+        margin: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 7px rgb(195, 192, 192);
+      }
+      form {
+        height: 70vh;
+        width: 30vw;
+        padding: 5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+      input,
+      select {
+        font-size: 18px;
+        border: 1px solid rgb(0, 0, 0, 0.1);
+        outline: none;
+        width: 100%;
+        padding: 10px 5px;
+        border-radius: 5px;
+      }
+      input:focus,
+      select:focus {
+        border-color: #ffbb00;
+        box-shadow: 0 0 5px #ffbb00;
+      }
+      .-pay {
+        padding: 10px 5px;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: #ffbb00;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px #c3c3c3;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+      .-i-group {
+        width: 100%;
+      }
+      .-f-order-h {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-nav">
+      <div class="logo">
+        <img
+          src="./resources/yammie.png"
+          alt="YAMMIE"
+          width="200"
+          height="100%"
+        />
+      </div>
+      <div class="order-f">
+        <h3>Yammie, Pay With Mobile Money:</h3>
+      </div>
+      <div class="cart-login">
+        <div class="login" id="login">
+          <img src="./resources/person.svg" alt="" />
+          <span class="login-text">Help</span>
+        </div>
+        <div class="cart">
+          <img src="./resources/shopping-cart.svg" alt="" />
+          <span class="cart-text">Call</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="-f-order -m">
+      <div class="f-order-ctr">
+        <div class="-f-order-r">
+          <form action="">
+            <div class="-f-order-h">
+              <img
+                src="./resources/yammie.png"
+                alt="YAMMIE"
+                width="200"
+                height="100%"
+              />
+              <h3>Pay With Mobile Money</h3>
+            </div>
+            <div class="-i-group">
+              <label for="">Amount:</label>
+              <br />
+              <input type="text" name="" id="" placeholder="Amount" />
+            </div>
+            <div class="-i-group">
+              <label for="">Mobile Money Operator:</label>
+              <br />
+              <select name="" id="">
+                <option value="" hidden>
+                  Select Your Operator(MTN or AIRTEL)
+                </option>
+                <option value="AIRTEL">AIRTEL</option>
+                <option value="MTN">MTN</option>
+              </select>
+            </div>
+            <div class="-i-group">
+              <label for="">Mobile Number:</label>
+              <br />
+              <input type="text" name="" id="" placeholder="Mobile Number" />
+            </div>
+
+            <button type="submit" class="-pay">
+              PAY NOW
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+        <div class="-f-order-l">
+          <div class="-img">
+            <img src="./resources/thanks.svg" alt="" width="60%" height="60%" />
+          </div>
+          <div class="">
+            Thanks for shopping with yammie.
+            <br />
+            You will receive an EMAIL or SMS containing the delivery information
+            of your order.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--scripts-->
+
+    <script>
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+        history.go(1);
+      };
+    </script>
+    <!--scripts-->
+  </body>
+</html>

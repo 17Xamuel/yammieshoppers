@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./resources/cartlink.png" />
+    <link rel="stylesheet" href="./styles/footer2.css" />
+    <link rel="stylesheet" href="./styles/items.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/products.css" />
+    <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <title>Yammie | Thanks for your order</title>
+
+    <style>
+      .f-order-ctr {
+        display: flex;
+        justify-content: center;
+        width: 70vw;
+        margin: 2% auto;
+      }
+      .-f-order-l {
+        margin: 20px;
+      }
+      .-f-order-r {
+        margin: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 7px rgb(195, 192, 192);
+      }
+      form {
+        height: 70vh;
+        width: 30vw;
+        padding: 5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      .-pay {
+        padding: 10px 5px;
+        font-size: 18px;
+        border: none;
+        outline: none;
+        background-color: #ffbb00;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px #c3c3c3;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        width: 30%;
+        margin: 15px 0px;
+      }
+      .-pay > i {
+        margin-right: 10px;
+      }
+      .-i-group {
+        width: 100%;
+      }
+      .-f-order-h {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="search-nav">
+      <div class="logo">
+        <img
+          src="./resources/yammie.png"
+          alt="YAMMIE"
+          width="200"
+          height="100%"
+        />
+      </div>
+      <div class="order-f">
+        <h3>Yammie, Cash on Delivery:</h3>
+      </div>
+      <div class="cart-login">
+        <div class="login" id="login">
+          <img src="./resources/person.svg" alt="" />
+          <span class="login-text">Help</span>
+        </div>
+        <div class="cart">
+          <img src="./resources/shopping-cart.svg" alt="" />
+          <span class="cart-text">Call</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="-f-order -m">
+      <div class="f-order-ctr">
+        <div class="-f-order-l">
+          <div class="-img">
+            <img src="./resources/thanks.svg" alt="" width="30%" height="30%" />
+          </div>
+          <div class="">
+            Thanks for shopping with yammie.
+            <br />
+            You will receive an EMAIL or SMS containing
+            <br />
+            the delivery information of your order.
+          </div>
+          <a href="../index.html">
+            <button type="submit" class="-pay">
+              <i class="fas fa-home"></i>
+              Return Home
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <!--scripts-->
+    <script>
+      history.pushState(null, null, location.href);
+      window.onpopstate = function () {
+        history.go(1);
+      };
+    </script>
+    <!--scripts-->
+  </body>
+</html>

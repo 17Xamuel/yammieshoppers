@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="../images/letter_b_PNG27.png" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
+      crossorigin="anonymous"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
+      integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../styles/home.css" />
+    <title>Tables</title>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md navbar-light">
+      <button
+        class="navbar-toggler ml-auto mb-2 bg-light"
+        type="button"
+        data-toggle="collapse"
+        data-target="#myNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <div class="container-fluid">
+          <div class="row">
+            <!-- Sidebar -->
+            <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
+              <a
+                href="#"
+                class="navbar-brand text-white d-block text-center py-3 mx-auto mb-4 border-bottom"
+                >YammieShoppers</a
+              >
+              <div class="border-bottom pb-3">
+                <img
+                  src="../images/user-1.jpg"
+                  width="50"
+                  height="50"
+                  class="rounded-circle mr-3"
+                />
+                <a href="#" class="text-white">Hello Denis</a>
+              </div>
+              <ul class="navbar-nav flex-column mt-4">
+                <li class="nav-item">
+                  <a href="/" class="nav-link text-white p-3 mb-2 current"
+                    ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
+                  >
+                </li>
+                <li class="nav-item current">
+                  <a
+                    href="tables.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-table text-light fa-lg mr-3"></i>Tables</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="inbox.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-envelope text-light fa-lg mr-3"></i
+                    >Inbox</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="sales.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
+                    >Sales</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="analytics.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-chart-line text-light fa-lg mr-3"></i
+                    >Analytics</a
+                  >
+                </li>
+
+                <li class="nav-item">
+                  <a
+                    href="profile.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="settings.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-wrench text-light fa-lg mr-3"></i
+                    >Settings</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-file-alt text-light fa-lg mr-3"></i
+                    >Documentation</a
+                  >
+                </li>
+              </ul>
+            </div>
+
+            <!-- End Sidebar -->
+
+            <!-- Topnavbar -->
+            <div
+              class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
+            >
+              <div class="row align-items">
+                <div class="col-md-4 mb-0 text-light py-3">
+                  <h4>DASHBOARD</h4>
+                </div>
+                <div class="col-md-5">
+                  <form action="#">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control search-input"
+                        placeholder="Search...."
+                      />
+                      <button
+                        type="button"
+                        class="btn btn-white bg-light search-button"
+                      >
+                        <i class="fas fa-search text-danger"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-3 py-2">
+                  <ul class="navbar-nav">
+                    <li class="list-item icon-parent">
+                      <a href="#" class="nav-link"
+                        ><span class="text-white icon-bullet">4</span
+                        ><i class="fas fa-comments text-muted fa-2x"></i
+                      ></a>
+                    </li>
+                    <li class="list-item icon-parent">
+                      <a href="#" class="nav-link"
+                        ><span class="text-white icon-bullet">5</span
+                        ><i class="fas fa-bell text-muted fa-2x"></i
+                      ></a>
+                    </li>
+
+                    <li class="list-item ml-md-auto">
+                      <a
+                        href="#"
+                        class="nav-link"
+                        data-target="#sign-out"
+                        data-toggle="modal"
+                        ><i class="fas fa-power-off text-danger fa-2x"></i
+                      ></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!--End Topnavbar -->
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="sign-out">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Want to Leave?</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+          <div class="modal-body">Press Logout to Leave</div>
+          <div class="modal-footer">
+            <button type="button" data-dismiss="modal" class="btn btn-success">
+              Stay Here
+            </button>
+            <button type="button" data-dismiss="modal" class="btn btn-danger">
+              Log Out
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
+    <section>
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row pt-md-5 mt-md-3 align-items-center">
+              <div class="col-xl-10 py-3 px-3">
+                <h1 class="text-dark">Data Tables</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tables -->
+    <section>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-6 col-12 mb-4 mb-xl-0">
+                <h4 class="text-muted mb-2 text-center">Staff Salary</h4>
+                <table class="table table-striped bg-light text-center">
+                  <thead>
+                    <tr class="text-muted">
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Salary</th>
+                      <th>Date</th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>Stephen</td>
+                      <td>UGX300,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th>2</th>
+                      <td>Livingstone</td>
+                      <td>UGX250,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>3</th>
+                      <td>Samuel</td>
+                      <td>UGX200,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>4</th>
+                      <td>Denis</td>
+                      <td>UGX800,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>5</th>
+                      <td>Maureen</td>
+                      <td>UGX100,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <nav>
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">&laquo;</a>
+                    </li>
+                    <li class="page-item active">
+                      <a href="#" class="page-link py-2 px-3">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">&raquo;</a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- End Pagination -->
+              </div>
+              <div class="col-xl-6 col-12">
+                <h4 class="text-muted mb-2 text-center">Recent Payments</h4>
+                <table class="table table-dark table-hover text-center">
+                  <thead>
+                    <tr class="text-muted">
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Price</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>Hakim</td>
+                      <td>UGX100,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <span class="badge badge-success w-75 py-2"
+                          >Approved</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>2</th>
+                      <td>Rodger</td>
+                      <td>UGX600,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <span class="badge badge-success w-75 py-2"
+                          >Approved</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>3</th>
+                      <td>Mary</td>
+                      <td>UGX340,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <span class="badge badge-danger w-75 py-2"
+                          >Pending</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>4</th>
+                      <td>Cynthia</td>
+                      <td>UGX453,000</td>
+                      <td>13/07/2020</td>
+                      <td>
+                        <span class="badge badge-success w-75 py-2"
+                          >Approved</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>5</th>
+                      <td>Daisy</td>
+                      <td>UGX1,000,000</td>
+                      <td>23/07/2020</td>
+                      <td>
+                        <span class="badge badge-danger w-75 py-2"
+                          >Pending</span
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- Pagination -->
+                <nav>
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">Previous</a>
+                    </li>
+                    <li class="page-item active">
+                      <a href="#" class="page-link py-2 px-3">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- End Pagination -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center pt-md-5 mt-md-3">
+              <div class="col-xl-6 col-12 mb-4 mb-xl-0">
+                <h4 class="text-muted mb-2 text-center">Users</h4>
+                <table class="table table-striped bg-light text-center">
+                  <thead>
+                    <tr class="text-muted">
+                      <th>#</th>
+                      <th>Username</th>
+                      <th>Password</th>
+                      <th>Email</th>
+                      <th>Contact</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>Stephen</td>
+                      <td>23r2568</td>
+                      <td>mk@gmail.com</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <th>2</th>
+                      <td>Livingstone</td>
+                      <td>aser257o</td>
+                      <td>sw@gmail.com</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>3</th>
+                      <td>Samuel</td>
+                      <td>fft4567</td>
+                      <td>md@gmail.com</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>4</th>
+                      <td>Denis</td>
+                      <td>nmulden66</td>
+                      <td>md@gmail.com</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>5</th>
+                      <td>Maureen</td>
+                      <td>567890</td>
+                      <td>am@gmail.com</td>
+                      <td>
+                        <button type="button" class="btn btn-info btn-sm">
+                          Message
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!-- Pagination -->
+                <nav>
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">&laquo;</a>
+                    </li>
+                    <li class="page-item active">
+                      <a href="#" class="page-link py-2 px-3">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">&raquo;</a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- End Pagination -->
+              </div>
+              <div class="col-xl-6 col-12">
+                <h4 class="text-muted mb-2 text-center">Sellers</h4>
+                <table class="table table-dark table-hover text-center">
+                  <thead>
+                    <tr class="text-muted">
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Item</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>1</th>
+                      <td>Hakim</td>
+                      <td>T-shirts</td>
+                      <td>UGX100,000</td>
+                      <td>
+                        <span class="badge badge-success w-75 py-2"
+                          >Approved</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>2</th>
+                      <td>Rodger</td>
+                      <td>Laptop</td>
+                      <td>UGX600,000</td>
+                      <td>
+                        <span class="badge badge-success w-75 py-2"
+                          >Approved</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>3</th>
+                      <td>Mary</td>
+                      <td>Phone</td>
+                      <td>UGX340,000</td>
+                      <td>
+                        <span class="badge badge-warning w-75 py-2"
+                          >Pending</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>4</th>
+                      <td>Cynthia</td>
+                      <td>Shoes</td>
+                      <td>UGX453,000</td>
+                      <td>
+                        <span class="badge badge-success w-75 py-2"
+                          >Approved</span
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>5</th>
+                      <td>Daisy</td>
+                      <td>Fridge</td>
+                      <td>UGX1,000,000</td>
+                      <td>
+                        <span class="badge badge-danger w-75 py-2"
+                          >Cancelled</span
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- Pagination -->
+                <nav>
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">Previous</a>
+                    </li>
+                    <li class="page-item active">
+                      <a href="#" class="page-link py-2 px-3">1</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a href="#" class="page-link py-2 px-3">Next</a>
+                    </li>
+                  </ul>
+                </nav>
+                <!-- End Pagination -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Tables -->
+
+    <!-- Footer -->
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row border-top pt-3">
+              <div class="col-lg-6 text-center">
+                <ul class="list-inline">
+                  <li class="list-inline-item mr-2">
+                    <a href="#" class="text-dark">YammieShoppers</a>
+                  </li>
+                  <li class="list-inline-item mr-2">
+                    <a href="#" class="text-dark">About</a>
+                  </li>
+                  <li class="list-inline-item mr-2">
+                    <a href="#" class="text-dark">Support</a>
+                  </li>
+                  <li class="list-inline-item mr-2">
+                    <a href="#" class="text-dark">Blog</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6 text-center">
+                <p>
+                  &copy;2020 Copy Right Made With
+                  <i class="fas fa-heart text-danger"></i>by
+                  <span class="text-success">YammieShoppers</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End Footer -->
+
+    <!-- Scripts -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src=" https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- End Scripts -->
+  </body>
+</html>

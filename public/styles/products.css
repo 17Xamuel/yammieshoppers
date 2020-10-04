@@ -1,0 +1,129 @@
+.category {
+  background-color: #fff;
+  padding: 15px 10px;
+  margin: 30px 0px 0px 0px;
+  border-radius: 10px;
+  position: relative;
+}
+/* product */
+.see-all {
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffbb00;
+  padding: 10px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 10px 10px 0px 0px;
+  height: 50px;
+  font-weight: bold;
+}
+.see-all > .check {
+  color: white;
+}
+.items-container {
+  margin-top: 50px;
+  display: flex;
+  padding-bottom: 15px;
+  overflow-x: hidden;
+}
+.item {
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+.item:hover {
+  box-shadow: 0px 0px 5px #c2c2c2;
+  /* border:  groove #efefef; */
+}
+/* .item:hover {
+  box-shadow: 4px 4px 5px #e2e2e2;
+  /* border:  groove #efefef; */
+/* } */
+.it-nm {
+  font-weight: 400;
+}
+.images {
+  display: flex;
+}
+.pr {
+  padding-left: 10px;
+}
+.pre-it-pr {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 750px) {
+  .items-container {
+    overflow-x: scroll;
+  }
+  .category {
+    overflow-x: auto;
+  }
+  .category,
+  .see-all {
+    border-radius: 0;
+    margin: 2px 0px;
+  }
+  #prevBtn,
+  #nextBtn {
+    display: none;
+  }
+  .categories,
+  .other-info {
+    display: none;
+    margin: 0;
+  }
+  .container1 {
+    margin: 0;
+    height: 200px;
+  }
+  .m-ctr {
+    margin: 10px 0px 0px 0px;
+    width: 100vw;
+  }
+  .slider-container {
+    margin: 0;
+    width: 100%;
+    overflow-x: scroll;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .items-container {
+    overflow-x: scroll;
+  }
+  .category {
+    overflow-x: auto;
+  }
+  .category,
+  .see-all {
+    border-radius: 0;
+    margin: 2px 0px;
+  }
+  .categories,
+  .ctg-li {
+    display: none;
+    margin: 0;
+  }
+  .container1 {
+    margin: 0;
+    height: 165px;
+  }
+  .m-ctr {
+    margin: 5px auto 0px auto;
+    width: 95vw;
+  }
+  #slider {
+    margin: 0;
+  }
+  #prevBtn,
+  #nextBtn {
+    display: none;
+  }
+}

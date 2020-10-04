@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./resources/cartlink.png" />
+    <link rel="stylesheet" href="./styles/footer2.css" />
+    <link rel="stylesheet" href="./styles/items.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/products.css" />
+    <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <title>Yammie | checkout - complete your order</title>
+
+    <style>
+      .p-order-ctr {
+        display: flex;
+        flex-direction: column;
+        width: 90vw;
+        margin: 20px auto;
+      }
+      .p-order-progress {
+        height: 10px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        margin: 20px 0px;
+        border-radius: 15px;
+      }
+      .p-order-progress-b {
+        height: 10px;
+        width: 10%;
+        background-color: #ffbb00;
+        border-radius: 15px;
+        transition: all 0.5s ease-in-out;
+      }
+      .p-order-steps {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+        column-gap: 1.1rem;
+        row-gap: 1.5rem;
+        margin: auto;
+      }
+      .p-order-s-1,
+      .p-order-s-2,
+      .p-order-s-3 {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 3px 3px 6px #cfcfcf;
+        height: fit-content;
+      }
+      .deliver {
+        opacity: 0.2;
+        pointer-events: none;
+      }
+      .payment {
+        opacity: 0.2;
+        pointer-events: none;
+      }
+      .p-order-address.inactive {
+        opacity: 0.2;
+        pointer-events: none;
+      }
+      .s-1-head {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      }
+      .s-1-head > span > .fas {
+        padding-right: 10px;
+        font-size: 22px;
+      }
+      .-s-i-1 {
+        color: green;
+      }
+      .p-order-address {
+        padding: 5px 0px 5px 35px;
+        /* border-bottom: 1px solid #000; */
+      }
+      .edit {
+        color: #ffbb00;
+        cursor: pointer;
+      }
+      #pay-form {
+        margin-top: 10px;
+      }
+      .mm-input {
+        display: flex;
+        align-items: center;
+      }
+      .-mm-l {
+        margin-left: 5%;
+      }
+      .-mm-img {
+        margin-left: 7%;
+      }
+      .p-order-procedure {
+        margin: 10px 5px;
+      }
+      .p-order-procedure > ol {
+        margin-left: 25px;
+      }
+      .cd-image {
+        margin: 5px;
+        padding-left: 3%;
+      }
+      .am-t-p {
+        margin-right: 25px;
+      }
+      .-am {
+        display: flex;
+        width: 100%;
+        padding-right: 5px;
+        justify-content: space-between;
+        margin-right: 5px;
+      }
+      .total {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .-btn-s-pyf {
+        width: 95%;
+        margin: 15px auto;
+        padding: 10px 0px;
+        font-size: 17px;
+        box-shadow: 3px 3px 5px #e2e2e2;
+        border-radius: 30px;
+        border: none;
+        outline: none;
+        color: white;
+        background-color: #ffbb00;
+        cursor: pointer;
+      }
+      .-btn-a-d {
+        width: 60%;
+        margin: 15px auto;
+        padding: 8px 0px;
+        font-size: 16px;
+        box-shadow: 3px 3px 5px #e2e2e2;
+        border-radius: 30px;
+        border: none;
+        outline: none;
+        color: white;
+        background-color: #ffbb00;
+        cursor: pointer;
+      }
+      /*radio button
+      //Later
+      /*radio button*/
+      /*Edit Address*/
+      .edit-a-ctr.active {
+        display: none;
+      }
+      #residence {
+        width: 85%;
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 5px;
+        height: 30px;
+        outline: none;
+        font-size: 17px;
+        margin-top: 5%;
+      }
+      #-edit-a {
+        margin: 2% 7%;
+        padding: 2%;
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 10px;
+      }
+      #other-a {
+        border: 0;
+        outline: none;
+        width: 70%;
+        border-bottom: 1px solid rgb(0, 0, 0, 0.3);
+        margin-top: 10%;
+        font-size: 17px;
+        padding: 5px;
+      }
+      #or {
+        margin-top: 2%;
+        display: flex;
+        justify-content: space-around;
+      }
+      .-edit-p {
+        margin: 2% 7%;
+        width: 85%;
+        padding: 10px 5px;
+        font-size: 17px;
+        border: none;
+        outline: none;
+        background-color: #ffbb00;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 2px 2px 5px #c3c3c3;
+        transform: translateY(-4px);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+      /*delivery method*/
+      .-d-method {
+        margin-left: 3%;
+      }
+      .p-order-residence {
+        margin-left: 6%;
+      }
+      .p-order-name {
+        margin-top: 3%;
+      }
+
+      .order-f {
+        font-size: 24px;
+      }
+      .-dm-e,
+      .-pm {
+        color: red;
+        opacity: 0;
+        transition: all 0.3s ease-in-out;
+      }
+      @media screen and (max-width: 1024px) {
+        .p-order-steps {
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          column-gap: 1.1rem;
+        }
+        .order-f {
+          display: none;
+        }
+        .search-nav {
+          padding: 0px 10%;
+        }
+      }
+    </style>
+    <script>
+      if (document.referrer == "") {
+        alert("Access Denied");
+        self.location = "http://127.0.0.1:5500/home/index.html";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="search-nav">
+      <div class="logo">
+        <div href="./home/index.html">
+          <img
+            src="./resources/yammie.png"
+            alt="YUMMY"
+            width="200"
+            height="100%"
+          />
+        </div>
+      </div>
+      <div class="order-f">
+        <b>Process Your Order: </b>
+      </div>
+      <div class="cart-login">
+        <div class="login" id="login">
+          <img src="./resources/person.svg" alt="" />
+          <span class="login-text">Help</span>
+        </div>
+        <div class="cart">
+          <img src="./resources/shopping-cart.svg" alt="" />
+          <span class="cart-text">Call</span>
+        </div>
+      </div>
+    </div>
+    <div class="p-order-m-ctr">
+      <div class="p-order-ctr">
+        <h3 class="current-s">1. ADDRESS</h3>
+        <div class="p-order-progress">
+          <div class="p-order-progress-b"></div>
+        </div>
+        <div class="p-order-steps">
+          <div class="p-order-s-1">
+            <div class="s-1-head">
+              <span>
+                <i class="fas fa-check-circle -s-i-1"></i>
+                <b>Your Current Address</b>
+              </span>
+              <b class="edit edit-a-b">Edit</b>
+            </div>
+            <div class="p-order-address">
+              <div class="p-order-name"><b>Samuel Joshua</b></div>
+              <div class="p-order-home">Pioneer</div>
+              <div class="p-order-email">sam@gmail.com</div>
+              <div class="p-order-phone">0789654356</div>
+              <button class="-btn-a-d" id="-s-1">NEXT STEP</button>
+            </div>
+            <div class="edit-a-ctr active">
+              <form id="-edit-a">
+                <b>Change Your Address</b>
+                <br />
+                <label for="residence"></label>
+                <select name="residence" id="residence">
+                  <option value="" hidden>Select Your Address</option>
+                  <option value="Royal">Royal</option>
+                  <option value="Maroon">Maroon</option>
+                  <option value="Pioneer">Pioneer</option>
+                  <option value="Mandela">Mandela</option>
+                  <option value="Pilipo">Pilipo</option>
+                  <option value="Jeremiah">Jeremiah</option>
+                  <option value="St. Peters">St. Peters</option>
+                  <option value="Black Roof">Black Roof</option>
+                </select>
+                <br />
+                <label for="other-a">Other:</label>
+                <input
+                  type="text"
+                  name="other-a"
+                  id="other-a"
+                  placeholder="(Specify)"
+                />
+                <button type="submit" class="-btn-a-d">SUBMIT</button>
+              </form>
+            </div>
+          </div>
+          <div class="p-order-s-2">
+            <div class="s-1-head">
+              <span>
+                <i class="fas fa-check-circle -s-i-2"></i>
+                <b>Delivery Method</b>
+              </span>
+              <span class="-edit-d edit"> Edit </span>
+            </div>
+            <form class="p-order-address deliver" id="-df">
+              <b>Select Your Preferred Delivery Method</b>
+              <div class="p-order-name">
+                <input
+                  type="radio"
+                  name="d-method"
+                  id="-d1"
+                  value="Door-step"
+                /><b class="-d-method">Door Step Delivery</b>
+              </div>
+              <div class="p-order-residence">We Reach At Your Residence.</div>
+              <div class="p-order-residence">
+                Fees: <span class="d-fees">UGX 550</span>
+              </div>
+              <div class="p-order-residence">
+                Delivered By: <span class="d-fees">Yammie Delivery</span>
+              </div>
+              <div class="p-order-name">
+                <input
+                  type="radio"
+                  name="d-method"
+                  id="-d2"
+                  value="Pick-Up"
+                /><b class="-d-method">Free Pick Up</b>
+              </div>
+              <div class="p-order-residence">
+                Get your items at the Yammie Store
+              </div>
+              <div class="p-order-residence">
+                Fees: <span class="d-fees">UGX 300</span>
+              </div>
+              <div class="p-order-residence">
+                Location:
+                <span class="d-fees">Next to Yammie SuperMarket</span>
+              </div>
+              <button class="-btn-a-d" id="-s-2" type="submit">
+                NEXT STEP
+              </button>
+              <div class="-dm-e">Please Select a Delivery Method.</div>
+            </form>
+          </div>
+          <div class="p-order-s-3">
+            <div class="s-1-head">
+              <span>
+                <i class="fas fa-check-circle -s-i-3"></i>
+                <b>Payment Details</b>
+              </span>
+            </div>
+            <div class="p-order-address payment">
+              <div class="p-order-name">
+                <b>Select Your Preferred Payment Method</b>
+              </div>
+              <form id="pay-form">
+                <div class="mm-input">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    id="payment_method_mm"
+                    value="mm"
+                  />
+                  <label for="payment_method" class="-mm-l">
+                    <b>Mobile Money</b> - MTN / AIRTEL
+                  </label>
+                </div>
+                <div class="-mm-img">
+                  <img src="./resources/mtn-mm.png" alt="" />
+                </div>
+                <div class="p-order-procedure">
+                  <b>Mobile Money Payment Procedure:</b>
+                  <ol>
+                    <li>Click 'Finish Your Order'</li>
+                    <li>Fill In Details On The Next Page</li>
+                    <li>Click 'Pay Now'</li>
+                    <li>Check your phone for payment request</li>
+                    <li>Enter your PIN And Approve</li>
+                    <li>
+                      You will receive SMS/Email confirming a successful
+                      payment.
+                    </li>
+                  </ol>
+                </div>
+                <div class="mm-input">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    id="payment_method"
+                    value="cod"
+                  />
+                  <span class="cd-image">
+                    <img src="./resources/cash-on-delivery.png" alt="" />
+                  </span>
+                  <label for="payment_method">
+                    <b>Cash On Delivery.</b>
+                  </label>
+                </div>
+                <div class="am-t-p">
+                  <div class="sub-total -am">
+                    <span>SUB. TOTAL</span>
+                    <span
+                      ><b>UGX <span id="pay">Loading Price ...</span></b></span
+                    >
+                  </div>
+                  <div class="-delivery-fees -am">
+                    <span><b>Delivery Fees</b></span>
+                    <span>UGX <span id="delivery">Waiting...</span></span>
+                  </div>
+                  <div class="total -am">
+                    <span><b>TOTAL</b></span>
+                    <span
+                      ><b>UGX <span id="total">Waiting...</span></b></span
+                    >
+                  </div>
+                </div>
+                <button type="submit" class="-btn-s-pyf">
+                  FINISH YOUR ORDER
+                </button>
+                <div class="-pm">Please Select a Payment Method.</div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--scripts-->
+    <script>
+      let cartItems = localStorage.getItem("cartItems");
+    </script>
+    <script>
+      let directOrder = "";
+      let multiOrder = [];
+      let numberFormat = new Intl.NumberFormat();
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
+
+      let editAddress = document.querySelector(".edit-a-b");
+      editAddress.addEventListener("click", (e) => {
+        document.querySelector(".edit-a-ctr").classList.toggle("active");
+        let address = document.querySelector(".p-order-address");
+        address.classList.remove("inactive");
+        document.querySelector(".-s-i-1").style.color = "green";
+      });
+      let step1 = document.querySelector("#-s-1");
+      step1.addEventListener("click", (e) => {
+        let address = document.querySelector(".p-order-address");
+        address.classList.add("inactive");
+        document.querySelector(".-s-i-2").style.color = "green";
+        document.querySelector(".edit-a-ctr").classList.add("active");
+        document.querySelector(".deliver").style.opacity = "1";
+        document.querySelector(".deliver").style.pointerEvents = "all";
+        document.querySelector(".p-order-progress-b").style.width = "35%";
+        document.querySelector(".current-s").textContent = "2. DELIVERY METHOD";
+      });
+      let orderInfo = {};
+      let dForm = document.getElementById("-df");
+      dForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        let formData = new FormData(dForm);
+        if (formData.has("d-method")) {
+          orderInfo.dm = formData.get("d-method");
+          let delivery = document.querySelector(".deliver");
+          delivery.style.opacity = "0.2";
+          document.querySelector(".deliver").style.pointerEvents = "none";
+          document.querySelector(".-s-i-3").style.color = "green";
+          document.querySelector(".payment").style.opacity = "1";
+          document.querySelector(".payment").style.pointerEvents = "all";
+          document.querySelector(".p-order-progress-b").style.width = "85%";
+          document.querySelector(".current-s").textContent =
+            "3. PAYMENT METHOD";
+          document.querySelector("#delivery").textContent =
+            orderInfo.dm == "Door-step" ? "550" : "300";
+
+          let xhr1 = new XMLHttpRequest();
+          xhr1.onreadystatechange = () => {
+            if (xhr1.readyState == 4 && xhr1.status == 200) {
+              let [amount] = JSON.parse(xhr1.responseText);
+              let pay = amount.c_cart_amount;
+              document.querySelector("#pay").textContent = numberFormat.format(
+                pay
+              );
+              let total =
+                parseInt(document.querySelector("#delivery").textContent) + pay;
+              document.querySelector(
+                "#total"
+              ).textContent = numberFormat.format(total);
+            }
+          };
+          xhr1.open(
+            "GET",
+            `http://localhost:3000/api/customer/cart/amount/${yammie}`,
+            true
+          );
+          xhr1.send();
+        } else {
+          document.querySelector(".-dm-e").style.opacity = "1";
+          setTimeout(() => {
+            document.querySelector(".-dm-e").style.opacity = "0";
+          }, 4000);
+        }
+      });
+      let editDm = document.querySelector(".-edit-d");
+      editDm.addEventListener("click", () => {
+        let currentStep = document.querySelector(".current-s").textContent;
+        if (currentStep == "3. PAYMENT METHOD") {
+          document.querySelector(".edit-a-ctr").classList.add("active");
+          document.querySelector(".deliver").style.opacity = "1";
+          document.querySelector(".deliver").style.pointerEvents = "all";
+          document.querySelector(".p-order-progress-b").style.width = "35%";
+          document.querySelector(".current-s").textContent =
+            "2. DELIVERY METHOD";
+        }
+      });
+
+      let xhr1 = new XMLHttpRequest();
+      xhr1.onreadystatechange = () => {
+        if (xhr1.readyState == 4 && xhr1.status == 200) {
+          let [amount] = JSON.parse(xhr1.responseText);
+          let pay = amount.c_cart_amount;
+          document.querySelector("#pay").textContent = numberFormat.format(pay);
+        }
+      };
+      xhr1.open(
+        "GET",
+        `http://localhost:3000/api/customer/cart/amount/${yammie}`,
+        true
+      );
+      xhr1.send();
+
+      let pf = document.querySelector("#pay-form");
+      pf.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const order = new FormData(pf);
+        if (!order.has("payment_method")) {
+          document.querySelector(".-pm").style.opacity = "1";
+          setTimeout(() => {
+            document.querySelector(".-pm").style.opacity = "0";
+          }, 4000);
+        } else {
+          order.append("yammie", yammie);
+          let orderContent = localStorage.getItem("cartItems")
+            ? localStorage.getItem("cartItems")
+            : directOrder;
+          order.append("order", orderContent);
+          order.append("amount", document.querySelector("#total").textContent);
+          order.append("dm", orderInfo.dm);
+          order.forEach((key) => {
+            multiOrder.push(key);
+          });
+
+          let orderRequest = new XMLHttpRequest();
+          orderRequest.onreadystatechange = () => {
+            if (orderRequest.readyState == 4 && orderRequest.status == 200) {
+              localStorage.removeItem("cartItems");
+              localStorage.removeItem("cartNumber");
+              if (orderRequest.responseText == "mm") {
+                window.location.assign(
+                  "http://127.0.0.1:5500/orders/finishup.html"
+                );
+              } else {
+                window.location.assign(
+                  "http://127.0.0.1:5500/orders/cashondelivery.html"
+                );
+              }
+            }
+          };
+          orderRequest.open(
+            "POST",
+            `http://localhost:3000/api/customer/order/register/new`,
+            true
+          );
+          orderRequest.setRequestHeader("Content-Type", "application/json");
+          orderRequest.send(JSON.stringify(multiOrder));
+        }
+      });
+    </script>
+    <!--scripts-->
+  </body>
+</html>
