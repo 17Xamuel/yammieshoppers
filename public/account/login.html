@@ -411,7 +411,7 @@
           "<strong>LOGIN</strong> to use your cart, get a personlized shopping,
           your likes and make your payments easily. <br />
           <h2>Create Your Yammie Account</h2>
-          <a href="/register.html">
+          <a href="register.html">
             <button class="cr-y-btn">CREATE ACCOUNT</button>
           </a>
           <br />
@@ -616,16 +616,14 @@
         xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            if (xhr.responseText == "Wrong Email Or Phone Number") {
+            if (xhr.responseText == "no email") {
               document.querySelector("#e-wr").style.opacity = "1";
-              setTimeout(() => {
-                document.querySelector("#e-wr").style.opacity = "0";
-              }, 10000);
-            } else if (xhr.responseText == "Wrong Password Used") {
               document.querySelector("#p-wr").style.opacity = "1";
               setTimeout(() => {
                 document.querySelector("#p-wr").style.opacity = "0";
+                document.querySelector("#e-wr").style.opacity = "0";
               }, 10000);
+              console.log("Got");
             } else {
               const res = JSON.parse(xhr.responseText);
               const useLocalStorage = res.c_password.concat(
