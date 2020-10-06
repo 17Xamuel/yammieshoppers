@@ -15,22 +15,35 @@ conn.connect((err) => {
   console.log("Database connected....");
 });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "productImages/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
+function getStorage(id) {
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "productImages/");
+    },
+    filename: (req, file, cb) => {
+      cb(null, id + "-" + file.originalname);
+    },
+  });
+  return storage;
+}
+function getUpload(id) {
+  const upload = multer({ storage: getStorage(id) }).array("images");
+  return upload;
+}
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 800;
 const app = express();
 
 app.use(express.static("public"));
 
-app.post("/addProduct", upload.array("images"), async (req, res) => {
+app.post("/addProduct", async (req, res) => {
+  let productId = uuid.v4();
+  let upload = getUpload(productId);
+  upload(req, res, (err) => {
+    if (err) throw err;
+    console.log(req.files);
+  });
+  console.log(productId);
   const {
     product,
     price,
@@ -43,7 +56,7 @@ app.post("/addProduct", upload.array("images"), async (req, res) => {
   conn.query(
     "INSERT INTO pending_products SET ?",
     {
-      id: uuid.v4(),
+      id: productId,
       product: product,
       price: price,
       description: description,
