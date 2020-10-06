@@ -35,7 +35,7 @@
     />
     <link rel="stylesheet" href="styles/home.css" />
 
-    <title>Add Item</title>
+    <title>Yammie | Add Your Item</title>
   </head>
 
   <body style="background-color: whitesmoke">
@@ -195,8 +195,10 @@
               <div class="col-xl-10 m-auto">
                 <h4 class="text-center m-3">Add Product</h4>
                 <form
-                  id="productForm"
+                  action="/upload"
+                  method="POST"
                   enctype="multipart/form-data"
+                  id="productForm"
                   class="text-dark"
                 >
                   <div class="form-row">
@@ -260,7 +262,9 @@
                         required=""
                         name="category"
                       >
-                        <option selected>Please Select Category</option>
+                        <option selected hidden value="">
+                          Please Select Category
+                        </option>
                         <option value="Easy Market">Easy Market</option>
                         <option value="Food & Drinks">
                           Fast Food & Drinks
@@ -325,6 +329,8 @@
                     </div>
                   </div>
                   <label for="Poduct Images">Product Images</label>
+                  <br />
+
                   <div style="width: 400px; margin: 20px auto 20px auto">
                     <div
                       class="custom-file-container"
