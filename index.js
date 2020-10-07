@@ -18,7 +18,7 @@ conn.connect((err) => {
 function getStorage(id) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "productImages/");
+      cb(null, "uploads/images/products/");
     },
     filename: (req, file, cb) => {
       cb(null, id + "-" + file.originalname);
@@ -41,7 +41,11 @@ app.post("/addProduct", async (req, res) => {
   let upload = getUpload(productId);
   upload(req, res, (err) => {
     if (err) throw err;
-    console.log(req.files);
+    let imagePaths = [];
+    req.files.forEach((file) => {
+      imagePaths.push(file.path);
+    });
+    console.log(imagePaths);
     const {
       product,
       price,
