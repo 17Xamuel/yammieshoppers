@@ -67,7 +67,7 @@
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
                   <a
-                    href="index.html"
+                    href="home.html"
                     class="nav-link text-white p-3 mb-2 current"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
@@ -198,7 +198,6 @@
                   action="/addProduct"
                   method="POST"
                   enctype="multipart/form-data"
-                  id="productForm"
                   class="text-dark"
                 >
                   <div class="form-row">
@@ -210,7 +209,6 @@
                         type="text"
                         class="form-control"
                         required
-                        id="productname"
                         placeholder="Product Name"
                         name="product"
                         autocomplete="off"
@@ -222,7 +220,6 @@
                         type="number"
                         class="form-control"
                         required=""
-                        id="price"
                         placeholder="Price(UGX)"
                         name="price"
                         autocomplete="off"
@@ -235,7 +232,6 @@
                       type="text"
                       class="form-control"
                       required=""
-                      id="description"
                       placeholder="Such as 5kg Lugazi Sweet Sugar"
                       name="description"
                       autocomplete="off"
@@ -247,7 +243,6 @@
                       type="text"
                       class="form-control"
                       required=""
-                      id="productBrand"
                       placeholder="Product Brand"
                       name="brand"
                       autocomplete="off"
@@ -256,12 +251,7 @@
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="category">Category</label>
-                      <select
-                        id="category"
-                        class="form-control"
-                        required=""
-                        name="category"
-                      >
+                      <select class="form-control" required="" name="category">
                         <option selected hidden value="">
                           Please Select Category
                         </option>
@@ -289,7 +279,6 @@
                     <div class="form-group col-md-4">
                       <label for="subcategory">Sub Category</label>
                       <select
-                        id="subcategory"
                         class="form-control"
                         required=""
                         name="subcategory"
@@ -321,7 +310,6 @@
                       <input
                         type="number"
                         class="form-control"
-                        id="discount"
                         placeholder="Discount(%)"
                         name="discount"
                         autocomplete="off"

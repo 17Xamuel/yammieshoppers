@@ -1,476 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="images/letter_b_PNG27.png" />
+    <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Login</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     />
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
-      crossorigin="anonymous"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <script
-      defer
-      src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
-      integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        background-color: #eee;
+        padding: 40px 10px 20px 250px;
+      }
+      .login-form {
+        width: 340px;
+        margin: 50px auto;
+        font-size: 15px;
+      }
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
-      rel="stylesheet"
-    />
+      .login-form form {
+        margin-bottom: 15px;
+        background: #f7f7f7;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+      }
 
-    <link rel="stylesheet" href="styles/home.css" />
+      .login-form h2 {
+        margin: 0 0 15px;
+      }
 
-    <title>Dashboard</title>
+      .form-control,
+      .btn {
+        min-height: 38px;
+        border-radius: 2px;
+      }
+
+      .btn {
+        font-size: 15px;
+        font-weight: bold;
+      }
+    </style>
   </head>
 
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-md navbar-light">
-      <button
-        class="navbar-toggler ml-auto mb-2 bg-light"
-        type="button"
-        data-toggle="collapse"
-        data-target="#myNavbar"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <div class="container-fluid">
-          <div class="row">
-            <!-- Sidebar -->
-            <div class="col-xl-2 col-lg-3 col-md-4 sidebar fixed-top">
-              <a
-                href="#"
-                class="navbar-brand text-white d-block text-center py-3 mx-auto mb-4 border-bottom"
-                >YammieShoppers</a
-              >
-              <div class="border-bottom pb-3 mx-auto">
-                <a href="#" class="text-white">Hello <span id="User"></span></a>
-              </div>
-              <ul class="navbar-nav flex-column mt-4">
-                <li class="nav-item current">
-                  <a href="index.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-home text-light fa-lg mr-3"></i
-                    >Dashboard</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="product.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-table text-light fa-lg mr-3"></i>My
-                    Products</a
-                  >
-                </li>
-
-                <li class="nav-item">
-                  <a href="orders.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-shopping-bag text-light fa-lg mr-3"></i>My
-                    Orders</a
-                  >
-                </li>
-
-                <li class="nav-item">
-                  <a href="profile.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-user text-light fa-lg mr-3"></i>My
-                    Profile</a
-                  >
-                </li>
-              </ul>
-            </div>
-
-            <!-- End Sidebar -->
-
-            <!-- Topnavbar -->
-            <div
-              class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
-            >
-              <div class="row align-items">
-                <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
-                  <h4>Dashboard</h4>
-                </div>
-                <div class="col-md-5">
-                  <form action="#">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control search-input"
-                        placeholder="Search...."
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-white bg-light search-button"
-                      >
-                        <i class="fas fa-search text-danger"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
-                <div class="col-md-3 py-2">
-                  <ul class="navbar-nav">
-                    <li class="list-item icon-parent">
-                      <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">4</span
-                        ><i class="fas fa-comments text-muted fa-2x"></i
-                      ></a>
-                    </li>
-                    <li class="list-item icon-parent">
-                      <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">5</span
-                        ><i class="fas fa-bell text-muted fa-2x"></i
-                      ></a>
-                    </li>
-                    <li class="list-item ml-md-auto">
-                      <a
-                        href="#"
-                        class="nav-link"
-                        data-target="#sign-out"
-                        data-toggle="modal"
-                        ><i class="fas fa-power-off text-danger fa-2x"></i
-                      ></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <!--End Topnavbar -->
-          </div>
+    <div class="login-form">
+      <form id="loginForm">
+        <h2 class="text-center">Log in</h2>
+        <div class="form-group">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email"
+            required="required"
+            id="email"
+            name="email"
+            autocomplete="off"
+          />
         </div>
-      </div>
-    </nav>
-    <!-- End Navbar -->
-
-    <!-- Modal -->
-    <div class="modal fade" id="sign-out">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Want to Leave?</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
-          </div>
-          <div class="modal-body">Press Logout to Leave</div>
-          <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-success">
-              Stay Here
-            </button>
-            <button type="button" data-dismiss="modal" class="btn btn-danger">
-              Log Out
-            </button>
-          </div>
+        <div class="form-group">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            required="required"
+            id="password"
+            name="password"
+            autocomplete="off"
+          />
         </div>
-      </div>
+        <div class="form-group">
+          <button
+            type="submit"
+            class="btn btn-block"
+            style="background-color: orange"
+          >
+            Log in
+          </button>
+        </div>
+        <div class="clearfix">
+          <label class="float-left form-check-label"
+            ><input type="checkbox" /> Remember me</label
+          >
+          <a href="#" class="float-right">Forgot Password?</a>
+        </div>
+        <h5 id="messages" class="text-center text-info py-2"></h5>
+      </form>
     </div>
-    <!-- End Modal -->
-
-    <!-- Cards -->
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3 mb-5">
-              <div class="col-xl-3 col-sm-6 p-2">
-                <div class="card card-common">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <i class="fas fa-eye fa-3x text-warning"></i>
-                      <div class="text-right text-secondary">
-                        <h4>Total Items</h4>
-                        <h3>2,000</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-footer text-secondary">
-                    <i class="fas fa-sync mr-3"></i>
-                    <span>Update Now</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 p-2">
-                <div class="card card-common">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <i class="fas fa-shopping-bag fa-3x text-success"></i>
-                      <div class="text-right text-secondary">
-                        <h4>Orders</h4>
-                        <h3>235,000</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-footer text-secondary">
-                    <i class="fas fa-sync mr-3"></i>
-                    <span>Update Now</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 p-2">
-                <div class="card card-common">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <i class="fas fa-shopping-cart fa-3x text-info"></i>
-                      <div class="text-right text-secondary">
-                        <h4>Sales</h4>
-                        <h3>UGX1000</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-footer text-secondary">
-                    <i class="fas fa-sync mr-3"></i>
-                    <span>Update Now</span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-3 col-sm-6 p-2">
-                <div class="card card-common">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                      <i class="fas fa-money-bill-alt fa-3x text-danger"></i>
-                      <div class="text-right text-secondary">
-                        <h4>Expenses</h4>
-                        <h3>UGX10,000</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-footer text-secondary">
-                    <i class="fas fa-sync mr-3"></i>
-                    <span>Update Now</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End cards -->
-
-    <!--  Orders-->
-    <section>
-      <div class="container-fluid">
-        <div class="row mb-5">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row align-items-center">
-              <div class="col-xl-6 col-12 mb-4 mb-xl-0">
-                <h4 class="text-center">Orders</h4>
-                <div class="content">
-                  <canvas id="orders"></canvas>
-                </div>
-              </div>
-              <div class="col-xl-6 col-12">
-                <div class="card rounded">
-                  <div class="card-body">
-                    <h5 class="text-muted mb-4 text-center">Orders Summary</h5>
-                    <table class="table">
-                      <tr>
-                        <td>Total</td>
-                        <td>20</td>
-                      </tr>
-                      <tr>
-                        <td>Completed</td>
-                        <td>5</td>
-                      </tr>
-                      <tr>
-                        <td>Processed</td>
-                        <td>7</td>
-                      </tr>
-                      <tr>
-                        <td>Pending</td>
-                        <td>3</td>
-                      </tr>
-                      <tr>
-                        <td>Cancelled</td>
-                        <td>4</td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--  orders -->
-
-    <!-- items -->
-    <section>
-      <div class="container-fluid">
-        <div class="row mb-5">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row align-items-center">
-              <div class="col-xl-6 col-12 mb-xl-0 mb-4">
-                <div class="card rounded">
-                  <div class="card-body">
-                    <h5 class="text-center text-dark mb-4">Items Summary</h5>
-                    <table class="table">
-                      <tr>
-                        <td>Total</td>
-                        <td>35</td>
-                      </tr>
-                      <tr>
-                        <td>Latest</td>
-                        <td>8</td>
-                      </tr>
-                      <tr>
-                        <td>Featured</td>
-                        <td>5</td>
-                      </tr>
-                      <tr>
-                        <td>Returned</td>
-                        <td>4</td>
-                      </tr>
-                      <tr>
-                        <td>Pending</td>
-                        <td>5</td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-6 col-12">
-                <h4 class="text-center">Sales</h4>
-                <div class="content">
-                  <canvas id="sales"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End items -->
-
-    <!-- Footer -->
-    <footer>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row border-top pt-3">
-              <div class="col-lg-6 text-center">
-                <ul class="list-inline">
-                  <li class="list-inline-item mr-2">
-                    <a href="#" class="text-dark">YammieShoppers</a>
-                  </li>
-                  <li class="list-inline-item mr-2">
-                    <a href="#" class="text-dark">About</a>
-                  </li>
-                  <li class="list-inline-item mr-2">
-                    <a href="#" class="text-dark">Support</a>
-                  </li>
-                  <li class="list-inline-item mr-2">
-                    <a href="#" class="text-dark">Blog</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6 text-center">
-                <p>
-                  &copy;2020 Copy Right Made With
-                  <i class="fas fa-heart text-danger"></i>by
-                  <span class="text-success">YammieShoppers</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- End Footer -->
-
-    <!-- Scripts -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src=" https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-    <script>
-      //Income
-      let myOrders = document.getElementById("orders").getContext("2d");
-      let Earning = new Chart(myOrders, {
-        type: "line",
-        data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          datasets: [
-            {
-              label: "Orders",
-              backgroundColor: "rgba(3,88,106,0.3)",
-              borderColor: "rgba(3,88,106,0.7)",
-              pointBorderColor: "rgba(3,88,106,0.7)",
-              pointHoverBorderColor: "rgba(151,187,205,1)",
-              pointBackgroundColor: "rgba(3,88,106,0.7)",
-              pointHoverBackgroundColor: "#fff",
-              pointBoderWidth: 1,
-              data: [78, 45, 23, 67, 95, 87, 43, 54, 60, 13, 19, 34],
-            },
-          ],
-        },
-      });
-      let mySales = document.getElementById("sales").getContext("2d");
-      let sales = new Chart(mySales, {
-        type: "bar",
-        data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          datasets: [
-            {
-              label: "Sales",
-              backgroundColor: "rgba(38,185,154,0.31)",
-              borderColor: "rgba(38,185,154,0.7)",
-              pointBorderColor: "rgba(38,185,154,0.7)",
-              pointHoverBackgroundColor: "rgba(38,185,154,0.7)",
-              pointHoverBorderColor: "#fff",
-              borderWitdh: 1,
-              data: [45, 78, 56, 23, 67, 89, 95, 12, 45, 35, 54, 25],
-            },
-          ],
-        },
-      });
-    </script>
-    <script>
-      document.getElementById("User").innerHTML = localStorage.getItem("User1");
-    </script>
-
-    <!-- End Scripts -->
+    <script src="scripts/loginSeller.js"></script>
   </body>
 </html>
