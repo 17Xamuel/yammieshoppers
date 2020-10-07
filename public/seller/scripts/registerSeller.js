@@ -5,9 +5,11 @@ sellerForm.addEventListener("submit", (e) => {
   seller.firstname = document.getElementById("fname").value;
   seller.lastname = document.getElementById("lname").value;
   seller.email = document.getElementById("email").value;
+  seller.emailConfirm = document.getElementById("repeat-email").value;
   seller.phonenumber = document.getElementById("phone").value;
   seller.location = document.getElementById("location").value;
   seller.password = document.getElementById("password").value;
+  seller.passwordConfirm = document.getElementById("pass-repeat").value;
 
   let sellerString = JSON.stringify(seller);
 
