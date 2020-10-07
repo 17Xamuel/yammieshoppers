@@ -31,7 +31,7 @@ function getUpload(id) {
   return upload;
 }
 
-const PORT = process.env.PORT || 800;
+const PORT = process.env.PORT || 8000;
 const app = express();
 
 app.use(express.static("public"));

@@ -6,11 +6,446 @@
     <link rel="shortcut icon" href="./resources/cartlink.png" />
     <link rel="stylesheet" href="./styles/footer2.css" />
     <link rel="stylesheet" href="./styles/header.css" />
-    <link rel="stylesheet" href="./styles/catalog.css" />
+    <!-- <link rel="stylesheet" href="./styles/catalog.css" /> -->
     <link rel="stylesheet" href="./styles/products.css" />
     <link rel="stylesheet" href="./styles/main.css" />
     <link rel="stylesheet" href="./font-awesome/css/all.css" />
     <title id="title">Shop &commat; Yammie</title>
+    <style>
+      .a-search {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #e3e3e3;
+      }
+      .ctlg-m-ctr {
+        margin: 10px auto;
+        width: 80vw;
+      }
+      .ctlg-ctr {
+        display: flex;
+      }
+      .ctlg-nav-panel {
+        padding: 10px;
+      }
+      .ctlg-itm-ctr {
+        flex: 5;
+        margin: 0px 8px 0px 0px;
+        background-color: white;
+        border-radius: 5px;
+      }
+      .ctlg-sort {
+        flex: 1;
+        margin: 0px 0px 0px 8px;
+        padding: 5px;
+        background-color: white;
+        border-radius: 5px;
+        height: fit-content;
+      }
+      .ctlg-sort > form {
+        border-bottom: 1px solid #c3c3c3;
+        padding: 5px 0px;
+      }
+      .ctlg-sort > h3 {
+        padding: 5px 0px 0px 15px;
+      }
+      .ctlg-sort > form > .sort-list {
+        padding-left: 25px;
+        list-style-type: none;
+      }
+      .display-price {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 15px 0px;
+      }
+      .display-price > input {
+        width: 75px;
+        padding: 5px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        outline: none;
+      }
+      .input-field {
+        padding: 5px 10px;
+      }
+      .input-field > label {
+        padding-left: 5px;
+      }
+      .sort-btn {
+        width: 75%;
+        margin: 5px 25px;
+        padding: 5px 0px;
+        box-shadow: 3px 3px 5px #e2e2e2;
+        border-radius: 15px;
+        border: none;
+        outline: none;
+        color: white;
+        background: linear-gradient(
+          to right,
+          rgba(250, 164, 6, 0.9),
+          rgba(250, 164, 6, 0.7)
+        );
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+      .sort-btn:hover {
+        background: linear-gradient(
+          to left,
+          rgba(250, 164, 6, 0.9),
+          rgba(250, 164, 6, 0.7)
+        );
+        transform: scale(1.04);
+      }
+
+      /* price slider*/
+      .price-form {
+        position: relative;
+        width: 100%;
+      }
+      .price-slide {
+        margin: 10px 0px;
+        width: 100%;
+      }
+      .slider {
+        position: relative;
+        z-index: 1;
+        height: 10px;
+        margin: 0 15px;
+      }
+      .slider > .track {
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        border-radius: 5px;
+        background-color: black;
+      }
+      .slider > .range {
+        position: absolute;
+        z-index: 2;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        border-radius: 5px;
+        background-color: #ffbb00;
+      }
+      .slider > .thumb {
+        position: absolute;
+        z-index: 3;
+        width: 25px;
+        height: 25px;
+        background-color: #ffbb00;
+        border-radius: 50%;
+        box-shadow: 0px 0px 0px 0px rgba(238, 156, 4, 0.2);
+        transition: box-shadow 0.3s ease-in-out;
+      }
+      .slider > .thumb.hover {
+        box-shadow: 0px 0px 0px 5px rgba(238, 156, 4, 0.2);
+      }
+      .slider > .thumb.active {
+        box-shadow: 0px 0px 0px 10px rgba(238, 156, 4, 0.3);
+      }
+      .slider > .thumb.left {
+        left: 0;
+        transform: translate(-15px, -8px);
+      }
+      .slider > .thumb.right {
+        right: 0;
+        transform: translate(10px, -8px);
+      }
+      input[type="range"] {
+        position: absolute;
+        pointer-events: none;
+        -webkit-appearance: none;
+        z-index: 2;
+        height: 10px;
+        width: 100%;
+        opacity: 0;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        pointer-events: all;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        border-radius: 0;
+        border: 0 none;
+        -webkit-appearance: none;
+        background-color: #ffbb00;
+      }
+
+      /* end of price slider*/
+
+      /* one item*/
+      .a-t-c {
+        cursor: pointer;
+        background-color: #ffbb00;
+        font-size: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 200px;
+        color: white;
+        border-radius: 5px;
+        opacity: 0;
+        transition: all 0.1s ease-in-out;
+        position: absolute;
+        padding: 5px 25px;
+        margin-bottom: 5px;
+        bottom: 0px;
+        left: auto;
+        right: auto;
+      }
+      .itms-ctr {
+        padding: 10px 30px 10px 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        column-gap: 1.5rem;
+        row-gap: 2rem;
+        position: relative;
+      }
+      .itm-searched {
+        position: relative;
+        border-radius: 5px;
+        height: 480px;
+
+        transition: box-shadow 0.1s ease-in-out;
+        border: 1px solid #efefef;
+        box-shadow: 3px 3px 4px #c3c3c3;
+      }
+      .itm-searched:hover .a-t-c {
+        opacity: 1;
+      }
+      .itm-s-img {
+        width: 95%;
+        margin: 2px auto;
+        height: 50%;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .itm-s-dtl {
+        padding: 0px 10px;
+        font-size: 15px;
+        font-weight: 550;
+        height: 50%;
+        max-height: 50%;
+        position: relative;
+      }
+      .price-current {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .price-prev {
+        font-size: 16px;
+        opacity: 0.8;
+        text-decoration: line-through;
+        text-decoration-color: rgba(0, 0, 0, 0.4);
+      }
+      .a-s-discount {
+        width: 15%;
+        opacity: 0.9;
+        font-size: 16px;
+        background-color: #ffbb00;
+        border-radius: 5px 0px 6px 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+      }
+      .location > .fas {
+        margin-left: 3px;
+        color: #ffbb00;
+      }
+      .delivery-by > .fab {
+        color: #ffbb00;
+      }
+      /* one item end*/
+      /*no data */
+      .no-itms {
+        /* background-color: #fff; */
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 25px;
+      }
+      .no-itms > span {
+        font-size: 20px;
+      }
+      #ctlg-rq-btn {
+        width: 45%;
+        margin: 5px 25px;
+        padding: 15px 0px;
+        font-size: 20px;
+        box-shadow: 3px 3px 5px #e2e2e2;
+        border-radius: 30px;
+        border: none;
+        outline: none;
+        color: white;
+        background: linear-gradient(
+          to right,
+          rgba(250, 164, 6, 0.9),
+          rgba(250, 164, 6, 0.7)
+        );
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+      }
+      #ctlg-rq-btn:hover {
+        background: linear-gradient(
+          to left,
+          rgba(250, 164, 6, 0.9),
+          rgba(250, 164, 6, 0.7)
+        );
+        transform: scale(1.04);
+      }
+      /*no data end*/
+
+      /*for pop up*/
+      /*Loader*/
+      #cartLoader {
+        border: 10px solid #f3f3f3;
+        border-top: 10px solid #ffbb00;
+        border-radius: 50%;
+        width: 75px;
+        height: 75px;
+        animation: spin 1.5s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      #pop-up-overlay.active {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 30;
+        transition: all 0.3s ease-in-out;
+      }
+      .close-pp {
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        font-size: 3.5rem;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-weight: 500;
+        background-color: #fff;
+      }
+
+      .popup {
+        background-color: white;
+        width: 35%;
+        height: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-radius: 5px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: 0.2s ease-in-out;
+        max-width: 90%;
+        z-index: 35;
+      }
+      .popup.pp-active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      .pp-content > a > button,
+      .pp-content > button {
+        cursor: pointer;
+        border: 0;
+        outline: 0;
+        background-color: #ffbb00;
+        padding: 10px 15px;
+        font-size: 20px;
+        margin: 20px 20px 20px 0px;
+        border-radius: 5px;
+        color: white;
+        box-shadow: 3px 3px 7px #c3c3c3;
+      }
+      /*for pop up*/
+
+      @media screen and (max-width: 768px) {
+        .popup {
+          width: 75%;
+          height: 40%;
+          padding-left: 20px;
+          padding-top: 15px;
+        }
+        .close-pp {
+          font-size: 2rem;
+        }
+        .pp-content > a > button {
+          padding: 10px 15px;
+          font-size: 17px;
+          margin: 10px 10px 10px 0px;
+          width: 80%;
+        }
+        .ctlg-ctr {
+          flex-direction: column;
+          justify-content: space-around;
+        }
+        .search-input {
+          display: none;
+        }
+        .a-t-c {
+          width: 90%;
+          margin: auto;
+          font-size: 14px;
+          padding: 5px 10px;
+          text-align: center;
+          position: relative;
+          box-shadow: 0 0 5px #c3c3c3;
+        }
+        .itm-searched {
+          height: 470px;
+        }
+        .itms-ctr {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(160px, 2fr));
+          column-gap: 10px;
+          row-gap: 10px;
+          width: 100%;
+          padding: 5px;
+        }
+        .ctlg-sort {
+          flex: 1;
+          margin: 10px 5px;
+          padding: 5px;
+          background-color: white;
+          border-radius: 5px;
+          height: fit-content;
+        }
+      }
+      @media screen and (max-width: 1024px) {
+        .ctlg-m-ctr {
+          width: 100vw;
+        }
+        .a-t-c {
+          opacity: 1;
+        }
+      }
+    </style>
   </head>
   <body>
     <!--add c popup-->
@@ -24,7 +459,7 @@
           <br />
           Click Check Cart to Continue OR continue Shopping
         </div>
-        <a href="./cart/cart.html">
+        <a href="./cart.html">
           <button class="check-ct">Check Cart</button>
         </a>
         <button class="cont" onclick="imageDialogClose()">
@@ -74,7 +509,7 @@
           <span class="h-greeting">Good Morning,</span>
           <span class="login-text">My Account</span>
         </a>
-        <a class="cart" href="./cart/cart.html">
+        <a class="cart" href="./cart.html">
           <img src="./resources/shopping-cart.svg" alt="" />
           <span class="cart-number" id="cartNumberItems"></span>
           <span class="cart-text">Cart</span>
@@ -609,10 +1044,10 @@
               </div>
               <div class="itm-s-img">
                 <img
-                  src="./resources/phone5.png"
+                  src="./resources/image-slider/slider-image-1.jpg"
                   alt="Lato Milk 0.5kg Tin packed"
-                  width="80%"
-                  height="80%"
+                  width="90%"
+                  height="75%"
                 />
               </div>
               <div class="itm-s-dtl">
@@ -676,6 +1111,11 @@
             ).innerHTML = `${validSearch} &commat; Yammie. Online Shopping for Groceries`;
 
             let btns = document.querySelectorAll(".add-to-c");
+            if (screen.availWidth < 768) {
+              btns.forEach((btn) => {
+                btn.innerHTML = "Add To Cart";
+              });
+            }
             btns.forEach((btn) => {
               btn.addEventListener("click", (e) => {
                 let cartItem = {

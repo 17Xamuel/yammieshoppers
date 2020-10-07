@@ -20,11 +20,6 @@
         margin: auto;
       }
 
-      /* Hide the images by default */
-      .mySlides {
-        display: none;
-      }
-
       /* Next & previous buttons */
       .prev,
       .next {
@@ -167,7 +162,7 @@
             <span class="h-greeting">Good Morning</span>
             <span class="login-text">My Account</span>
           </a>
-          <a class="cart" href="./cart/cart.html">
+          <a class="cart" href="./cart.html">
             <img src="./resources/shopping-cart.svg" alt="" />
             <span class="cart-number" id="cartNumberItems">0</span>
             <span class="cart-text">Cart</span>
@@ -416,7 +411,7 @@
           </ul>
           <div class="slideshow-container">
             <div class="mySlides fade">
-              <div class="numbertext">1 / 3</div>
+              <div class="numbertext">1 / 6</div>
               <img
                 src="./resources/image-slider/slider-image-1.jpg"
                 style="width: 100%; border-radius: 5px"
@@ -428,7 +423,7 @@
             </div>
 
             <div class="mySlides fade">
-              <div class="numbertext">2 / 3</div>
+              <div class="numbertext">2 / 6</div>
               <img
                 src="./resources/image-slider/slider-image-2.jpg"
                 style="width: 100%; border-radius: 5px"
@@ -438,7 +433,7 @@
             </div>
 
             <div class="mySlides fade">
-              <div class="numbertext">3 / 3</div>
+              <div class="numbertext">3 / 6</div>
               <img
                 src="./resources/image-slider/slider-image-3.jpg"
                 style="width: 100%; border-radius: 5px"
@@ -446,6 +441,39 @@
               />
               <div style="text-align: center" class="text">
                 Buy this from yammieshoppers
+              </div>
+            </div>
+            <div class="mySlides fade">
+              <div class="numbertext">4 / 6</div>
+              <img
+                src="./resources/image-slider/slider-image-4.jpg"
+                style="width: 100%; border-radius: 5px"
+                height="100%"
+              />
+              <div style="text-align: center" class="text">
+                Check Out this from yammieshoppers
+              </div>
+            </div>
+            <div class="mySlides fade">
+              <div class="numbertext">5 / 6</div>
+              <img
+                src="./resources/image-slider/slider-image-5.jpg"
+                style="width: 100%; border-radius: 5px"
+                height="100%"
+              />
+              <div style="text-align: center" class="text">
+                Awesome Product from yammie
+              </div>
+            </div>
+            <div class="mySlides fade">
+              <div class="numbertext">6 / 6</div>
+              <img
+                src="./resources/image-slider/slider-image-6.jpg"
+                style="width: 100%; border-radius: 5px"
+                height="100%"
+              />
+              <div style="text-align: center" class="text">
+                Outstanding Price from yammieshoppers
               </div>
             </div>
 
@@ -457,6 +485,9 @@
               <span class="dot" onclick="currentSlide(1)"></span>
               <span class="dot" onclick="currentSlide(2)"></span>
               <span class="dot" onclick="currentSlide(3)"></span>
+              <span class="dot" onclick="currentSlide(4)"></span>
+              <span class="dot" onclick="currentSlide(5)"></span>
+              <span class="dot" onclick="currentSlide(6)"></span>
             </div>
           </div>
           <div class="categories">
@@ -777,42 +808,47 @@
         account.href = "/account/login.html";
       </script>
       <script>
-        let slideIndex = 1;
-        showSlides(slideIndex);
+        let sliderCtr = document.querySelector(".slideshow-container");
+        if (screen.availWidth < 768) {
+          console.log(screen.availWidth);
+        } else {
+          let slideIndex = 1;
+          showSlides(slideIndex);
 
-        let changeSlide = setInterval(() => {
-          showSlides((slideIndex += 1));
-        }, 5000);
-        // Next/previous controls
-        function plusSlides(n) {
-          showSlides((slideIndex += n));
-        }
+          let changeSlide = setInterval(() => {
+            showSlides((slideIndex += 1));
+          }, 5000);
+          // Next/previous controls
+          function plusSlides(n) {
+            showSlides((slideIndex += n));
+          }
 
-        // Thumbnail image controls
-        function currentSlide(n) {
-          showSlides((slideIndex = n));
-        }
-        let sliders = document.getElementsByClassName("mySlides");
+          // Thumbnail image controls
+          function currentSlide(n) {
+            showSlides((slideIndex = n));
+          }
+          let sliders = document.getElementsByClassName("mySlides");
 
-        function showSlides(n) {
-          let i;
-          let slides = document.getElementsByClassName("mySlides");
-          let dots = document.getElementsByClassName("dot");
-          if (n > slides.length) {
-            slideIndex = 1;
+          function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {
+              slideIndex = 1;
+            }
+            if (n < 1) {
+              slideIndex = slides.length;
+            }
+            for (i = 0; i < slides.length; i++) {
+              slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+              dots[i].classList.remove("activeDot");
+              // dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].classList.add("activeDot");
           }
-          if (n < 1) {
-            slideIndex = slides.length;
-          }
-          for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-          }
-          for (i = 0; i < dots.length; i++) {
-            dots[i].classList.remove("activeDot");
-            // dots[i].className = dots[i].className.replace(" active", "");
-          }
-          slides[slideIndex - 1].style.display = "block";
-          dots[slideIndex - 1].classList.add("activeDot");
         }
       </script>
       <script>
