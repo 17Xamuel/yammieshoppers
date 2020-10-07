@@ -15,6 +15,7 @@
   justify-content: space-between;
   height: 100%;
   width: 15%;
+  min-width: 180px;
 }
 .ctg-li {
   list-style-type: none;
@@ -22,6 +23,7 @@
   flex-direction: column;
   justify-content: space-around;
   width: 22%;
+  min-width: 275px;
   height: 100%;
   border-radius: 5px;
   background-color: #fff;
@@ -99,9 +101,31 @@
 
 .slideshow-container {
   width: 60%;
+  min-width: 720px;
   height: 100%;
 }
 .mySlides {
   height: 100%;
   border-radius: 10px;
+  display: none;
+}
+@media screen and (max-width: 768px) {
+  .slideshow-container {
+    min-width: 95vw;
+    width: 95vw;
+    display: flex;
+    overflow-x: scroll;
+  }
+  .mySlides {
+    display: block;
+    min-width: 90%;
+    width: 90%;
+    margin: 0px 10px;
+  }
+  .numbertext,
+  .prev,
+  .next,
+  .dots {
+    display: none;
+  }
 }

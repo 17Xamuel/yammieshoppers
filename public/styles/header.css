@@ -110,6 +110,7 @@
   background-color: #fff;
   z-index: 20;
   height: 8.5vh;
+  /* min-height: fit-content; */
 }
 .search {
   border: 1px solid rgb(0, 0, 0, 0.3);
