@@ -193,17 +193,32 @@
                   <div class="form-row form-group">
                     <div class="col">
                       <label for="firstname">First Name</label>
-                      <input type="text" class="form-control" id="firstname" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="firstname"
+                        autocomplete="off"
+                      />
                     </div>
                     <div class="col">
                       <label for="lastname">Last Name</label>
-                      <input type="text" class="form-control" id="lastname" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="lastname"
+                        autocomplete="off"
+                      />
                     </div>
                   </div>
                   <div class="form-row form-group">
                     <div class="col">
                       <label for="email">Email</label>
-                      <input type="text" class="form-control" id="email" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="email"
+                        autocomplete="off"
+                      />
                     </div>
                     <div class="col">
                       <label for="phonenumber">Phonenumber</label>
@@ -211,12 +226,18 @@
                         type="text"
                         class="form-control"
                         id="phonenumber"
+                        autocomplete="off"
                       />
                     </div>
                   </div>
                   <div class="form-group">
                     <label for="locatiom">Location</label>
-                    <input type="text" class="form-control" id="location" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="location"
+                      autocomplete="off"
+                    />
                   </div>
 
                   <button
@@ -286,17 +307,17 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+
     <script>
-      document.getElementById("User").innerHTML = localStorage.getItem("User1");
-      document.getElementById("firstname").value = localStorage.getItem("Name");
-      document.getElementById("lastname").value = localStorage.getItem("User1");
-      document.getElementById("email").value = localStorage.getItem("Email");
-      document.getElementById("phonenumber").value = localStorage.getItem(
-        "Contact"
+      let [seller] = JSON.parse(
+        localStorage.getItem("yammie/useLocalstorage/storage")
       );
-      document.getElementById("location").value = localStorage.getItem(
-        "Location"
-      );
+      document.getElementById("User").innerHTML = seller.lastname;
+      document.getElementById("firstname").value = seller.firstname;
+      document.getElementById("lastname").value = seller.lastname;
+      document.getElementById("email").value = seller.email;
+      document.getElementById("phonenumber").value = seller.phonenumber;
+      document.getElementById("location").value = seller.location;
     </script>
     <!-- End Scripts -->
   </body>

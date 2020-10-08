@@ -28,9 +28,6 @@ request.onreadystatechange = () => {
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
             if ((request.responseText = "Deleted")) {
-              window.location.reload(
-                "http://127.0.0.1:5500/views/settings.html"
-              );
             }
           }
         };
@@ -49,9 +46,6 @@ request.onreadystatechange = () => {
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
             if ((request.responseText = "Confirmed")) {
-              window.location.reload(
-                "http://127.0.0.1:5500/views/settings.html"
-              );
             }
           }
         };
@@ -67,3 +61,76 @@ request.onreadystatechange = () => {
 };
 request.open("GET", "http://localhost:3000/api/admin/sellerRequests", true);
 request.send();
+
+const xhr = new XMLHttpRequest();
+xhr.onreadystatechange = () => {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    let pendingProducts = JSON.parse(xhr.responseText);
+
+    let rows = "";
+    pendingProducts.forEach((pendingProduct) => {
+      let images = JSON.parse(pendingProduct.images);
+
+      rows += ` <tr>
+                      <td>
+                        <img
+                          src="/${images[0]}"
+                          width="50"
+                          height="50"
+                          class="rounded-circle"
+                        />
+                      </td>
+                      <td>${pendingProduct.product}</td>
+                      <td>${pendingProduct.price}</td>
+                      <td>${pendingProduct.description}</td>
+                      <td>
+                        <button type="submit" class="btn btn-danger btn-sm -a-product"
+                        data-id="${pendingProduct.id}">
+                          Accept
+                        </button>
+                      </td>
+                      <td><button type="submit" class="btn btn-info btn-sm -d-product"
+                      data-id="${pendingProduct.id}">
+                        Delete
+                      </button></td>
+                    </tr>`;
+    });
+    document.getElementById("pendingProducts").innerHTML = rows;
+    document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
+    let deleteProducts = document.querySelectorAll(".-d-product");
+    deleteProducts.forEach((deleteProduct) => {
+      deleteProduct.addEventListener("click", (e) => {
+        let deleteSellerProduct = e.target.dataset.id;
+        request.onreadystatechange = () => {
+          if (request.readyState == 4 && request.status == 200) {
+          }
+        };
+        request.open(
+          "GET",
+          `http://localhost:3000/api/admin/deleteProduct/${deleteSellerProduct}`,
+          true
+        );
+        request.send();
+      });
+    });
+    let acceptButtons = document.querySelectorAll(".-a-product");
+    acceptButtons.forEach((acceptButton) => {
+      acceptButton.addEventListener("click", (e) => {
+        let acceptProduct = e.target.dataset.id;
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log(xhr.responseText);
+          }
+        };
+        xhr.open(
+          "GET",
+          `http://localhost:3000/api/admin/confirmProduct/${acceptProduct}`,
+          true
+        );
+        xhr.send();
+      });
+    });
+  }
+};
+xhr.open("GET", "http://localhost:3000/api/admin/pendingProduct", true);
+xhr.send();

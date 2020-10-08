@@ -313,7 +313,10 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      document.getElementById("User").innerHTML = localStorage.getItem("User1");
+      let [seller] = JSON.parse(
+        localStorage.getItem("yammie/useLocalstorage/storage")
+      );
+      document.getElementById("User").innerHTML = seller.lastname;
     </script>
   </body>
 </html>

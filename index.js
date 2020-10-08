@@ -1,8 +1,9 @@
 const express = require("express");
-const multer = require("multer");
 const path = require("path");
+const multer = require("multer");
 const uuid = require("uuid");
 const mysql = require("mysql");
+
 const conn = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -38,6 +39,7 @@ app.use(express.static("public"));
 
 app.post("/addProduct", async (req, res) => {
   let productId = uuid.v4();
+
   let upload = getUpload(productId);
   upload(req, res, (err) => {
     if (err) throw err;
@@ -45,7 +47,8 @@ app.post("/addProduct", async (req, res) => {
     req.files.forEach((file) => {
       imagePaths.push(file.path);
     });
-    console.log(imagePaths);
+
+    let path = JSON.stringify(imagePaths);
     const {
       product,
       price,
@@ -54,7 +57,9 @@ app.post("/addProduct", async (req, res) => {
       category,
       subcategory,
       discount,
+      seller_id,
     } = req.body;
+
     conn.query(
       "INSERT INTO pending_products SET ?",
       {
@@ -66,6 +71,8 @@ app.post("/addProduct", async (req, res) => {
         category: category,
         subcategory: subcategory,
         discount: discount,
+        images: path,
+        seller_id: seller_id,
       },
       (err, results) => {
         if (err) {
@@ -76,6 +83,11 @@ app.post("/addProduct", async (req, res) => {
       }
     );
   });
+});
+app.get("/uploads/images/products/:imageName", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "uploads", "images", "products", req.params.imageName)
+  );
 });
 
 app.listen(PORT, () => {

@@ -202,9 +202,7 @@
                 >
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="productname" class="text-dark"
-                        >Product Name</label
-                      >
+                      <label for="productname">Product Name</label>
                       <input
                         type="text"
                         class="form-control"
@@ -356,11 +354,18 @@
                       ></div>
                     </div>
                   </div>
+                  <div class="form-group">
+                    <input
+                      type="hidden"
+                      name="seller_id"
+                      id="auth"
+                      class="form-control"
+                    />
+                  </div>
 
                   <button type="submit" class="btn btn-primary btn-block">
                     Add Product
                   </button>
-                  <div class="text-center text-info py-2" id="messages"></div>
                 </form>
               </div>
             </div>
@@ -426,9 +431,12 @@
     <script>
       const upload = new FileUploadWithPreview("myUpload");
     </script>
-
     <script>
-      document.getElementById("User").innerHTML = localStorage.getItem("User1");
+      let [seller] = JSON.parse(
+        localStorage.getItem("yammie/useLocalstorage/storage")
+      );
+      document.getElementById("User").innerHTML = seller.lastname;
+      document.getElementById("auth").value = seller.id;
     </script>
 
     <!-- End Scripts -->

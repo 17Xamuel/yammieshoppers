@@ -235,115 +235,21 @@
             </div>
             <div class="row">
               <div class="col-xl-12">
-                <h4 class="text-center">Pending Items <span>(5)</span></h4>
+                <h4 class="text-center">
+                  Pending Items <span id="ppn"></span>
+                </h4>
                 <table class="table table-striped bg-light text-center">
                   <thead>
                     <tr>
                       <th>Images</th>
                       <th>Name</th>
-                      <th>Quantity</th>
-                      <th>Seller Name</th>
+                      <th>Price</th>
+                      <th>Description</th>
                       <th>Confirm</th>
                       <th>Delete</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <img
-                          src="./images/corn.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Bread</td>
-                      <td>20</td>
-                      <td>Mulindwa</td>
-                      <td>
-                        <button type="submit" class="btn btn-danger btn-sm">
-                          Accept
-                        </button>
-                      </td>
-                      <td><i class="fas fa-trash"></i></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img
-                          src="./images/laptop.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Laptop</td>
-                      <td>20</td>
-                      <td>Sam</td>
-                      <td>
-                        <button type="submit" class="btn btn-danger btn-sm">
-                          Accept
-                        </button>
-                      </td>
-                      <td><i class="fas fa-trash"></i></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img
-                          src="./images/smartphone.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Drink</td>
-                      <td>20</td>
-                      <td>John</td>
-                      <td>
-                        <button type="submit" class="btn btn-danger btn-sm">
-                          Accept
-                        </button>
-                      </td>
-                      <td><i class="fas fa-trash"></i></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img
-                          src="./images/mac.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Bread</td>
-                      <td>20</td>
-                      <td>Maureen</td>
-                      <td>
-                        <button type="submit" class="btn btn-danger btn-sm">
-                          Accept
-                        </button>
-                      </td>
-                      <td><i class="fas fa-trash"></i></td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img
-                          src="./images/corn.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Charger</td>
-                      <td>13</td>
-                      <td>Hakim</td>
-                      <td>
-                        <button type="submit" class="btn btn-danger btn-sm">
-                          Accept
-                        </button>
-                      </td>
-                      <td><i class="fas fa-trash"></i></td>
-                    </tr>
-                  </tbody>
+                  <tbody id="pendingProducts"></tbody>
                 </table>
               </div>
             </div>
