@@ -75,7 +75,7 @@
   </head>
   <body style="background-color: whitesmoke" class="align-items-center">
     <div class="container">
-      <form action="">
+      <form id="sellerForm">
         <h1 class="text-center">Register</h1>
         <p class="text-center">
           Please fill in this form to create an account.
@@ -85,8 +85,8 @@
         <input
           type="text"
           placeholder="Enter Firstname"
-          name="Firstname"
-          id="firstname"
+          name="firstname"
+          id="fname"
           autocomplete="off"
           required
         />
@@ -94,8 +94,8 @@
         <input
           type="text"
           placeholder="Enter Lastname"
-          name="Lastname"
-          id="lastname"
+          name="lastname"
+          id="lname"
           autocomplete="off"
           required
         />
@@ -112,8 +112,8 @@
         <input
           type="text"
           placeholder="Enter Mobile Number"
-          name="Lastname"
-          id="lastname"
+          name="phonenumber"
+          id="phone"
           autocomplete="off"
           required
         />
@@ -143,6 +143,7 @@
           placeholder="Enter Password"
           name="password"
           id="password"
+          autocomplete="off"
           required
         />
 
@@ -151,7 +152,8 @@
           type="password"
           placeholder="Repeat Password"
           name="psw-repeat"
-          id="psw-repeat"
+          id="pass-repeat"
+          autocomplete="off"
           required
         />
         <hr />
@@ -169,5 +171,5 @@
       </form>
     </div>
   </body>
-  <script src="scripts/registerSeller.js"></script>
+  <script src="./scripts/registerSeller.js"></script>
 </html>
