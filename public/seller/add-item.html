@@ -38,7 +38,7 @@
     <title>Yammie | Add Your Item</title>
   </head>
 
-  <body style="background-color: whitesmoke">
+  <body class="bg-light">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light">
       <button
@@ -235,17 +235,31 @@
                       autocomplete="off"
                     />
                   </div>
-                  <div class="form-group">
-                    <label for="Product Brand">Product Brand</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      required=""
-                      placeholder="Product Brand"
-                      name="brand"
-                      autocomplete="off"
-                    />
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="Product Brand">Product Brand</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        required=""
+                        placeholder="Product Brand"
+                        name="brand"
+                        autocomplete="off"
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="Product Brand">Quantity</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        required=""
+                        placeholder="Quantity in Stock"
+                        name="quantity"
+                        autocomplete="off"
+                      />
+                    </div>
                   </div>
+
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="category">Category</label>

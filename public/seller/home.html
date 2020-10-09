@@ -182,8 +182,8 @@
                     <div class="d-flex justify-content-between">
                       <i class="fas fa-eye fa-3x text-warning"></i>
                       <div class="text-right text-secondary">
-                        <h4>Total Items</h4>
-                        <h3>2,000</h3>
+                        <h4>Products</h4>
+                        <h3 id="items">2,000</h3>
                       </div>
                     </div>
                   </div>
@@ -467,12 +467,8 @@
         },
       });
     </script>
-    <script>
-      let [seller] = JSON.parse(
-        localStorage.getItem("yammie/useLocalstorage/storage")
-      );
-      document.getElementById("User").innerHTML = seller.lastname;
-    </script>
+    <script src="scripts/home.js"></script>
+
     <!-- End Scripts -->
   </body>
 </html>

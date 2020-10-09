@@ -58,6 +58,7 @@ app.post("/addProduct", async (req, res) => {
       subcategory,
       discount,
       seller_id,
+      quantity,
     } = req.body;
 
     conn.query(
@@ -73,6 +74,7 @@ app.post("/addProduct", async (req, res) => {
         discount: discount,
         images: path,
         seller_id: seller_id,
+        quantity: quantity,
       },
       (err, results) => {
         if (err) {

@@ -27,8 +27,6 @@ request.onreadystatechange = () => {
         let deleteSeller = e.target.dataset.id;
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
-            if ((request.responseText = "Deleted")) {
-            }
           }
         };
         request.open(
@@ -45,8 +43,6 @@ request.onreadystatechange = () => {
         let confirmSeller = e.target.dataset.id;
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
-            if ((request.responseText = "Confirmed")) {
-            }
           }
         };
         request.open(
@@ -84,12 +80,20 @@ xhr.onreadystatechange = () => {
                       <td>${pendingProduct.price}</td>
                       <td>${pendingProduct.description}</td>
                       <td>
-                        <button type="submit" class="btn btn-danger btn-sm -a-product"
+                      <a href="product-details.html?item=${pendingProduct.id}">
+                      <button type="submit" class="btn btn-info btn-sm -a-product"
+                        data-id="${pendingProduct.id}">
+                          Details
+                        </button>
+                        </a>
+                        </td>
+                      <td>
+                        <button type="submit" class="btn btn-success btn-sm -a-product"
                         data-id="${pendingProduct.id}">
                           Accept
                         </button>
                       </td>
-                      <td><button type="submit" class="btn btn-info btn-sm -d-product"
+                      <td><button type="submit" class="btn btn-danger btn-sm -d-product"
                       data-id="${pendingProduct.id}">
                         Delete
                       </button></td>
@@ -119,7 +123,6 @@ xhr.onreadystatechange = () => {
         let acceptProduct = e.target.dataset.id;
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            console.log(xhr.responseText);
           }
         };
         xhr.open(
