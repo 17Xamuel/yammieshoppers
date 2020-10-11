@@ -101,22 +101,7 @@ xhr.onreadystatechange = () => {
     });
     document.getElementById("pendingProducts").innerHTML = rows;
     document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
-    let deleteProducts = document.querySelectorAll(".-d-product");
-    deleteProducts.forEach((deleteProduct) => {
-      deleteProduct.addEventListener("click", (e) => {
-        let deleteSellerProduct = e.target.dataset.id;
-        request.onreadystatechange = () => {
-          if (request.readyState == 4 && request.status == 200) {
-          }
-        };
-        request.open(
-          "GET",
-          `http://localhost:3000/api/admin/deleteProduct/${deleteSellerProduct}`,
-          true
-        );
-        request.send();
-      });
-    });
+
     let acceptButtons = document.querySelectorAll(".-a-product");
     acceptButtons.forEach((acceptButton) => {
       acceptButton.addEventListener("click", (e) => {

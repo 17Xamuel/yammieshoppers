@@ -80,7 +80,7 @@ app.post("/addProduct", async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          res.send("Product Added");
+          res.redirect("http://localhost:8000/seller/product.html");
         }
       }
     );
@@ -89,6 +89,16 @@ app.post("/addProduct", async (req, res) => {
 app.get("/uploads/images/products/:imageName", (req, res) => {
   res.sendFile(
     path.join(__dirname, "uploads", "images", "products", req.params.imageName)
+  );
+});
+app.get("/deleteProduct/:id", async (req, res) => {
+  conn.query(
+    "DELETE FROM pending_products WHERE id=?",
+    [req.params.id],
+    (err, results) => {
+      if (err) throw err;
+      res.send("Deleted");
+    }
   );
 });
 
