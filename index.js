@@ -4,7 +4,7 @@ const path = require("path");
 const uuid = require("uuid");
 const mysql = require("mysql");
 const conn = mysql.createConnection({
-  host: "localhost",
+  host: "127.0.0.1",
   user: "root",
   password: "",
   database: "yammie_db_secure",
@@ -78,6 +78,11 @@ app.post("/addProduct", async (req, res) => {
   });
 });
 
+app.get("/uploads/images/products/:imageName", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "uploads", "images", "products", req.params.imageName)
+  );
+});
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}...`);
 });

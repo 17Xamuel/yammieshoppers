@@ -285,6 +285,11 @@
         padding-bottom: 15px;
         overflow-x: scroll;
       }
+      .itm-r-sm:hover,
+      .itm-r-lg:hover {
+        color: #ffbb00;
+        cursor: pointer;
+      }
       /*media*/
       @media screen and (max-width: 1024px) {
         .cart-itm-sm {
@@ -758,7 +763,7 @@
             </div>
             <div class="ct-sm-bottom">
               <div class="ct-sm-b-left">
-                <span>
+                <span class="itm-r-sm" data-id=${item.cartItemAdded}>
                   <i class="fas fa-trash"></i>
                   Remove From Cart
                 </span>
@@ -797,7 +802,7 @@
               </div>
               <div class="delivery">YammieDelivery</div>
               <div class="like-remove">
-                <span>
+                <span class="itm-r-lg" data-id=${item.cartItemAdded}>
                   <i class="fas fa-trash"></i>
                   Remove From Cart
                 </span>
@@ -889,6 +894,32 @@
                 } else {
                   cartItems[id].inCartNumber += 0;
                 }
+              }
+            }
+            localStorage.setItem("cartNumber", JSON.stringify(cartNumber));
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+            window.location.reload();
+          }
+          const removeItemLg = document.querySelectorAll(".itm-r-lg");
+          for (let i = 0; i < removeItemLg.length; i++) {
+            let btnClicked = removeItemLg[i];
+            btnClicked.addEventListener("click", (e) => {
+              removeItem(btnClicked.dataset.id);
+            });
+          }
+          const removeItemsm = document.querySelectorAll(".itm-r-sm");
+          for (let i = 0; i < removeItemsm.length; i++) {
+            let btnClicked = removeItemsm[i];
+            btnClicked.addEventListener("click", (e) => {
+              removeItem(btnClicked.dataset.id);
+            });
+          }
+
+          function removeItem(id) {
+            for (const item in cartItems) {
+              if (item == id) {
+                cartNumber -= cartItems[id].inCartNumber;
+                delete cartItems[id];
               }
             }
             localStorage.setItem("cartNumber", JSON.stringify(cartNumber));

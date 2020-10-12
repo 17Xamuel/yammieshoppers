@@ -1,8 +1,27 @@
 .banner {
-  height: 60px;
+  height: 50px;
   background-color: #000;
   color: white;
   padding: 0px 350px;
+}
+.-s-sm {
+  display: none;
+}
+.-user {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 20px;
+  cursor: pointer;
+}
+.-user:hover {
+  color: orange;
+}
+.-c-text {
+  padding: 0px 10px;
+}
+.-c-icon {
+  font-size: 22px;
 }
 .cart {
   position: relative;
@@ -21,12 +40,12 @@
   position: absolute;
   background-color: #ffbb00;
   border-radius: 50%;
-  width: 24px;
-  height: 25px;
+  width: 22px;
+  height: 22px;
   text-align: center;
-  top: -12px;
+  top: -10px;
   left: 20px;
-  font-size: 17px;
+  font-size: 15px;
   color: white;
 }
 .d-app {
@@ -38,12 +57,12 @@
 }
 .h-greeting.g-active {
   opacity: 1;
-  font-size: 14px;
+  font-size: 18px;
 }
 .login-text {
   padding: 5px 10px 10px 1px;
   margin: 5px 5px 10px 5px;
-  font-size: 20px;
+  font-size: 18px;
 }
 .cart-text {
   padding: 5px 10px 10px 1px;
@@ -54,7 +73,7 @@
 .login {
   /* font-size: 17px; */
   position: relative;
-  margin: 0px 40px 0px 0px;
+  margin: 10px 40px 0px 0px;
 }
 .menu {
   margin-right: 15px;
@@ -71,17 +90,6 @@
   align-items: center;
 }
 
-.login-opt::before {
-  content: "";
-  position: absolute;
-  top: -2.4rem;
-  left: 7rem;
-  border: 1.2rem solid transparent;
-  border-bottom-color: #ffbb00;
-}
-.login-opt.showLogin {
-  display: flex;
-}
 .navsearch {
   padding: 5px 3px;
   font-size: 20px;
@@ -99,7 +107,6 @@
   outline: none;
 }
 .search-nav {
-  /* box-shadow: 0px 3px 4px #a1a1a1; */
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
@@ -109,7 +116,7 @@
   padding: 5px 150px;
   background-color: #fff;
   z-index: 20;
-  height: 10vh;
+  height: 8vh;
   min-height: fit-content;
 }
 .search {
@@ -133,31 +140,43 @@
   display: none;
 }
 @media screen and (max-width: 768px) {
+  .-user-more {
+    display: none !important;
+  }
+  .-user-account {
+    display: none;
+  }
+  .-c-text {
+    display: none;
+  }
+  .-s-sm {
+    display: flex;
+  }
+  .-s-sm > .-s-text-sm {
+    display: none;
+  }
+  .-s-sm > .icon {
+    font-size: 24px;
+  }
   .banner {
     padding: 0px;
     width: auto;
+    height: 5vh;
   }
   .search-nav {
-    padding: 0;
+    padding-top: 15px;
     justify-content: space-between;
-    background-color: #f00;
     font-size: 12px;
+    height: 8vh;
   }
   .search {
     display: none;
   }
+  .menu {
+    margin: 0px 10px;
+  }
 }
 @media screen and (max-width: 1120px) {
-  .login-text {
-    padding: 0px;
-    margin: 0px;
-  }
-  .cart-wrd {
-    display: none;
-  }
-  .login {
-    display: none;
-  }
   .line1.rotateLine1 {
     transform: rotate(-45deg) translate(-8px, 6px);
   }
@@ -178,7 +197,7 @@
   }
   .menu {
     display: block;
-    margin: 5px 20px;
+    /* margin: 5px 20px; */
   }
 
   .search-nav {
@@ -186,11 +205,9 @@
     justify-content: space-between;
     background-color: #fff;
     font-size: 12px;
-    height: 85px;
+    /* height: 85px; */
   }
-  .search {
-    display: none;
-  }
+
   #sideNav {
     display: block;
     transform: translateX(-100%);
@@ -236,13 +253,13 @@
   list-style-type: none;
 }
 #sideNav > .s-n-1 {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding: 5px 15px;
 }
 #sideNav > .s-n-2,
 #sideNav > .s-n-3,
 #sideNav > .s-n-4 {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   padding: 5px 10px;
 }
 #sideNav > .s-n-2 > li,

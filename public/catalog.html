@@ -385,6 +385,9 @@
       }
       /*for pop up*/
 
+      .-sort-s {
+        display: none;
+      }
       @media screen and (max-width: 768px) {
         .popup {
           width: 75%;
@@ -408,17 +411,23 @@
         .search-input {
           display: none;
         }
+        .location,
+        .delivery-by {
+          display: none;
+        }
         .a-t-c {
           width: 90%;
           margin: auto;
           font-size: 14px;
           padding: 5px 10px;
           text-align: center;
-          position: relative;
+          position: absolute;
           box-shadow: 0 0 5px #c3c3c3;
+          bottom: 10px;
         }
         .itm-searched {
           height: 470px;
+          min-height: fit-content;
         }
         .itms-ctr {
           display: grid;
@@ -438,6 +447,27 @@
         }
       }
       @media screen and (max-width: 1024px) {
+        .-sort-s {
+          display: block;
+          margin: 20px 15px;
+          padding: 10px 0px;
+          font-size: 17px;
+          box-shadow: 3px 3px 5px #e2e2e2;
+          border-radius: 5px;
+          border: none;
+          outline: none;
+          color: white;
+          background-color: #ffbb00;
+          cursor: pointer;
+        }
+        .ctlg-sort {
+          display: none;
+        }
+        .ctlg-sort.s-sort {
+          display: block;
+          margin: 10px auto;
+          width: 90vw;
+        }
         .ctlg-m-ctr {
           width: 100vw;
         }
@@ -665,6 +695,7 @@
           </div>
           <div class="itms-ctr" id="s-itms-ctr"></div>
         </div>
+        <button class="-sort-s open">Expand Sorting Panel</button>
         <div class="ctlg-sort" id="ctlg-sort">
           <h3>Sort By Price</h3>
           <form action="#" method="POST" class="price-form">
@@ -999,16 +1030,8 @@
       //price slider end
       //search
       let urlParams = new URLSearchParams(window.location.search);
-      let v_search = urlParams.get("q");
-      let validSearch = v_search.length > 0 ? v_search : "all";
-      let trial = /^[a-z]+$/i.test(validSearch);
-
-      // if (trial) {
-      //   console.log("true");
-      // } else {
-      //   console.log("not true");
-      // }
-
+      let search_query = urlParams.get("q");
+      let validSearch = search_query == null ? "all" : search_query;
       document.getElementById("s-word").innerHTML = validSearch;
       xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {
@@ -1022,7 +1045,7 @@
                 height="50%"
                 alt=""
               />
-                <span>Sorry, '${validSearch}' did not match any item.
+                <span>Sorry, "${validSearch}" did not match any item.
                 <br/>
                 Try Requesting Your Item.
                 </span>
@@ -1039,7 +1062,11 @@
               <article class="itm-searched" data-name="">
               <div class="a-s-discount">
                 <span class="d">
-                  ${itm.item_discount !== null ? itm.item_discount + "%" : ""}
+                  ${
+                    itm.item_discount !== null
+                      ? "-" + itm.item_discount + "%"
+                      : ""
+                  }
                 </span>
               </div>
               <div class="itm-s-img">
@@ -1064,9 +1091,7 @@
                     : itm.item_price)
                 }</div>
                 <div class="price-prev">${
-                  itm.item_discount
-                    ? "UGX " + (itm.item_price * itm.item_discount) / 100
-                    : ""
+                  itm.item_discount ? "UGX " + itm.item_price : ""
                 }</div>
                 <div class="location">
                   <i class="fas fa-map-marker-alt"></i>
@@ -1233,6 +1258,14 @@
         xhr1.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
         xhr1.send();
       }
+    </script>
+    <script>
+      let sort = document.querySelector("#ctlg-sort");
+      let btnSort = document.querySelector(".-sort-s.open");
+      btnSort.addEventListener("click", (e) => {
+        sort.classList.toggle("s-sort");
+      });
+      // sort.innerHTML = "T";
     </script>
     <!--scripts-->
   </body>

@@ -1,6 +1,7 @@
 .m-ctr {
   margin: 10px auto;
   width: 75vw;
+  position: relative;
 }
 .container1 {
   display: flex;
@@ -113,13 +114,31 @@
   .slideshow-container {
     min-width: 95vw;
     width: 95vw;
-    display: flex;
-    overflow-x: scroll;
+    /* overflow-x: scroll; */
   }
   .mySlides {
     display: block;
     min-width: 90%;
     width: 90%;
+    margin: 0px 10px;
+  }
+  .numbertext,
+  .prev,
+  .next,
+  .dots {
+    display: none;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .slideshow-container {
+    min-width: 95vw;
+    width: 95vw;
+    /* display: flex; */
+    /* overflow-x: scroll; */
+  }
+  .mySlides {
+    display: block;
+    width: 40%;
     margin: 0px 10px;
   }
   .numbertext,

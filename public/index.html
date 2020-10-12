@@ -14,6 +14,21 @@
       Yammie | Online Market For Groceries, Electric Appliances, and Other items
     </title>
     <style>
+      .back-to-top {
+        position: absolute;
+        height: 40px;
+        width: 40px;
+        background-color: #ffbb00;
+        border-radius: 50%;
+        right: -10%;
+        bottom: 1%;
+        z-index: 40;
+        text-align: center;
+        padding: 5px;
+        font-size: 20px;
+        color: white;
+        opacity: 0;
+      }
       /* Slideshow container */
       .slideshow-container {
         position: relative;
@@ -116,6 +131,14 @@
           opacity: 1;
         }
       }
+      @media screen and (max-width: 768px) {
+        .back-to-top {
+          position: relative;
+          border-radius: 5%;
+          width: 80%;
+          margin: 10px 0px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -128,7 +151,7 @@
             <div class="line2"></div>
             <div class="line3"></div>
           </div>
-          <a href="./index.html">
+          <a href="./">
             <img
               src="./resources/yammie.png"
               alt="YAMMIE"
@@ -156,10 +179,24 @@
             </button>
           </form>
         </div>
-        <div class="cart-login">
+        <div class="-s-sm">
+          <i class="fas fa-search icon"></i>
+          <span class="-s-text-sm">Search</span>
+        </div>
+        <a class="-user -user-account" href="">
+          <i class="far fa-user -c-icon"></i>
+          <!-- <img src="./resources/person.svg" alt="" /> -->
+          <span class="-c-text">My Account</span>
+        </a>
+        <a class="-user" href="./cart.html">
+          <i class="fas fa-shopping-cart -c-icon"></i>
+          <!-- <img src="./resources/person.svg" alt="" /> -->
+          <span class="-c-text">Cart</span>
+        </a>
+        <!-- <div class="cart-login">
           <a class="login login-check" id="login" href="">
             <img src="./resources/person.svg" alt="" />
-            <span class="h-greeting">Good Morning</span>
+            <span class="h-greeting">Hello,</span>
             <span class="login-text">My Account</span>
           </a>
           <a class="cart" href="./cart.html">
@@ -167,7 +204,7 @@
             <span class="cart-number" id="cartNumberItems">0</span>
             <span class="cart-text">Cart</span>
           </a>
-        </div>
+        </div> -->
         <div id="sideNav">
           <ul class="s-n-1">
             <h3 class="sn-categories">Categories</h3>
@@ -612,6 +649,9 @@
           </section>
           <!-- End Shop Newsletter -->
         </div>
+        <div class="back-to-top">
+          <i class="fas fa-arrow-up"></i>
+        </div>
       </div>
       <footer class="footer">
         <div class="ftr-sm-s">
@@ -809,7 +849,7 @@
       </script>
       <script>
         let sliderCtr = document.querySelector(".slideshow-container");
-        if (screen.availWidth < 768) {
+        if (screen.availWidth <= 1024) {
           console.log(screen.availWidth);
         } else {
           let slideIndex = 1;
@@ -861,22 +901,39 @@
               let greeting = document.querySelector(".h-greeting");
               let account = document.querySelector(".login-text");
               greeting.classList.add("g-active");
-              account.innerHTML = yammieUsr.c_first_name.toUpperCase();
+              account.innerHTML = yammieUsr.c_first_name;
               account.style.marginRight = "75px";
-              let timeGreeting = new Date();
-              if (timeGreeting.getHours() < 12) {
-                greeting.innerHTML = "Good Morning";
-              } else if (timeGreeting.getHours() < 16) {
-                greeting.innerHTML = "Good Afternoon";
-              } else {
-                console.log(greeting.getHours());
-                greeting.innerHTML = "Good Evening";
-              }
+              // let timeGreeting = new Date();
+              // if (timeGreeting.getHours() < 12) {
+              //   greeting.innerHTML = "Good Morning";
+              // } else if (timeGreeting.getHours() < 16) {
+              //   greeting.innerHTML = "Good Afternoon";
+              // } else {
+              //   console.log(greeting.getHours());
+              //   greeting.innerHTML = "Good Evening";
+              // }
             }
           };
           xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
           xhr.send();
         }
+      </script>
+      <script>
+        let topBtn = document.querySelector(".back-to-top");
+        if (screen.availWidth <= 768) {
+          topBtn.innerHTML = `<i class="fas fa-arrow-up"></i> Back To Top`;
+        }
+
+        window.addEventListener("scroll", () => {
+          topBtn.style.opacity = 1;
+        });
+        topBtn.addEventListener("click", (e) => {
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
+        });
       </script>
       <!--scripts-->
     </div>

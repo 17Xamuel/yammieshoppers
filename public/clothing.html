@@ -311,8 +311,8 @@
         <div class="right">
           <a href="#" class="">
             <img
-              src="./resources/image-slider/mask.jpg"
-              alt="yummie"
+              src="/uploads/images/products/94e3adbb-a475-4049-8f3c-b8b7e2a09a6b-headsets.png"
+              alt="yammie"
               style="border-radius: 10px"
               width="100%"
               height="100%"
@@ -507,6 +507,7 @@
             let account = document.querySelector(".login-text");
             greeting.classList.add("g-active");
             account.innerHTML = yammieUsr.c_first_name.toUpperCase();
+            account.style.marginRight = "75px";
           }
         };
         xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
