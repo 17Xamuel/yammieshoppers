@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const fs = require('fs');
 const multer = require("multer");
 const uuid = require("uuid");
 const mysql = require("mysql");
@@ -60,7 +61,10 @@ app.post("/addProduct", async (req, res) => {
       seller_id,
       quantity,
     } = req.body;
-
+    let categories="";
+     if(category == 'Electronics'){
+        categories = '1';
+     };
     conn.query(
       "INSERT INTO pending_products SET ?",
       {
@@ -69,7 +73,7 @@ app.post("/addProduct", async (req, res) => {
         price: price,
         description: description,
         brand: brand,
-        category: category,
+        category: categories,
         subcategory: subcategory,
         discount: discount,
         images: path,
@@ -86,20 +90,39 @@ app.post("/addProduct", async (req, res) => {
     );
   });
 });
-app.get("/uploads/images/products/:imageName", (req, res) => {
+app.get("/uploads/images/products/:imageName", async(req, res) => {
   res.sendFile(
     path.join(__dirname, "uploads", "images", "products", req.params.imageName)
   );
 });
-app.get("/deleteProduct/:id", async (req, res) => {
-  conn.query(
+
+// delete image function
+function deleteImages(image){
+    let imagePath = path.join(__dirname, image);
+    fs.unlink(imagePath,(err)=>{
+      if(err) throw err;
+    });
+  }
+app.delete("/deleteProduct/:id", async (req, res) => {
+  
+  conn.query('SELECT images from pending_products WHERE id = ?',
+  [req.params.id],
+  (err, results) => {
+      if (err) throw 'Error'+err;
+      let images = JSON.parse(results[0].images);
+      images.forEach(image=>{
+        deleteImages(image)
+      })
+      conn.query(
     "DELETE FROM pending_products WHERE id=?",
     [req.params.id],
-    (err, results) => {
+    async(err, results) => {
       if (err) throw err;
       res.send("Deleted");
     }
   );
+    }
+  )
 });
 
 app.listen(PORT, () => {

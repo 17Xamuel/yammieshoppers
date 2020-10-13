@@ -1,3 +1,4 @@
+
 const request = new XMLHttpRequest();
 request.onreadystatechange = () => {
   if (request.readyState == 4 && request.status == 200) {
@@ -93,8 +94,13 @@ xhr.onreadystatechange = () => {
                           Accept
                         </button>
                       </td>
-                      <td><button type="submit" class="btn btn-danger btn-sm -d-product"
-                      data-id="${pendingProduct.id}">
+                      <td>
+                      <button 
+                      type="submit" 
+                      class="btn btn-danger btn-sm -d-product" 
+                      data-id="${pendingProduct.id}"
+                      data-images="${pendingProduct.images}"
+                      >
                         Delete
                       </button></td>
                     </tr>`;
@@ -102,7 +108,29 @@ xhr.onreadystatechange = () => {
     document.getElementById("pendingProducts").innerHTML = rows;
     document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
 
-    let acceptButtons = document.querySelectorAll(".-a-product");
+   let deleteButtons = document.querySelectorAll(".-d-product");
+    deleteButtons.forEach((deleteButton) => {
+      deleteButton.addEventListener("click", (e) => {
+        let deleteProduct = e.target.dataset.id;
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            if(xhr.responseText == 'Deleted'){
+              window.location.reload();
+            }else{
+              console.log('Error');
+            }
+          }
+        };
+        xhr.open(
+          "DELETE",
+          `/deleteProduct/${deleteProduct}`,
+          true
+        );
+        xhr.send({});
+      });
+    });
+
+   let acceptButtons = document.querySelectorAll(".-a-product");
     acceptButtons.forEach((acceptButton) => {
       acceptButton.addEventListener("click", (e) => {
         let acceptProduct = e.target.dataset.id;
