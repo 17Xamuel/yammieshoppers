@@ -175,9 +175,14 @@
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-12">
-                <button type="button" class="btn btn-info btn-md my-3 ml-auto">
-                  Add New Item
-                </button>
+                <a href="add-item.html"
+                  ><button
+                    type="button"
+                    class="btn btn-info btn-md my-3 ml-auto"
+                  >
+                    Add Product
+                  </button></a
+                >
 
                 <table class="table table-dark table-hover text-center">
                   <thead>
@@ -189,90 +194,8 @@
                       <th>Status</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <img
-                          src="images/corn.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Bread</td>
-                      <td>2</td>
-                      <td>200,000</td>
-                      <td>
-                        <span class="badge badge-info w-75 py-2">Featured</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img
-                          src="images/subwoofer.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Fish</td>
-                      <td>7</td>
-                      <td>200,000</td>
-                      <td>
-                        <span class="badge badge-danger w-75 py-2">New</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img
-                          src="images/laptop.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Laptop</td>
-                      <td>2</td>
-                      <td>500,000</td>
-                      <td>
-                        <span class="badge badge-info w-75 py-2">Featured</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img
-                          src="images/mac.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>Laptop</td>
-                      <td>1</td>
-                      <td>400,000</td>
-                      <td>
-                        <span class="badge badge-danger w-75 py-2">New</span>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img
-                          src="images/corn.png"
-                          width="50"
-                          height="50"
-                          class="rounded-circle"
-                        />
-                      </td>
-                      <td>bread</td>
-                      <td>5</td>
-                      <td>300,000</td>
-                      <td>
-                        <span class="badge badge-primary w-75 py-2"
-                          >Returned</span
-                        >
-                      </td>
-                    </tr>
-                  </tbody>
+                  <tbody class="sellerProducts"></tbody>
+                  <tbody id="products"></tbody>
                 </table>
               </div>
             </div>
@@ -330,8 +253,6 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script>
-      document.getElementById("User").innerHTML = localStorage.getItem("User1");
-    </script>
+    <script src="./scripts/product.js"></script>
   </body>
 </html>

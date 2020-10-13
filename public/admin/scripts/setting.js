@@ -1,3 +1,4 @@
+
 const request = new XMLHttpRequest();
 request.onreadystatechange = () => {
   if (request.readyState == 4 && request.status == 200) {
@@ -27,11 +28,6 @@ request.onreadystatechange = () => {
         let deleteSeller = e.target.dataset.id;
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
-            if ((request.responseText = "Deleted")) {
-              window.location.reload(
-                "http://127.0.0.1:5500/views/settings.html"
-              );
-            }
           }
         };
         request.open(
@@ -48,11 +44,6 @@ request.onreadystatechange = () => {
         let confirmSeller = e.target.dataset.id;
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
-            if ((request.responseText = "Confirmed")) {
-              window.location.reload(
-                "http://127.0.0.1:5500/views/settings.html"
-              );
-            }
           }
         };
         request.open(
@@ -67,3 +58,95 @@ request.onreadystatechange = () => {
 };
 request.open("GET", "http://localhost:3000/api/admin/sellerRequests", true);
 request.send();
+
+const xhr = new XMLHttpRequest();
+xhr.onreadystatechange = () => {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    let pendingProducts = JSON.parse(xhr.responseText);
+
+    let rows = "";
+    pendingProducts.forEach((pendingProduct) => {
+      let images = JSON.parse(pendingProduct.images);
+
+      rows += ` <tr>
+                      <td>
+                        <img
+                          src="/${images[0]}"
+                          width="50"
+                          height="50"
+                          class="rounded-circle"
+                        />
+                      </td>
+                      <td>${pendingProduct.product}</td>
+                      <td>${pendingProduct.price}</td>
+                      <td>${pendingProduct.description}</td>
+                      <td>
+                      <a href="product-details.html?item=${pendingProduct.id}">
+                      <button type="submit" class="btn btn-info btn-sm -a-product"
+                        data-id="${pendingProduct.id}">
+                          Details
+                        </button>
+                        </a>
+                        </td>
+                      <td>
+                        <button type="submit" class="btn btn-success btn-sm -a-product"
+                        data-id="${pendingProduct.id}">
+                          Accept
+                        </button>
+                      </td>
+                      <td>
+                      <button 
+                      type="submit" 
+                      class="btn btn-danger btn-sm -d-product" 
+                      data-id="${pendingProduct.id}"
+                      data-images="${pendingProduct.images}"
+                      >
+                        Delete
+                      </button></td>
+                    </tr>`;
+    });
+    document.getElementById("pendingProducts").innerHTML = rows;
+    document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
+
+   let deleteButtons = document.querySelectorAll(".-d-product");
+    deleteButtons.forEach((deleteButton) => {
+      deleteButton.addEventListener("click", (e) => {
+        let deleteProduct = e.target.dataset.id;
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            if(xhr.responseText == 'Deleted'){
+              window.location.reload();
+            }else{
+              console.log('Error');
+            }
+          }
+        };
+        xhr.open(
+          "DELETE",
+          `/deleteProduct/${deleteProduct}`,
+          true
+        );
+        xhr.send({});
+      });
+    });
+
+   let acceptButtons = document.querySelectorAll(".-a-product");
+    acceptButtons.forEach((acceptButton) => {
+      acceptButton.addEventListener("click", (e) => {
+        let acceptProduct = e.target.dataset.id;
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+          }
+        };
+        xhr.open(
+          "GET",
+          `http://localhost:3000/api/admin/confirmProduct/${acceptProduct}`,
+          true
+        );
+        xhr.send();
+      });
+    });
+  }
+};
+xhr.open("GET", "http://localhost:3000/api/admin/pendingProduct", true);
+xhr.send();

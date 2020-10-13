@@ -13,14 +13,12 @@ login.addEventListener("submit", (e) => {
       } else if (xhr.responseText == "User not Found") {
         document.getElementById("messages").innerHTML = xhr.responseText;
       } else {
-        let [loggedSeller] = JSON.parse(xhr.responseText);
-        localStorage.setItem("Auth", loggedSeller.id);
-        localStorage.setItem("Name", loggedSeller.firstname);
-        localStorage.setItem("User1", loggedSeller.lastname);
-        localStorage.setItem("Email", loggedSeller.email);
-        localStorage.setItem("Location", loggedSeller.location);
-        localStorage.setItem("Contact", loggedSeller.phonenumber);
-        window.location.assign("http://127.0.0.1:5501/home/index.html");
+        localStorage.setItem(
+          "yammie/useLocalstorage/storage",
+          xhr.responseText
+        );
+
+        window.location.assign("http://localhost:8000/seller/home.html");
       }
     }
   };
