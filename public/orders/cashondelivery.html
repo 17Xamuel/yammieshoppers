@@ -12,6 +12,13 @@
     <link rel="stylesheet" href="../font-awesome/css/all.css" />
     <title>Yammie | Thanks for your order</title>
 
+    <script>
+      if (document.referrer == "") {
+        alert("Access Denied");
+        self.location = "../index.html";
+      }
+    </script>
+
     <style>
       .f-order-ctr {
         display: flex;
@@ -108,7 +115,7 @@
             <br />
             the delivery information of your order.
           </div>
-          <a href=".../index.html">
+          <a href="../index.html">
             <button type="submit" class="-pay">
               <i class="fas fa-home"></i>
               Return Home
@@ -127,3 +134,4 @@
     <!--scripts-->
   </body>
 </html>
+e

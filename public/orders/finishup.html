@@ -3,14 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="./resources/cartlink.png" />
-    <link rel="stylesheet" href="./styles/footer2.css" />
-    <link rel="stylesheet" href="./styles/items.css" />
-    <link rel="stylesheet" href="./styles/header.css" />
-    <link rel="stylesheet" href="./styles/main.css" />
-    <link rel="stylesheet" href="./styles/products.css" />
-    <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <link rel="shortcut icon" href="../resources/cartlink.png" />
+    <link rel="stylesheet" href="../styles/footer2.css" />
+    <link rel="stylesheet" href="../styles/items.css" />
+    <link rel="stylesheet" href="../styles/header.css" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/products.css" />
+    <link rel="stylesheet" href="../font-awesome/css/all.css" />
     <title>Yammie | Thanks for your order</title>
+    <script>
+      if (document.referrer == "") {
+        alert("Access Denied");
+        self.location = "../index.html";
+      }
+    </script>
 
     <style>
       .f-order-ctr {
@@ -30,7 +36,7 @@
       }
       form {
         height: 70vh;
-        width: 30vw;
+        width: 25vw;
         padding: 5%;
         display: flex;
         flex-direction: column;
@@ -72,12 +78,53 @@
         justify-content: center;
       }
     </style>
+    <style>
+      @media screen and (max-width: 1024px) {
+        .search-nav {
+          padding: 0px 30px;
+        }
+        .f-order-ctr {
+          display: flex;
+          justify-content: center;
+          width: 95vw;
+          margin: 2% auto;
+        }
+        form {
+          height: 60vh;
+          width: 50vw;
+          padding: 5%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+        }
+      }
+      @media screen and (max-width: 500px) {
+        .logo {
+          display: none;
+        }
+        .search-nav {
+          padding: 0px 20px;
+        }
+        .f-order-ctr {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          width: 95vw;
+          margin: 2% auto;
+        }
+        form {
+          height: 70vh;
+          width: 95%;
+          flex-direction: column;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="search-nav">
       <div class="logo">
         <img
-          src="./resources/yammie.png"
+          src="../resources/yammie.png"
           alt="YAMMIE"
           width="200"
           height="100%"
@@ -86,14 +133,17 @@
       <div class="order-f">
         <h3>Yammie, Pay With Mobile Money:</h3>
       </div>
-      <div class="cart-login">
-        <div class="login" id="login">
-          <img src="./resources/person.svg" alt="" />
-          <span class="login-text">Help</span>
+      <div
+        class=""
+        style="display: flex; justify-content: space-around; width: 40%"
+      >
+        <div class="">
+          <i class="fas fa-hands"></i>
+          <span class="">Help</span>
         </div>
-        <div class="cart">
-          <img src="./resources/shopping-cart.svg" alt="" />
-          <span class="cart-text">Call</span>
+        <div class="">
+          <i class="fas fa-phone"></i>
+          <span class="">Call</span>
         </div>
       </div>
     </div>
@@ -104,7 +154,7 @@
           <form action="">
             <div class="-f-order-h">
               <img
-                src="./resources/yammie.png"
+                src="../resources/yammie.png"
                 alt="YAMMIE"
                 width="200"
                 height="100%"
@@ -141,7 +191,12 @@
         </div>
         <div class="-f-order-l">
           <div class="-img">
-            <img src="./resources/thanks.svg" alt="" width="60%" height="60%" />
+            <img
+              src="../resources/thanks.svg"
+              alt=""
+              width="60%"
+              height="60%"
+            />
           </div>
           <div class="">
             Thanks for shopping with yammie.

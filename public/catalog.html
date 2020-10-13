@@ -505,7 +505,7 @@
           <div class="line2"></div>
           <div class="line3"></div>
         </div>
-        <a href="./index.html">
+        <a href="./">
           <img
             src="./resources/yammie.png"
             alt="YAMMIE"
@@ -533,18 +533,20 @@
           </button>
         </form>
       </div>
-      <div class="cart-login">
-        <a class="login" id="login" href="">
-          <img src="./resources/person.svg" alt="" />
-          <span class="h-greeting">Good Morning,</span>
-          <span class="login-text">My Account</span>
-        </a>
-        <a class="cart" href="./cart.html">
-          <img src="./resources/shopping-cart.svg" alt="" />
-          <span class="cart-number" id="cartNumberItems"></span>
-          <span class="cart-text">Cart</span>
-        </a>
+      <div class="-s-sm">
+        <i class="fas fa-search icon"></i>
+        <span class="-s-text-sm">Search</span>
       </div>
+      <a class="-user -user-account" href="">
+        <i class="far fa-user -c-icon"></i>
+
+        <span class="-c-text login-text">My Account</span>
+      </a>
+      <a class="-user -user-cart" href="./cart.html">
+        <i class="fas fa-shopping-cart -c-icon"></i>
+        <span class="cart-number" id="cartNumberItems">0</span>
+        <span class="-c-text">Cart</span>
+      </a>
       <div id="sideNav">
         <ul class="s-n-1">
           <h3 class="sn-categories">Categories</h3>
@@ -555,13 +557,13 @@
             </a>
           </li>
           <li class="n-l-itm">
-            <a href="./quick-foods.html">
+            <a href="quick-foods.html">
               <i class="fas fa-pizza-slice ctg-icon"></i>
               Fast Foods &amp; Drinks
             </a>
           </li>
           <li class="n-l-itm">
-            <a href="./phones.html">
+            <a href="phones.html">
               <i class="fas fa-headphones-alt ctg-icon"></i>
               Phones &amp; Accessories
             </a>
@@ -1032,7 +1034,7 @@
       let urlParams = new URLSearchParams(window.location.search);
       let search_query = urlParams.get("q");
       let validSearch = search_query == null ? "all" : search_query;
-      document.getElementById("s-word").innerHTML = validSearch;
+      document.getElementById("s-word").innerText = validSearch;
       xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {
         if (xhr.readyState == 4 && xhr.status == 200) {

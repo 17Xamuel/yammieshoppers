@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
 }
 .-user:hover {
@@ -21,7 +21,7 @@
   padding: 0px 10px;
 }
 .-c-icon {
-  font-size: 22px;
+  font-size: 24px;
 }
 .cart {
   position: relative;
@@ -44,7 +44,7 @@
   height: 22px;
   text-align: center;
   top: -10px;
-  left: 20px;
+  left: 14px;
   font-size: 15px;
   color: white;
 }
@@ -59,10 +59,8 @@
   opacity: 1;
   font-size: 18px;
 }
-.login-text {
-  padding: 5px 10px 10px 1px;
-  margin: 5px 5px 10px 5px;
-  font-size: 18px;
+.-user-cart {
+  position: relative;
 }
 .cart-text {
   padding: 5px 10px 10px 1px;

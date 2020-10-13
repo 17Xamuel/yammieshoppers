@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="./resources/cartlink.png" />
-    <link rel="stylesheet" href="./styles/footer2.css" />
-    <link rel="stylesheet" href="./styles/items.css" />
-    <link rel="stylesheet" href="./styles/header.css" />
-    <link rel="stylesheet" href="./styles/main.css" />
-    <link rel="stylesheet" href="./styles/products.css" />
-    <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <link rel="shortcut icon" href="../resources/cartlink.png" />
+    <link rel="stylesheet" href="../styles/footer2.css" />
+    <link rel="stylesheet" href="../styles/items.css" />
+    <link rel="stylesheet" href="../styles/header.css" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/products.css" />
+    <link rel="stylesheet" href="../font-awesome/css/all.css" />
     <title>Yammie | checkout - complete your order</title>
 
     <style>
@@ -231,16 +231,16 @@
     <script>
       if (document.referrer == "") {
         alert("Access Denied");
-        self.location = "http://127.0.0.1:5500/home/index.html";
+        self.location = "../index.html";
       }
     </script>
   </head>
   <body>
     <div class="search-nav">
       <div class="logo">
-        <div href="./home/index.html">
+        <div href="../home/index.html">
           <img
-            src="./resources/yammie.png"
+            src="../resources/yammie.png"
             alt="YUMMY"
             width="200"
             height="100%"
@@ -252,11 +252,11 @@
       </div>
       <div class="cart-login">
         <div class="login" id="login">
-          <img src="./resources/person.svg" alt="" />
+          <img src="../resources/person.svg" alt="" />
           <span class="login-text">Help</span>
         </div>
         <div class="cart">
-          <img src="./resources/shopping-cart.svg" alt="" />
+          <img src="../resources/shopping-cart.svg" alt="" />
           <span class="cart-text">Call</span>
         </div>
       </div>
@@ -384,7 +384,7 @@
                   </label>
                 </div>
                 <div class="-mm-img">
-                  <img src="./resources/mtn-mm.png" alt="" />
+                  <img src="../resources/mtn-mm.png" alt="" />
                 </div>
                 <div class="p-order-procedure">
                   <b>Mobile Money Payment Procedure:</b>
@@ -408,7 +408,7 @@
                     value="cod"
                   />
                   <span class="cd-image">
-                    <img src="./resources/cash-on-delivery.png" alt="" />
+                    <img src="../resources/cash-on-delivery.png" alt="" />
                   </span>
                   <label for="payment_method">
                     <b>Cash On Delivery.</b>
@@ -575,13 +575,9 @@
               localStorage.removeItem("cartItems");
               localStorage.removeItem("cartNumber");
               if (orderRequest.responseText == "mm") {
-                window.location.assign(
-                  "http://127.0.0.1:5500/orders/finishup.html"
-                );
+                window.location.assign("../orders/finishup.html");
               } else {
-                window.location.assign(
-                  "http://127.0.0.1:5500/orders/cashondelivery.html"
-                );
+                window.location.assign("../orders/cashondelivery.html");
               }
             }
           };

@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="./styles/main.css" />
     <link rel="stylesheet" href="./styles/products.css" />
     <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bowser@2.9.0/es5.js"></script>
     <title>
       Yammie | Online Market For Groceries, Electric Appliances, and Other items
     </title>
@@ -183,28 +188,16 @@
           <i class="fas fa-search icon"></i>
           <span class="-s-text-sm">Search</span>
         </div>
-        <a class="-user -user-account" href="">
+        <a class="-user -user-account" href="" id="login">
           <i class="far fa-user -c-icon"></i>
-          <!-- <img src="./resources/person.svg" alt="" /> -->
-          <span class="-c-text">My Account</span>
+
+          <span class="-c-text login-text">My Account</span>
         </a>
-        <a class="-user" href="./cart.html">
-          <i class="fas fa-shopping-cart -c-icon"></i>
-          <!-- <img src="./resources/person.svg" alt="" /> -->
+        <a class="-user -user-cart" href="./cart.html">
+          <span class="material-icons -c-icon"> shopping_cart </span>
+          <span class="cart-number" id="cartNumberItems">0</span>
           <span class="-c-text">Cart</span>
         </a>
-        <!-- <div class="cart-login">
-          <a class="login login-check" id="login" href="">
-            <img src="./resources/person.svg" alt="" />
-            <span class="h-greeting">Hello,</span>
-            <span class="login-text">My Account</span>
-          </a>
-          <a class="cart" href="./cart.html">
-            <img src="./resources/shopping-cart.svg" alt="" />
-            <span class="cart-number" id="cartNumberItems">0</span>
-            <span class="cart-text">Cart</span>
-          </a>
-        </div> -->
         <div id="sideNav">
           <ul class="s-n-1">
             <h3 class="sn-categories">Categories</h3>
@@ -528,26 +521,15 @@
             </div>
           </div>
           <div class="categories">
-            <ul class="up-container">
-              <li>
-                Want a Special Order?
-                <a href="#">
-                  <button class="h-btns">CLick Here</button>
-                </a>
-              </li>
-              <li>
-                Make Chart With Us
-                <a href="#">
-                  <button class="h-btns">Live Chart</button>
-                </a>
-              </li>
-              <li>
-                Request An Item?
-                <a href="#">
-                  <button class="h-btns">CLick Here</button>
-                </a>
-              </li>
-            </ul>
+            <div class="up-container">
+              <img
+                src="./resources/image-slider/slider-image-2.jpg"
+                alt=""
+                width="100%"
+                height="100%"
+                style="border-radius: 5px"
+              />
+            </div>
             <ul class="down-container">
               <li>
                 <h4>FLASH SALES!!!</h4>
@@ -843,9 +825,8 @@
         }
 
         let account = document.querySelector("#login");
-        console.log(account);
-        // account.href = yammie ? "/account/profile.html" : "/account/login.html";
-        account.href = "/account/login.html";
+
+        account.href = yammie ? "/account/profile.html" : "/account/login.html";
       </script>
       <script>
         let sliderCtr = document.querySelector(".slideshow-container");
@@ -902,16 +883,6 @@
               let account = document.querySelector(".login-text");
               greeting.classList.add("g-active");
               account.innerHTML = yammieUsr.c_first_name;
-              account.style.marginRight = "75px";
-              // let timeGreeting = new Date();
-              // if (timeGreeting.getHours() < 12) {
-              //   greeting.innerHTML = "Good Morning";
-              // } else if (timeGreeting.getHours() < 16) {
-              //   greeting.innerHTML = "Good Afternoon";
-              // } else {
-              //   console.log(greeting.getHours());
-              //   greeting.innerHTML = "Good Evening";
-              // }
             }
           };
           xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
@@ -934,7 +905,21 @@
             behavior: "smooth",
           });
         });
+
+        // PARSE USER AGENT
+        // let result = bowser.getParser(navigator.userAgent).getResult();
+        // // BROWSER INFO
+        // console.log(result.browser.name);
+        // console.log(result.browser.version);
+        // console.log(result.engine);
+        // // OPERATING SYSTEM
+        // console.log(result.os.name);
+        // console.log(result.os.version);
+        // console.log(result.os.versionName);
+        // // PLATFORM
+        // console.log(result.platform.type);
       </script>
+
       <!--scripts-->
     </div>
   </body>
