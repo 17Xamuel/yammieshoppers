@@ -6,7 +6,7 @@ const uuid = require("uuid");
 const mysql = require("mysql");
 
 const conn = mysql.createConnection({
-  host: "127.0.0.1",
+  host: "localhost",
   user: "root",
   password: "",
   database: "yammie_db_secure",
