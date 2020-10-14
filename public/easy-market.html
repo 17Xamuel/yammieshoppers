@@ -9,7 +9,7 @@
       type="image/x-icon"
     />
     <title>
-      Yammie | Clothings and fashion - Online Store for your fashion
+      Yammie | Easy Market - Online Market Store for your Easy Foods
     </title>
     <link rel="stylesheet" href="./font-awesome/css/all.css" />
     <link rel="stylesheet" href="./styles/items.css" />
@@ -20,7 +20,7 @@
     <style>
       .m-ctr {
         margin: 20px auto;
-        width: 85vw;
+        width: 80vw;
       }
       .section-1 {
         display: flex;
@@ -505,13 +505,11 @@
           if (xhr.readyState == 4 && xhr.status == 200) {
             [yammieUsr] = JSON.parse(xhr.responseText);
             console.log(yammieUsr);
-            let greeting = document.querySelector(".h-greeting");
             let account = document.querySelector(".login-text");
-            greeting.classList.add("g-active");
-            account.innerHTML = yammieUsr.c_first_name.toUpperCase();
+            // account.innerHTML = "Hi," + yammieUsr.c_first_name.toUpperCase();
           }
         };
-        xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+        xhr.open("GET", `http://localhost:3000/api/user/${yammie}`, true);
         xhr.send();
       }
     </script>

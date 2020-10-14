@@ -1064,11 +1064,7 @@
               <article class="itm-searched" data-name="">
               <div class="a-s-discount">
                 <span class="d">
-                  ${
-                    itm.item_discount !== null
-                      ? "-" + itm.item_discount + "%"
-                      : ""
-                  }
+                  ${itm.discount !== null ? "-" + itm.discount + "%" : ""}
                 </span>
               </div>
               <div class="itm-s-img">
@@ -1084,16 +1080,16 @@
                   <b>Seller:</b> Yammie Shoppers
                 </div>
                 <div class="itm-name" style="font-size:16px;">
-                  ${itm.item_name} - ${itm.item_qty_description}
+                  ${itm.product} - ${itm.description}
                 </div>
                 <div class="price-current">${
                   "UGX " +
-                  (itm.item_discount
-                    ? (itm.item_price * (100 - itm.item_discount)) / 100
-                    : itm.item_price)
+                  (itm.discount
+                    ? (itm.price * (100 - itm.discount)) / 100
+                    : itm.price)
                 }</div>
                 <div class="price-prev">${
-                  itm.item_discount ? "UGX " + itm.item_price : ""
+                  itm.discount ? "UGX " + itm.price : ""
                 }</div>
                 <div class="location">
                   <i class="fas fa-map-marker-alt"></i>
@@ -1104,28 +1100,22 @@
                   Yammie Delivery
                 </div>
                 <div class="a-t-c add-to-c"
-                  data-id=${itm.item_id}
-                  data-name=${itm.item_name.replace(/ /g, "_")}
-                  data-price=${itm.item_price}
-                  data-description=${itm.item_qty_description.replace(
-                    / /g,
-                    "_"
-                  )}
-                  data-discount=${itm.item_discount}
+                  data-id=${itm.id}
+                  data-name=${itm.product.replace(/ /g, "_")}
+                  data-price=${itm.price}
+                  data-description=${itm.description.replace(/ /g, "_")}
+                  data-discount=${itm.discount}
                 >
                   <img
                     src="./resources/shopping_cart_add_white.svg"
                     alt=""
                     width="25px"
                     height="25px"
-                    data-id=${itm.item_id}
-                    data-name=${itm.item_name.replace(/ /g, "_")}
-                    data-price=${itm.item_price}
-                    data-description=${itm.item_qty_description.replace(
-                      / /g,
-                      "_"
-                    )}
-                    data-discount=${itm.item_discount}
+                    data-id=${itm.id}
+                    data-name=${itm.product.replace(/ /g, "_")}
+                    data-price=${itm.price}
+                    data-description=${itm.description.replace(/ /g, "_")}
+                    data-discount=${itm.discount}
                   />
                   Add to Cart
                 </div>
@@ -1210,7 +1200,7 @@
       };
       xhr.open(
         "GET",
-        `http://localhost:3000/api/search?q=${validSearch}`,
+        `http://localhost:8080/api/user/search?q=${validSearch}`,
         true
       );
       // xhr.setRequestHeader("Content-type", "application/json");
@@ -1252,9 +1242,8 @@
             [yammieUsr] = JSON.parse(xhr1.responseText);
             let greeting = document.querySelector(".h-greeting");
             let account = document.querySelector(".login-text");
-            greeting.classList.add("g-active");
+
             account.innerHTML = yammieUsr.c_first_name.toUpperCase();
-            account.style.marginRight = "75px";
           }
         };
         xhr1.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);

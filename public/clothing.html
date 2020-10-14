@@ -508,9 +508,7 @@
             console.log(yammieUsr);
             let greeting = document.querySelector(".h-greeting");
             let account = document.querySelector(".login-text");
-            greeting.classList.add("g-active");
-            account.innerHTML = yammieUsr.c_first_name.toUpperCase();
-            account.style.marginRight = "75px";
+            account.innerHTML = "Hi," + yammieUsr.c_first_name.toUpperCase();
           }
         };
         xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
