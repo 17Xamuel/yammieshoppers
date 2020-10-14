@@ -7,7 +7,7 @@ const mysql = require("mysql");
 // const { Storage } = require("@google-cloud/storage");
 
 const conn = mysql.createConnection({
-  host: "127.0.0.1",
+  host: "localhost",
   user: "root",
   password: "",
   database: "yammie_db_secure",

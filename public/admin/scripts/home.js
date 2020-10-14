@@ -7,7 +7,12 @@ $(document).ready(function () {
 let xhr = new XMLHttpRequest();
 xhr.onreadystatechange = () => {
   if (xhr.status == 200 && xhr.readyState == 4) {
-    document.getElementById("users-number").innerHTML = xhr.responseText;
+    if(xhr.responseText==""){
+      document.getElementById("users-number").innerHTML=0;
+    }else{
+      document.getElementById("users-number").innerHTML = xhr.responseText;
+    }
+    
   }
 };
 xhr.open("GET", "http://localhost:3000/api/admin/customers", true);

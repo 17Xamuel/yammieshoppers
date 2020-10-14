@@ -8,9 +8,16 @@ request.onreadystatechange = () => {
   if (request.status == 200 && request.readyState == 4) {
     
   let items=  document.querySelectorAll(".items");
+  if(request.responseText=""){
+    items.forEach((item)=>{
+      item.innerHTML=0;
+    })
+  }else{
     items.forEach((item)=>{
       item.innerHTML=request.responseText;
     })
+  }
+    
   }
 };
 request.open(
@@ -23,8 +30,13 @@ request.send();
 const xhr=new XMLHttpRequest();
 xhr.onreadystatechange=()=>{
 if(xhr.status==200&&xhr.readyState==4){
+  if(xhr.responseText=""){
+    document.getElementById("pending").innerHTML=0;
+  }
+  else{
+    document.getElementById("pending").innerHTML=xhr.responseText;
+  }
   
-  document.getElementById("pending").innerHTML=xhr.responseText;
 }
 }
 xhr.open("GET",`http://localhost:3000/api/sellers/pending/${sellerId}`,true);
@@ -33,7 +45,12 @@ xhr.send();
 const xhr1=new XMLHttpRequest();
 xhr1.onreadystatechange=()=>{
   if(xhr1.status==200 && xhr1.readyState==4){
-    document.getElementById("total").innerHTML=xhr1.responseText;
+    if(xhr1.responseText=""){
+      document.getElementById("total").innerHTML=0;
+    }else{
+      document.getElementById("total").innerHTML=xhr1.responseText;
+    }
+    
   }
 }
 xhr1.open("GET",`http://localhost:3000/api/sellers/totalProducts/${sellerId}`,true);
