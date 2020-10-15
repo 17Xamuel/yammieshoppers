@@ -16,6 +16,7 @@
 }
 .-user:hover {
   color: orange;
+  font-size: 18.5px;
 }
 .-c-text {
   padding: 0px 10px;
@@ -62,6 +63,10 @@
 .-user-cart {
   position: relative;
 }
+.-user-cart:hover {
+  font-size: larger;
+}
+
 .cart-text {
   padding: 5px 10px 10px 1px;
   margin: 5px 5px 10px 0px;
@@ -89,7 +94,7 @@
 }
 
 .navsearch {
-  padding: 5px 3px;
+  padding: 5px 1px;
   font-size: 20px;
   border: 0;
   outline: none;
@@ -111,7 +116,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 5px 150px;
+  padding: 5px 175px;
   background-color: #fff;
   z-index: 20;
   height: 8vh;
@@ -119,14 +124,16 @@
 }
 .search {
   border: 1px solid rgb(0, 0, 0, 0.3);
-  padding: 5px 5px 5px 20px;
+  padding: 5px 0px 5px 20px;
   margin: 0px;
   border-radius: 30px;
   width: 32vw;
+  box-shadow: 0px 0px 10px #e4e1e1;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 .search:hover {
   box-shadow: 0px 0px 10px #e4e1e1;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 1px solid #ffbb00;
 }
 #sideNav {
   background-color: rgb(173, 169, 169);

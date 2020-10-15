@@ -507,11 +507,7 @@
               ).textContent = numberFormat.format(total);
             }
           };
-          xhr1.open(
-            "GET",
-            `http://localhost:3000/api/customer/cart/amount/${yammie}`,
-            true
-          );
+          xhr1.open("GET", `/api/user/customer/cart/amount/${yammie}`, true);
           xhr1.send();
         } else {
           document.querySelector(".-dm-e").style.opacity = "1";
@@ -541,11 +537,7 @@
           document.querySelector("#pay").textContent = numberFormat.format(pay);
         }
       };
-      xhr1.open(
-        "GET",
-        `http://localhost:3000/api/customer/cart/amount/${yammie}`,
-        true
-      );
+      xhr1.open("GET", `/api/user/customer/cart/amount/${yammie}`, true);
       xhr1.send();
 
       let pf = document.querySelector("#pay-form");
@@ -583,7 +575,7 @@
           };
           orderRequest.open(
             "POST",
-            `http://localhost:3000/api/customer/order/register/new`,
+            `/api/user/customer/order/register/new`,
             true
           );
           orderRequest.setRequestHeader("Content-Type", "application/json");

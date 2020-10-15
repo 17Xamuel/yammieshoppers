@@ -629,9 +629,6 @@
               console.log("Got");
             } else {
               const res = JSON.parse(xhr.responseText);
-              const useLocalStorage = res.c_password.concat(
-                res.yammie.toString()
-              );
               localStorage.setItem(
                 "https://yammieshoppers.com/useLocalStorage/Storage",
                 res.yammie.toString()
@@ -645,7 +642,7 @@
           }
         };
 
-        xhr.open("POST", "http://localhost:3000/api/customer/lg", true);
+        xhr.open("POST", "/api/user/customer/lg", true);
         xhr.setRequestHeader("content-type", "application/json");
         xhr.send(JSON.stringify(user));
       });
@@ -662,12 +659,10 @@
             [yammieUsr] = JSON.parse(xhr1.responseText);
             let greeting = document.querySelector(".h-greeting");
             let account = document.querySelector(".login-text");
-            greeting.classList.add("g-active");
             account.innerHTML = yammieUsr.c_first_name.toUpperCase();
-            account.style.marginRight = "75px";
           }
         };
-        xhr1.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+        xhr1.open("GET", `/api/user/customer/${yammie}`, true);
         xhr1.send();
       }
     </script>

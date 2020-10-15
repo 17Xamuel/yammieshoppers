@@ -31,11 +31,7 @@ xhr.onreadystatechange = () => {
     document.querySelector(".sellerProducts").innerHTML = row;
   }
 };
-xhr.open(
-  "GET",
-  `http://localhost:3000/api/sellers/getPendingProducts/${sellerId}`,
-  true
-);
+xhr.open("GET", `/api/sellers/getPendingProducts/${sellerId}`, true);
 xhr.send();
 
 const req = new XMLHttpRequest();

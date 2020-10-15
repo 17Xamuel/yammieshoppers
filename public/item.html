@@ -609,7 +609,7 @@
             account.innerHTML = yammieUsr.c_first_name.toUpperCase();
           }
         };
-        xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+        xhr.open("GET", `/api/user/customer/${yammie}`, true);
         xhr.send();
       }
     </script>

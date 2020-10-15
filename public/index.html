@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="./styles/header.css" />
     <link rel="stylesheet" href="./styles/main.css" />
     <link rel="stylesheet" href="./styles/products.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css"
+    />
     <link rel="stylesheet" href="./font-awesome/css/all.css" />
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -149,190 +153,200 @@
   <body>
     <div id="yammie">
       <div class="banner">Banner</div>
-      <div class="search-nav">
-        <div class="logo">
-          <div class="menu">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
+      <div class="nav">
+        <div class="search-nav">
+          <div class="logo">
+            <div class="menu">
+              <div class="line1"></div>
+              <div class="line2"></div>
+              <div class="line3"></div>
+            </div>
+            <a href="./">
+              <img
+                src="./resources/yammie.png"
+                alt="YAMMIE"
+                width="200"
+                height="95%"
+              />
+            </a>
           </div>
-          <a href="./">
-            <img
-              src="./resources/yammie.png"
-              alt="YAMMIE"
-              width="200"
-              height="95%"
-            />
+          <div class="search">
+            <form
+              id="f-search"
+              autocomplete="off"
+              action="./catalog.html"
+              method="GET"
+            >
+              <input
+                type="text"
+                name="q"
+                placeholder="Search Groceries...."
+                class="navsearch"
+                id="v-search"
+              />
+              <button type="submit" id="search-button">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          </div>
+          <div class="-s-sm">
+            <i class="fas fa-search icon"></i>
+            <span class="-s-text-sm">Search</span>
+          </div>
+          <a class="-help -user" href="" id="login">
+            <!-- <span class="material-icons"> question_mark </span> -->
+            <i class="fas fa-question-mark">??</i>
+            <span class="-c-text login-text">Help</span>
+            <i class="fas fa-chevron-down"></i>
           </a>
-        </div>
-        <div class="search">
-          <form
-            id="f-search"
-            autocomplete="off"
-            action="./catalog.html"
-            method="GET"
-          >
-            <input
-              type="text"
-              name="q"
-              placeholder="Search Groceries...."
-              class="navsearch"
-              id="v-search"
-            />
-            <button type="submit" id="search-button">
-              <i class="fas fa-search"></i>
-            </button>
-          </form>
-        </div>
-        <div class="-s-sm">
-          <i class="fas fa-search icon"></i>
-          <span class="-s-text-sm">Search</span>
-        </div>
-        <a class="-user -user-account" href="" id="login">
-          <i class="far fa-user -c-icon"></i>
+          <a class="-user -user-account" href="" id="login">
+            <span class="material-icons"> perm_identity </span>
+            <span class="-c-text login-text">My Account</span>
+            <i class="fas fa-chevron-down"></i>
+          </a>
+          <a class="-user -user-cart" href="./cart.html">
+            <!-- <i class="material-icons" style="font-size: 24px; size: 24px">
+              add_shopping_cart
+            </i> -->
+            <i class="fas fa-shopping-cart" style="font-size: 24px"></i>
+            <span class="cart-number" id="cartNumberItems">0</span>
+          </a>
+          <div id="sideNav">
+            <ul class="s-n-1">
+              <h3 class="sn-categories">Categories</h3>
+              <li class="n-l-itm">
+                <a href="./easy-market.html">
+                  <i class="fas fa-shopping-basket ctg-icon"></i>
+                  EasyMarket with Yammie
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="quick-foods.html">
+                  <i class="fas fa-pizza-slice ctg-icon"></i>
+                  Fast Foods &amp; Drinks
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="phones.html">
+                  <i class="fas fa-headphones-alt ctg-icon"></i>
+                  Phones &amp; Accessories
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="./electronics.html">
+                  <i class="fas fa-charging-station ctg-icon"></i>
+                  Electronics
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="./computing.html">
+                  <i class="fas fa-desktop ctg-icon"></i>
+                  Computing &amp; Accessories
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="./stationery.html">
+                  <i class="fas fa-paperclip ctg-icon"></i>
+                  Stationery
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="./clothing.html">
+                  <i class="fas fa-tshirt ctg-icon"></i>
+                  Clothes &amp; Shoes
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="./kitchen.html">
+                  <i class="fas fa-utensils ctg-icon"></i>
+                  Kitchen Staff &amp; Utensils
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="./kids.html">
+                  <i class="fas fa-child ctg-icon"></i>
+                  Kid's Section
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="./diy.html">
+                  <img src="./resources/clean-hands.png" alt="" />
+                  Cleaning, Healthy &amp; Beauty
+                </a>
+              </li>
+              <li class="n-l-itm">
+                <a href="">
+                  <i class="fas fa-layer-group ctg-icon"></i>
+                  All Items
+                </a>
+              </li>
+            </ul>
+            <ul class="s-n-4">
+              <h3>My Account</h3>
+              <li>
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+              </li>
+              <li>
+                <i class="fas fa-box"></i>
+                <span>My Orders</span>
+              </li>
 
-          <span class="-c-text login-text">My Account</span>
-        </a>
-        <a class="-user -user-cart" href="./cart.html">
-          <span class="material-icons -c-icon"> shopping_cart </span>
-          <span class="cart-number" id="cartNumberItems">0</span>
-          <span class="-c-text">Cart</span>
-        </a>
-        <div id="sideNav">
-          <ul class="s-n-1">
-            <h3 class="sn-categories">Categories</h3>
-            <li class="n-l-itm">
-              <a href="./easy-market.html">
-                <i class="fas fa-shopping-basket ctg-icon"></i>
-                EasyMarket with Yammie
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="quick-foods.html">
-                <i class="fas fa-pizza-slice ctg-icon"></i>
-                Fast Foods &amp; Drinks
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="phones.html">
-                <i class="fas fa-headphones-alt ctg-icon"></i>
-                Phones &amp; Accessories
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="./electronics.html">
-                <i class="fas fa-charging-station ctg-icon"></i>
-                Electronics
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="./computing.html">
-                <i class="fas fa-desktop ctg-icon"></i>
-                Computing &amp; Accessories
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="./stationery.html">
-                <i class="fas fa-paperclip ctg-icon"></i>
-                Stationery
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="./clothing.html">
-                <i class="fas fa-tshirt ctg-icon"></i>
-                Clothes &amp; Shoes
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="./kitchen.html">
-                <i class="fas fa-utensils ctg-icon"></i>
-                Kitchen Staff &amp; Utensils
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="./kids.html">
-                <i class="fas fa-child ctg-icon"></i>
-                Kid's Section
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="./diy.html">
-                <img src="./resources/clean-hands.png" alt="" />
-                Cleaning, Healthy &amp; Beauty
-              </a>
-            </li>
-            <li class="n-l-itm">
-              <a href="">
-                <i class="fas fa-layer-group ctg-icon"></i>
-                All Items
-              </a>
-            </li>
-          </ul>
-          <ul class="s-n-4">
-            <h3>My Account</h3>
-            <li>
-              <i class="fas fa-user"></i>
-              <span>My Profile</span>
-            </li>
-            <li>
-              <i class="fas fa-box"></i>
-              <span>My Orders</span>
-            </li>
-
-            <li>
-              <i class="fas fa-dolly-flatbed"></i>
-              <span>Pending Orders</span>
-            </li>
-            <li>
-              <i class="fas fa-thumbs-up"></i>
-              <span><a href="#">Liked Items</a></span>
-            </li>
-            <li>
-              <i class="fas fa-address-card"></i>
-              <span>My Address</span>
-            </li>
-            <li>
-              <i class="fas fa-user-edit"></i>
-              <span>Edit My Profile</span>
-            </li>
-            <button class="s-n-logout">LOG OUT</button>
-          </ul>
-          <ul class="s-n-2">
-            <h3 class="s-n-how">Products &amp; Groceries</h3>
-            <li><a href="#">Special Order</a></li>
-            <li><a href="#">Delivery Time</a></li>
-            <li><a href="#">Payment Methods</a></li>
-            <li><a href="#">Request An Item</a></li>
-            <li><a href="#">Report an Item</a></li>
-            <li><a href="#">Return Policy</a></li>
-          </ul>
-          <ul class="s-n-3">
-            <h3 class="s-n-how">Explore Yammie</h3>
-            <li><a href="#">About Yammie</a></li>
-            <li><a href="#">How to Order</a></li>
-            <li><a href="#">Our Partners</a></li>
-            <li><a href="#">Terms &amp; Conditions For Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-          </ul>
-          <div class="ftr-down">
-            <div class="ftr-official">
-              &copy; 2020 Yammie. All rights reserved
-              <div class="social-icons">
-                <a href="" class="icon-button"
-                  ><i class="fab fa-facebook-f"></i
-                ></a>
-                <a href="" class="icon-button"
-                  ><i class="fab fa-twitter"></i
-                ></a>
-                <a href="" class="icon-button"
-                  ><i class="fab fa-instagram"></i
-                ></a>
-                <a href="" class="icon-button"
-                  ><i class="fab fa-youtube"></i
-                ></a>
-                <a href="" class="icon-button"
-                  ><i class="fab fa-linkedin"></i
-                ></a>
+              <li>
+                <i class="fas fa-dolly-flatbed"></i>
+                <span>Pending Orders</span>
+              </li>
+              <li>
+                <i class="fas fa-thumbs-up"></i>
+                <span><a href="#">Liked Items</a></span>
+              </li>
+              <li>
+                <i class="fas fa-address-card"></i>
+                <span>My Address</span>
+              </li>
+              <li>
+                <i class="fas fa-user-edit"></i>
+                <span>Edit My Profile</span>
+              </li>
+              <button class="s-n-logout">LOG OUT</button>
+            </ul>
+            <ul class="s-n-2">
+              <h3 class="s-n-how">Products &amp; Groceries</h3>
+              <li><a href="#">Special Order</a></li>
+              <li><a href="#">Delivery Time</a></li>
+              <li><a href="#">Payment Methods</a></li>
+              <li><a href="#">Request An Item</a></li>
+              <li><a href="#">Report an Item</a></li>
+              <li><a href="#">Return Policy</a></li>
+            </ul>
+            <ul class="s-n-3">
+              <h3 class="s-n-how">Explore Yammie</h3>
+              <li><a href="#">About Yammie</a></li>
+              <li><a href="#">How to Order</a></li>
+              <li><a href="#">Our Partners</a></li>
+              <li><a href="#">Terms &amp; Conditions For Use</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+            </ul>
+            <div class="ftr-down">
+              <div class="ftr-official">
+                &copy; 2020 Yammie. All rights reserved
+                <div class="social-icons">
+                  <a href="" class="icon-button"
+                    ><i class="fab fa-facebook-f"></i
+                  ></a>
+                  <a href="" class="icon-button"
+                    ><i class="fab fa-twitter"></i
+                  ></a>
+                  <a href="" class="icon-button"
+                    ><i class="fab fa-instagram"></i
+                  ></a>
+                  <a href="" class="icon-button"
+                    ><i class="fab fa-youtube"></i
+                  ></a>
+                  <a href="" class="icon-button"
+                    ><i class="fab fa-linkedin"></i
+                  ></a>
+                </div>
               </div>
             </div>
           </div>
@@ -879,13 +893,11 @@
           xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 200) {
               [yammieUsr] = JSON.parse(xhr.responseText);
-              let greeting = document.querySelector(".h-greeting");
               let account = document.querySelector(".login-text");
-              greeting.classList.add("g-active");
               account.innerHTML = yammieUsr.c_first_name;
             }
           };
-          xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+          xhr.open("GET", `/api/user/customer/${yammie}`, true);
           xhr.send();
         }
       </script>

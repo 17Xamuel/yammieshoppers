@@ -4,22 +4,18 @@ const fs = require("fs");
 const multer = require("multer");
 const uuid = require("uuid");
 const mysql = require("mysql");
-// const { Storage } = require("@google-cloud/storage");
+const { Storage } = require("@google-cloud/storage");
+const conn = require("./database/db.js");
 
-const conn = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "yammie_db_secure",
-});
-
-conn.connect((err) => {
-  if (err) throw err;
-  console.log("Database connected....");
-});
+const PORT = process.env.PORT || 8000;
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use("/api/admin/", require("./routes/adminRoutes"));
+app.use("/api/user/", require("./routes/userRoutes"));
+app.use("/api/sellers/", require("./routes/sellerRoutes"));
 
 //cloud storage
-
 // const cloudStorage = new Storage({
 //   keyFilename: path.join(
 //     __dirname + "/speedy-equator-291708-dc81eeec366e.json"
@@ -44,9 +40,6 @@ function getUpload(id) {
   const upload = multer({ storage: getStorage(id) }).array("images");
   return upload;
 }
-
-const PORT = process.env.PORT || 8000;
-const app = express();
 
 app.use(express.static("public"));
 

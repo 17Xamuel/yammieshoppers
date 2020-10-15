@@ -1069,8 +1069,8 @@
               </div>
               <div class="itm-s-img">
                 <img
-                  src="./resources/image-slider/slider-image-1.jpg"
-                  alt="Lato Milk 0.5kg Tin packed"
+                  src="${JSON.parse(itm.images)[0]}"
+                  alt="${itm.name}"
                   width="90%"
                   height="75%"
                 />
@@ -1198,11 +1198,7 @@
           }
         }
       };
-      xhr.open(
-        "GET",
-        `http://localhost:8080/api/user/search?q=${validSearch}`,
-        true
-      );
+      xhr.open("GET", `/api/user/search?q=${validSearch}`, true);
       // xhr.setRequestHeader("Content-type", "application/json");
       xhr.send();
 
@@ -1246,7 +1242,7 @@
             account.innerHTML = yammieUsr.c_first_name.toUpperCase();
           }
         };
-        xhr1.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+        xhr1.open("GET", `/api/user/customer/${yammie}`, true);
         xhr1.send();
       }
     </script>

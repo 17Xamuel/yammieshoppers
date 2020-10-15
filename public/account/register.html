@@ -710,7 +710,7 @@
               window.location.reload();
             }
           };
-          xhr.open("POST", "http://localhost:3000/api/customer/insert", true);
+          xhr.open("POST", "/api/user/customer/insert", true);
           xhr.setRequestHeader("Content-type", "application/json");
           xhr.send(JSON.stringify(validUser));
         }

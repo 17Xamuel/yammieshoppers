@@ -506,12 +506,12 @@
           if (xhr.readyState == 4 && xhr.status == 200) {
             [yammieUsr] = JSON.parse(xhr.responseText);
             console.log(yammieUsr);
-            let greeting = document.querySelector(".h-greeting");
             let account = document.querySelector(".login-text");
+
             account.innerHTML = "Hi," + yammieUsr.c_first_name.toUpperCase();
           }
         };
-        xhr.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+        xhr.open("GET", `/api/user/customer/${yammie}`, true);
         xhr.send();
       }
     </script>

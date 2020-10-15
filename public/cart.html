@@ -976,11 +976,7 @@
       st.addEventListener("click", () => {
         if (yammie) {
           let xhr2 = new XMLHttpRequest();
-          xhr2.open(
-            "POST",
-            `http://localhost:3000/api/customer/cart/amount/${yammie}`,
-            true
-          );
+          xhr2.open("POST", `/api/user/customer/cart/amount/${yammie}`, true);
           xhr2.setRequestHeader("Content-type", "application/json");
           xhr2.send(JSON.stringify([totalAmount(), yammie]));
           window.location.assign("orders/checkout.html");
@@ -1020,7 +1016,7 @@
             account.innerHTML = yammieUsr.c_first_name.toUpperCase();
           }
         };
-        xhr1.open("GET", `http://localhost:3000/api/customer/${yammie}`, true);
+        xhr1.open("GET", `/api/user/customer/${yammie}`, true);
         xhr1.send();
       }
     </script>
