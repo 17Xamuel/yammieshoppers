@@ -42,7 +42,6 @@ request.onreadystatechange = () => {
             if (request.responseText == "Confirmed") window.location.reload();
           }
         };
-        request.open("GET", `/api/admin/confirmseller/${confirmSeller}`, true);
         request.send();
       });
     });
