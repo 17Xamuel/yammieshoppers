@@ -43,6 +43,7 @@ orders.onreadystatechange = () =>{
      </tr>`
      });
      document.getElementById("pendingOrders").innerHTML=row;
+
   }
 }
 orders.open("GET","/api/admin/pendingOrders",true);
