@@ -23,7 +23,7 @@ login.addEventListener("submit", (e) => {
     }
   };
   let sellerString = JSON.stringify(seller);
-  xhr.open("POST", "http://localhost:3000/api/sellers/loginSeller", true);
+  xhr.open("POST", "/api/sellers/loginSeller", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(sellerString);
 });

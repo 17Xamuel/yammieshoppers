@@ -32,7 +32,7 @@ request.onreadystatechange = () => {
         };
         request.open(
           "GET",
-          `http://localhost:3000/api/admin/deleteSeller/${deleteSeller}`,
+          `/api/admin/deleteSeller/${deleteSeller}`,
           true
         );
         request.send();
@@ -48,7 +48,7 @@ request.onreadystatechange = () => {
         };
         request.open(
           "GET",
-          `http://localhost:3000/api/admin/confirmseller/${confirmSeller}`,
+          `/api/admin/confirmseller/${confirmSeller}`,
           true
         );
         request.send();
@@ -56,7 +56,7 @@ request.onreadystatechange = () => {
     });
   }
 };
-request.open("GET", "http://localhost:3000/api/admin/sellerRequests", true);
+request.open("GET", "/api/admin/sellerRequests", true);
 request.send();
 
 const xhr = new XMLHttpRequest();
@@ -140,7 +140,7 @@ xhr.onreadystatechange = () => {
         };
         xhr.open(
           "GET",
-          `http://localhost:3000/api/admin/confirmProduct/${acceptProduct}`,
+          `/api/admin/confirmProduct/${acceptProduct}`,
           true
         );
         xhr.send();
@@ -148,5 +148,5 @@ xhr.onreadystatechange = () => {
     });
   }
 };
-xhr.open("GET", "http://localhost:3000/api/admin/pendingProduct", true);
+xhr.open("GET", "/api/admin/pendingProduct", true);
 xhr.send();

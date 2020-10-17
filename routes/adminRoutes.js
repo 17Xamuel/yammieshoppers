@@ -10,6 +10,7 @@ router.get("/customers", async (req, res) => {
     res.json(result.length);
   });
 });
+
 //End Customer Routes
 
 //Seller Routes
@@ -80,7 +81,7 @@ router.get("/pendingProduct", async (req, res) => {
 
 router.get("/confirmProduct/:id", async (req, res) => {
   conn.query(
-    "SELECT *FROM pending_products WHERE id=?",
+    "SELECT * FROM pending_products WHERE id = ? ",
     [req.params.id],
     (err, result) => {
       if (err) {
@@ -100,6 +101,20 @@ router.get("/confirmProduct/:id", async (req, res) => {
       }
     }
   );
+});
+
+router.get("/orderNumber", async (req,res) => {
+  conn.query(`SELECT * FROM pending_orders`, (err,result) => {
+    if(err) throw err;
+    res.json(result.length);
+  });
+});
+
+router.get("/pendingOrders", async (req,res) =>{
+  conn.query(`SELECT * FROM pending_orders`, (err,results) =>{
+    if(err) throw err;
+    res.json(results);
+  });
 });
 
 //End Item Routes

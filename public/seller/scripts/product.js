@@ -64,7 +64,7 @@ req.onreadystatechange = () => {
 };
 req.open(
   "GET",
-  `http://localhost:3000/api/sellers/getApprovedProducts/${sellerId}`,
+  `/api/sellers/getApprovedProducts/${sellerId}`,
   true
 );
 req.send();

@@ -15,8 +15,37 @@ xhr.onreadystatechange = () => {
     
   }
 };
-xhr.open("GET", "http://localhost:3000/api/admin/customers", true);
+xhr.open("GET", "/api/admin/customers", true);
 xhr.send();
+
+const orders = new XMLHttpRequest();
+orders.onreadystatechange = () =>{
+  if(orders.status==200 && orders.readyState==4){
+     console.log(orders.responseText);
+     let pendingOrders=JSON.parse(orders.responseText);
+     let row="";
+     pendingOrders.forEach((order) =>{
+       row+=`   <tr>
+       <td>${order.order_number}</td>
+       <td>${order.order_amount}</td>
+       <td>${order.order_delivery_method}</td>
+       <td>
+         <button type="button" class="btn btn-info btn-sm">
+           Details
+         </button>
+       </td>
+       <td>
+         <button type="button" class="btn btn-success btn-sm">
+           Cleared
+         </button>
+       </td>
+     </tr>`
+     });
+     document.getElementById("pendingOrders").innerHTML=row;
+  }
+}
+orders.open("GET","/api/admin/pendingOrders",true);
+orders.send();
 
 //Showing Date
 const currentdate = new Date();
