@@ -321,7 +321,7 @@
         </div>
         <div class="-help -user">
           <button class="-dropdown -hp">
-            <i class="far fa-user"></i>
+            <i class="far fa-question-circle"></i>
             <span class="-c-text">Help</span>
             <i class="fas fa-chevron-down chev"></i>
           </button>
@@ -361,7 +361,7 @@
         <div class="-account -user">
           <button class="-dropdown -acc">
             <i class="far fa-user"></i>
-            <span class="-c-text">My Account</span>
+            <span class="-c-text -acc-name">My Account</span>
             <i class="fas fa-chevron-down chev-acc"></i>
           </button>
           <ul class="-help-list -acc-l">
@@ -403,7 +403,7 @@
             <i class="fas fa-search"></i>
           </div>
           <a href="./cart.html" style="position: relative">
-            <i class="fas fa-shopping-cart" style="font-size: 24px"></i>
+            <i class="fas fa-cart-plus" style="font-size: 24px"></i>
             <span class="cart-number" id="cartNumberItems">0</span>
           </a>
         </div>
@@ -829,35 +829,46 @@
     </footer>
     <!--scripts-->
     <script>
+      //yammie
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
       //header
       let acc = document.querySelector(".-acc");
       let hp = document.querySelector(".-hp");
 
       acc.addEventListener("focus", (e) => {
+        e.target.style.color = "#ffbb00";
         document
           .querySelector(".chev-acc")
           .classList.replace("fa-chevron-down", "fa-chevron-up");
         document.querySelector(".-acc-l").style.display = "flex";
       });
       acc.addEventListener("blur", (e) => {
+        e.target.style.color = "#000";
         document
           .querySelector(".chev-acc")
           .classList.replace("fa-chevron-up", "fa-chevron-down");
         document.querySelector(".-acc-l").style.display = "none";
       });
       hp.addEventListener("focus", (e) => {
+        e.target.style.color = "#ffbb00";
         document
           .querySelector(".chev")
           .classList.replace("fa-chevron-down", "fa-chevron-up");
         document.querySelector(".-hlp").style.display = "flex";
       });
       hp.addEventListener("blur", (e) => {
+        e.target.style.color = "#000";
         document
           .querySelector(".chev")
           .classList.replace("fa-chevron-up", "fa-chevron-down");
         document.querySelector(".-hlp").style.display = "none";
       });
 
+      if (!yammie) {
+        //What happens when not logged in
+      }
       //side
       const closeSide = document.querySelector(".-c-side");
       const menu = document.querySelector(".menu");
@@ -903,10 +914,6 @@
       timerFunc();
     </script>
     <script>
-      let yammie = localStorage.getItem(
-        "https://yammieshoppers.com/useLocalStorage/Storage"
-      );
-
       closeAppBanner.addEventListener("click", () => {
         AppBanner.style.display = "none";
       });
@@ -928,7 +935,7 @@
 
         let changeSlide = setInterval(() => {
           showSlides((slideIndex += 1));
-        }, 5000);
+        }, 7000);
         // Next/previous controls
         function plusSlides(n) {
           showSlides((slideIndex += n));
@@ -969,8 +976,8 @@
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             [yammieUsr] = JSON.parse(xhr.responseText);
-            let account = document.querySelector(".login-text");
-            account.innerHTML = yammieUsr.c_first_name;
+            let account = document.querySelector(".-acc-name");
+            account.innerHTML = "Hi " + yammieUsr.c_first_name;
           }
         };
         xhr.open("GET", `/api/user/customer/${yammie}`, true);

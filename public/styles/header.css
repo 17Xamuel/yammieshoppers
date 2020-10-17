@@ -53,6 +53,9 @@
   font-size: 15px;
   cursor: pointer;
 }
+.-dropdown:hover {
+  color: #ffbb00;
+}
 .-c-text {
   padding: 0px 10px;
 }
@@ -76,12 +79,12 @@
   position: absolute;
   background-color: #ffbb00;
   border-radius: 50%;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   text-align: center;
   top: -10px;
   left: 14px;
-  font-size: 15px;
+  font-size: 14px;
   color: white;
 }
 .d-app {
@@ -139,17 +142,15 @@
   min-height: fit-content;
 }
 .search {
-  border: 1px solid rgb(0, 0, 0, 0.3);
+  border: 1px solid rgb(0, 0, 0, 0.1);
   padding: 5px 0px 5px 20px;
   margin: 0px;
   border-radius: 30px;
   width: 32vw;
-  box-shadow: 0px 0px 10px #e4e1e1;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px #e4e1e1;
 }
 .search:hover {
-  box-shadow: 0px 0px 10px #e4e1e1;
-  border: 1px solid #ffbb00;
+  box-shadow: 0px 0px 15px #e4e1e1;
 }
 .-icon-sm {
   margin-right: 24px;

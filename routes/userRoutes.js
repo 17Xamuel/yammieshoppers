@@ -113,13 +113,14 @@ router.get("/customer/cart/amount/:id", (req, res) => {
 });
 
 // new order
-router.post("/customer/order/register/new", (req, res) => {
+router.post("/customer/order", (req, res) => {
   const [
     order_payment_method,
     c_id,
     order_items,
     order_amount,
     order_delivery_method,
+    order_number,
   ] = req.body;
   conn.query(
     "INSERT INTO pending_orders SET ? ",
@@ -130,6 +131,7 @@ router.post("/customer/order/register/new", (req, res) => {
       order_amount,
       order_payment_method,
       c_id,
+      order_number,
     },
     (err, result) => {
       if (err) throw err;

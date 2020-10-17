@@ -1,6 +1,7 @@
 .m-ctr {
   margin: 10px auto;
   width: 75vw;
+  min-width: 1240px;
   position: relative;
 }
 .container1 {
@@ -9,6 +10,7 @@
   width: 100%;
   justify-content: space-between;
   margin: 20px 0px;
+  min-width: 100%;
 }
 .categories {
   display: flex;
@@ -107,8 +109,6 @@
   .slideshow-container {
     min-width: 95vw;
     width: 95vw;
-    /* display: flex; */
-    /* overflow-x: scroll; */
   }
   .mySlides {
     display: block;

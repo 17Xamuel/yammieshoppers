@@ -557,29 +557,35 @@
           order.append("order", orderContent);
           order.append("amount", document.querySelector("#total").textContent);
           order.append("dm", orderInfo.dm);
+          function rs(l) {
+            var rc =
+              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var r = "";
+            for (var i = 0; i < l; i++) {
+              r += rc.charAt(Math.floor(Math.random() * rclength));
+            }
+            return r;
+          }
+          order.append("n", rs(5));
           order.forEach((key) => {
             multiOrder.push(key);
           });
 
-          let orderRequest = new XMLHttpRequest();
-          orderRequest.onreadystatechange = () => {
-            if (orderRequest.readyState == 4 && orderRequest.status == 200) {
+          let request = new XMLHttpRequest();
+          request.onreadystatechange = () => {
+            if (request.readyState == 4 && request.status == 200) {
               localStorage.removeItem("cartItems");
               localStorage.removeItem("cartNumber");
-              if (orderRequest.responseText == "mm") {
+              if (request.responseText == "mm") {
                 window.location.assign("../orders/finishup.html");
               } else {
                 window.location.assign("../orders/cashondelivery.html");
               }
             }
           };
-          orderRequest.open(
-            "POST",
-            `/api/user/customer/order/register/new`,
-            true
-          );
-          orderRequest.setRequestHeader("Content-Type", "application/json");
-          orderRequest.send(JSON.stringify(multiOrder));
+          request.open("POST", `/api/user/customer/order/`, true);
+          request.setRequestHeader("Content-Type", "application/json");
+          request.send(JSON.stringify(multiOrder));
         }
       });
     </script>
