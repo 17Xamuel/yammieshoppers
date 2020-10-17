@@ -15,16 +15,7 @@ app.use("/api/admin/", require("./routes/adminRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
 app.use("/api/sellers/", require("./routes/sellerRoutes"));
 
-//cloud storage
-// const cloudStorage = new Storage({
-//   keyFilename: path.join(
-//     __dirname + "/speedy-equator-291708-dc81eeec366e.json"
-//   ),
-//   projectId: "speedy-equator-291708",
-// });
-// cloudStorage.getBuckets().then((bucket) => {
-//   console.log(bucket);
-// });
+
 function getStorage(id) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {

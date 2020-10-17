@@ -15,7 +15,7 @@ xhr.onreadystatechange = () => {
     
   }
 };
-xhr.open("GET", "http://localhost:3000/api/admin/customers", true);
+xhr.open("GET", "/api/admin/customers", true);
 xhr.send();
 
 //Showing Date

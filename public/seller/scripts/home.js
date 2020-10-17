@@ -22,7 +22,7 @@ request.onreadystatechange = () => {
 };
 request.open(
   "GET",
-  `http://localhost:3000/api/sellers/items/${sellerId}`,
+  `/api/sellers/items/${sellerId}`,
   true
 );
 request.send();
@@ -39,7 +39,7 @@ if(xhr.status==200&&xhr.readyState==4){
   
 }
 }
-xhr.open("GET",`http://localhost:3000/api/sellers/pending/${sellerId}`,true);
+xhr.open("GET",`/api/sellers/pending/${sellerId}`,true);
 xhr.send();
 
 const xhr1=new XMLHttpRequest();
@@ -53,5 +53,5 @@ xhr1.onreadystatechange=()=>{
     
   }
 }
-xhr1.open("GET",`http://localhost:3000/api/sellers/totalProducts/${sellerId}`,true);
+xhr1.open("GET",`/api/sellers/totalProducts/${sellerId}`,true);
 xhr1.send();

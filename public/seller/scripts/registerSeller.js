@@ -19,7 +19,7 @@ sellerForm.addEventListener("submit", (e) => {
       document.getElementById("messages").innerHTML = xhr.responseText;
     }
   };
-  xhr.open("POST", "http://localhost:3000/api/sellers/registerSeller", true);
+  xhr.open("POST", "/api/sellers/registerSeller", true);
   xhr.setRequestHeader("Content-Type", "application/json");
   xhr.send(sellerString);
 });
