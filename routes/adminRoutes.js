@@ -40,7 +40,7 @@ router.get("/confirmSeller/:id", async (req, res) => {
         console.log(err);
       } else {
         conn.query("INSERT INTO sellers SET ? ", result, (error, results) => {
-          if (error) throw errpr;
+          if (error) throw error;
           conn.query(
             "DELETE FROM pending_sellers WHERE id = ? ",
             [req.params.id],

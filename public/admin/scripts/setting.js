@@ -48,7 +48,7 @@ request.onreadystatechange = () => {
         };
         request.open(
           "GET",
-          `/api/admin/confirmseller/${confirmSeller}`,
+          `/api/admin/confirmSeller/${confirmSeller}`,
           true
         );
         request.send();
@@ -131,21 +131,16 @@ xhr.onreadystatechange = () => {
     });
 
    let acceptButtons = document.querySelectorAll(".-a-product");
-    acceptButtons.forEach((acceptButton) => {
-      acceptButton.addEventListener("click", (e) => {
-        let acceptProduct = e.target.dataset.id;
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-          }
-        };
-        xhr.open(
-          "GET",
-          `/api/admin/confirmProduct/${acceptProduct}`,
-          true
-        );
-        xhr.send();
-      });
-    });
+   acceptButtons.forEach((acceptButton)=>{
+     acceptButton.addEventListener("click",(e)=>{
+       let acceptProduct=e.target.dataset.id;
+       xhr.onreadystatechange=()=>{
+          console.log(xhr.responseText);
+       }
+       xhr.open("GET",`/api/admin/confirmProduct/${acceptProduct}`);
+       xhr.send();
+     })
+   })
   }
 };
 xhr.open("GET", "/api/admin/pendingProduct", true);

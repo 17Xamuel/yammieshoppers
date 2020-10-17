@@ -21,7 +21,7 @@ xhr.send();
 const orders = new XMLHttpRequest();
 orders.onreadystatechange = () =>{
   if(orders.status==200 && orders.readyState==4){
-     console.log(orders.responseText);
+     
      let pendingOrders=JSON.parse(orders.responseText);
      let row="";
      pendingOrders.forEach((order) =>{
@@ -30,9 +30,10 @@ orders.onreadystatechange = () =>{
        <td>${order.order_amount}</td>
        <td>${order.order_delivery_method}</td>
        <td>
+       <a href="order.html?order_id=${order.order_id}">
          <button type="button" class="btn btn-info btn-sm">
            Details
-         </button>
+         </button></a>
        </td>
        <td>
          <button type="button" class="btn btn-success btn-sm">
@@ -72,3 +73,4 @@ if (hours == 0) {
 }
 document.getElementById("showTime").innerHTML =
   hours + ":" + minutes + " " + suffix;
+
