@@ -1,4 +1,3 @@
-
 const request = new XMLHttpRequest();
 request.onreadystatechange = () => {
   if (request.readyState == 4 && request.status == 200) {
@@ -30,11 +29,7 @@ request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
           }
         };
-        request.open(
-          "GET",
-          `/api/admin/deleteSeller/${deleteSeller}`,
-          true
-        );
+        request.open("GET", `/api/admin/deleteSeller/${deleteSeller}`, true);
         request.send();
       });
     });
@@ -44,13 +39,10 @@ request.onreadystatechange = () => {
         let confirmSeller = e.target.dataset.id;
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
+            if (request.responseText == "Confirmed") window.location.reload();
           }
         };
-        request.open(
-          "GET",
-          `/api/admin/confirmseller/${confirmSeller}`,
-          true
-        );
+        request.open("GET", `/api/admin/confirmseller/${confirmSeller}`, true);
         request.send();
       });
     });
@@ -108,41 +100,34 @@ xhr.onreadystatechange = () => {
     document.getElementById("pendingProducts").innerHTML = rows;
     document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
 
-   let deleteButtons = document.querySelectorAll(".-d-product");
+    let deleteButtons = document.querySelectorAll(".-d-product");
     deleteButtons.forEach((deleteButton) => {
       deleteButton.addEventListener("click", (e) => {
         let deleteProduct = e.target.dataset.id;
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            if(xhr.responseText == 'Deleted'){
+            if (xhr.responseText == "Deleted") {
               window.location.reload();
-            }else{
-              console.log('Error');
+            } else {
+              console.log("Error");
             }
           }
         };
-        xhr.open(
-          "DELETE",
-          `/deleteProduct/${deleteProduct}`,
-          true
-        );
+        xhr.open("DELETE", `/deleteProduct/${deleteProduct}`, true);
         xhr.send({});
       });
     });
 
-   let acceptButtons = document.querySelectorAll(".-a-product");
+    let acceptButtons = document.querySelectorAll(".-a-product");
     acceptButtons.forEach((acceptButton) => {
       acceptButton.addEventListener("click", (e) => {
         let acceptProduct = e.target.dataset.id;
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
+            if (xhr.responseText == "Accepted") window.location.reload();
           }
         };
-        xhr.open(
-          "GET",
-          `/api/admin/confirmProduct/${acceptProduct}`,
-          true
-        );
+        xhr.open("GET", `/api/admin/confirmProduct/${acceptProduct}`, true);
         xhr.send();
       });
     });

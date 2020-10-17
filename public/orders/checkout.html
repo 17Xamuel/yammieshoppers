@@ -217,8 +217,8 @@
       }
       @media screen and (max-width: 1024px) {
         .p-order-steps {
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          column-gap: 1.1rem;
+          grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+          column-gap: 2rem;
         }
         .order-f {
           display: none;
@@ -558,13 +558,12 @@
           order.append("amount", document.querySelector("#total").textContent);
           order.append("dm", orderInfo.dm);
           function rs(l) {
-            var rc =
-              "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var rc = "YAMMIESHOPPERS";
             var r = "";
             for (var i = 0; i < l; i++) {
-              r += rc.charAt(Math.floor(Math.random() * rclength));
+              r += rc.charAt(Math.floor(Math.random() * rc.length));
             }
-            return r;
+            return "YAMMIE" + r + "S";
           }
           order.append("n", rs(5));
           order.forEach((key) => {

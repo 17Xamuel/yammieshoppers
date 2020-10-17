@@ -40,7 +40,7 @@ router.get("/confirmSeller/:id", async (req, res) => {
         console.log(err);
       } else {
         conn.query("INSERT INTO sellers SET ? ", result, (error, results) => {
-          if (error) throw errpr;
+          if (error) throw error;
           conn.query(
             "DELETE FROM pending_sellers WHERE id = ? ",
             [req.params.id],
@@ -88,6 +88,7 @@ router.get("/confirmProduct/:id", async (req, res) => {
         console.log(err);
       } else {
         conn.query("INSERT INTO products SET ? ", result, (error, results) => {
+          console.log(error);
           if (error) throw err;
           conn.query(
             "DELETE FROM pending_products WHERE id = ? ",
@@ -103,16 +104,16 @@ router.get("/confirmProduct/:id", async (req, res) => {
   );
 });
 
-router.get("/orderNumber", async (req,res) => {
-  conn.query(`SELECT * FROM pending_orders`, (err,result) => {
-    if(err) throw err;
+router.get("/orderNumber", async (req, res) => {
+  conn.query(`SELECT * FROM pending_orders`, (err, result) => {
+    if (err) throw err;
     res.json(result.length);
   });
 });
 
-router.get("/pendingOrders", async (req,res) =>{
-  conn.query(`SELECT * FROM pending_orders`, (err,results) =>{
-    if(err) throw err;
+router.get("/pendingOrders", async (req, res) => {
+  conn.query(`SELECT * FROM pending_orders`, (err, results) => {
+    if (err) throw err;
     res.json(results);
   });
 });

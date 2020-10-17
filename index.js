@@ -15,7 +15,6 @@ app.use("/api/admin/", require("./routes/adminRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
 app.use("/api/sellers/", require("./routes/sellerRoutes"));
 
-
 function getStorage(id) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -61,29 +60,29 @@ app.post("/addProduct", async (req, res) => {
     if (category == "Electronics") {
       categories = "1";
     }
-    // conn.query(
-    //   "INSERT INTO pending_products SET ?",
-    //   {
-    //     id: productId,
-    //     product: product,
-    //     price: price,
-    //     description: description,
-    //     brand: brand,
-    //     category: categories,
-    //     subcategory: subcategory,
-    //     discount: discount,
-    //     images: path,
-    //     seller_id: seller_id,
-    //     quantity: quantity,
-    //   },
-    //   (err, results) => {
-    //     if (err) {
-    //       console.log(err);
-    //     } else {
-    //       res.redirect("http://localhost:8000/seller/product.html");
-    //     }
-    //   }
-    // );
+    conn.query(
+      "INSERT INTO pending_products SET ?",
+      {
+        id: productId,
+        product: product,
+        price: price,
+        description: description,
+        brand: brand,
+        category: categories,
+        subcategory: subcategory,
+        discount: discount,
+        images: path,
+        seller_id: seller_id,
+        quantity: quantity,
+      },
+      (err, results) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.redirect("http://localhost:8000/seller/product.html");
+        }
+      }
+    );
   });
 });
 app.get("/uploads/images/products/:imageName", async (req, res) => {
@@ -100,25 +99,25 @@ function deleteImages(image) {
   });
 }
 app.delete("/deleteProduct/:id", async (req, res) => {
-  // conn.query(
-  //   "SELECT images from pending_products WHERE id = ?",
-  //   [req.params.id],
-  //   (err, results) => {
-  //     if (err) throw "Error" + err;
-  //     let images = JSON.parse(results[0].images);
-  //     images.forEach((image) => {
-  //       deleteImages(image);
-  //     });
-  //     conn.query(
-  //       "DELETE FROM pending_products WHERE id=?",
-  //       [req.params.id],
-  //       async (err, results) => {
-  //         if (err) throw err;
-  //         res.send("Deleted");
-  //       }
-  //     );
-  //   }
-  // );
+  conn.query(
+    "SELECT images from pending_products WHERE id = ?",
+    [req.params.id],
+    (err, results) => {
+      if (err) throw "Error" + err;
+      let images = JSON.parse(results[0].images);
+      images.forEach((image) => {
+        deleteImages(image);
+      });
+      conn.query(
+        "DELETE FROM pending_products WHERE id=?",
+        [req.params.id],
+        async (err, results) => {
+          if (err) throw err;
+          res.send("Deleted");
+        }
+      );
+    }
+  );
 });
 
 app.get("/uploads/images/products/:imageName", (req, res) => {
