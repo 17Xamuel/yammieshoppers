@@ -213,7 +213,7 @@
                             
                                   <ul class="list-inline ">
                                     <li class="text-left ml-5">No of Items Ordered:<span id="items">4</span></li>
-                                    <li class="text-right mr-5">Order Date: <span>27/07/2021</span></li>
+                                    <li class="text-right mr-5">Order Date: <span id="date">27/07/2021</span></li>
                                   </ul>
                                   <ul class="list-inline ">
                                     <li class="text-left ml-5">Payment Method:<span id="method">Cash On Delivery</span></li>
@@ -310,7 +310,21 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script src="scripts/home.js"></script>
+    <script>
+      const orders = new XMLHttpRequest();
+orders.onreadystatechange = () =>{
+  if(orders.status==200 && orders.readyState==4){
+     
+     let pendingOrders=JSON.parse(orders.responseText);
+     console.log(pendingOrders);
+     document.getElementById("ordernumber").innerHTML=pendingOrders.order_number;
+     document.getElementById("date").innerHTML=pendingOrders.order_date;
+
+  }
+}
+orders.open("GET","/api/admin/pendingOrders",true);
+orders.send();
+    </script>
     <!-- End Scripts -->
   </body>
 </html>
