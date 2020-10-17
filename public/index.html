@@ -31,7 +31,7 @@
         border-radius: 50%;
         right: -10%;
         bottom: 1%;
-        z-index: 40;
+        z-index: 35;
         text-align: center;
         padding: 5px;
         font-size: 20px;
@@ -96,8 +96,8 @@
       /* The dots/bullets/indicators */
       .dot {
         cursor: pointer;
-        height: 15px;
-        width: 15px;
+        height: 10px;
+        width: 10px;
         margin: 0 2px;
         background-color: #bbb;
         border-radius: 50%;
@@ -151,788 +151,866 @@
     </style>
   </head>
   <body>
-    <div id="yammie">
-      <div class="banner">Banner</div>
-      <div class="nav">
-        <div class="search-nav">
-          <div class="logo">
-            <div class="menu">
-              <div class="line1"></div>
-              <div class="line2"></div>
-              <div class="line3"></div>
-            </div>
-            <a href="./">
-              <img
-                src="./resources/yammie.png"
-                alt="YAMMIE"
-                width="200"
-                height="95%"
-              />
-            </a>
-          </div>
-          <div class="search">
-            <form
-              id="f-search"
-              autocomplete="off"
-              action="./catalog.html"
-              method="GET"
-            >
-              <input
-                type="text"
-                name="q"
-                placeholder="Search Groceries...."
-                class="navsearch"
-                id="v-search"
-              />
-              <button type="submit" id="search-button">
-                <i class="fas fa-search"></i>
-              </button>
-            </form>
-          </div>
-          <div class="-s-sm">
-            <i class="fas fa-search icon"></i>
-            <span class="-s-text-sm">Search</span>
-          </div>
-          <a class="-help -user" href="" id="login">
-            <!-- <span class="material-icons"> question_mark </span> -->
-            <i class="fas fa-question-mark">??</i>
-            <span class="-c-text login-text">Help</span>
-            <i class="fas fa-chevron-down"></i>
+    <div id="sidenav">
+      <span class="-c-side" style="font-size: 35px">&times;</span>
+      <ul class="s-n-1">
+        <h3 class="sn-categories">Categories</h3>
+        <li class="n-l-itm">
+          <a href="./easy-market.html">
+            <i class="fas fa-shopping-basket ctg-icon"></i>
+            EasyMarket with Yammie
           </a>
-          <a class="-user -user-account" href="" id="login">
-            <span class="material-icons"> perm_identity </span>
-            <span class="-c-text login-text">My Account</span>
-            <i class="fas fa-chevron-down"></i>
+        </li>
+        <li class="n-l-itm">
+          <a href="quick-foods.html">
+            <i class="fas fa-pizza-slice ctg-icon"></i>
+            Fast Foods &amp; Drinks
           </a>
-          <a class="-user -user-cart" href="./cart.html">
-            <!-- <i class="material-icons" style="font-size: 24px; size: 24px">
-              add_shopping_cart
-            </i> -->
+        </li>
+        <li class="n-l-itm">
+          <a href="phones.html">
+            <i class="fas fa-headphones-alt ctg-icon"></i>
+            Phones &amp; Accessories
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./electronics.html">
+            <i class="fas fa-charging-station ctg-icon"></i>
+            Electronics
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./computing.html">
+            <i class="fas fa-desktop ctg-icon"></i>
+            Computing &amp; Accessories
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./stationery.html">
+            <i class="fas fa-paperclip ctg-icon"></i>
+            Stationery
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./clothing.html">
+            <i class="fas fa-tshirt ctg-icon"></i>
+            Clothes &amp; Shoes
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./kitchen.html">
+            <i class="fas fa-utensils ctg-icon"></i>
+            Kitchen Staff &amp; Utensils
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./kids.html">
+            <i class="fas fa-child ctg-icon"></i>
+            Kid's Section
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./diy.html">
+            <img src="./resources/clean-hands.png" alt="" />
+            Cleaning, Healthy &amp; Beauty
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="">
+            <i class="fas fa-layer-group ctg-icon"></i>
+            All Items
+          </a>
+        </li>
+      </ul>
+      <ul class="s-n-4">
+        <h3>My Account</h3>
+        <li>
+          <i class="fas fa-user"></i>
+          <span>My Profile</span>
+        </li>
+        <li>
+          <i class="fas fa-box"></i>
+          <span>My Orders</span>
+        </li>
+
+        <li>
+          <i class="fas fa-dolly-flatbed"></i>
+          <span>Pending Orders</span>
+        </li>
+        <li>
+          <i class="fas fa-thumbs-up"></i>
+          <span><a href="#">Liked Items</a></span>
+        </li>
+        <li>
+          <i class="fas fa-address-card"></i>
+          <span>My Address</span>
+        </li>
+        <li>
+          <i class="fas fa-user-edit"></i>
+          <span>Edit My Profile</span>
+        </li>
+        <button class="s-n-logout">LOG OUT</button>
+      </ul>
+      <ul class="s-n-2">
+        <h3 class="s-n-how">Products &amp; Groceries</h3>
+        <li><a href="#">Special Order</a></li>
+        <li><a href="#">Delivery Time</a></li>
+        <li><a href="#">Payment Methods</a></li>
+        <li><a href="#">Request An Item</a></li>
+        <li><a href="#">Report an Item</a></li>
+        <li><a href="#">Return Policy</a></li>
+      </ul>
+      <ul class="s-n-3">
+        <h3 class="s-n-how">Explore Yammie</h3>
+        <li><a href="#">About Yammie</a></li>
+        <li><a href="#">How to Order</a></li>
+        <li><a href="#">Our Partners</a></li>
+        <li><a href="#">Terms &amp; Conditions For Use</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+      </ul>
+      <div class="ftr-down">
+        <div class="ftr-official">
+          &copy; 2020 Yammie. All rights reserved
+          <div class="social-icons">
+            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="banner">Banner</div>
+    <div class="nav">
+      <div class="search-nav">
+        <div class="logo">
+          <div class="menu">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+          </div>
+          <a href="./">
+            <img
+              src="./resources/yammie.png"
+              alt="YAMMIE"
+              width="200"
+              height="95%"
+              id="logo"
+            />
+          </a>
+        </div>
+        <div class="search">
+          <form
+            id="f-search"
+            autocomplete="off"
+            action="./catalog.html"
+            method="GET"
+          >
+            <input
+              type="text"
+              name="q"
+              placeholder="Search Groceries...."
+              class="navsearch"
+              id="v-search"
+            />
+            <button type="submit" id="search-button">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+        <div class="-help -user">
+          <button class="-dropdown -hp">
+            <i class="far fa-user"></i>
+            <span class="-c-text">Help</span>
+            <i class="fas fa-chevron-down chev"></i>
+          </button>
+          <ul class="-help-list -hlp">
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                How to Order
+              </a>
+            </li>
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                Delivery Times
+              </a>
+            </li>
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                Request an Item
+              </a>
+            </li>
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                FAQs
+              </a>
+            </li>
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                Contact Us
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="-account -user">
+          <button class="-dropdown -acc">
+            <i class="far fa-user"></i>
+            <span class="-c-text">My Account</span>
+            <i class="fas fa-chevron-down chev-acc"></i>
+          </button>
+          <ul class="-help-list -acc-l">
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                My Profile
+              </a>
+            </li>
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                My Cart
+              </a>
+            </li>
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                My Orders
+              </a>
+            </li>
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                My Profile
+              </a>
+            </li>
+            <li class="-help">
+              <a href="">
+                <i class="far fa-user"></i>
+                Log Out
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="-user -user-cart">
+          <!--for small screens-->
+          <div class="-icon-sm">
+            <i class="fas fa-search"></i>
+          </div>
+          <a href="./cart.html" style="position: relative">
             <i class="fas fa-shopping-cart" style="font-size: 24px"></i>
             <span class="cart-number" id="cartNumberItems">0</span>
           </a>
-          <div id="sideNav">
-            <ul class="s-n-1">
-              <h3 class="sn-categories">Categories</h3>
-              <li class="n-l-itm">
-                <a href="./easy-market.html">
-                  <i class="fas fa-shopping-basket ctg-icon"></i>
-                  EasyMarket with Yammie
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="quick-foods.html">
-                  <i class="fas fa-pizza-slice ctg-icon"></i>
-                  Fast Foods &amp; Drinks
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="phones.html">
-                  <i class="fas fa-headphones-alt ctg-icon"></i>
-                  Phones &amp; Accessories
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="./electronics.html">
-                  <i class="fas fa-charging-station ctg-icon"></i>
-                  Electronics
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="./computing.html">
-                  <i class="fas fa-desktop ctg-icon"></i>
-                  Computing &amp; Accessories
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="./stationery.html">
-                  <i class="fas fa-paperclip ctg-icon"></i>
-                  Stationery
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="./clothing.html">
-                  <i class="fas fa-tshirt ctg-icon"></i>
-                  Clothes &amp; Shoes
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="./kitchen.html">
-                  <i class="fas fa-utensils ctg-icon"></i>
-                  Kitchen Staff &amp; Utensils
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="./kids.html">
-                  <i class="fas fa-child ctg-icon"></i>
-                  Kid's Section
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="./diy.html">
-                  <img src="./resources/clean-hands.png" alt="" />
-                  Cleaning, Healthy &amp; Beauty
-                </a>
-              </li>
-              <li class="n-l-itm">
-                <a href="">
-                  <i class="fas fa-layer-group ctg-icon"></i>
-                  All Items
-                </a>
-              </li>
-            </ul>
-            <ul class="s-n-4">
-              <h3>My Account</h3>
-              <li>
-                <i class="fas fa-user"></i>
-                <span>My Profile</span>
-              </li>
-              <li>
-                <i class="fas fa-box"></i>
-                <span>My Orders</span>
-              </li>
-
-              <li>
-                <i class="fas fa-dolly-flatbed"></i>
-                <span>Pending Orders</span>
-              </li>
-              <li>
-                <i class="fas fa-thumbs-up"></i>
-                <span><a href="#">Liked Items</a></span>
-              </li>
-              <li>
-                <i class="fas fa-address-card"></i>
-                <span>My Address</span>
-              </li>
-              <li>
-                <i class="fas fa-user-edit"></i>
-                <span>Edit My Profile</span>
-              </li>
-              <button class="s-n-logout">LOG OUT</button>
-            </ul>
-            <ul class="s-n-2">
-              <h3 class="s-n-how">Products &amp; Groceries</h3>
-              <li><a href="#">Special Order</a></li>
-              <li><a href="#">Delivery Time</a></li>
-              <li><a href="#">Payment Methods</a></li>
-              <li><a href="#">Request An Item</a></li>
-              <li><a href="#">Report an Item</a></li>
-              <li><a href="#">Return Policy</a></li>
-            </ul>
-            <ul class="s-n-3">
-              <h3 class="s-n-how">Explore Yammie</h3>
-              <li><a href="#">About Yammie</a></li>
-              <li><a href="#">How to Order</a></li>
-              <li><a href="#">Our Partners</a></li>
-              <li><a href="#">Terms &amp; Conditions For Use</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
-            <div class="ftr-down">
-              <div class="ftr-official">
-                &copy; 2020 Yammie. All rights reserved
-                <div class="social-icons">
-                  <a href="" class="icon-button"
-                    ><i class="fab fa-facebook-f"></i
-                  ></a>
-                  <a href="" class="icon-button"
-                    ><i class="fab fa-twitter"></i
-                  ></a>
-                  <a href="" class="icon-button"
-                    ><i class="fab fa-instagram"></i
-                  ></a>
-                  <a href="" class="icon-button"
-                    ><i class="fab fa-youtube"></i
-                  ></a>
-                  <a href="" class="icon-button"
-                    ><i class="fab fa-linkedin"></i
-                  ></a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+    </div>
 
-      <div class="d-app" id="d-app">
-        <span>
-          <a href="#"> Download Our App <span class="here">Here</span></a>
-          For Better Shopping.
-        </span>
-        <i class="fas fa-times close-icon"></i>
-      </div>
+    <div class="d-app" id="d-app">
+      <span>
+        <a href="#"> Download Our App <span class="here">Here</span></a>
+        For Better Shopping.
+      </span>
+      <i class="fas fa-times close-icon"></i>
+    </div>
 
-      <div class="m-ctr">
-        <div class="container1">
-          <ul class="ctg-li">
-            <li class="ctg-item" id="ctg-easy-market">
-              <span class="ctg-name">
-                <a href="./easy-market.html">
-                  <i class="fas fa-shopping-basket ctg-icon"></i>
-                  EasyMarket with Yammie
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-foods-drinks">
-              <span class="ctg-name">
-                <a href="quick-foods.html">
-                  <i class="fas fa-pizza-slice ctg-icon"></i>
-                  Fast Foods &amp; Drinks
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-phones">
-              <span class="ctg-name">
-                <a href="phones.html">
-                  <i class="fas fa-headphones-alt ctg-icon"></i>
-                  Phones &amp; Accessories
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-electronics">
-              <span class="ctg-name">
-                <a href="./electronics.html">
-                  <i class="fas fa-charging-station ctg-icon"></i>
-                  Electronics
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-clothes">
-              <span class="ctg-name">
-                <a href="./clothing.html">
-                  <i class="fas fa-tshirt ctg-icon"></i>
-                  Clothes &amp; Shoes
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-kitchen">
-              <span class="ctg-name">
-                <a href="./kitchen.html">
-                  <i class="fas fa-utensils ctg-icon"></i>
-                  Kitchen Staff &amp; Utensils
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-computing">
-              <span class="ctg-name">
-                <a href="./computing.html">
-                  <i class="fas fa-desktop ctg-icon"></i>
-                  Computing &amp; Accessories
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-kids">
-              <span class="ctg-name">
-                <a href="./kids.html">
-                  <i class="fas fa-child ctg-icon"></i>
-                  Kid's Section
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-cleaning">
-              <span class="ctg-name">
-                <a href="./diy.html">
-                  <img src="./resources/clean-hands.png" alt="" />
-                  Cleaning, Healthy &amp; Beauty
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item" id="ctg-stationery">
-              <span class="ctg-name">
-                <a href="./stationery.html">
-                  <i class="fas fa-paperclip ctg-icon"></i>
-                  Stationery
-                </a>
-              </span>
-            </li>
-            <li class="ctg-item">
-              <span class="ctg-name">
-                <a href="">
-                  <i class="fas fa-layer-group ctg-icon"></i>
-                  All Items
-                </a>
-              </span>
+    <div class="m-ctr">
+      <div class="container1">
+        <ul class="ctg-li">
+          <li class="ctg-item" id="ctg-easy-market">
+            <span class="ctg-name">
+              <a href="./easy-market.html">
+                <i class="fas fa-shopping-basket ctg-icon"></i>
+                EasyMarket with Yammie
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-foods-drinks">
+            <span class="ctg-name">
+              <a href="quick-foods.html">
+                <i class="fas fa-pizza-slice ctg-icon"></i>
+                Fast Foods &amp; Drinks
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-phones">
+            <span class="ctg-name">
+              <a href="phones.html">
+                <i class="fas fa-headphones-alt ctg-icon"></i>
+                Phones &amp; Accessories
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-electronics">
+            <span class="ctg-name">
+              <a href="./electronics.html">
+                <i class="fas fa-charging-station ctg-icon"></i>
+                Electronics
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-clothes">
+            <span class="ctg-name">
+              <a href="./clothing.html">
+                <i class="fas fa-tshirt ctg-icon"></i>
+                Clothes &amp; Shoes
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-kitchen">
+            <span class="ctg-name">
+              <a href="./kitchen.html">
+                <i class="fas fa-utensils ctg-icon"></i>
+                Kitchen Staff &amp; Utensils
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-computing">
+            <span class="ctg-name">
+              <a href="./computing.html">
+                <i class="fas fa-desktop ctg-icon"></i>
+                Computing &amp; Accessories
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-kids">
+            <span class="ctg-name">
+              <a href="./kids.html">
+                <i class="fas fa-child ctg-icon"></i>
+                Kid's Section
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-cleaning">
+            <span class="ctg-name">
+              <a href="./diy.html">
+                <img src="./resources/clean-hands.png" alt="" />
+                Cleaning, Healthy &amp; Beauty
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item" id="ctg-stationery">
+            <span class="ctg-name">
+              <a href="./stationery.html">
+                <i class="fas fa-paperclip ctg-icon"></i>
+                Stationery
+              </a>
+            </span>
+          </li>
+          <li class="ctg-item">
+            <span class="ctg-name">
+              <a href="">
+                <i class="fas fa-layer-group ctg-icon"></i>
+                All Items
+              </a>
+            </span>
+          </li>
+        </ul>
+        <div class="slideshow-container">
+          <div class="mySlides fade">
+            <div class="numbertext">1 / 6</div>
+            <img
+              src="./resources/image-slider/slider-image-1.jpg"
+              style="width: 100%; border-radius: 5px"
+              height="100%"
+            />
+            <div style="text-align: center" class="text">
+              Buy From Yammie!!!
+            </div>
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">2 / 6</div>
+            <img
+              src="./resources/image-slider/slider-image-2.jpg"
+              style="width: 100%; border-radius: 5px"
+              height="100%"
+            />
+            <div style="text-align: center" class="text">Buy from Yammie</div>
+          </div>
+
+          <div class="mySlides fade">
+            <div class="numbertext">3 / 6</div>
+            <img
+              src="./resources/image-slider/slider-image-3.jpg"
+              style="width: 100%; border-radius: 5px"
+              height="100%"
+            />
+            <div style="text-align: center" class="text">
+              Buy this from yammieshoppers
+            </div>
+          </div>
+          <div class="mySlides fade">
+            <div class="numbertext">4 / 6</div>
+            <img
+              src="./resources/image-slider/slider-image-4.jpg"
+              style="width: 100%; border-radius: 5px"
+              height="100%"
+            />
+            <div style="text-align: center" class="text">
+              Check Out this from yammieshoppers
+            </div>
+          </div>
+          <div class="mySlides fade">
+            <div class="numbertext">5 / 6</div>
+            <img
+              src="./resources/image-slider/slider-image-5.jpg"
+              style="width: 100%; border-radius: 5px"
+              height="100%"
+            />
+            <div style="text-align: center" class="text">
+              Awesome Product from yammie
+            </div>
+          </div>
+          <div class="mySlides fade">
+            <div class="numbertext">6 / 6</div>
+            <img
+              src="./resources/image-slider/slider-image-6.jpg"
+              style="width: 100%; border-radius: 5px"
+              height="100%"
+            />
+            <div style="text-align: center" class="text">
+              Outstanding Price from yammieshoppers
+            </div>
+          </div>
+
+          <!-- Next and previous buttons -->
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+          <!-- The dots/circles -->
+          <div class="dots">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+          </div>
+        </div>
+        <div class="categories">
+          <div class="up-container">
+            <img
+              src="./resources/image-slider/slider-image-2.jpg"
+              alt=""
+              width="100%"
+              height="100%"
+              style="border-radius: 5px"
+            />
+          </div>
+          <ul class="down-container">
+            <li>
+              <h4>FLASH SALES!!!</h4>
+              <div class="timer">
+                <h2 id="pms-timer"><small>Loading...</small></h2>
+              </div>
+              <span>Check Out <b>HERE</b></span>
+              <div class="d-m-u">
+                <h2>DON'T MISS OUT!!!</h2>
+                <i class="fas fa-map-marker-alt"></i>
+                <span class="location">Yammie Lira</span>
+              </div>
             </li>
           </ul>
-          <div class="slideshow-container">
-            <div class="mySlides fade">
-              <div class="numbertext">1 / 6</div>
-              <img
-                src="./resources/image-slider/slider-image-1.jpg"
-                style="width: 100%; border-radius: 5px"
-                height="100%"
-              />
-              <div style="text-align: center" class="text">
-                Buy From Yammie!!!
-              </div>
-            </div>
-
-            <div class="mySlides fade">
-              <div class="numbertext">2 / 6</div>
-              <img
-                src="./resources/image-slider/slider-image-2.jpg"
-                style="width: 100%; border-radius: 5px"
-                height="100%"
-              />
-              <div style="text-align: center" class="text">Buy from Yammie</div>
-            </div>
-
-            <div class="mySlides fade">
-              <div class="numbertext">3 / 6</div>
-              <img
-                src="./resources/image-slider/slider-image-3.jpg"
-                style="width: 100%; border-radius: 5px"
-                height="100%"
-              />
-              <div style="text-align: center" class="text">
-                Buy this from yammieshoppers
-              </div>
-            </div>
-            <div class="mySlides fade">
-              <div class="numbertext">4 / 6</div>
-              <img
-                src="./resources/image-slider/slider-image-4.jpg"
-                style="width: 100%; border-radius: 5px"
-                height="100%"
-              />
-              <div style="text-align: center" class="text">
-                Check Out this from yammieshoppers
-              </div>
-            </div>
-            <div class="mySlides fade">
-              <div class="numbertext">5 / 6</div>
-              <img
-                src="./resources/image-slider/slider-image-5.jpg"
-                style="width: 100%; border-radius: 5px"
-                height="100%"
-              />
-              <div style="text-align: center" class="text">
-                Awesome Product from yammie
-              </div>
-            </div>
-            <div class="mySlides fade">
-              <div class="numbertext">6 / 6</div>
-              <img
-                src="./resources/image-slider/slider-image-6.jpg"
-                style="width: 100%; border-radius: 5px"
-                height="100%"
-              />
-              <div style="text-align: center" class="text">
-                Outstanding Price from yammieshoppers
-              </div>
-            </div>
-
-            <!-- Next and previous buttons -->
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            <!-- The dots/circles -->
-            <div class="dots">
-              <span class="dot" onclick="currentSlide(1)"></span>
-              <span class="dot" onclick="currentSlide(2)"></span>
-              <span class="dot" onclick="currentSlide(3)"></span>
-              <span class="dot" onclick="currentSlide(4)"></span>
-              <span class="dot" onclick="currentSlide(5)"></span>
-              <span class="dot" onclick="currentSlide(6)"></span>
-            </div>
-          </div>
-          <div class="categories">
-            <div class="up-container">
-              <img
-                src="./resources/image-slider/slider-image-2.jpg"
-                alt=""
-                width="100%"
-                height="100%"
-                style="border-radius: 5px"
-              />
-            </div>
-            <ul class="down-container">
-              <li>
-                <h4>FLASH SALES!!!</h4>
-                <div class="timer">
-                  <h2 id="pms-timer"><small>Loading...</small></h2>
-                </div>
-                <span>Check Out <b>HERE</b></span>
-                <div class="d-m-u">
-                  <h2>DON'T MISS OUT!!!</h2>
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span class="location">Yammie Lira</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="category">
-          <div class="see-all">
-            <span>Frequently Bought</span>
-            <span style="color: white">
-              Check
-              <i class="fas fa-chevron-right"></i>
-            </span>
-          </div>
-          <div class="items-container" id="tp-s">
-            <div class="item">
-              <img src="./resources/asus.png" alt="" width="150" height="150" />
-              <div class="item-info">
-                <div class="it-nm">Jesa Milk - 500ml</div>
-                <div class="it-pr pr">UGX 500</div>
-                <div class="pre-it-pr pr">UGX 750</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="category">
-          <div class="see-all">
-            <span>Your Phone Accessories</span>
-            <span style="color: white">
-              Check
-              <i class="fas fa-chevron-right"></i>
-            </span>
-          </div>
-          <div class="items-container" id="phone-acs"></div>
-        </div>
-        <div class="category">
-          <div class="images">
-            <div class="left-image">
-              <img src="./resources/milk.jpg" alt="" />
-            </div>
-            <div class="right-image">
-              <img src="./resources/latoMilk.jpg" alt="" />
-            </div>
-          </div>
-        </div>
-        <div class="category">
-          <div class="see-all">
-            <span>Just Added Items</span>
-            <span>
-              See ALL
-              <i class="fas fa-chevron-right"></i>
-            </span>
-          </div>
-          <div class="items-container" id="plastics"></div>
-        </div>
-        <div class="category">
-          <!-- Start Shop Newsletter  -->
-          <section class="shop-newsletter section">
-            <div class="container">
-              <div class="inner-top">
-                <div class="row">
-                  <!-- Start Newsletter Inner -->
-                  <div class="inner">
-                    <h4>Newsletter</h4>
-                    <p>
-                      Subscribe to our newsletter and get <span>10%</span> off
-                      your first purchase
-                    </p>
-                    <form
-                      action=""
-                      method="get"
-                      target="_blank"
-                      class="newsletter-inner"
-                    >
-                      <input
-                        name="EMAIL"
-                        placeholder="Your email address"
-                        required=""
-                        type="email"
-                      />
-                      <button class="n-btn">Subscribe</button>
-                    </form>
-                  </div>
-                  <!-- End Newsletter Inner -->
-                </div>
-              </div>
-            </div>
-          </section>
-          <!-- End Shop Newsletter -->
-        </div>
-        <div class="back-to-top">
-          <i class="fas fa-arrow-up"></i>
         </div>
       </div>
-      <footer class="footer">
-        <div class="ftr-sm-s">
-          <span> Terms &amp; Conditions </span>
-          <span> Help Center </span>
-          <span> Contact Us </span>
+
+      <div class="category">
+        <div class="see-all">
+          <span>Frequently Bought</span>
+          <span style="color: white">
+            Check
+            <i class="fas fa-chevron-right"></i>
+          </span>
         </div>
-        <div class="ftr-up">
-          <div class="ftr-u-first">
-            <div class="ftr-logo">
-              <img
-                src="./resources/yammie.png"
-                alt="YAMMIE"
-                width="250px"
-                height="100px"
-              />
+        <div class="items-container" id="tp-s">
+          <div class="item">
+            <img src="./resources/asus.png" alt="" width="150" height="150" />
+            <div class="item-info">
+              <div class="it-nm">Jesa Milk - 500ml</div>
+              <div class="it-pr pr">UGX 500</div>
+              <div class="pre-it-pr pr">UGX 750</div>
             </div>
-            <div class="ftr-message">
-              <p>
-                Your online Market Store For Groceries, <br />
-                Food Items, Clothings, Gadgets And Many More.
-              </p>
-            </div>
-            <div class="ftr-app">
-              <h3>Get the Yammie App On . . . .</h3>
-              <div class="ftr-app-stores" style="margin-top: 15px">
-                <a href="">
-                  <img
-                    src="./resources/play-store-3.jpg"
-                    alt=""
-                    height="45"
-                    width="150"
-                    style="margin-right: 5px"
-                  />
-                </a>
-                <a href="">
-                  <img
-                    src="./resources/apple-store.jpg"
-                    alt=""
-                    height="45"
-                    width="150"
-                  />
-                </a>
+          </div>
+        </div>
+      </div>
+      <div class="category">
+        <div class="see-all">
+          <span>Your Phone Accessories</span>
+          <span style="color: white">
+            Check
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="items-container" id="phone-acs"></div>
+      </div>
+      <div class="category">
+        <div class="images">
+          <div class="left-image">
+            <img src="./resources/milk.jpg" alt="" />
+          </div>
+          <div class="right-image">
+            <img src="./resources/latoMilk.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="category">
+        <div class="see-all">
+          <span>Just Added Items</span>
+          <span>
+            See ALL
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="items-container" id="plastics"></div>
+      </div>
+      <div class="category">
+        <!-- Start Shop Newsletter  -->
+        <section class="shop-newsletter section">
+          <div class="container">
+            <div class="inner-top">
+              <div class="row">
+                <!-- Start Newsletter Inner -->
+                <div class="inner">
+                  <h4>Newsletter</h4>
+                  <p>
+                    Subscribe to our newsletter and get <span>10%</span> off
+                    your first purchase
+                  </p>
+                  <form
+                    action=""
+                    method="get"
+                    target="_blank"
+                    class="newsletter-inner"
+                  >
+                    <input
+                      name="EMAIL"
+                      placeholder="Your email address"
+                      required=""
+                      type="email"
+                    />
+                    <button class="n-btn">Subscribe</button>
+                  </form>
+                </div>
+                <!-- End Newsletter Inner -->
               </div>
             </div>
           </div>
-          <div class="ftr-u-second">
-            <h4 class="footer-h4">Explore Yammie</h4>
-            <ul class="footer-list">
-              <li><a href="#">About Yammie</a></li>
-              <li><a href="#">How to Order</a></li>
-              <li><a href="#">Help &amp; FAQs</a></li>
-              <li><a href="#">Our Partners</a></li>
-              <li><a href="#">Terms &amp; Conditions For Use</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
+        </section>
+        <!-- End Shop Newsletter -->
+      </div>
+      <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="ftr-sm-s">
+        <span> Terms &amp; Conditions </span>
+        <span> Help Center </span>
+        <span> Contact Us </span>
+      </div>
+      <div class="ftr-up">
+        <div class="ftr-u-first">
+          <div class="ftr-logo">
+            <img
+              src="./resources/yammie.png"
+              alt="YAMMIE"
+              width="250px"
+              height="100px"
+            />
           </div>
-          <div class="ftr-u-third">
-            <h4 class="footer-h4">Contact Us</h4>
-            <ul class="footer-list">
-              <li class="second-list">
-                <a href="">
-                  <i class="fas fa-shopping-cart"></i>
-                  Yammie Shoppers
-                </a>
-              </li>
-              <li class="second-list">
-                <a href="mailto:#">
-                  <i class="fas fa-envelope"></i>
-                  customer@yammieshoppers.com
-                </a>
-              </li>
-              <li class="second-list">
-                <a href="#">
-                  <i class="fas fa-map-marker-alt"></i>
-                  Lira Campus
-                </a>
-              </li>
-            </ul>
-            <form action="#">
-              <input
-                type="text"
-                name=""
-                id="comment"
-                placeholder="Leave a Comment"
-              />
-              <br />
-              <input
-                type="text"
-                name=""
-                id="customer-email"
-                placeholder="Email or Phone Number(Optional)"
-              />
-              <br />
-              <button class="footer-form-button">submit</button>
-            </form>
+          <div class="ftr-message">
+            <p>
+              Your online Market Store For Groceries, <br />
+              Food Items, Clothings, Gadgets And Many More.
+            </p>
           </div>
-          <div class="ftr-u-fourth">
-            <h4 class="footer-h4">Products &amp; Groceries</h4>
-            <ul class="footer-list">
-              <li><a href="#">Special Order</a></li>
-              <li><a href="#">Delivery Time</a></li>
-              <li><a href="#">Payment Methods</a></li>
-              <li><a href="#">Request An Item</a></li>
-              <li><a href="#">Report an Item</a></li>
-              <li><a href="#">Return Policy</a></li>
-            </ul>
-          </div>
-        </div>
-        <div class="ftr-down">
-          <div class="ftr-official">
-            &copy; 2020 Yammie. All rights reserved
-            <div class="social-icons">
-              <a href="" class="icon-button"
-                ><i class="fab fa-facebook-f"></i
-              ></a>
-              <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
-              <a href="" class="icon-button"
-                ><i class="fab fa-instagram"></i
-              ></a>
-              <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
-              <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+          <div class="ftr-app">
+            <h3>Get the Yammie App On . . . .</h3>
+            <div class="ftr-app-stores" style="margin-top: 15px">
+              <a href="">
+                <img
+                  src="./resources/play-store-3.jpg"
+                  alt=""
+                  height="45"
+                  width="150"
+                  style="margin-right: 5px"
+                />
+              </a>
+              <a href="">
+                <img
+                  src="./resources/apple-store.jpg"
+                  alt=""
+                  height="45"
+                  width="150"
+                />
+              </a>
             </div>
           </div>
         </div>
-      </footer>
-      <!--scripts-->
-      <script>
-        // All Variables
-        const closeAppBanner = document.querySelector(".close-icon");
-        const AppBanner = document.getElementById("d-app");
-        const menu = document.querySelector(".menu");
-        const sideNav = document.querySelector("#sideNav");
-        const menuLine1 = document.querySelector(".line1");
-        const menuLine2 = document.querySelector(".line2");
-        const menuLine3 = document.querySelector(".line3");
+        <div class="ftr-u-second">
+          <h4 class="footer-h4">Explore Yammie</h4>
+          <ul class="footer-list">
+            <li><a href="#">About Yammie</a></li>
+            <li><a href="#">How to Order</a></li>
+            <li><a href="#">Help &amp; FAQs</a></li>
+            <li><a href="#">Our Partners</a></li>
+            <li><a href="#">Terms &amp; Conditions For Use</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="ftr-u-third">
+          <h4 class="footer-h4">Contact Us</h4>
+          <ul class="footer-list">
+            <li class="second-list">
+              <a href="">
+                <i class="fas fa-shopping-cart"></i>
+                Yammie Shoppers
+              </a>
+            </li>
+            <li class="second-list">
+              <a href="mailto:#">
+                <i class="fas fa-envelope"></i>
+                customer@yammieshoppers.com
+              </a>
+            </li>
+            <li class="second-list">
+              <a href="#">
+                <i class="fas fa-map-marker-alt"></i>
+                Lira Campus
+              </a>
+            </li>
+          </ul>
+          <form action="#">
+            <input
+              type="text"
+              name=""
+              id="comment"
+              placeholder="Leave a Comment"
+            />
+            <br />
+            <input
+              type="text"
+              name=""
+              id="customer-email"
+              placeholder="Email or Phone Number(Optional)"
+            />
+            <br />
+            <button class="footer-form-button">submit</button>
+          </form>
+        </div>
+        <div class="ftr-u-fourth">
+          <h4 class="footer-h4">Products &amp; Groceries</h4>
+          <ul class="footer-list">
+            <li><a href="#">Special Order</a></li>
+            <li><a href="#">Delivery Time</a></li>
+            <li><a href="#">Payment Methods</a></li>
+            <li><a href="#">Request An Item</a></li>
+            <li><a href="#">Report an Item</a></li>
+            <li><a href="#">Return Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ftr-down">
+        <div class="ftr-official">
+          &copy; 2020 Yammie. All rights reserved
+          <div class="social-icons">
+            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--scripts-->
+    <script>
+      //header
+      let acc = document.querySelector(".-acc");
+      let hp = document.querySelector(".-hp");
 
-        // Promotions timer
-        const timerFunc = () => {
-          let timerDisplay = document.getElementById("pms-timer");
-          let timerHours = 14;
-          let timerMinutes = 15;
-          let timerSeconds = 7;
-          let timer = setInterval(calcTimer, 1000);
-          function calcTimer() {
-            timerSeconds -= 1;
-            if (timerSeconds == -1) {
-              timerMinutes -= 1;
-              timerSeconds = 59;
-            }
-            if (timerMinutes == -1) {
-              timerHours = timerHours != 0 ? timerHours - 1 : 0;
-              timerMinutes = 59;
-            }
-            if (timerHours == -1) {
-              timerMinutes = timerMinutes == 0 ? 0 : 0;
-            }
-            if (timerHours == 0 && timerMinutes == 0 && timerSeconds == 0) {
-              clearInterval(timer);
-              timerDisplay.innerHTML = "Cleared";
-            }
-            timerDisplay.innerHTML =
-              timerHours + " : " + timerMinutes + " : " + timerSeconds;
+      acc.addEventListener("focus", (e) => {
+        document
+          .querySelector(".chev-acc")
+          .classList.replace("fa-chevron-down", "fa-chevron-up");
+        document.querySelector(".-acc-l").style.display = "flex";
+      });
+      acc.addEventListener("blur", (e) => {
+        document
+          .querySelector(".chev-acc")
+          .classList.replace("fa-chevron-up", "fa-chevron-down");
+        document.querySelector(".-acc-l").style.display = "none";
+      });
+      hp.addEventListener("focus", (e) => {
+        document
+          .querySelector(".chev")
+          .classList.replace("fa-chevron-down", "fa-chevron-up");
+        document.querySelector(".-hlp").style.display = "flex";
+      });
+      hp.addEventListener("blur", (e) => {
+        document
+          .querySelector(".chev")
+          .classList.replace("fa-chevron-up", "fa-chevron-down");
+        document.querySelector(".-hlp").style.display = "none";
+      });
+
+      //side
+      const closeSide = document.querySelector(".-c-side");
+      const menu = document.querySelector(".menu");
+      const sidenav = document.querySelector("#sidenav");
+      menu.addEventListener("click", () => {
+        sidenav.classList.add("active");
+      });
+      closeSide.addEventListener("click", () => {
+        sidenav.classList.remove("active");
+      });
+      //app banner
+      const closeAppBanner = document.querySelector(".close-icon");
+      const AppBanner = document.getElementById("d-app");
+
+      // Promotions timer
+      const timerFunc = () => {
+        let timerDisplay = document.getElementById("pms-timer");
+        let timerHours = 14;
+        let timerMinutes = 15;
+        let timerSeconds = 7;
+        let timer = setInterval(calcTimer, 1000);
+        function calcTimer() {
+          timerSeconds -= 1;
+          if (timerSeconds == -1) {
+            timerMinutes -= 1;
+            timerSeconds = 59;
+          }
+          if (timerMinutes == -1) {
+            timerHours = timerHours != 0 ? timerHours - 1 : 0;
+            timerMinutes = 59;
+          }
+          if (timerHours == -1) {
+            timerMinutes = timerMinutes == 0 ? 0 : 0;
+          }
+          if (timerHours == 0 && timerMinutes == 0 && timerSeconds == 0) {
+            clearInterval(timer);
+            timerDisplay.innerHTML = "Cleared";
+          }
+          timerDisplay.innerHTML =
+            timerHours + " : " + timerMinutes + " : " + timerSeconds;
+        }
+      };
+      timerFunc();
+    </script>
+    <script>
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
+
+      closeAppBanner.addEventListener("click", () => {
+        AppBanner.style.display = "none";
+      });
+      cartNumbersDisplay();
+      function cartNumbersDisplay() {
+        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+        document.querySelector("#cartNumberItems").textContent = cartNumber
+          ? cartNumber
+          : 0;
+      }
+    </script>
+    <script>
+      let sliderCtr = document.querySelector(".slideshow-container");
+      if (screen.availWidth <= 1024) {
+        console.log(screen.availWidth);
+      } else {
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        let changeSlide = setInterval(() => {
+          showSlides((slideIndex += 1));
+        }, 5000);
+        // Next/previous controls
+        function plusSlides(n) {
+          showSlides((slideIndex += n));
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+          showSlides((slideIndex = n));
+        }
+        let sliders = document.getElementsByClassName("mySlides");
+
+        function showSlides(n) {
+          let i;
+          let slides = document.getElementsByClassName("mySlides");
+          let dots = document.getElementsByClassName("dot");
+          if (n > slides.length) {
+            slideIndex = 1;
+          }
+          if (n < 1) {
+            slideIndex = slides.length;
+          }
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          for (i = 0; i < dots.length; i++) {
+            dots[i].classList.remove("activeDot");
+            // dots[i].className = dots[i].className.replace(" active", "");
+          }
+          slides[slideIndex - 1].style.display = "block";
+          dots[slideIndex - 1].classList.add("activeDot");
+        }
+      }
+    </script>
+    <script>
+      let yammieUsr = "";
+      if (yammie) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            [yammieUsr] = JSON.parse(xhr.responseText);
+            let account = document.querySelector(".login-text");
+            account.innerHTML = yammieUsr.c_first_name;
           }
         };
-        timerFunc();
-      </script>
-      <script>
-        let yammie = localStorage.getItem(
-          "https://yammieshoppers.com/useLocalStorage/Storage"
-        );
+        xhr.open("GET", `/api/user/customer/${yammie}`, true);
+        xhr.send();
+      }
+    </script>
+    <script>
+      let topBtn = document.querySelector(".back-to-top");
+      if (screen.availWidth <= 768) {
+        topBtn.innerHTML = `<i class="fas fa-arrow-up"></i> Back To Top`;
+        document.querySelector("#logo").src = "./resources/cartlink.png";
+        document.querySelector("#logo").style.width = "60px";
+        document.querySelector("#logo").style.height = "30px";
+      }
 
-        menu.addEventListener("click", () => {
-          sideNav.classList.toggle("activeSideNav");
-          menuLine1.classList.toggle("rotateLine1");
-          menuLine2.classList.toggle("rotateLine2");
-          menuLine3.classList.toggle("rotateLine3");
+      window.addEventListener("scroll", () => {
+        topBtn.style.opacity = 1;
+      });
+      topBtn.addEventListener("click", (e) => {
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: "smooth",
         });
+      });
 
-        closeAppBanner.addEventListener("click", () => {
-          AppBanner.style.display = "none";
-        });
-        cartNumbersDisplay();
-        function cartNumbersDisplay() {
-          let cartNumber = parseInt(localStorage.getItem("cartNumber"));
-          document.querySelector("#cartNumberItems").textContent = cartNumber
-            ? cartNumber
-            : 0;
-        }
+      // PARSE USER AGENT
+      // let result = bowser.getParser(navigator.userAgent).getResult();
+      // // BROWSER INFO
+      // console.log(result.browser.name);
+      // console.log(result.browser.version);
+      // console.log(result.engine);
+      // // OPERATING SYSTEM
+      // console.log(result.os.name);
+      // console.log(result.os.version);
+      // console.log(result.os.versionName);
+      // // PLATFORM
+      // console.log(result.platform.type);
+    </script>
 
-        let account = document.querySelector("#login");
-
-        account.href = yammie ? "/account/profile.html" : "/account/login.html";
-      </script>
-      <script>
-        let sliderCtr = document.querySelector(".slideshow-container");
-        if (screen.availWidth <= 1024) {
-          console.log(screen.availWidth);
-        } else {
-          let slideIndex = 1;
-          showSlides(slideIndex);
-
-          let changeSlide = setInterval(() => {
-            showSlides((slideIndex += 1));
-          }, 5000);
-          // Next/previous controls
-          function plusSlides(n) {
-            showSlides((slideIndex += n));
-          }
-
-          // Thumbnail image controls
-          function currentSlide(n) {
-            showSlides((slideIndex = n));
-          }
-          let sliders = document.getElementsByClassName("mySlides");
-
-          function showSlides(n) {
-            let i;
-            let slides = document.getElementsByClassName("mySlides");
-            let dots = document.getElementsByClassName("dot");
-            if (n > slides.length) {
-              slideIndex = 1;
-            }
-            if (n < 1) {
-              slideIndex = slides.length;
-            }
-            for (i = 0; i < slides.length; i++) {
-              slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-              dots[i].classList.remove("activeDot");
-              // dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].classList.add("activeDot");
-          }
-        }
-      </script>
-      <script>
-        let yammieUsr = "";
-        if (yammie) {
-          let xhr = new XMLHttpRequest();
-          xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-              [yammieUsr] = JSON.parse(xhr.responseText);
-              let account = document.querySelector(".login-text");
-              account.innerHTML = yammieUsr.c_first_name;
-            }
-          };
-          xhr.open("GET", `/api/user/customer/${yammie}`, true);
-          xhr.send();
-        }
-      </script>
-      <script>
-        let topBtn = document.querySelector(".back-to-top");
-        if (screen.availWidth <= 768) {
-          topBtn.innerHTML = `<i class="fas fa-arrow-up"></i> Back To Top`;
-        }
-
-        window.addEventListener("scroll", () => {
-          topBtn.style.opacity = 1;
-        });
-        topBtn.addEventListener("click", (e) => {
-          window.scroll({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-        });
-
-        // PARSE USER AGENT
-        // let result = bowser.getParser(navigator.userAgent).getResult();
-        // // BROWSER INFO
-        // console.log(result.browser.name);
-        // console.log(result.browser.version);
-        // console.log(result.engine);
-        // // OPERATING SYSTEM
-        // console.log(result.os.name);
-        // console.log(result.os.version);
-        // console.log(result.os.versionName);
-        // // PLATFORM
-        // console.log(result.platform.type);
-      </script>
-
-      <!--scripts-->
-    </div>
+    <!--scripts-->
   </body>
 </html>
