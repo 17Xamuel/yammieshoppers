@@ -9,9 +9,9 @@ login.addEventListener("submit", (e) => {
   xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200) {
       if (xhr.responseText == "Incorrect Email or Password") {
-        document.getElementById("messages").innerHTML = xhr.responseText;
+        document.getElementById("message").innerHTML = xhr.responseText;
       } else if (xhr.responseText == "User not Found") {
-        document.getElementById("messages").innerHTML = xhr.responseText;
+        document.getElementById("message").innerHTML = xhr.responseText;
       } else {
         localStorage.setItem(
           "yammie/useLocalstorage/storage",

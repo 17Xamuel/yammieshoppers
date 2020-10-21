@@ -9,6 +9,11 @@
       integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
       crossorigin="anonymous"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../admin/styles/home.css" />
     <style>
       .register {
         width: 40%;
@@ -104,11 +109,31 @@
               <button
                 type="submit"
                 class="btn btn-warning btn-block text-light"
+                data-toggle="modal"
+                data-target="#alert"
               >
                 Register
               </button>
-              <h5 class="text-center text-info" id="messages"></h5>
             </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="alert">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">YammieShoppers Response</h5>
+
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
+            </div>
+            <div class="modal-body text-center" id="outcome"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
