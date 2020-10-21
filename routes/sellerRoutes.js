@@ -8,12 +8,10 @@ const router = express.Router();
 try {
   router.post("/registerSeller", async (req, res) => {
     const {
-      firstname,
-      lastname,
-      email,
-      emailConfirm,
+      username,
       phonenumber,
       location,
+      email,
       password,
       passwordConfirm,
     } = req.body;
@@ -27,9 +25,7 @@ try {
         if (results.length > 0) {
           return res.send("Email Already in Use");
         }
-        if (email != emailConfirm) {
-          return res.send("Emails donot Match");
-        }
+      
         if (password.length < 5) {
           return res.send("Password should be morethan 5 characters");
         }
@@ -41,8 +37,7 @@ try {
           "INSERT INTO pending_sellers SET ?",
           {
             id: uuid.v4(),
-            firstName: firstname,
-            lastName: lastname,
+            username: username,
             email: email,
             phonenumber: phonenumber,
             location: location,
@@ -92,7 +87,7 @@ try {
                       (await bycrpt.compare(password, result[0].password))
                     ) {
                       conn.query(
-                        "SELECT id,firstname,lastname,email,phonenumber,location FROM sellers WHERE email=?",
+                        "SELECT id,username,email,phonenumber,location FROM sellers WHERE email=?",
                         [email],
                         async (err, results) => {
                           if (err) throw err;
@@ -114,7 +109,7 @@ try {
 }
 router.get("/getPendingProducts/:id", async (req, res) => {
   conn.query(
-    "SELECT product,price,images,quantity FROM pending_products WHERE seller_id=?",
+    "SELECT id,product,price,images,quantity FROM pending_products WHERE seller_id=?",
     [req.params.id],
     (err, results) => {
       if (err) throw err;
@@ -124,7 +119,7 @@ router.get("/getPendingProducts/:id", async (req, res) => {
 });
 router.get("/getApprovedProducts/:id", async (req, res) => {
   conn.query(
-    "SELECT product,price,images,quantity FROM products WHERE seller_id=?",
+    "SELECT id,product,price,images,quantity FROM products WHERE seller_id=?",
     [req.params.id],
     (err, results) => {
       if (err) throw err;
@@ -160,14 +155,27 @@ router.get("/totalProducts/:id",async(req,res)=>{
       conn.query("SELECT * FROM pending_products WHERE seller_id=?",
       [req.params.id],
       (error,results)=>{
-
-
-        res.json(result.length + results.length)
-      })
+         res.json(result.length + results.length)
+      });
     }
     
-  }
-  )
-})
+  });
+});
+
+router.get("/pendingDetails/:id", async (req,res)=>{
+  conn.query("SELECT product,price,discount,quantity,description FROM pending_products WHERE id=?",
+  [req.params.id],(error,results)=>{
+    if(error) throw error;
+    res.send(results);
+  });
+});
+
+router.get("/pdetails/:id",async (req,res)=>{
+  conn.query("SELECT product,price,discount,quantity,description FROM products WHERE id= ?",
+  [req.params.id],(err,result)=>{
+    if(err) throw err;
+    res.send(result);
+  });
+});
 
 module.exports = router;

@@ -21,7 +21,7 @@
     ></script>
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
 
@@ -65,17 +65,7 @@
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
                 </li>
-                <li class="nav-item">
-                  <a href="tables.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-table text-light fa-lg mr-3"></i>Tables</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="inbox.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-envelope text-light fa-lg mr-3"></i
-                    >Inbox</a
-                  >
-                </li>
+
                 <li class="nav-item">
                   <a href="sales.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
@@ -101,9 +91,9 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-file-alt text-light fa-lg mr-3"></i
-                    >Documentation</a
+                  <a href="upload.html" class="nav-link text-white p-3 mb-2"
+                    ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
+                    >Uploads</a
                   >
                 </li>
               </ul>
@@ -119,23 +109,7 @@
                 <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
                   <h4>Dashboard</h4>
                 </div>
-                <div class="col-md-5">
-                  <form action="#">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control search-input"
-                        placeholder="Search...."
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-white bg-light search-button"
-                      >
-                        <i class="fas fa-search text-danger"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
@@ -196,69 +170,88 @@
 
     <!-- Details -->
     <section>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-                    <div class="row pt-md-5 mt-md-3">
-                        <div class="col-xl-10 mx-auto my-5">
-                            <div class="card rounded">
-                              <div class="card-body">
-                                <h4 class="text-center text-info">Order No: <span id="ordernumber">GF2zk</span></h4>
-                                <div>
-                                  <ul class="list-inline">
-                                    <li class="text-left ml-5">Customer Name:<span id="name">Sam</span></li>
-                                    <li class="text-right mr-5">Email: <span id="email">sam@gmail.com</span></li>
-                                  </ul>
-                           
-                            
-                                  <ul class="list-inline ">
-                                    <li class="text-left ml-5">No of Items Ordered:<span id="items">4</span></li>
-                                    <li class="text-right mr-5">Order Date: <span id="date">27/07/2021</span></li>
-                                  </ul>
-                                  <ul class="list-inline ">
-                                    <li class="text-left ml-5">Payment Method:<span id="method">Cash On Delivery</span></li>
-                                    <li class="text-right mr-5">Order Status: <span id="status">Undelivered</span></li>
-                                  </ul>
-                                </div>
-                              
-                                <h6 class="text-center text-primary">Item details</h6>
-                                <table class="table">
-                                   <tr>
-                                     <th>Item No</th>
-                                     <th>Item</th>
-                                     <th>Quantity</th>
-                                     <th>Unit Price</th>
-                                     <th>Amount</th>
-                                     <th>Seller name</th>
-                                     <th>Seller Contact</th>
-                                     <th>Approve</th>
-                                   </tr>
-                                   <tbody>
-                                     <tr>
-                                       <td>1</td>
-                                       <td>Soda</td>
-                                       <td>4</td>
-                                       <td>2000</td>
-                                       <td>8000</td>
-                                       <td>Denis</td>
-                                       <td>0709857117</td>
-                                       <td><button type="button" class="btn btn-success btn-sm">Approve</button>
-                                      </td>
-                                     </tr>
-                                   </tbody>
-                                </table>
-                              </div>
-                            </div>
-                        </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row pt-md-5 mt-md-3">
+              <div class="col-xl-10 mx-auto my-5">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <h4 class="text-center text-info">
+                      Order No: <span id="ordernumber">GF2zk</span>
+                    </h4>
+                    <div>
+                      <table class="table text-center">
+                        <tbody>
+                          <tr>
+                            <td>Customer Name:<span id="name">Sam</span></td>
+                            <td>
+                              Email: <span id="email">sam@gmail.com</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              No of Items Ordered:<span id="items">4</span>
+                            </td>
+                            <td>
+                              Order Date: <span id="date">27/07/2021</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Payment Method:<span id="method"
+                                >Cash On Delivery</span
+                              >
+                            </td>
+                            <td>
+                              Order Status: <span id="status">Undelivered</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
+
+                    <h6 class="text-center text-primary">Item details</h6>
+                    <table class="table">
+                      <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Amount</th>
+                        <th>Seller name</th>
+                        <th>Seller Contact</th>
+                        <th>Approve</th>
+                      </tr>
+                      <tbody>
+                        <tr>
+                          <td>Soda</td>
+                          <td>4</td>
+                          <td>2000</td>
+                          <td>8000</td>
+                          <td>Denis</td>
+                          <td>0709857117</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-success btn-sm"
+                            >
+                              Approve
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
     <!-- End details -->
 
-   
-<!-- Footer -->
+    <!-- Footer -->
     <footer>
       <div class="container-fluid">
         <div class="row">
@@ -311,19 +304,18 @@
       crossorigin="anonymous"
     ></script>
     <script>
+      let orderId = new URLSearchParams(window.location.search).get("order");
       const orders = new XMLHttpRequest();
-orders.onreadystatechange = () =>{
-  if(orders.status==200 && orders.readyState==4){
-     
-     let pendingOrders=JSON.parse(orders.responseText);
-     console.log(pendingOrders);
-     document.getElementById("ordernumber").innerHTML=pendingOrders.order_number;
-     document.getElementById("date").innerHTML=pendingOrders.order_date;
-
-  }
-}
-orders.open("GET","/api/admin/pendingOrders",true);
-orders.send();
+      orders.onreadystatechange = () => {
+        if (orders.status == 200 && orders.readyState == 4) {
+          let [pendingOrders] = JSON.parse(orders.responseText);
+          document.getElementById("ordernumber").innerHTML =
+            pendingOrders.order_number;
+          document.getElementById("date").innerHTML = pendingOrders.order_date;
+        }
+      };
+      orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);
+      orders.send();
     </script>
     <!-- End Scripts -->
   </body>

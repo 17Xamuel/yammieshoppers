@@ -562,7 +562,7 @@
               "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             var r = "";
             for (var i = 0; i < l; i++) {
-              r += rc.charAt(Math.floor(Math.random() * rclength));
+              r += rc.charAt(Math.floor(Math.random() * rc.length));
             }
             return r;
           }

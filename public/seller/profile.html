@@ -25,10 +25,10 @@
       crossorigin="anonymous"
     ></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles/home.css" />
+    <link rel="stylesheet" href="../admin/styles/home.css" />
 
     <title>My Profile</title>
   </head>
@@ -107,23 +107,7 @@
                 <div class="col-md-4 mb-0 text-light py-3">
                   <h4>DASHBOARD</h4>
                 </div>
-                <div class="col-md-5">
-                  <form action="#">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control search-input"
-                        placeholder="Search...."
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-white bg-light search-button"
-                      >
-                        <i class="fas fa-search text-danger"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
@@ -173,7 +157,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-success">
               Stay Here
             </button>
-            <button type="button" data-dismiss="modal" class="btn btn-danger">
+            <button type="button" id="slg" class="btn btn-danger">
               Log Out
             </button>
           </div>
@@ -187,66 +171,32 @@
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
-              <div class="col-xl-8 m-auto">
-                <h4 class="text-center text-muted m-3">My Profile</h4>
-                <form>
-                  <div class="form-row form-group">
-                    <div class="col">
-                      <label for="firstname">First Name</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="firstname"
-                        autocomplete="off"
-                      />
-                    </div>
-                    <div class="col">
-                      <label for="lastname">Last Name</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="lastname"
-                        autocomplete="off"
-                      />
-                    </div>
+              <div class="col-xl-8 mx-auto">
+                <div class="card rounded my-5">
+                  <div class="card-body">
+                    <h3 class="text-center text-muted m-3">My Profile</h3>
+                    <table class="table text-center">
+                      <tbody>
+                        <tr>
+                          <td>Username</td>
+                          <td id="name"></td>
+                        </tr>
+                        <tr>
+                          <td>Email</td>
+                          <td id="email"></td>
+                        </tr>
+                        <tr>
+                          <td>Phonenumber</td>
+                          <td id="phonenumber"></td>
+                        </tr>
+                        <tr>
+                          <td>Location</td>
+                          <td id="location"></td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                  <div class="form-row form-group">
-                    <div class="col">
-                      <label for="email">Email</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="email"
-                        autocomplete="off"
-                      />
-                    </div>
-                    <div class="col">
-                      <label for="phonenumber">Phonenumber</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="phonenumber"
-                        autocomplete="off"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="locatiom">Location</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="location"
-                      autocomplete="off"
-                    />
-                  </div>
-
-                  <button
-                    type="button"
-                    class="btn btn-primary btn-lg btn-block"
-                  >
-                    Save
-                  </button>
-                </form>
+                </div>
               </div>
             </div>
           </div>
@@ -312,13 +262,13 @@
       let [seller] = JSON.parse(
         localStorage.getItem("yammie/useLocalstorage/storage")
       );
-      document.getElementById("User").innerHTML = seller.lastname;
-      document.getElementById("firstname").value = seller.firstname;
-      document.getElementById("lastname").value = seller.lastname;
-      document.getElementById("email").value = seller.email;
-      document.getElementById("phonenumber").value = seller.phonenumber;
-      document.getElementById("location").value = seller.location;
+      document.getElementById("User").innerHTML = seller.username;
+      document.getElementById("name").innerHTML = seller.username;
+      document.getElementById("email").innerHTML = seller.email;
+      document.getElementById("phonenumber").innerHTML = seller.phonenumber;
+      document.getElementById("location").innerHTML = seller.location;
     </script>
+    <script src="scripts/lg.js"></script>
     <!-- End Scripts -->
   </body>
 </html>

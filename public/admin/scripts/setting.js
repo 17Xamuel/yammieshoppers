@@ -6,7 +6,7 @@ request.onreadystatechange = () => {
     let row = "";
     pendingSellers.forEach((pendingSeller) => {
       row += ` <tr>
-                      <td>${pendingSeller.firstname}</td>
+                      <td>${pendingSeller.username}</td>
                       <td>${pendingSeller.email}</td>
                       <td>${pendingSeller.location}</td>
                       <td>${pendingSeller.phonenumber}</td>
@@ -62,10 +62,10 @@ request.send();
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = () => {
   if (xhr.readyState == 4 && xhr.status == 200) {
-    let pendingProducts = JSON.parse(xhr.responseText);
+     let pendingProducts = JSON.parse(xhr.responseText);
 
-    let rows = "";
-    pendingProducts.forEach((pendingProduct) => {
+     let rows = "";
+      pendingProducts.forEach((pendingProduct) => {
       let images = JSON.parse(pendingProduct.images);
 
       rows += ` <tr>
@@ -89,12 +89,6 @@ xhr.onreadystatechange = () => {
                         </a>
                         </td>
                       <td>
-                        <button type="submit" class="btn btn-success btn-sm -a-product"
-                        data-id="${pendingProduct.id}">
-                          Accept
-                        </button>
-                      </td>
-                      <td>
                       <button 
                       type="submit" 
                       class="btn btn-danger btn-sm -d-product" 
@@ -107,6 +101,8 @@ xhr.onreadystatechange = () => {
     });
     document.getElementById("pendingProducts").innerHTML = rows;
     document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
+
+    
 
    let deleteButtons = document.querySelectorAll(".-d-product");
     deleteButtons.forEach((deleteButton) => {
@@ -130,17 +126,7 @@ xhr.onreadystatechange = () => {
       });
     });
 
-   let acceptButtons = document.querySelectorAll(".-a-product");
-   acceptButtons.forEach((acceptButton)=>{
-     acceptButton.addEventListener("click",(e)=>{
-       let acceptProduct=e.target.dataset.id;
-       xhr.onreadystatechange=()=>{
-          console.log(xhr.responseText);
-       }
-       xhr.open("GET",`/api/admin/confirmProduct/${acceptProduct}`);
-       xhr.send();
-     })
-   })
+  
   }
 };
 xhr.open("GET", "/api/admin/pendingProduct", true);

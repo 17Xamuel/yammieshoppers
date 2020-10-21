@@ -25,11 +25,10 @@
       crossorigin="anonymous"
     ></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/home.css" />
-    <link rel="stylesheet" href="./styles/profile.css" />
 
     <title>Profile</title>
   </head>
@@ -72,21 +71,7 @@
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
                 </li>
-                <li class="nav-item">
-                  <a
-                    href="tables.html"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-table text-light fa-lg mr-3"></i>Tables</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    href="inbox.html"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-envelope text-light fa-lg mr-3"></i
-                    >Inbox</a
-                  >
-                </li>
+
                 <li class="nav-item">
                   <a
                     href="sales.html"
@@ -120,9 +105,11 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-file-alt text-light fa-lg mr-3"></i
-                    >Documentation</a
+                  <a
+                    href="upload.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
+                    >Uploads</a
                   >
                 </li>
               </ul>
@@ -138,23 +125,7 @@
                 <div class="col-md-4 mb-0 text-light py-3">
                   <h4>DASHBOARD</h4>
                 </div>
-                <div class="col-md-5">
-                  <form action="#">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control search-input"
-                        placeholder="Search...."
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-white bg-light search-button"
-                      >
-                        <i class="fas fa-search text-danger"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
@@ -218,170 +189,37 @@
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 mb-5 align-items-center">
-              <div class="container emp-profile">
-                <form method="post">
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="profile-img">
-                        <img src="./images/user-1.jpg" class="rounded-circle" />
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="profile-head">
-                        <h5>Mulindwa Denis</h5>
-                        <h6>Web Developer and Designer</h6>
-
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                          <li class="nav-item">
-                            <a
-                              class="nav-link active"
-                              id="home-tab"
-                              data-toggle="tab"
-                              href="#home"
-                              role="tab"
-                              aria-controls="home"
-                              aria-selected="true"
-                              >About</a
-                            >
-                          </li>
-                          <li class="nav-item">
-                            <a
-                              class="nav-link"
-                              id="profile-tab"
-                              data-toggle="tab"
-                              href="#profile"
-                              role="tab"
-                              aria-controls="profile"
-                              aria-selected="false"
-                              >Timeline</a
-                            >
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
+              <div class="col-xl-8 mx-auto">
+                <div class="card rounded my-5">
+                  <div class="card-body text-center">
+                    <img
+                      src="images/user-1.jpg"
+                      class="rounded-circle"
+                      width="150"
+                      height="150"
+                    />
+                    <table class="table my-2">
+                      <tbody>
+                        <tr>
+                          <td>Full Name</td>
+                          <td>Mulindwa Denis</td>
+                        </tr>
+                        <tr>
+                          <td>Email Address</td>
+                          <td>mulindwadenis@yahoo.com</td>
+                        </tr>
+                        <tr>
+                          <td>Job Title</td>
+                          <td>Web Developer and Designer</td>
+                        </tr>
+                        <tr>
+                          <td>Mobile Number</td>
+                          <td>0709857117</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="profile-work">
-                        <p>WORK LINK</p>
-                        <a href="">Linkedin</a><br />
-                        <a href="">Facebook</a><br />
-                        <a href="">Instagram</a><br />
-                        <a href="">Twitter</a>
-                        <p>SKILLS</p>
-                        <a href="">Web Designer</a><br />
-                        <a href="">Web Developer</a><br />
-                        <a href="">Javascript</a><br />
-                        <a href="">HTML&CSS</a><br />
-                        <a href="">PHP</a><br />
-                      </div>
-                    </div>
-                    <div class="col-md-8">
-                      <div class="tab-content profile-tab" id="myTabContent">
-                        <div
-                          class="tab-pane fade show active"
-                          id="home"
-                          role="tabpanel"
-                          aria-labelledby="home-tab"
-                        >
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>User Id</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>YS/003</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>Name</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>Mulindwa Denis</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>Email</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>mulindwadenis@gmail.com</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>Phone</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>0709857117</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>Profession</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>Web Developer and Designer</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="tab-pane fade"
-                          id="profile"
-                          role="tabpanel"
-                          aria-labelledby="profile-tab"
-                        >
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>Experience</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>Expert</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>Hourly Rate</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>UGX100,000/hr</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>Total Projects</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>230</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>English Level</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>Expert</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <label>Availability</label>
-                            </div>
-                            <div class="col-md-6">
-                              <p>6 months</p>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-12">
-                              <label>Your Bio</label><br />
-                              <p>Your detail description</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>

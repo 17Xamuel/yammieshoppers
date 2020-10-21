@@ -2,10 +2,8 @@ let sellerForm = document.getElementById("sellerForm");
 sellerForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let seller = {};
-  seller.firstname = document.getElementById("fname").value;
-  seller.lastname = document.getElementById("lname").value;
+  seller.username = document.getElementById("name").value;
   seller.email = document.getElementById("email").value;
-  seller.emailConfirm = document.getElementById("repeat-email").value;
   seller.phonenumber = document.getElementById("phone").value;
   seller.location = document.getElementById("location").value;
   seller.password = document.getElementById("password").value;

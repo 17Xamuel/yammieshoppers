@@ -1,7 +1,15 @@
-//tooltip
-$(document).ready(function () {
-  $('[data-toggle="tooltip"]').tooltip();
-});
+const xhr1 = new XMLHttpRequest();
+xhr1.onreadystatechange = ()=>{
+  if(xhr1.readyState==4 && xhr1.status==200){
+    if(xhr1.responseText==""){
+      document.getElementById("products").innerHTML=0;
+    }else {
+      document.getElementById("products").innerHTML=xhr1.responseText;
+    }
+  }
+};
+xhr1.open("GET","/api/admin/allProducts",true);
+xhr1.send();
 
 //Number of Users
 let xhr = new XMLHttpRequest();
@@ -30,7 +38,7 @@ orders.onreadystatechange = () =>{
        <td>${order.order_amount}</td>
        <td>${order.order_delivery_method}</td>
        <td>
-       <a href="order.html?order_id=${order.order_id}">
+       <a href="order.html?order=${order.order_id}">
          <button type="button" class="btn btn-info btn-sm">
            Details
          </button></a>

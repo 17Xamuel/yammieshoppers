@@ -23,7 +23,7 @@
 
     <!-- End Scripts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/home.css" />
@@ -69,21 +69,7 @@
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
                 </li>
-                <li class="nav-item">
-                  <a
-                    href="tables.html"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-table text-light fa-lg mr-3"></i>Tables</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    href="inbox.html"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-envelope text-light fa-lg mr-3"></i
-                    >Inbox</a
-                  >
-                </li>
+
                 <li class="nav-item">
                   <a
                     href="sales.html"
@@ -117,9 +103,11 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-file-alt text-light fa-lg mr-3"></i
-                    >Documentation</a
+                  <a
+                    href="upload.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
+                    >Uploads</a
                   >
                 </li>
               </ul>
@@ -135,23 +123,7 @@
                 <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
                   <h4>Dashboard</h4>
                 </div>
-                <div class="col-md-5">
-                  <form action="#">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control search-input"
-                        placeholder="Search...."
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-white bg-light search-button"
-                      >
-                        <i class="fas fa-search text-danger"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
@@ -213,7 +185,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3 align-items-center">
+            <div class="row pt-md-5 mt-md-3">
               <div class="col-xl-12">
                 <h4 class="text-center my-3">
                   Seller Requests <span id="psn"></span>
@@ -232,6 +204,15 @@
                 </table>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row">
               <div class="col-xl-12">
                 <h4 class="text-center">
@@ -244,51 +225,13 @@
                       <th>Name</th>
                       <th>Price</th>
                       <th>Description</th>
-                      <th colspan="3">Operations</th>
+                      <th colspan="2">Operations</th>
                     </tr>
                   </thead>
                   <tbody id="pendingProducts"></tbody>
                 </table>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Image Upload -->
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row">
-              <div class="container">
-                <h3 class="text-center mt-2">Image Upload</h3>
-                <form action="/upload" method="POST">
-                  <div class="input-group mb-4">
-                    <div class="custom-file">
-                      <input type="file" class="custom-file-input" />
-                      <label class="custom-file-label" for="inputGroupFile04"
-                        >Choose file</label
-                      >
-                    </div>
-                    <div class="input-group-append">
-                      <button class="btn btn-info" type="submit">Upload</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End image Upload -->
-    <section>
-      <div class="container-fluid">
-        <div class="row mb-5">
-          <div class="col-xl-10 col-lg-9 col-d-8 ml-auto">
-            <div class="row align-items-center"></div>
           </div>
         </div>
       </div>

@@ -21,7 +21,7 @@
     ></script>
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
 
@@ -65,17 +65,7 @@
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
                 </li>
-                <li class="nav-item">
-                  <a href="tables.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-table text-light fa-lg mr-3"></i>Tables</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a href="inbox.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-envelope text-light fa-lg mr-3"></i
-                    >Inbox</a
-                  >
-                </li>
+
                 <li class="nav-item">
                   <a href="sales.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
@@ -101,9 +91,9 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="#" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-file-alt text-light fa-lg mr-3"></i
-                    >Documentation</a
+                  <a href="upload.html" class="nav-link text-white p-3 mb-2"
+                    ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
+                    >Uploads</a
                   >
                 </li>
               </ul>
@@ -119,23 +109,7 @@
                 <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
                   <h4>Dashboard</h4>
                 </div>
-                <div class="col-md-5">
-                  <form action="#">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control search-input"
-                        placeholder="Search...."
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-white bg-light search-button"
-                      >
-                        <i class="fas fa-search text-danger"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
@@ -221,10 +195,10 @@
                 <div class="card card-common">
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
-                      <i class="fas fa-money-bill-alt fa-3x text-success"></i>
+                      <i class="fas fa-table fa-3x text-success"></i>
                       <div class="text-right text-secondary">
-                        <h4>Expenses</h4>
-                        <h3>UGX235,000</h3>
+                        <h4>Products</h4>
+                        <h3 id="products"></h3>
                       </div>
                     </div>
                   </div>
@@ -286,7 +260,6 @@
                 <table class="table table-striped bg-light text-center">
                   <thead>
                     <tr class="text-muted">
-                      
                       <th>OrderNumber</th>
                       <th>OrderAmount</th>
                       <th>DeliveryMethod</th>
@@ -310,8 +283,6 @@
                         </button>
                       </td>
                     </tr>
-
-                   
                   </tbody>
                 </table>
 
@@ -446,219 +417,6 @@
       </div>
     </section>
     <!-- End Tables -->
-
-    <!-- Progress/taskbar-->
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row mb-4 align-items-center">
-              <div class="col-xl-6 col-12 mb-4 mb-xl-0">
-                <div class="bg-dark text-white p-4 rounded">
-                  <h4 class="mb-5">Conversion Rates</h4>
-                  <h6 class="mb-3">Google Chrome</h6>
-                  <div class="progress mb-4" style="height: 20px">
-                    <div
-                      class="progress-bar progress-bar-striped font-weight-bold"
-                      style="width: 91%"
-                    >
-                      91%
-                    </div>
-                  </div>
-                  <h6 class="mb-3">Mozilla Firefox</h6>
-                  <div class="progress mb-4" style="height: 20px">
-                    <div
-                      class="progress-bar progress-bar-striped font-weight-bold bg-success"
-                      style="width: 82%"
-                    >
-                      82%
-                    </div>
-                  </div>
-                  <h6 class="mb-3">Opera Mini</h6>
-                  <div class="progress mb-4" style="height: 20px">
-                    <div
-                      class="progress-bar progress-bar-striped font-weight-bold bg-danger"
-                      style="width: 20%"
-                    >
-                      20%
-                    </div>
-                  </div>
-                  <h6 class="mb-3">Internet Explorer</h6>
-                  <div class="progress mb-4" style="height: 20px">
-                    <div
-                      class="progress-bar progress-bar-striped font-weight-bold bg-info"
-                      style="width: 35%"
-                    >
-                      35%
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-6 col-12">
-                <h4 class="text-muted p-3 mb-3">Tasks</h4>
-                <div class="container-fluid bg-white">
-                  <div class="row py-3 mb-4 task-border align-items-center">
-                    <div class="col-1">
-                      <input type="checkbox" checked />
-                    </div>
-                    <div class="col-sm-9 col-8">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Natus, culpa perferendis quibusdam.
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Edit</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-edit fa-lg mr-3 text-success"></i
-                      ></a>
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Delete</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-trash-alt fa-lg mr-3 text-danger"></i
-                      ></a>
-                    </div>
-                  </div>
-                </div>
-                <div class="container-fluid bg-white">
-                  <div class="row py-3 mb-4 task-border align-items-center">
-                    <div class="col-1">
-                      <input type="checkbox" checked />
-                    </div>
-                    <div class="col-sm-9 col-8">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Natus, culpa perferendis quibusdam.
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Edit</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-edit fa-lg mr-3 text-success"></i
-                      ></a>
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Delete</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-trash-alt fa-lg mr-3 text-danger"></i
-                      ></a>
-                    </div>
-                  </div>
-                </div>
-                <div class="container-fluid bg-white">
-                  <div class="row py-3 mb-4 task-border align-items-center">
-                    <div class="col-1">
-                      <input type="checkbox" checked />
-                    </div>
-                    <div class="col-sm-9 col-8">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Natus, culpa perferendis quibusdam.
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Edit</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-edit fa-lg mr-3 text-success"></i
-                      ></a>
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Delete</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-trash-alt fa-lg mr-3 text-danger"></i
-                      ></a>
-                    </div>
-                  </div>
-                </div>
-                <div class="container-fluid bg-white">
-                  <div class="row py-3 mb-4 task-border align-items-center">
-                    <div class="col-1">
-                      <input type="checkbox" checked />
-                    </div>
-                    <div class="col-sm-9 col-8">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Natus, culpa perferendis quibusdam.
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Edit</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-edit fa-lg mr-3 text-success"></i
-                      ></a>
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Delete</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-trash-alt fa-lg mr-3 text-danger"></i
-                      ></a>
-                    </div>
-                  </div>
-                </div>
-                <div class="container-fluid bg-white">
-                  <div class="row py-3 mb-4 task-border align-items-center">
-                    <div class="col-1">
-                      <input type="checkbox" checked />
-                    </div>
-                    <div class="col-sm-9 col-8">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Natus, culpa perferendis quibusdam.
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Edit</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-edit fa-lg mr-3 text-success"></i
-                      ></a>
-                    </div>
-                    <div class="col-1">
-                      <a
-                        href="#"
-                        data-toggle="tooltip"
-                        title="<h6>Delete</h6>"
-                        data-html="true"
-                        data-placement="top"
-                        ><i class="fas fa-trash-alt fa-lg mr-3 text-danger"></i
-                      ></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- End Progress/taskbar -->
 
     <!-- Activities/Quickpost -->
     <section>
@@ -824,44 +582,6 @@
               <div class="col-xl-5 mt-5">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h5 class="text-muted mb-4 text-center">
-                      Quick Status Post
-                    </h5>
-                    <ul class="list-inline text-center py-3">
-                      <li class="list-inline-item mr-4">
-                        <a href="#"
-                          ><i class="fas fa-pencil-alt text-success"></i
-                          ><span class="h5 text-muted">Status</span></a
-                        >
-                      </li>
-                      <li class="list-inline-item mr-4">
-                        <a href="#"
-                          ><i class="fas fa-camera text-info"></i
-                          ><span class="h5 text-muted">Photo</span></a
-                        >
-                      </li>
-                      <li class="list-inline-item">
-                        <a href="#"
-                          ><i class="fas fa-map-marker-alt text-primary"></i
-                          ><span class="h5 text-muted">Check-in</span></a
-                        >
-                      </li>
-                    </ul>
-                    <form action="#">
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control py-2 mb-3"
-                          placeholder="What's your status...?"
-                        />
-                        <button
-                          type="button"
-                          class="btn btn-block text-uppercase font-weight-bold text-light bg-info py-2 mb-5"
-                        >
-                          Submit Post
-                        </button>
-                      </div>
-                    </form>
                     <div class="row">
                       <div class="col-6">
                         <div class="card bg-light">

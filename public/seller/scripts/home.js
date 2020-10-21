@@ -1,7 +1,8 @@
 const [seller] = JSON.parse(
   localStorage.getItem("yammie/useLocalstorage/storage")
 );
-document.getElementById("User").innerHTML = seller.lastname;
+document.getElementById("User").innerHTML = seller.username;
+
 const sellerId = seller.id;
 const request = new XMLHttpRequest();
 request.onreadystatechange = () => {
@@ -55,3 +56,4 @@ xhr1.onreadystatechange=()=>{
 }
 xhr1.open("GET",`/api/sellers/totalProducts/${sellerId}`,true);
 xhr1.send();
+

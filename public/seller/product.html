@@ -21,10 +21,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles/home.css" />
+    <link rel="stylesheet" href="../admin/styles/home.css" />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
@@ -95,23 +95,7 @@
                 <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
                   <h4>Dashboard</h4>
                 </div>
-                <div class="col-md-5">
-                  <form action="#">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control search-input"
-                        placeholder="Search...."
-                      />
-                      <button
-                        type="button"
-                        class="btn btn-white bg-light search-button"
-                      >
-                        <i class="fas fa-search text-danger"></i>
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
@@ -160,7 +144,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-success">
               Stay Here
             </button>
-            <button type="button" data-dismiss="modal" class="btn btn-danger">
+            <button type="button" id="slg" class="btn btn-danger">
               Log Out
             </button>
           </div>
@@ -192,6 +176,7 @@
                       <th>Quantity</th>
                       <th>Price</th>
                       <th>Status</th>
+                      <th>Details</th>
                     </tr>
                   </thead>
                   <tbody class="sellerProducts"></tbody>
@@ -254,5 +239,43 @@
       crossorigin="anonymous"
     ></script>
     <script src="./scripts/product.js"></script>
+    <script src="scripts/lg.js"></script>
+    <script>
+      const req = new XMLHttpRequest();
+
+      req.onreadystatechange = () => {
+        if (req.status == 200 && req.readyState == 4) {
+          let approvedProducts = JSON.parse(req.responseText);
+          let rows = "";
+          approvedProducts.forEach((approvedProduct) => {
+            let image = JSON.parse(approvedProduct.images);
+            rows += `
+           <tr>
+                <td>
+                  <img
+                    src="/${image[0]}"
+                    width="50"
+                    height="50"
+                    class="rounded-circle"
+                  />
+                </td>
+                <td>${approvedProduct.product}</td>
+                <td>${approvedProduct.quantity}</td>
+                <td>${approvedProduct.price}</td>
+                <td>
+                  <span class="badge badge-success w-75 py-2">Approved</span>
+                </td>
+                  <td>
+                    <a href="productdetails.html?approvedProduct=${approvedProduct.id}">
+                    <button type="button" class="btn btn-info btn-sm">Details</button></a>
+                  </td>
+                </tr>`;
+          });
+          document.getElementById("products").innerHTML = rows;
+        }
+      };
+      req.open("GET", `/api/sellers/getApprovedProducts/${sellerId}`, true);
+      req.send();
+    </script>
   </body>
 </html>

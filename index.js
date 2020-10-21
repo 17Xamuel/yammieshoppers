@@ -57,10 +57,7 @@ app.post("/addProduct", async (req, res) => {
       seller_id,
       quantity,
     } = req.body;
-    let categories = "";
-    if (category == "Electronics") {
-      categories = "1";
-    }
+    
     conn.query(
       "INSERT INTO pending_products SET ?",
       {
@@ -69,7 +66,7 @@ app.post("/addProduct", async (req, res) => {
         price: price,
         description: description,
         brand: brand,
-        category: categories,
+        category: category,
         subcategory: subcategory,
         discount: discount,
         images: path,
