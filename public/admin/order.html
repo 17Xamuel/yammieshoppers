@@ -196,69 +196,89 @@
 
     <!-- Details -->
     <section>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-                    <div class="row pt-md-5 mt-md-3">
-                        <div class="col-xl-10 mx-auto my-5">
-                            <div class="card rounded">
-                              <div class="card-body">
-                                <h4 class="text-center text-info">Order No: <span id="ordernumber">GF2zk</span></h4>
-                                <div>
-                                  <ul class="list-inline">
-                                    <li class="text-left ml-5">Customer Name:<span id="name">Sam</span></li>
-                                    <li class="text-right mr-5">Email: <span id="email">sam@gmail.com</span></li>
-                                  </ul>
-                           
-                            
-                                  <ul class="list-inline ">
-                                    <li class="text-left ml-5">No of Items Ordered:<span id="items">4</span></li>
-                                    <li class="text-right mr-5">Order Date: <span id="date">27/07/2021</span></li>
-                                  </ul>
-                                  <ul class="list-inline ">
-                                    <li class="text-left ml-5">Payment Method:<span id="method">Cash On Delivery</span></li>
-                                    <li class="text-right mr-5">Order Status: <span id="status">Undelivered</span></li>
-                                  </ul>
-                                </div>
-                              
-                                <h6 class="text-center text-primary">Item details</h6>
-                                <table class="table">
-                                   <tr>
-                                     <th>Item No</th>
-                                     <th>Item</th>
-                                     <th>Quantity</th>
-                                     <th>Unit Price</th>
-                                     <th>Amount</th>
-                                     <th>Seller name</th>
-                                     <th>Seller Contact</th>
-                                     <th>Approve</th>
-                                   </tr>
-                                   <tbody>
-                                     <tr>
-                                       <td>1</td>
-                                       <td>Soda</td>
-                                       <td>4</td>
-                                       <td>2000</td>
-                                       <td>8000</td>
-                                       <td>Denis</td>
-                                       <td>0709857117</td>
-                                       <td><button type="button" class="btn btn-success btn-sm">Approve</button>
-                                      </td>
-                                     </tr>
-                                   </tbody>
-                                </table>
-                              </div>
-                            </div>
-                        </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row pt-md-5 mt-md-3">
+              <div class="col-xl-10 mx-auto my-5">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <h4 class="text-center text-info">
+                      Order No: <span id="ordernumber">GF2zk</span>
+                    </h4>
+                    <div>
+                      <ul class="list-inline">
+                        <li class="text-left ml-5">
+                          Customer Name:<span id="name">Sam</span>
+                        </li>
+                        <li class="text-right mr-5">
+                          Email: <span id="email">sam@gmail.com</span>
+                        </li>
+                      </ul>
+
+                      <ul class="list-inline">
+                        <li class="text-left ml-5">
+                          No of Items Ordered:<span id="items">4</span>
+                        </li>
+                        <li class="text-right mr-5">
+                          Order Date: <span id="date">27/07/2021</span>
+                        </li>
+                      </ul>
+                      <ul class="list-inline">
+                        <li class="text-left ml-5">
+                          Payment Method:<span id="method"
+                            >Cash On Delivery</span
+                          >
+                        </li>
+                        <li class="text-right mr-5">
+                          Order Status: <span id="status">Undelivered</span>
+                        </li>
+                      </ul>
                     </div>
+
+                    <h6 class="text-center text-primary">Item details</h6>
+                    <table class="table">
+                      <tr>
+                        <th>Item No</th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Amount</th>
+                        <th>Seller name</th>
+                        <th>Seller Contact</th>
+                        <th>Approve</th>
+                      </tr>
+                      <tbody>
+                        <tr>
+                          <td>1</td>
+                          <td>Soda</td>
+                          <td>4</td>
+                          <td>2000</td>
+                          <td>8000</td>
+                          <td>Denis</td>
+                          <td>0709857117</td>
+                          <td>
+                            <button
+                              type="button"
+                              class="btn btn-success btn-sm"
+                            >
+                              Approve
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </section>
     <!-- End details -->
 
-   
-<!-- Footer -->
+    <!-- Footer -->
     <footer>
       <div class="container-fluid">
         <div class="row">
@@ -312,18 +332,17 @@
     ></script>
     <script>
       const orders = new XMLHttpRequest();
-orders.onreadystatechange = () =>{
-  if(orders.status==200 && orders.readyState==4){
-     
-     let pendingOrders=JSON.parse(orders.responseText);
-     console.log(pendingOrders);
-     document.getElementById("ordernumber").innerHTML=pendingOrders.order_number;
-     document.getElementById("date").innerHTML=pendingOrders.order_date;
-
-  }
-}
-orders.open("GET","/api/admin/pendingOrders",true);
-orders.send();
+      orders.onreadystatechange = () => {
+        if (orders.status == 200 && orders.readyState == 4) {
+          let pendingOrders = JSON.parse(orders.responseText);
+          console.log(pendingOrders);
+          document.getElementById("ordernumber").innerHTML =
+            pendingOrders.order_number;
+          document.getElementById("date").innerHTML = pendingOrders.order_date;
+        }
+      };
+      orders.open("GET", "/api/admin/pendingOrders", true);
+      orders.send();
     </script>
     <!-- End Scripts -->
   </body>

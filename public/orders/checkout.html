@@ -227,6 +227,19 @@
           padding: 0px 10%;
         }
       }
+      @media screen and (max-width: 768px) {
+        .p-order-steps {
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          column-gap: 1.1rem;
+          row-gap: 1.5rem;
+        }
+        .order-f {
+          display: none;
+        }
+        .search-nav {
+          padding: 0px 10%;
+        }
+      }
     </style>
     <script>
       if (document.referrer == "") {

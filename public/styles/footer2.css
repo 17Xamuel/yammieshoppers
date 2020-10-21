@@ -96,7 +96,7 @@
   color: #ffbb00;
 }
 .footer-list > li:hover {
-  transform: translateX(7px);
+  transform: translateX(1px);
 }
 .social-icons {
   margin-top: 10px;

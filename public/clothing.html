@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="./styles/main.css" />
     <link rel="stylesheet" href="./styles/products.css" />
     <link rel="stylesheet" href="./styles/footer2.css" />
+    <script>
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
+    </script>
     <style>
       .m-ctr {
         margin: 20px auto;
@@ -291,8 +296,14 @@
             <i class="fas fa-search"></i>
           </div>
           <a href="./cart.html" style="position: relative">
-            <i class="fas fa-cart-plus" style="font-size: 24px"></i>
+            <img
+              src="../resources/shopping-cart.svg"
+              alt=""
+              width="25px"
+              height="25px"
+            />
             <span class="cart-number" id="cartNumberItems">0</span>
+            <span class="cart-label" style="padding-bottom: 10px"> Cart </span>
           </a>
         </div>
       </div>
@@ -557,32 +568,14 @@
       </div>
     </footer>
     <script>
-      // animate menu  bars
-      const menu = document.querySelector(".menu");
-      const sideNav = document.querySelector("#sideNav");
-      const menuLine1 = document.querySelector(".line1");
-      const menuLine2 = document.querySelector(".line2");
-      const menuLine3 = document.querySelector(".line3");
-
-      menu.addEventListener("click", () => {
-        sideNav.classList.toggle("activeSideNav");
-        menuLine1.classList.toggle("rotateLine1");
-        menuLine2.classList.toggle("rotateLine2");
-        menuLine3.classList.toggle("rotateLine3");
-      });
       let yammieUsr = "";
-      let yammie = localStorage.getItem(
-        "https://yammieshoppers.com/useLocalStorage/Storage"
-      );
       if (yammie) {
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
             [yammieUsr] = JSON.parse(xhr.responseText);
-            console.log(yammieUsr);
-            let account = document.querySelector(".login-text");
-
-            account.innerHTML = "Hi," + yammieUsr.c_first_name.toUpperCase();
+            let account = document.querySelector(".-acc-name");
+            account.innerHTML = "Hi, " + yammieUsr.c_first_name;
           }
         };
         xhr.open("GET", `/api/user/customer/${yammie}`, true);

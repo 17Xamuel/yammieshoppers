@@ -24,7 +24,7 @@ xhr.onreadystatechange = () => {
                       <td>${PendingProduct.quantity}</td>
                       <td>${PendingProduct.price}</td>
                       <td>
-                        <span class="badge badge-danger w-75 py-2">Pending</span>
+                        <span class="badge badge-warning w-75 py-2">Pending</span>
                       </td>
                     </tr>`;
     });
@@ -62,9 +62,36 @@ req.onreadystatechange = () => {
     document.getElementById("products").innerHTML = rows;
   }
 };
-req.open(
-  "GET",
-  `/api/sellers/getApprovedProducts/${sellerId}`,
-  true
-);
+req.open("GET", `/api/sellers/getApprovedProducts/${sellerId}`, true);
 req.send();
+
+const reject = new XMLHttpRequest();
+reject.onreadystatechange = () => {
+  if (reject.readyState == 4 && reject.status == 200) {
+    console.log(reject.responseText);
+    let rejectedProducts = JSON.parse(reject.responseText);
+    let data = "";
+    rejectedProducts.forEach((rejectedProduct) => {
+      let image = JSON.parse(rejectedProduct.images);
+      data += `<tr>
+                      <td>
+                        <img
+                          src="/${image[0]}"
+                          width="50"
+                          height="50"
+                          class="rounded-circle"
+                        />
+                      </td>
+                      <td>${rejectedProduct.product}</td>
+                      <td>${rejectedProduct.quantity}</td>
+                      <td>${rejectedProduct.price}</td>
+                      <td>
+                        <span class="badge badge-danger w-75 py-2">Rejected</span>
+                      </td>
+                    </tr>`;
+    });
+    document.getElementById("rejected").innerHTML = data;
+  }
+};
+reject.open("GET", `/api/sellers/rejectedProduct/${sellerId}`, true);
+reject.send();

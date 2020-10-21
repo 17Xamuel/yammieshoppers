@@ -91,31 +91,48 @@ xhr.onreadystatechange = () => {
                       class="btn btn-danger btn-sm -d-product" 
                       data-id="${pendingProduct.id}"
                       data-images="${pendingProduct.images}"
+                      data-toggle="modal"
+                      data-target="#reject"
                       >
-                        Delete
+                        Reject
                       </button></td>
                     </tr>`;
     });
     document.getElementById("pendingProducts").innerHTML = rows;
     document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
 
-    let deleteButtons = document.querySelectorAll(".-d-product");
-    deleteButtons.forEach((deleteButton) => {
-      deleteButton.addEventListener("click", (e) => {
-        let deleteProduct = e.target.dataset.id;
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            if (xhr.responseText == "Deleted") {
-              window.location.reload();
-            } else {
-              console.log("Error");
-            }
-          }
-        };
-        xhr.open("DELETE", `/deleteProduct/${deleteProduct}`, true);
-        xhr.send({});
-      });
-    });
+    let rejectButtons = document.querySelectorAll(".-d-product");
+    let reason = document.getElementById("reason").value;
+    console.log(reason);
+    // rejectButtons.forEach((rejectButton) => {
+    //   rejectButton.addEventListener("click", (e) => {
+    //     let rejectProduct = e.target.dataset.id;
+    //     xhr.onreadystatechange = () => {
+    //       if (xhr.readyState == 4 && xhr.status == 200) {
+    //       }
+    //     };
+    //     xhr.open("GET", `/api/admin/rejectProduct/${rejectProduct}`, true);
+    //     xhr.send();
+    //   });
+    // });
+
+    // let deleteButtons = document.querySelectorAll(".-d-product");
+    // deleteButtons.forEach((deleteButton) => {
+    //   deleteButton.addEventListener("click", (e) => {
+    //     let deleteProduct = e.target.dataset.id;
+    //     xhr.onreadystatechange = () => {
+    //       if (xhr.readyState == 4 && xhr.status == 200) {
+    //         if (xhr.responseText == "Deleted") {
+    //           window.location.reload();
+    //         } else {
+    //           console.log("Error");
+    //         }
+    //       }
+    //     };
+    //     xhr.open("DELETE", `/deleteProduct/${deleteProduct}`, true);
+    //     xhr.send({});
+    //   });
+    // });
 
     let acceptButtons = document.querySelectorAll(".-a-product");
     acceptButtons.forEach((acceptButton) => {

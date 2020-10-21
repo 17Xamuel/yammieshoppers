@@ -91,7 +91,7 @@ app.get("/uploads/images/products/:imageName", async (req, res) => {
   );
 });
 
-// delete image function
+// delete image function'?
 function deleteImages(image) {
   let imagePath = path.join(__dirname, image);
   fs.unlink(imagePath, (err) => {
