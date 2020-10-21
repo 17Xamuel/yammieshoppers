@@ -196,7 +196,7 @@
         position: absolute;
         padding: 5px 25px;
         margin-bottom: 5px;
-        bottom: 0px;
+        bottom: 5px;
         left: auto;
         right: auto;
       }
@@ -211,8 +211,7 @@
       .itm-searched {
         position: relative;
         border-radius: 5px;
-        height: 480px;
-
+        height: 450px;
         transition: box-shadow 0.1s ease-in-out;
         border: 1px solid #efefef;
         box-shadow: 3px 3px 4px #c3c3c3;
@@ -233,7 +232,6 @@
       .itm-s-dtl {
         padding: 0px 10px;
         font-size: 15px;
-        font-weight: 550;
         height: 50%;
         max-height: 50%;
         position: relative;
@@ -249,7 +247,7 @@
         text-decoration-color: rgba(0, 0, 0, 0.4);
       }
       .a-s-discount {
-        width: 15%;
+        width: 18%;
         opacity: 0.9;
         font-size: 16px;
         background-color: #ffbb00;
@@ -287,7 +285,7 @@
         padding: 15px 0px;
         font-size: 20px;
         box-shadow: 3px 3px 5px #e2e2e2;
-        border-radius: 30px;
+        border-radius: 5px;
         border: none;
         outline: none;
         color: white;
@@ -305,7 +303,6 @@
           rgba(250, 164, 6, 0.9),
           rgba(250, 164, 6, 0.7)
         );
-        transform: scale(1.04);
       }
       /*no data end*/
 
@@ -328,7 +325,6 @@
           transform: rotate(360deg);
         }
       }
-
       #pop-up-overlay.active {
         position: fixed;
         top: 0;
@@ -350,7 +346,6 @@
         font-weight: 500;
         background-color: #fff;
       }
-
       .popup {
         background-color: white;
         width: 35%;
@@ -393,7 +388,7 @@
           width: 75%;
           height: 40%;
           padding-left: 20px;
-          padding-top: 15px;
+          padding-top: 30px;
         }
         .close-pp {
           font-size: 2rem;
@@ -426,8 +421,12 @@
           bottom: 10px;
         }
         .itm-searched {
-          height: 470px;
+          height: 420px;
           min-height: fit-content;
+        }
+        .a-s-discount {
+          width: 20%;
+          height: 5%;
         }
         .itms-ctr {
           display: grid;
@@ -490,9 +489,9 @@
           Click Check Cart to Continue OR continue Shopping
         </div>
         <a href="./cart.html">
-          <button class="check-ct">Check Cart</button>
+          <button class="-b-pp">Check Cart</button>
         </a>
-        <button class="cont" onclick="imageDialogClose()">
+        <button class="-b-pp" onclick="imageDialogClose()">
           Continue Shopping
         </button>
       </div>
@@ -750,8 +749,14 @@
             <i class="fas fa-search"></i>
           </div>
           <a href="./cart.html" style="position: relative">
-            <i class="fas fa-cart-plus" style="font-size: 24px"></i>
+            <img
+              src="../resources/shopping-cart.svg"
+              alt=""
+              width="25px"
+              height="25px"
+            />
             <span class="cart-number" id="cartNumberItems">0</span>
+            <span class="cart-label" style="padding-bottom: 10px"> Cart </span>
           </a>
         </div>
       </div>
@@ -1175,7 +1180,7 @@
                   Yammie Delivery
                 </div>
                 <div class="a-t-c add-to-c"
-                  data-id=${itm.id}
+                  data-item=${itm.id}
                   data-name=${itm.product.replace(/ /g, "_")}
                   data-price=${itm.price}
                   data-description=${itm.description.replace(/ /g, "_")}
@@ -1186,7 +1191,7 @@
                     alt=""
                     width="25px"
                     height="25px"
-                    data-id=${itm.id}
+                    data-item=${itm.id}
                     data-name=${itm.product.replace(/ /g, "_")}
                     data-price=${itm.price}
                     data-description=${itm.description.replace(/ /g, "_")}
@@ -1214,7 +1219,7 @@
                   name: e.target.dataset.name,
                   price: e.target.dataset.price,
                   discount: parseInt(e.target.dataset.discount),
-                  cartItemAdded: e.target.dataset.id,
+                  cartItemAdded: e.target.dataset.item,
                   description: e.target.dataset.description,
                   inCartNumber: 0,
                 };
@@ -1307,18 +1312,16 @@
     <script>
       let yammieUsr = "";
       if (yammie) {
-        let xhr1 = new XMLHttpRequest();
-        xhr1.onreadystatechange = () => {
-          if (xhr1.readyState == 4 && xhr1.status == 200) {
-            [yammieUsr] = JSON.parse(xhr1.responseText);
-            let greeting = document.querySelector(".h-greeting");
-            let account = document.querySelector(".login-text");
-
-            account.innerHTML = yammieUsr.c_first_name.toUpperCase();
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            [yammieUsr] = JSON.parse(xhr.responseText);
+            let account = document.querySelector(".-acc-name");
+            account.innerHTML = "Hi, " + yammieUsr.c_first_name;
           }
         };
-        xhr1.open("GET", `/api/user/customer/${yammie}`, true);
-        xhr1.send();
+        xhr.open("GET", `/api/user/customer/${yammie}`, true);
+        xhr.send();
       }
     </script>
     <script>

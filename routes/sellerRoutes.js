@@ -138,13 +138,18 @@ router.get("/items/:id", async (req, res) => {
   );
 });
 
-router.get("/pending/:id",async(req,res)=>{
-  conn.query("SELECT * FROM pending_products WHERE seller_id=?",[req.params.id],(err,results)=>{
-    if(err)throw err;
-    res.json(results.length);
-  });
+router.get("/pending/:id", async (req, res) => {
+  conn.query(
+    "SELECT * FROM pending_products WHERE seller_id=?",
+    [req.params.id],
+    (err, results) => {
+      if (err) throw err;
+      res.json(results.length);
+    }
+  );
 });
 
+<<<<<<< HEAD
 router.get("/totalProducts/:id",async(req,res)=>{
   conn.query("SELECT * FROM products WHERE seller_id = ? ",
   [req.params.id],
@@ -176,6 +181,38 @@ router.get("/pdetails/:id",async (req,res)=>{
     if(err) throw err;
     res.send(result);
   });
+=======
+router.get("/rejectedProduct/:id", async (req, res) => {
+  conn.query(
+    "SELECT product,price,quantity,images FROM rejected_products WHERE seller_id=?",
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      console.log(result);
+      res.send(result);
+    }
+  );
+});
+
+router.get("/totalProducts/:id", async (req, res) => {
+  conn.query(
+    "SELECT * FROM products WHERE seller_id = ? ",
+    [req.params.id],
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        conn.query(
+          "SELECT * FROM pending_products WHERE seller_id=?",
+          [req.params.id],
+          (error, results) => {
+            res.json(result.length + results.length);
+          }
+        );
+      }
+    }
+  );
+>>>>>>> f85e5954c85c9d0676e72f1465e09ad8d2047728
 });
 
 module.exports = router;
