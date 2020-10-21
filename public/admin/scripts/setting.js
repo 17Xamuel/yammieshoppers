@@ -1,4 +1,3 @@
-
 const request = new XMLHttpRequest();
 request.onreadystatechange = () => {
   if (request.readyState == 4 && request.status == 200) {
@@ -30,11 +29,7 @@ request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
           }
         };
-        request.open(
-          "GET",
-          `/api/admin/deleteSeller/${deleteSeller}`,
-          true
-        );
+        request.open("GET", `/api/admin/deleteSeller/${deleteSeller}`, true);
         request.send();
       });
     });
@@ -44,13 +39,9 @@ request.onreadystatechange = () => {
         let confirmSeller = e.target.dataset.id;
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
+            if (request.responseText == "Confirmed") window.location.reload();
           }
         };
-        request.open(
-          "GET",
-          `/api/admin/confirmSeller/${confirmSeller}`,
-          true
-        );
         request.send();
       });
     });
@@ -82,7 +73,7 @@ xhr.onreadystatechange = () => {
                       <td>${pendingProduct.description}</td>
                       <td>
                       <a href="product-details.html?item=${pendingProduct.id}">
-                      <button type="submit" class="btn btn-info btn-sm -a-product"
+                      <button type="submit" class="btn btn-info btn-sm"
                         data-id="${pendingProduct.id}">
                           Details
                         </button>
@@ -93,41 +84,30 @@ xhr.onreadystatechange = () => {
                       type="submit" 
                       class="btn btn-danger btn-sm -d-product" 
                       data-id="${pendingProduct.id}"
-                      data-images="${pendingProduct.images}"
-                      >
+                      data-images="${pendingProduct.images}">
                         Delete
                       </button></td>
                     </tr>`;
     });
     document.getElementById("pendingProducts").innerHTML = rows;
     document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
-
-    
-
-   let deleteButtons = document.querySelectorAll(".-d-product");
+    let deleteButtons = document.querySelectorAll(".-d-product");
     deleteButtons.forEach((deleteButton) => {
       deleteButton.addEventListener("click", (e) => {
         let deleteProduct = e.target.dataset.id;
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            if(xhr.responseText == 'Deleted'){
+            if (xhr.responseText == "Deleted") {
               window.location.reload();
-            }else{
-              console.log('Error');
+            } else {
+              console.log("Error");
             }
           }
         };
-        xhr.open(
-          "DELETE",
-          `/deleteProduct/${deleteProduct}`,
-          true
-        );
+        xhr.open("DELETE", `/deleteProduct/${deleteProduct}`, true);
         xhr.send({});
       });
     });
-
-  
-  }
-};
+  }}
 xhr.open("GET", "/api/admin/pendingProduct", true);
 xhr.send();

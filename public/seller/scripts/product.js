@@ -39,3 +39,5 @@ xhr.onreadystatechange = () => {
 xhr.open("GET", `/api/sellers/getPendingProducts/${sellerId}`, true);
 xhr.send();
 
+
+

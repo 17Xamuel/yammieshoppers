@@ -149,6 +149,15 @@
         }
       }
     </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", (e) => {
+        cnd(
+          localStorage.getItem("cartNumber"),
+          document.querySelector("#cartNumberItems")
+        );
+        sch(document.querySelector("#-is"), document.querySelector(".-sh"));
+      });
+    </script>
   </head>
   <body>
     <div id="sidenav">
@@ -269,7 +278,7 @@
         <li><a href="#">Privacy Policy</a></li>
       </ul>
       <div class="ftr-down">
-        <div class="ftr-official">
+        <div class="ftr-official" style="color: black !important">
           &copy; 2020 Yammie. All rights reserved
           <div class="social-icons">
             <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
@@ -311,7 +320,7 @@
               type="text"
               name="q"
               placeholder="Search Groceries...."
-              class="navsearch"
+              class="-ns"
               id="v-search"
             />
             <button type="submit" id="search-button">
@@ -399,17 +408,35 @@
         </div>
         <div class="-user -user-cart">
           <!--for small screens-->
-          <div class="-icon-sm">
+          <div class="-icon-sm" id="-is">
             <i class="fas fa-search"></i>
           </div>
           <a href="./cart.html" style="position: relative">
-            <i class="fas fa-cart-plus" style="font-size: 24px"></i>
+            <img
+              src="../resources/shopping-cart.svg"
+              alt=""
+              width="25px"
+              height="25px"
+            />
             <span class="cart-number" id="cartNumberItems">0</span>
+            <span class="cart-label" style="padding-bottom: 10px"> Cart </span>
           </a>
         </div>
       </div>
     </div>
-
+    <div class="-sh">
+      <form autocomplete="off" action="./catalog.html" method="GET" id="-sm-s">
+        <input
+          type="text"
+          name="q"
+          placeholder="Search Groceries...."
+          class="-ns"
+        />
+        <button type="submit" id="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
     <div class="d-app" id="d-app">
       <span>
         <a href="#"> Download Our App <span class="here">Here</span></a>
@@ -417,7 +444,6 @@
       </span>
       <i class="fas fa-times close-icon"></i>
     </div>
-
     <div class="m-ctr">
       <div class="container1">
         <ul class="ctg-li">
@@ -603,6 +629,7 @@
           </div>
           <ul class="down-container">
             <li>
+              <i class="fas fa-clock fa-3x"></i>
               <h4>FLASH SALES!!!</h4>
               <div class="timer">
                 <h2 id="pms-timer"><small>Loading...</small></h2>
@@ -666,41 +693,6 @@
           </span>
         </div>
         <div class="items-container" id="plastics"></div>
-      </div>
-      <div class="category">
-        <!-- Start Shop Newsletter  -->
-        <section class="shop-newsletter section">
-          <div class="container">
-            <div class="inner-top">
-              <div class="row">
-                <!-- Start Newsletter Inner -->
-                <div class="inner">
-                  <h4>Newsletter</h4>
-                  <p>
-                    Subscribe to our newsletter and get <span>10%</span> off
-                    your first purchase
-                  </p>
-                  <form
-                    action=""
-                    method="get"
-                    target="_blank"
-                    class="newsletter-inner"
-                  >
-                    <input
-                      name="EMAIL"
-                      placeholder="Your email address"
-                      required=""
-                      type="email"
-                    />
-                    <button class="n-btn">Subscribe</button>
-                  </form>
-                </div>
-                <!-- End Newsletter Inner -->
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- End Shop Newsletter -->
       </div>
       <div class="back-to-top">
         <i class="fas fa-arrow-up"></i>
@@ -836,7 +828,7 @@
       //header
       let acc = document.querySelector(".-acc");
       let hp = document.querySelector(".-hp");
-
+      //check toggle a class
       acc.addEventListener("focus", (e) => {
         e.target.style.color = "#ffbb00";
         document
@@ -844,6 +836,7 @@
           .classList.replace("fa-chevron-down", "fa-chevron-up");
         document.querySelector(".-acc-l").style.display = "flex";
       });
+
       acc.addEventListener("blur", (e) => {
         e.target.style.color = "#000";
         document
@@ -917,18 +910,16 @@
       closeAppBanner.addEventListener("click", () => {
         AppBanner.style.display = "none";
       });
-      cartNumbersDisplay();
-      function cartNumbersDisplay() {
-        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
-        document.querySelector("#cartNumberItems").textContent = cartNumber
-          ? cartNumber
-          : 0;
+      function cnd(i, c) {
+        i = parseInt(i);
+        c.textContent = i ? i : 0;
+        c.style.display = c.textContent == "0" ? "none" : "block";
       }
     </script>
     <script>
       let sliderCtr = document.querySelector(".slideshow-container");
       if (screen.availWidth <= 1024) {
-        console.log(screen.availWidth);
+        console.log("Width: " + screen.availWidth);
       } else {
         let slideIndex = 1;
         showSlides(slideIndex);
@@ -977,7 +968,7 @@
           if (xhr.readyState == 4 && xhr.status == 200) {
             [yammieUsr] = JSON.parse(xhr.responseText);
             let account = document.querySelector(".-acc-name");
-            account.innerHTML = "Hi " + yammieUsr.c_first_name;
+            account.innerHTML = "Hi, " + yammieUsr.c_first_name;
           }
         };
         xhr.open("GET", `/api/user/customer/${yammie}`, true);
@@ -1003,6 +994,11 @@
           behavior: "smooth",
         });
       });
+      const sch = (i, sch) => {
+        i.addEventListener("click", () => {
+          sch.classList.toggle("sch-s");
+        });
+      };
 
       // PARSE USER AGENT
       // let result = bowser.getParser(navigator.userAgent).getResult();

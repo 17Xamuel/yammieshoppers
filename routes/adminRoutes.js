@@ -111,6 +111,7 @@ router.get("/confirmProduct/:id", async (req, res) => {
         console.log(err);
       } else {
         conn.query("INSERT INTO products SET ? ", result, (error, results) => {
+          console.log(error);
           if (error) throw err;
           conn.query(
             "DELETE FROM pending_products WHERE id = ? ",
@@ -126,16 +127,45 @@ router.get("/confirmProduct/:id", async (req, res) => {
   );
 });
 
-router.get("/orderNumber", async (req,res) => {
-  conn.query(`SELECT * FROM pending_orders`, (err,result) => {
-    if(err) throw err;
+router.get("/rejectProduct/:id", async (req, res) => {
+  conn.query(
+    "SELECT * FROM pending_products WHERE id = ? ",
+    [req.params.id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        conn.query(
+          "INSERT INTO rejected_products SET ? ",
+          result,
+          (error, results) => {
+            console.log(error);
+            if (error) throw err;
+            conn.query(
+              "DELETE FROM pending_products WHERE id = ? ",
+              [req.params.id],
+              (errs, queryResult) => {
+                if (errs) throw errs;
+                res.send("Rejected");
+              }
+            );
+          }
+        );
+      }
+    }
+  );
+});
+
+router.get("/orderNumber", async (req, res) => {
+  conn.query(`SELECT * FROM pending_orders`, (err, result) => {
+    if (err) throw err;
     res.json(result.length);
   });
 });
 
-router.get("/pendingOrders", async (req,res) =>{
-  conn.query(`SELECT * FROM pending_orders`, (err,results) =>{
-    if(err) throw err;
+router.get("/pendingOrders", async (req, res) => {
+  conn.query(`SELECT * FROM pending_orders`, (err, results) => {
+    if (err) throw err;
     res.json(results);
   });
 });

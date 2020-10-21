@@ -15,7 +15,6 @@ app.use("/api/admin/", require("./routes/adminRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
 app.use("/api/sellers/", require("./routes/sellerRoutes"));
 
-
 function getStorage(id) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -89,7 +88,7 @@ app.get("/uploads/images/products/:imageName", async (req, res) => {
   );
 });
 
-// delete image function
+// delete image function'?
 function deleteImages(image) {
   let imagePath = path.join(__dirname, image);
   fs.unlink(imagePath, (err) => {
