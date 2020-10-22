@@ -39,9 +39,10 @@ request.onreadystatechange = () => {
         let confirmSeller = e.target.dataset.id;
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
-            if (request.responseText == "Confirmed") window.location.reload();
+            if (request.responseText == "Confirmed") {window.location.reload();}
           }
         };
+        request.open("GET",`/api/admin/confirmSeller/${confirmSeller}`);
         request.send();
       });
     });

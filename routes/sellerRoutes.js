@@ -182,17 +182,7 @@ router.get("/pdetails/:id",async (req,res)=>{
     res.send(result);
   });
 });
-router.get("/rejectedProduct/:id", async (req, res) => {
-  conn.query(
-    "SELECT product,price,quantity,images FROM rejected_products WHERE seller_id=?",
-    [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      console.log(result);
-      res.send(result);
-    }
-  );
-});
+
 
 router.get("/totalProducts/:id", async (req, res) => {
   conn.query(
