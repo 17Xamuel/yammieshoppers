@@ -762,14 +762,13 @@
           return user;
         }
 
-        let validUser = validate();
-        if (validUser === false) {
+        let _vu = validate();
+        if (_vu === false) {
           return;
         } else {
           xhr = new XMLHttpRequest();
           xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 401) {
-              // document.getElementById("demo").innerHTML = xhttp.responseText;
               document.querySelector("#used-e").style.opacity = "1";
               document.querySelector("#used-e").innerHTML = xhr.responseText;
               setTimeout(() => {
@@ -777,7 +776,7 @@
               }, 10000);
             }
             if (xhr.responseText === "inserted") {
-              location.replace("../index.html");
+              location.replace("/");
             }
             if (xhr.responseText === "Error in Registering") {
               alert(xhr.responseText);
@@ -786,7 +785,7 @@
           };
           xhr.open("POST", "/api/user/customer/insert", true);
           xhr.setRequestHeader("Content-type", "application/json");
-          xhr.send(JSON.stringify(validUser));
+          xhr.send(JSON.stringify(_vu));
         }
       });
       //form end

@@ -26,7 +26,24 @@ body {
   font-family: "Roboto", sans-serif;
   background-color: #faf5f5;
 }
-
+.-b-x {
+  box-shadow: 0px 0px 10px #cccbcb;
+}
+.-br {
+  border-radius: 5px;
+}
+.btn {
+  padding: 10px 15px;
+  width: 200px;
+  font-size: 16px;
+  background-color: #ffbb00;
+  border-radius: 5px;
+  height: 40px;
+  outline: none;
+  border: none;
+  color: #fff;
+  margin: 5px;
+}
 @media screen and (max-width: 768px) {
   body {
     background-color: #eee;

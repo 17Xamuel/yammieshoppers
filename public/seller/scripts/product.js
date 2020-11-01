@@ -32,14 +32,10 @@ xhr.onreadystatechange = () => {
                     </tr>`;
     });
     document.querySelector(".sellerProducts").innerHTML = row;
-
-
   }
 };
 xhr.open("GET", `/api/sellers/getPendingProducts/${sellerId}`, true);
 xhr.send();
-
-
 
 const req = new XMLHttpRequest();
 
@@ -102,4 +98,3 @@ reject.onreadystatechange = () => {
 };
 reject.open("GET", `/api/sellers/rejectedProduct/${sellerId}`, true);
 reject.send();
-

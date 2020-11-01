@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./resources/cartlink.png" />
     <link rel="stylesheet" href="./styles/footer2.css" />
-    <link rel="stylesheet" href="./styles/items.css" />
     <link rel="stylesheet" href="./styles/header.css" />
     <link rel="stylesheet" href="./styles/main.css" />
     <link rel="stylesheet" href="./styles/products.css" />
@@ -140,12 +139,186 @@
           opacity: 1;
         }
       }
+    </style>
+    <style>
+      .-ch-all-index {
+        background-color: white;
+        color: black;
+      }
+      .-ct-index {
+        align-items: center;
+        justify-content: space-around;
+      }
+    </style>
+    <style>
+      .m-ctr {
+        margin: 10px auto;
+        width: 75vw;
+        min-width: 1240px;
+        position: relative;
+      }
+      .container1 {
+        display: flex;
+        height: 50vh;
+        width: 100%;
+        justify-content: space-between;
+        margin: 20px 0px;
+        min-width: 100%;
+      }
+      .categories {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        width: 18%;
+        min-width: 180px;
+      }
+      .ctg-li {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 22%;
+        min-width: 275px;
+        height: 100%;
+        border-radius: 5px;
+        background-color: #fff;
+        padding: 5px 10px;
+        font-size: 14px;
+        box-shadow: 0px 0px 10px #cccbcb;
+      }
+      .ctg-name {
+        padding: 10px 0px 10px 5px;
+        transition: all 0.1s ease-in-out;
+      }
+      .ctg-name > a {
+        text-decoration: none;
+        color: black;
+      }
+      .ctg-name > a:hover {
+        color: #ffbb00;
+        cursor: pointer;
+      }
+      .ctg-icon {
+        padding-right: 5px;
+      }
+      .ctg-name:hover {
+        color: #ffbb00;
+        cursor: pointer;
+      }
+      /*ct*/
+      .-i-item {
+        text-align: center;
+      }
+      .up-container {
+        background-color: #fff;
+        list-style-type: none;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        height: 45%;
+        box-shadow: 0px 0px 10px #cccbcb;
+      }
+
+      .down-container {
+        background-color: #fff;
+        list-style-type: none;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        height: 50%;
+        box-shadow: 0px 0px 10px #cccbcb;
+      }
+
+      .slideshow-container {
+        width: 55%;
+        min-width: 600px;
+        height: 100%;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px #cccbcb;
+      }
+      .mySlides {
+        height: 100%;
+        border-radius: 10px;
+        display: none;
+      }
       @media screen and (max-width: 768px) {
+        .slideshow-container {
+          min-width: 95vw;
+          width: 95vw;
+          /* overflow-x: scroll; */
+        }
+        .mySlides {
+          height: 90%;
+          margin: auto 10px;
+        }
+        .numbertext,
+        .prev,
+        .next,
+        .dots {
+          display: none;
+        }
+        /*-ct-index*/
+        .-ct-index {
+          justify-content: right;
+        }
+        .-d-none {
+          display: none;
+        }
+        /*-ct-index*/
+      }
+      @media screen and (max-width: 1024px) {
         .back-to-top {
           position: relative;
           border-radius: 5%;
           width: 80%;
           margin: 10px 0px;
+        }
+        .container1 {
+          height: 15vh;
+        }
+        .ctg-li,
+        .categories {
+          display: none;
+        }
+        .m-ctr {
+          width: 95vw;
+          min-width: 95vw;
+        }
+        .slideshow-container {
+          /* min-width: 95vw; */
+          width: 95vw;
+          display: flex;
+          /* justify-content: space-around; */
+          overflow-x: scroll;
+        }
+        .mySlides {
+          display: block;
+          width: 40%;
+          height: 90%;
+          margin: auto 10px;
+        }
+        .text,
+        .numbertext,
+        .prev,
+        .next,
+        .dots {
+          display: none;
+        }
+      }
+      @media screen and (max-width: 500px) {
+        .container1 {
+          height: 30vh;
+        }
+        .mySlides {
+          min-width: 75%;
+          height: 90%;
+          margin: auto 10px;
         }
       }
     </style>
@@ -235,28 +408,30 @@
         <h3>My Account</h3>
         <li>
           <i class="fas fa-user"></i>
-          <span>My Profile</span>
+          <span><a href="./account/profile.html">My Profile</a></span>
         </li>
         <li>
           <i class="fas fa-box"></i>
-          <span>My Orders</span>
+          <span><a href="./account/orders.html">My Orders</a></span>
         </li>
 
         <li>
           <i class="fas fa-dolly-flatbed"></i>
-          <span>Pending Orders</span>
+          <span
+            ><a href="./account/pending-orders.html">Pending Orders</a></span
+          >
         </li>
         <li>
           <i class="fas fa-thumbs-up"></i>
-          <span><a href="#">Liked Items</a></span>
+          <span><a href="/">Liked Items</a></span>
         </li>
         <li>
           <i class="fas fa-address-card"></i>
-          <span>My Address</span>
+          <span><a href="./account/address.html"> My Address</a></span>
         </li>
         <li>
           <i class="fas fa-user-edit"></i>
-          <span>Edit My Profile</span>
+          <span><a href="./account/edit.html">Edit My Profile</a></span>
         </li>
         <button class="s-n-logout">LOG OUT</button>
       </ul>
@@ -425,7 +600,13 @@
       </div>
     </div>
     <div class="-sh">
-      <form autocomplete="off" action="./catalog.html" method="GET" id="-sm-s">
+      <form
+        autocomplete="off"
+        action="./catalog.html"
+        method="GET"
+        class=""
+        id="-sm-s"
+      >
         <input
           type="text"
           name="q"
@@ -540,7 +721,7 @@
           <div class="mySlides fade">
             <div class="numbertext">1 / 6</div>
             <img
-              src="./resources/image-slider/slider-image-1.jpg"
+              src="./resources/ct-clothing-1.jpg"
               style="width: 100%; border-radius: 5px"
               height="100%"
             />
@@ -644,55 +825,483 @@
           </ul>
         </div>
       </div>
-
-      <div class="category">
-        <div class="see-all">
-          <span>Frequently Bought</span>
-          <span style="color: white">
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
+      <div class="-ct -b-x">
+        <div class="-ch-all -ch-all-index -ch-all-w">
+          <span>Welcome To Yammie</span>
+          <span class="none -d-none">Shop our Best Products</span>
         </div>
-        <div class="items-container" id="tp-s">
-          <div class="item">
-            <img src="./resources/asus.png" alt="" width="150" height="150" />
-            <div class="item-info">
-              <div class="it-nm">Jesa Milk - 500ml</div>
-              <div class="it-pr pr">UGX 500</div>
-              <div class="pre-it-pr pr">UGX 750</div>
+        <div class="-scroll -ct -ct-index">
+          <a class="" href="./catalog.html?q=foods">
+            <img
+              src="./resources/super_rice.png"
+              alt="Shop Foods"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Food Stuffs</div>
             </div>
-          </div>
+          </a>
+          <a class="" href="./catalog.html?q=sandals">
+            <img
+              src="./resources/men_sandals.jpg"
+              alt="For FootWear Image"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Sandals</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=electronics">
+            <img
+              src="./resources/tea.jpg"
+              alt="Electronics Image"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Electronics</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=tshirts">
+            <img
+              src="./resources/cloth4.jpg"
+              alt="For Computing"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Cool T-Shirts</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=phones">
+            <img
+              src="./resources/phone2.png"
+              alt="Phones Image"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Phones</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=shoes">
+            <img
+              src="./resources/image-slider/shoe.jpg"
+              alt="Shoes On Yammie"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Shoe Center</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=phone-accessories">
+            <img
+              src="./resources/studio-speech.png"
+              alt="Phone Accessories"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Phone Accessories</div>
+            </div>
+          </a>
+        </div>
+        <div class="-scroll -ct -ct-index">
+          <a class="" href="./catalog.html?q=music">
+            <img
+              src="./resources/headsets.png"
+              alt="Check Your Music World"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Music World</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=drinks">
+            <img
+              src="./resources/milk.jpg"
+              alt="Drinks image"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Drinks</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=utencils">
+            <img
+              src="./resources/utencils.jpg"
+              alt="Utencis Image"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Utencis</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=diy">
+            <img
+              src="./resources/ariel.png"
+              alt="Clean Image"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Keep Clean</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=stationery">
+            <img
+              src="./resources/books.jpg"
+              alt="Stationery Image"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Stationery</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=laptop-accessories">
+            <img
+              src="./resources/hp_battery.jpg"
+              alt="laptop-accessories"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">LapTop Accessories</div>
+            </div>
+          </a>
+          <a class="" href="./catalog.html?q=computers">
+            <img
+              src="./resources/hp-elitebook.png"
+              alt="Computing"
+              width="120"
+              height="100"
+            />
+            <div class="-i-dtl">
+              <div class="-i-item it-nm">Computers</div>
+            </div>
+          </a>
         </div>
       </div>
-      <div class="category">
-        <div class="see-all">
-          <span>Your Phone Accessories</span>
-          <span style="color: white">
+      <div class="-ct -b-x">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all -ch-all-w">
+          <span>Recently Viewed</span>
+          <span>
             Check
             <i class="fas fa-chevron-right"></i>
           </span>
         </div>
-        <div class="items-container" id="phone-acs"></div>
-      </div>
-      <div class="category">
-        <div class="images">
-          <div class="left-image">
-            <img src="./resources/milk.jpg" alt="" />
+        <div class="-scroll -ct -ct-rv">
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
           </div>
-          <div class="right-image">
-            <img src="./resources/latoMilk.jpg" alt="" />
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
           </div>
         </div>
       </div>
-      <div class="category">
-        <div class="see-all">
-          <span>Just Added Items</span>
+      <div class="-ct">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all">
+          <span>Trending On Yammie</span>
           <span>
-            See ALL
+            Check
             <i class="fas fa-chevron-right"></i>
           </span>
         </div>
-        <div class="items-container" id="plastics"></div>
+        <div class="-scroll -ct -ct-trending">
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="-img-ls">
+        <a href="#" class="">
+          <img
+            src="./resources/image-slider/mask.jpg"
+            alt="yammie"
+            style="border-radius: 5px"
+            width="100%"
+            height="100%"
+          />
+        </a>
+
+        <a href="#" class="">
+          <img
+            src="./resources/ct-clothing-1.jpg"
+            alt="yammie"
+            style="border-radius: 5px"
+            width="100%"
+            height="100%"
+          />
+        </a>
+      </div>
+      <div class="-ct -b-x">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all -ch-all-w">
+          <span>Recommended For You</span>
+          <span>
+            Check
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="-scroll -ct -ct-rec">
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="-ct">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all">
+          <span>Enhance Your Phone</span>
+          <span>
+            See All
+            <i class="fas fa-chevron-right"></i>
+          </span>
+        </div>
+        <div class="-scroll -ct -ct-phone-accessories">
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="-img-ls">
+        <a href="#" class="">
+          <img
+            src="./resources/image-slider/mask.jpg"
+            alt="yammie"
+            style="border-radius: 5px"
+            width="100%"
+            height="100%"
+          />
+        </a>
+
+        <a href="#" class="">
+          <img
+            src="./resources/ct-clothing-1.jpg"
+            alt="yammie"
+            style="border-radius: 5px"
+            width="100%"
+            height="100%"
+          />
+        </a>
       </div>
       <div class="back-to-top">
         <i class="fas fa-arrow-up"></i>
@@ -994,12 +1603,93 @@
           behavior: "smooth",
         });
       });
+      //scrolling through
+      scl(document.querySelectorAll(".-sc-n"));
+      scr(document.querySelectorAll(".-sc-b"));
+
+      //search
       const sch = (i, sch) => {
         i.addEventListener("click", () => {
           sch.classList.toggle("sch-s");
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
         });
       };
-
+      function ctg(c, url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let _c = JSON.parse(xhr.responseText),
+              group = "";
+            _c.forEach((item) => {
+              group += `
+                    <div class="item -ct-item">
+                      <img
+                        src="${JSON.parse(item.images)[0]}"
+                        alt="${item.name}"
+                        width="180px"
+                        height="150px"
+                      />
+                      <div class="-i-dtl">
+                        <div class="it-nm">${item.product} - ${
+                item.description
+              }</div>
+                        <div class="it-pr pr price-current">${
+                          "UGX " +
+                          (item.discount
+                            ? (item.price * (100 - item.discount)) / 100
+                            : item.price)
+                        }</div>
+                         <div class="pre-it-pr pr price-prev">${
+                           item.discount ? "UGX " + item.price : ""
+                         }</div>
+                      </div>
+                    </div>
+                    `;
+            });
+            c.innerHTML = group;
+          }
+        };
+        xhr.open("GET", url, true);
+        xhr.send();
+      }
+      function scr(b) {
+        b.forEach((sc) => {
+          sc.addEventListener("click", (e) => {
+            e.target.parentNode.querySelector(".-scroll").scrollBy({
+              top: 0,
+              left: -250,
+              behavior: "smooth",
+            });
+          });
+        });
+      }
+      function scl(b) {
+        b.forEach((sc) => {
+          sc.addEventListener("click", (e) => {
+            e.target.parentNode.querySelector(".-scroll").scrollBy({
+              top: 0,
+              left: 250,
+              behavior: "smooth",
+            });
+          });
+        });
+      }
+      function _sclb() {}
+      //depends on the url
+      ctg(
+        document.querySelector(".-ct-trending"),
+        "/api/user/ct/index/trending"
+      );
+      ctg(
+        document.querySelector(".-ct-phone-accessories"),
+        "/api/user/ct/index/phone-accessories"
+      );
+      ctg(document.querySelector(".-ct-rv"), "/api/user/ct/index/rv");
+      ctg(document.querySelector(".-ct-rec"), "/api/user/ct/index/rec");
       // PARSE USER AGENT
       // let result = bowser.getParser(navigator.userAgent).getResult();
       // // BROWSER INFO

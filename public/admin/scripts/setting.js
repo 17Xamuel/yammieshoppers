@@ -39,9 +39,12 @@ request.onreadystatechange = () => {
         let confirmSeller = e.target.dataset.id;
         request.onreadystatechange = () => {
           if (request.readyState == 4 && request.status == 200) {
-            if (request.responseText == "Confirmed") window.location.reload();
+            if (request.responseText == "Confirmed") {
+              window.location.reload();
+            }
           }
         };
+        request.open("GET", `/api/admin/confirmSeller/${confirmSeller}`);
         request.send();
       });
     });
@@ -53,10 +56,10 @@ request.send();
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = () => {
   if (xhr.readyState == 4 && xhr.status == 200) {
-     let pendingProducts = JSON.parse(xhr.responseText);
+    let pendingProducts = JSON.parse(xhr.responseText);
 
-     let rows = "";
-      pendingProducts.forEach((pendingProduct) => {
+    let rows = "";
+    pendingProducts.forEach((pendingProduct) => {
       let images = JSON.parse(pendingProduct.images);
 
       rows += ` <tr>
@@ -91,13 +94,7 @@ xhr.onreadystatechange = () => {
     });
     document.getElementById("pendingProducts").innerHTML = rows;
     document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
-    let deleteButtons = document.querySelectorAll(".-d-product");
-
-
-
-    
-
-  
+    // let deleteButtons = document.querySelectorAll(".-d-product");
 
     let deleteButtons = document.querySelectorAll(".-d-product");
     deleteButtons.forEach((deleteButton) => {
@@ -116,10 +113,8 @@ xhr.onreadystatechange = () => {
         xhr.send({});
       });
     });
-
-    
-
-  }}   
+  }
+};
 
 xhr.open("GET", "/api/admin/pendingProduct", true);
 xhr.send();

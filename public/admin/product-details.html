@@ -318,6 +318,8 @@
         accept.onreadystatechange = () => {
           if (accept.readyState == 4 && accept.status == 200) {
             console.log(accept.responseText);
+            if (accept.responseText == "Accepted")
+              window.location.assign("./settings.html");
           }
         };
         accept.open("GET", `/api/admin/confirmProduct/${pId}`, true);

@@ -21,7 +21,6 @@ router.post("/customer/insert", async (req, res) => {
           c_last_name,
         } = req.body;
         let c_id = uuid.v4();
-        console.log(c_id);
         let newUser = {
           c_id,
           c_email,
@@ -140,4 +139,32 @@ router.post("/customer/order", (req, res) => {
   );
 });
 
+//trending category items
+// route-->/category/category(name)/nature(trending, headsets,..etc)
+router.get("/ct/:ct/:nature", (req, res) => {
+  conn.query("SELECT * FROM products", (err, result) => {
+    if (err) throw err;
+    res.status(200).send(result);
+  });
+});
+router.post("/customer/edit/:id", (req, res) => {
+  conn.query(
+    "UPDATE customers SET ? WHERE c_id = ? ",
+    [req.body, req.params.id],
+    (err, results) => {
+      if (err) {
+        throw "error: " + err;
+      } else {
+        res.send("Changed");
+      }
+    }
+  );
+});
+router.get("/account/address");
+// router.get("/d/:id",(req,res)=>{
+//   conn.query("SELECT * FROM products", (err, result) => {
+//     if (err) throw err;
+//     res.status(200).send(result);
+//   });
+// });
 module.exports = router;

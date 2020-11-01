@@ -181,7 +181,6 @@
                       Order No: <span id="ordernumber">GF2zk</span>
                     </h4>
                     <div>
-<<<<<<< HEAD
                       <table class="table text-center">
                         <tbody>
                           <tr>
@@ -210,46 +209,12 @@
                           </tr>
                         </tbody>
                       </table>
-=======
-                      <ul class="list-inline">
-                        <li class="text-left ml-5">
-                          Customer Name:<span id="name">Sam</span>
-                        </li>
-                        <li class="text-right mr-5">
-                          Email: <span id="email">sam@gmail.com</span>
-                        </li>
-                      </ul>
-
-                      <ul class="list-inline">
-                        <li class="text-left ml-5">
-                          No of Items Ordered:<span id="items">4</span>
-                        </li>
-                        <li class="text-right mr-5">
-                          Order Date: <span id="date">27/07/2021</span>
-                        </li>
-                      </ul>
-                      <ul class="list-inline">
-                        <li class="text-left ml-5">
-                          Payment Method:<span id="method"
-                            >Cash On Delivery</span
-                          >
-                        </li>
-                        <li class="text-right mr-5">
-                          Order Status: <span id="status">Undelivered</span>
-                        </li>
-                      </ul>
->>>>>>> f85e5954c85c9d0676e72f1465e09ad8d2047728
                     </div>
 
                     <h6 class="text-center text-primary">Item details</h6>
                     <table class="table">
                       <tr>
-<<<<<<< HEAD
                         <th>Name</th>
-=======
-                        <th>Item No</th>
-                        <th>Item</th>
->>>>>>> f85e5954c85c9d0676e72f1465e09ad8d2047728
                         <th>Quantity</th>
                         <th>Unit Price</th>
                         <th>Amount</th>
@@ -258,11 +223,8 @@
                         <th>Approve</th>
                       </tr>
                       <tbody>
-                        <tr>
-<<<<<<< HEAD
-=======
+                        <tr></tr>
                           <td>1</td>
->>>>>>> f85e5954c85c9d0676e72f1465e09ad8d2047728
                           <td>Soda</td>
                           <td>4</td>
                           <td>2000</td>
@@ -347,22 +309,14 @@
       const orders = new XMLHttpRequest();
       orders.onreadystatechange = () => {
         if (orders.status == 200 && orders.readyState == 4) {
-<<<<<<< HEAD
           let [pendingOrders] = JSON.parse(orders.responseText);
-=======
-          let pendingOrders = JSON.parse(orders.responseText);
           console.log(pendingOrders);
->>>>>>> f85e5954c85c9d0676e72f1465e09ad8d2047728
           document.getElementById("ordernumber").innerHTML =
             pendingOrders.order_number;
           document.getElementById("date").innerHTML = pendingOrders.order_date;
         }
       };
-<<<<<<< HEAD
       orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);
-=======
-      orders.open("GET", "/api/admin/pendingOrders", true);
->>>>>>> f85e5954c85c9d0676e72f1465e09ad8d2047728
       orders.send();
     </script>
     <!-- End Scripts -->

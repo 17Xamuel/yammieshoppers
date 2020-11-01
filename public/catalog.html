@@ -184,7 +184,7 @@
       .a-t-c {
         cursor: pointer;
         background-color: #ffbb00;
-        font-size: 18px;
+        font-size: 17px;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -220,8 +220,7 @@
         opacity: 1;
       }
       .itm-s-img {
-        width: 95%;
-        margin: 2px auto;
+        width: 100%;
         height: 50%;
         padding: 5px;
         display: flex;
@@ -231,25 +230,25 @@
 
       .itm-s-dtl {
         padding: 0px 10px;
-        font-size: 15px;
+        font-size: 13px;
         height: 50%;
         max-height: 50%;
         position: relative;
       }
       .price-current {
-        font-size: 18px;
+        font-size: 15px;
         font-weight: bold;
       }
       .price-prev {
-        font-size: 16px;
+        font-size: 14px;
         opacity: 0.8;
         text-decoration: line-through;
         text-decoration-color: rgba(0, 0, 0, 0.4);
       }
       .a-s-discount {
-        width: 18%;
+        width: 15%;
         opacity: 0.9;
-        font-size: 16px;
+        font-size: 15px;
         background-color: #ffbb00;
         border-radius: 5px 0px 6px 0px;
         position: absolute;
@@ -425,7 +424,7 @@
           min-height: fit-content;
         }
         .a-s-discount {
-          width: 20%;
+          width: 18%;
           height: 5%;
         }
         .itms-ctr {
@@ -780,7 +779,7 @@
         <button class="-sort-s open">Expand Sorting Panel</button>
         <div class="ctlg-sort" id="ctlg-sort">
           <h3>Sort By Price</h3>
-          <form action="#" method="POST" class="price-form">
+          <form id="sort-price-form" class="price-form">
             <div class="price-slide">
               <input
                 type="range"
@@ -807,11 +806,16 @@
                 <div class="thumb right"></div>
               </div>
             </div>
-            <div class="display-price">
-              <input type="text" id="lower-p" value="0" />
-              <input type="text" id="higher-p" />
-            </div>
-            <button class="sort-btn" type="submit">Apply</button>
+            <form
+              class="display-price -stv"
+              method="GET"
+              action="./catalog.html"
+            >
+              <input type="hidden" name="q" id="search_query" />
+              <input type="text" id="lower-p" value="0" name="lp" />
+              <input type="text" id="higher-p" name="hp" />
+              <button class="sort-btn" type="submit">Apply</button>
+            </form>
           </form>
           <h3>Sort By Discount</h3>
           <form action="" method="POST">
@@ -1044,6 +1048,7 @@
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
+
       //price slider
       let inputLeft = document.getElementById("input-slide-left");
       let inputRight = document.getElementById("input-slide-right");
@@ -1056,7 +1061,6 @@
       let maxPrice = 800000;
       let higherPrice = document.getElementById("higher-p");
       higherPrice.value = maxPrice;
-      //Prices End
 
       inputLeft.addEventListener("input", () => {
         let _this = inputLeft,
@@ -1113,6 +1117,7 @@
       //search
       let urlParams = new URLSearchParams(window.location.search);
       let search_query = urlParams.get("q");
+      document.querySelector("#search_query").value = search_query;
       let validSearch = search_query == null ? "all" : search_query;
       document.getElementById("s-word").innerText = validSearch;
       xhr = new XMLHttpRequest();
@@ -1141,7 +1146,7 @@
             let itmsSearched = "";
             searchData.forEach((itm) => {
               itmsSearched += `
-              <article class="itm-searched" data-name="">
+              <article class="-test -catalog itm-searched">
               <div class="a-s-discount">
                 <span class="d">
                   ${itm.discount !== null ? "-" + itm.discount + "%" : ""}
@@ -1151,7 +1156,7 @@
                 <img
                   src="${JSON.parse(itm.images)[0]}"
                   alt="${itm.name}"
-                  width="90%"
+                  width="100%"
                   height="75%"
                 />
               </div>
@@ -1159,14 +1164,16 @@
                 <div class="seller">
                   <b>Seller:</b> Yammie Shoppers
                 </div>
-                <div class="itm-name" style="font-size:16px;">
+                <div class="itm-name" style="font-size:13.5px;">
                   ${itm.product} - ${itm.description}
                 </div>
                 <div class="price-current">${
                   "UGX " +
                   (itm.discount
-                    ? (itm.price * (100 - itm.discount)) / 100
-                    : itm.price)
+                    ? new Intl.NumberFormat().format(
+                        (itm.price * (100 - itm.discount)) / 100
+                      )
+                    : new Intl.NumberFormat().format(itm.price))
                 }</div>
                 <div class="price-prev">${
                   itm.discount ? "UGX " + itm.price : ""
@@ -1184,6 +1191,7 @@
                   data-name=${itm.product.replace(/ /g, "_")}
                   data-price=${itm.price}
                   data-description=${itm.description.replace(/ /g, "_")}
+                  data-im=${JSON.parse(itm.images)[0]}
                   data-discount=${itm.discount}
                 >
                   <img
@@ -1195,6 +1203,7 @@
                     data-name=${itm.product.replace(/ /g, "_")}
                     data-price=${itm.price}
                     data-description=${itm.description.replace(/ /g, "_")}
+                    data-im=${JSON.parse(itm.images)[0]}
                     data-discount=${itm.discount}
                   />
                   Add to Cart
@@ -1222,6 +1231,7 @@
                   cartItemAdded: e.target.dataset.item,
                   description: e.target.dataset.description,
                   inCartNumber: 0,
+                  display: e.target.dataset.im,
                 };
                 cartNumbers(cartItem);
                 wait();
@@ -1279,7 +1289,6 @@
         }
       };
       xhr.open("GET", `/api/user/search?q=${validSearch}`, true);
-      // xhr.setRequestHeader("Content-type", "application/json");
       xhr.send();
 
       //search end

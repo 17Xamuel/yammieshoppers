@@ -10,6 +10,13 @@ const conn = require("./database/db.js");
 const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(express.json());
+//404
+// app.use(function (req, res, next) {
+//   if (res.status(404)) {
+//     res.send("Not Found");
+//   }
+// });
+//404
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/admin/", require("./routes/adminRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
@@ -56,9 +63,9 @@ app.post("/addProduct", async (req, res) => {
       seller_id,
       quantity,
     } = req.body;
-    
+
     conn.query(
-      "INSERT INTO pending_products SET ?",
+      "INSERT INTO pending_products SET ? ",
       {
         id: productId,
         product: product,
@@ -97,7 +104,7 @@ function deleteImages(image) {
 }
 app.delete("/deleteProduct/:id", async (req, res) => {
   conn.query(
-    "SELECT images from pending_products WHERE id = ?",
+    "SELECT images from pending_products WHERE id = ? ",
     [req.params.id],
     (err, results) => {
       if (err) throw "Error" + err;
@@ -106,7 +113,7 @@ app.delete("/deleteProduct/:id", async (req, res) => {
         deleteImages(image);
       });
       conn.query(
-        "DELETE FROM pending_products WHERE id=?",
+        "DELETE FROM pending_products WHERE id = ? ",
         [req.params.id],
         async (err, results) => {
           if (err) throw err;
