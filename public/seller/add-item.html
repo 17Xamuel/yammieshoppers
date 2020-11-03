@@ -371,6 +371,8 @@
                   <button
                     type="submit"
                     class="btn btn-warning text-light btn-block my-3"
+                    data-target="#addProduct"
+                    data-toggle="modal"
                   >
                     Add Product
                   </button>
@@ -416,6 +418,27 @@
         </div>
       </div>
     </footer>
+
+    <!-- Product Modal -->
+    <div class="modal fade" id="addProduct">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">YammieShoppers Response</h5>
+          </div>
+          <div class="modal-body text-center">
+            Your Product has been Submitted, please wait for Confirmation.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="air">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
+
     <!-- End Footer -->
 
     <!-- Scripts -->
