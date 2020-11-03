@@ -6,3 +6,12 @@
         });
       }
       lg();
+
+      
+      function ref() {
+        let page = document.getElementById("air");
+        page.addEventListener("click", (e) => {
+          window.location.reload("add-item.html");
+        });
+      }
+      ref();

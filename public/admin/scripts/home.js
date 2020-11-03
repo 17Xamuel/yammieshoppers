@@ -32,8 +32,8 @@ orders.onreadystatechange = () =>{
      
      let pendingOrders=JSON.parse(orders.responseText);
      let row="";
-     pendingOrders.forEach((order) =>{
-       row+=`   <tr>
+     pendingOrders.forEach((order)=>{
+         row+= `<tr>
        <td>${order.order_number}</td>
        <td>${order.order_amount}</td>
        <td>${order.order_delivery_method}</td>
@@ -45,7 +45,7 @@ orders.onreadystatechange = () =>{
        </td>
        <td>
          <button type="button" class="btn btn-success btn-sm">
-           Cleared
+           Finish
          </button>
        </td>
      </tr>`
@@ -56,6 +56,20 @@ orders.onreadystatechange = () =>{
 }
 orders.open("GET","/api/admin/pendingOrders",true);
 orders.send();
+
+const request = new XMLHttpRequest();
+request.onreadystatechange = () => {
+    if (request.status == 200 && request.readyState == 4) {
+        if (request.responseText == "") {
+            document.getElementById("orders").innerHTML = 0;
+        } else {
+
+            document.getElementById("orders").innerHTML = request.responseText;
+        }
+    }
+}
+request.open("GET", "/api/admin/orderNumber", true);
+request.send();
 
 //Showing Date
 const currentdate = new Date();

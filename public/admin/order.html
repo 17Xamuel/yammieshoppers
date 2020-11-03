@@ -78,12 +78,6 @@
                     >Analytics</a
                   >
                 </li>
-
-                <li class="nav-item">
-                  <a href="profile.html" class="nav-link text-white p-3 mb-2"
-                    ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
-                  >
-                </li>
                 <li class="nav-item">
                   <a href="settings.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
@@ -94,6 +88,11 @@
                   <a href="upload.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
                     >Uploads</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a href="profile.html" class="nav-link text-white p-3 mb-2"
+                    ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
                   >
                 </li>
               </ul>
@@ -178,34 +177,28 @@
                 <div class="card rounded">
                   <div class="card-body">
                     <h4 class="text-center text-info">
-                      Order No: <span id="ordernumber">GF2zk</span>
+                      Order No: <span id="ordernumber"></span>
                     </h4>
                     <div>
                       <table class="table text-center">
                         <tbody>
                           <tr>
-                            <td>Customer Name:<span id="name">Sam</span></td>
-                            <td>
-                              Email: <span id="email">sam@gmail.com</span>
-                            </td>
+                            <td>Customer Name:<span id="name"></span></td>
+                            <td>Email: <span id="email"></span></td>
                           </tr>
                           <tr>
                             <td>
-                              No of Items Ordered:<span id="items">4</span>
+                              No of Items Ordered:<span id="items"></span>
                             </td>
-                            <td>
-                              Order Date: <span id="date">27/07/2021</span>
-                            </td>
+                            <td>Order Date: <span id="date"></span></td>
                           </tr>
                           <tr>
-                            <td>
-                              Payment Method:<span id="method"
-                                >Cash On Delivery</span
-                              >
-                            </td>
-                            <td>
-                              Order Status: <span id="status">Undelivered</span>
-                            </td>
+                            <td>Order Amount: <span id="amount"></span></td>
+                            <td>Delivery Method: <span id="dmethod"></span></td>
+                          </tr>
+                          <tr>
+                            <td>Payment Method:<span id="method"></span></td>
+                            <td>Order Status: <span>Undelivered</span></td>
                           </tr>
                         </tbody>
                       </table>
@@ -216,12 +209,13 @@
                       <tr>
                         <th>Name</th>
                         <th>Quantity</th>
-                        <th>Unit Price</th>
-                        <th>Amount</th>
-                        <th>Seller name</th>
-                        <th>Seller Contact</th>
-                        <th>Approve</th>
+                        <th>Price</th>
+                        <th>Discount(%)</th>
+                        <th>Total</th>
+                        <th>Seller</th>
+                        <th>NotifySeller</th>
                       </tr>
+<<<<<<< HEAD
                       <tbody>
                         <tr></tr>
                           <td>1</td>
@@ -241,6 +235,9 @@
                           </td>
                         </tr>
                       </tbody>
+=======
+                      <tbody id="id"></tbody>
+>>>>>>> 10287041010cc34aa6f298c39691830723b387e0
                     </table>
                   </div>
                 </div>
@@ -288,6 +285,45 @@
     </footer>
     <!-- End Footer -->
 
+    <!-- sellerInfo Modal -->
+    <div class="modal fade" id="sellerInfo">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Seller Information</h5>
+          </div>
+          <div class="modal-body">
+            <table class="table text-center">
+              <tbody>
+                <tr>
+                  <td>Name: <span id="sn"></span></td>
+                </tr>
+                <tr>
+                  <td>Mobile Number: <span id="spn"></span></td>
+                </tr>
+                <tr>
+                  <td>Email: <span id="se"></span></td>
+                </tr>
+                <tr>
+                  <td>Location: <span id="sl"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End sellerInfo Modal -->
+
     <!-- Scripts -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -310,10 +346,101 @@
       orders.onreadystatechange = () => {
         if (orders.status == 200 && orders.readyState == 4) {
           let [pendingOrders] = JSON.parse(orders.responseText);
+<<<<<<< HEAD
           console.log(pendingOrders);
+=======
+          let date = pendingOrders.order_date.slice(0, 10);
+
+>>>>>>> 10287041010cc34aa6f298c39691830723b387e0
           document.getElementById("ordernumber").innerHTML =
             pendingOrders.order_number;
-          document.getElementById("date").innerHTML = pendingOrders.order_date;
+          document.getElementById("date").innerHTML = date;
+          document.getElementById("name").innerHTML = pendingOrders.c_last_name;
+          document.getElementById("email").innerHTML = pendingOrders.c_email;
+          if (pendingOrders.order_payment_method == "cod") {
+            document.getElementById("method").innerHTML = "Cash On Delivery";
+          } else if (pendingOrders.order_payment_method == "mm") {
+            document.getElementById("method").innerHTML = "Mobile Money";
+          }
+          document.getElementById("amount").innerHTML =
+            "UGX" + pendingOrders.order_amount;
+          document.getElementById("dmethod").innerHTML =
+            pendingOrders.order_delivery_method;
+          let items = JSON.parse(pendingOrders.order_items);
+          document.getElementById("items").innerHTML = Object.keys(
+            items
+          ).length;
+
+          let itemdetails = Object.values(items);
+          let data = "";
+          itemdetails.forEach((item) => {
+            let total =
+              (item.price - (item.discount / 100) * item.price) *
+              item.inCartNumber;
+            data += `<tr>
+                          <td>${item.name}</td>
+                          <td>${item.inCartNumber}</td>
+                          <td>${item.price}</td>
+                          <td>${item.discount}</td>
+                          <td>${total}</td>
+                          <td>
+                            <button type="button" class="btn btn-sm btn-info"
+                            data-toggle="modal" data-target="#sellerInfo"
+                            data-it="${item.cartItemAdded}">Contact</button>
+                          </td>
+                          <td>
+                            <button type="button" 
+                            class="btn btn-sm btn-danger"data-name="${item.name}"
+                            data-no="${item.inCartNumber}"data-id="${item.cartItemAdded}"
+                            data-dis="${item.discount}"data-price="${item.price}"
+                            >Notify</button>
+                          </td>
+                      </tr>`;
+          });
+          document.getElementById("id").innerHTML = data;
+
+          let contactButtons = document.querySelectorAll(".btn-info");
+          contactButtons.forEach((contactButton) => {
+            contactButton.addEventListener("click", (e) => {
+              let contact = e.target.dataset.it;
+              const xhr = new XMLHttpRequest();
+              xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                  let [result] = JSON.parse(xhr.responseText);
+                  document.getElementById("sn").innerHTML = result.username;
+                  document.getElementById("spn").innerHTML = result.phonenumber;
+                  document.getElementById("se").innerHTML = result.email;
+                  document.getElementById("sl").innerHTML = result.location;
+                }
+              };
+              xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
+              xhr.send();
+            });
+          });
+          let notifyButtons = document.querySelectorAll(".btn-danger");
+          notifyButtons.forEach((notifyButton) => {
+            notifyButton.addEventListener("click", (e) => {
+              let order = {};
+              order.id = e.target.dataset.id;
+              order.qty = e.target.dataset.no;
+              order.product = e.target.dataset.name;
+              order.price = e.target.dataset.price;
+              order.discount = e.target.dataset.dis;
+              order.amount =
+                (order.price - (order.discount / 100) * order.price) *
+                order.qty;
+              let orderString = JSON.stringify(order);
+              const orderA = new XMLHttpRequest();
+              orderA.onreadystatechange = () => {
+                if (orderA.status == 200 && orderA.readyState == 4) {
+                  console.log(orderA.responseText);
+                }
+              };
+              orderA.open("POST", "/api/admin/notifyOrder", true);
+              orderA.setRequestHeader("Content-Type", "application/json");
+              orderA.send(orderString);
+            });
+          });
         }
       };
       orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);

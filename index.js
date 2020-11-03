@@ -82,8 +82,6 @@ app.post("/addProduct", async (req, res) => {
       (err, results) => {
         if (err) {
           console.log(err);
-        } else {
-          res.redirect("http://localhost:8000/seller/product.html");
         }
       }
     );

@@ -16,7 +16,7 @@ try {
       passwordConfirm,
     } = req.body;
     conn.query(
-      "SELECT email FROM pending_sellers WHERE email=?",
+      "SELECT email FROM sellers  WHERE email=?",
       [email],
       async (err, results) => {
         if (err) {
@@ -241,4 +241,16 @@ router.get("/totalProducts/:id", async (req, res) => {
     }
   );
 });
+<<<<<<< HEAD
 module.exports = router;
+=======
+router.get("/orderItems",(req,res)=>{
+  conn.query("SELECT order_items FROM pending_orders",(err,result)=>{
+    if(err) throw err;
+    res.send(result);
+  });
+});
+
+
+module.exports=router;
+>>>>>>> 10287041010cc34aa6f298c39691830723b387e0

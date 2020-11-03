@@ -57,3 +57,15 @@ xhr1.onreadystatechange=()=>{
 xhr1.open("GET",`/api/sellers/totalProducts/${sellerId}`,true);
 xhr1.send();
 
+const orders=new XMLHttpRequest();
+orders.onreadystatechange=()=>{
+  if(orders.status==200 && orders.readyState==4){
+     if(orders.responseText=""){
+       document.getElementById("ordernumber").innerHTML=0;
+     }else{
+       document.getElementById("ordernumber").innerHTML=orders.responseText;
+     }
+  }
+};
+orders.open("GET",`/api/sellers/ordernumber/${sellerId}`,true);
+orders.send();
