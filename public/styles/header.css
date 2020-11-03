@@ -32,19 +32,30 @@
   flex-direction: column;
   display: none;
 }
-.-help-list > li {
-  margin: 12px 0px;
+.-a-btn {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: #ffbb00;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.4);
+  color: white;
+  margin: 5px 0px;
 }
-.-help-list > li > a {
-  transition: all 0.1s ease-in-out;
-  font-size: 14px;
+.-help-list > a > li {
+  margin: 5px 0px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14.5px;
 }
-.-help-list > li > a > i {
+.-help-list > a > li > i,
+.-a-btn > i {
   margin-right: 5px;
 }
-.-help-list > li > a:hover {
-  color: #ffbb00;
-  font-size: 14.5px;
+.-help-list > a > li:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: rgb(255, 255, 255);
 }
 .-dropdown {
   padding: 5px;

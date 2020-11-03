@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="/styles/header.css" />
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/font-awesome/css/all.css" />
-    <title>Samuel Josh &commat; Yammie | online Store</title>
+    <title>Yammie | Your online Store</title>
     <style>
       .pf-ctr {
         width: 75vw;
         margin: 30px auto;
         display: flex;
-        height: 60vh;
+        min-height: fit-content;
       }
       .left {
         flex: 1;
@@ -27,6 +27,7 @@
         justify-content: space-around;
         padding-left: 10px;
         padding-right: 10px;
+        height: 60vh;
       }
       .left > a > li {
         padding: 10px;
@@ -451,16 +452,16 @@
           <div class="pf-details-ctr">
             <div class="pf-details -pfd">
               <div class="-pdf-h pf-d">Your Account</div>
-              <div class="pf-name pf-d">Samuel Joshua</div>
-              <div class="pf-email pf-d">sam@gmail.com</div>
-              <div class="pf-phone pf-d">0789654356</div>
+              <div class="pf-name pf-d" id="_cn">N/A</div>
+              <div class="pf-email pf-d" id="_ce"></div>
+              <div class="pf-phone pf-d" id="_cm"></div>
+              <div class="pf-phone pf-d" id="_cg"></div>
             </div>
             <div class="pf-address-dt -pfd">
-              <div class="-pdf-h">Default Address</div>
-              <div class="pf-d">Samuel Josh</div>
-              <div class="pf-d">Pioneer Hostel</div>
-              <div class="pf-d">Management Sciences</div>
-              <div class="pf-d">0789654356</div>
+              <div class="-pdf-h">Primary Address</div>
+              <div class="pf-name pf-d" id="cn">N/A</div>
+              <div class="pf-email pf-d" id="cm"></div>
+              <div class="pf-email pf-d" id="_2a"></div>
             </div>
             <div class="pf-address-dt">
               <button class="pf-start-spg">START SHOPPING</button>
@@ -603,7 +604,22 @@
         xhr.onreadystatechange = () => {
           if (xhr.status == 200 && xhr.readyState == 4) {
             let [res] = JSON.parse(xhr.responseText);
-            console.log(res);
+            document.querySelector("#_2a").innerHTML =
+              res.pickup_address_1 || "";
+            document.querySelector("#cn").innerHTML =
+              res.pickup_address_1 == null
+                ? "N/A"
+                : res.c_first_name + " " + res.c_last_name;
+            document.querySelector("#_cm").innerHTML =
+              res.pickup_address_1 == null ? "" : res.c_phone || res.c_email;
+            document.querySelector("#_cg").innerHTML = res.c_gender;
+            document.querySelector("#_cn").innerHTML =
+              res.c_first_name + " " + res.c_last_name;
+            document.querySelector("#_ce").innerHTML = res.c_email;
+            document.querySelector("#_cm").innerHTML = res.c_phone;
+            document.getElementsByTagName("title")[0].innerHTML = `${
+              res.c_first_name + " " + res.c_last_name
+            } &commat; Yammie | online Store`;
           }
         };
       }
@@ -616,7 +632,7 @@
       }
     </script>
     <script>
-      if (yammie) _up(`/api/user/customer/${yammie}`);
+      if (yammie) _up(`/api/user/account/address/${yammie}`);
     </script>
     <!--scripts-->
   </body>

@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="/styles/header.css" />
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/font-awesome/css/all.css" />
-    <title>Samuel Josh &commat; Yammie | online Store</title>
+    <title>Yammie | Your online Store</title>
     <style>
       .pf-ctr {
         width: 75vw;
         margin: 30px auto;
         display: flex;
-        height: 60vh;
+        min-height: fit-content;
       }
       .left {
         flex: 1;
@@ -27,6 +27,7 @@
         justify-content: space-around;
         padding-left: 10px;
         padding-right: 10px;
+        height: 60vh;
       }
       .left > a > li {
         padding: 10px;
@@ -720,6 +721,9 @@
             document.querySelector("#-e-email").value = res.c_email;
             document.querySelector("#-e-number").value = res.c_phone;
             document.querySelector("#-e-password").value = res.c_password;
+            document.getElementsByTagName("title")[0].innerHTML = `${
+              res.c_first_name + " " + res.c_last_name
+            } &commat; Yammie | online Store`;
           }
         };
       }

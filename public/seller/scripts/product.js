@@ -24,7 +24,7 @@ xhr.onreadystatechange = () => {
                       <td>${PendingProduct.quantity}</td>
                       <td>${PendingProduct.price}</td>
                       <td>
-                        <span class="badge badge-warning w-75 py-2">Pending</span>
+                        <span class="badge badge-danger w-75 py-2">Pending</span>
                       </td>
                       <td><a href="productdetails.html?pendingProduct=${PendingProduct.id}">
                       <button type="button" class="btn btn-info btn-sm">Details</button>
@@ -37,6 +37,7 @@ xhr.onreadystatechange = () => {
 xhr.open("GET", `/api/sellers/getPendingProducts/${sellerId}`, true);
 xhr.send();
 
+<<<<<<< HEAD
 const req = new XMLHttpRequest();
 
 req.onreadystatechange = () => {
@@ -98,3 +99,8 @@ reject.onreadystatechange = () => {
 };
 reject.open("GET", `/api/sellers/rejectedProduct/${sellerId}`, true);
 reject.send();
+=======
+
+
+
+>>>>>>> 5622370459ebacc1d89a0b0b4f5705d71328bb58

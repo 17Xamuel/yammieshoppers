@@ -30,11 +30,19 @@ router.post("/customer/insert", async (req, res) => {
           c_first_name,
           c_last_name,
         };
-        conn.query("INSERT INTO customers SET ?", newUser, (err, result) => {
+        conn.query("INSERT INTO customers SET ?", newUser, (err) => {
           if (err) {
             return res.send("Error in Registering");
+          } else {
+            conn.query(
+              "INSERT INTO customer_address SET c_id = ?",
+              newUser.c_id,
+              (error) => {
+                if (error) throw error;
+              }
+            );
+            res.send("inserted");
           }
-          res.send("inserted");
         });
       }
     }
@@ -160,11 +168,56 @@ router.post("/customer/edit/:id", (req, res) => {
     }
   );
 });
-router.get("/account/address");
-// router.get("/d/:id",(req,res)=>{
-//   conn.query("SELECT * FROM products", (err, result) => {
-//     if (err) throw err;
-//     res.status(200).send(result);
-//   });
-// });
+router.get("/account/address/:id", (req, res) => {
+  conn.query(
+    `SELECT * FROM customer_address
+      JOIN customers
+      ON customer_address.c_id = customers.c_id
+        WHERE customer_address.c_id = ? `,
+    req.params.id,
+    (err, result) => {
+      if (err) throw err;
+      res.status(200).send(result);
+    }
+  );
+});
+router.post("/account/address/edit/:id", (req, res) => {
+  conn.query(
+    `SELECT * FROM customer_address WHERE c_id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      let newAddress = {};
+      if (result.length == 0) {
+        newAddress.c_id = req.params.id;
+        newAddress.pickup_address_1 =
+          req.body.type == "Primary" ? req.body.add : "";
+        newAddress.pickup_address_2 =
+          req.body.type == "Primary" ? "" : req.body.add;
+        conn.query(
+          `INSERT INTO customer_address SET ? `,
+          newAddress,
+          (error, results) => {
+            if (error) throw "err: " + error;
+            res.send("Changed");
+          }
+        );
+      } else {
+        if (req.body.type == "Primary") {
+          newAddress.pickup_address_1 = req.body.add;
+        } else {
+          newAddress.pickup_address_2 = req.body.add;
+        }
+        conn.query(
+          `UPDATE customer_address SET ? WHERE c_id = ?`,
+          [newAddress, req.params.id],
+          (error, results) => {
+            if (error) throw error;
+            res.send("Changed");
+          }
+        );
+      }
+    }
+  );
+});
 module.exports = router;

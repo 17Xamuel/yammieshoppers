@@ -14,7 +14,7 @@
         width: 75vw;
         margin: 30px auto;
         display: flex;
-        height: 60vh;
+        min-height: fit-content;
       }
       .left {
         flex: 1;
@@ -27,6 +27,7 @@
         justify-content: space-around;
         padding-left: 10px;
         padding-right: 10px;
+        height: 60vh;
       }
       .left > a > li {
         padding: 10px;
@@ -400,6 +401,12 @@
               <span> My Profile </span>
             </li>
           </a>
+          <a href="./pending-orders.html">
+            <li id="pf-pending" class="active">
+              <i class="fas fa-dolly-flatbed"></i>
+              <span>Pending Orders</span>
+            </li>
+          </a>
           <a href="./orders.html">
             <li id="pf-orders">
               <i class="fas fa-box"></i>
@@ -410,12 +417,6 @@
             <li id="pf-cart">
               <i class="fas fa-shopping-cart"></i>
               <span>My Cart</span>
-            </li>
-          </a>
-          <a href="./pending-orders.html">
-            <li id="pf-pending" class="active">
-              <i class="fas fa-dolly-flatbed"></i>
-              <span>Pending Orders</span>
             </li>
           </a>
           <a href="/">
@@ -582,13 +583,11 @@
         </div>
       </div>
     </footer>
-
     <!--scripts-->
     <script>
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
-
       cartNumbersDisplay();
       function cartNumbersDisplay() {
         let cartNumber = parseInt(localStorage.getItem("cartNumber"));
@@ -596,6 +595,7 @@
           ? cartNumber
           : 0;
       }
+      function _uo(url) {}
     </script>
     <!--scripts-->
   </body>

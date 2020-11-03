@@ -47,7 +47,9 @@ try {
             if (err) {
               console.log(err);
             } else {
-              res.send("Registered Successfully");
+              res.send(
+                "Your request has been sent please wait for Confirmation"
+              );
             }
           }
         );

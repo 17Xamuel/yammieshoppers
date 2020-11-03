@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="/styles/header.css" />
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/font-awesome/css/all.css" />
-    <title>Samuel Josh &commat; Yammie | online Store</title>
+    <title>Yammie | Your online Store</title>
     <style>
       .pf-ctr {
         width: 75vw;
         margin: 30px auto;
         display: flex;
-        height: 60vh;
+        min-height: fit-content;
       }
       .left {
         flex: 1;
@@ -27,6 +27,7 @@
         justify-content: space-around;
         padding-left: 10px;
         padding-right: 10px;
+        height: 60vh;
       }
       .left > a > li {
         padding: 10px;
@@ -119,10 +120,51 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         font-size: 17px;
       }
-      @media screen and (max-width: 1024px) {
+      #-edit-a {
+        /* margin: 5px 0px; */
+        padding: 2%;
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 5px;
+        display: none;
+      }
+      #-edit-a.dn {
+        display: block;
+      }
+      #other-a {
+        border: 0;
+        outline: none;
+        width: 70%;
+        border-bottom: 1px solid rgb(0, 0, 0, 0.3);
+        margin-top: 5%;
+        font-size: 17px;
+        padding: 5px;
+      }
+      ._add {
+        width: 85%;
+        border: 1px solid rgb(0, 0, 0, 0.2);
+        border-radius: 5px;
+        height: 30px;
+        outline: none;
+        font-size: 17px;
+        margin-top: 5%;
+      }
+      .-btn-a-d {
+        width: 60%;
+        margin: 15px auto;
+        padding: 8px 0px;
+        font-size: 16px;
+        box-shadow: 3px 3px 5px #e2e2e2;
+        border-radius: 30px;
+        border: none;
+        outline: none;
+        color: white;
+        background-color: #ffbb00;
+        cursor: pointer;
+      }
+      @media screen and (max-width: 768px) {
         .pf-ctr {
-          width: 85vw;
-          margin: 30px auto;
+          width: 95vw;
+          margin: 15px auto;
           display: flex;
           height: fit-content;
         }
@@ -443,13 +485,41 @@
           <div class="pf-details-ctr">
             <div class="pf-details -pfd">
               <div class="-pdf-h pf-d">Primary Address</div>
-              <div class="pf-name pf-d">Samuel Joshua</div>
-              <div class="pf-email pf-d">sam@gmail.com</div>
-              <div class="pf-phone pf-d">0789654356</div>
+              <div class="pf-name pf-d" id="_cn">N/A</div>
+              <div class="pf-email pf-d" id="_cm"></div>
+              <div class="pf-email pf-d" id="_1a"></div>
             </div>
-            <div class="pf-address-dt">
-              <button class="pf-start-spg">START SHOPPING</button>
+            <div class="pf-details -pfd">
+              <div class="-pdf-h pf-d">Other Address</div>
+              <div class="pf-name pf-d" id="cn">N/A</div>
+              <div class="pf-email pf-d" id="cm"></div>
+              <div class="pf-email pf-d" id="_2a"></div>
             </div>
+            <form id="-edit-a" autocomplete="off">
+              <b>Change Your Address</b>
+              <select id="type" class="_add" id="type">
+                <option value="" hidden>Select Type</option>
+                <option value="Primary">Primary</option>
+                <option value="Other">Other Address</option>
+              </select>
+              <br />
+              <select class="_add" id="-ad">
+                <option value="" hidden>Select Your Address</option>
+                <option value="Royal">Royal</option>
+                <option value="Maroon">Maroon</option>
+                <option value="Pioneer">Pioneer</option>
+                <option value="Mandela">Mandela</option>
+                <option value="Pilipo">Pilipo</option>
+                <option value="Jeremiah">Jeremiah</option>
+                <option value="St. Peters">St. Peters</option>
+                <option value="Black Roof">Black Roof</option>
+              </select>
+              <br />
+              <label for="other-a">Other:</label>
+              <input type="text" name="" id="other-a" placeholder="(Specify)" />
+              <button type="submit" class="-btn-a-d">SUBMIT</button>
+            </form>
+            <button class="btn _ea-b">Change Your Address</button>
           </div>
         </div>
       </div>
@@ -581,7 +651,7 @@
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
-
+      _ua(`/api/user/account/address/${yammie}`);
       cartNumbersDisplay();
       function cartNumbersDisplay() {
         let cartNumber = parseInt(localStorage.getItem("cartNumber"));
@@ -589,6 +659,56 @@
           ? cartNumber
           : 0;
       }
+      function _ua(url) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.send();
+        xhr.onreadystatechange = () => {
+          if (xhr.status == 200 && xhr.readyState == 4) {
+            let [res] = JSON.parse(xhr.responseText);
+            console.log(res);
+            document.querySelector("#_1a").innerHTML = res.pickup_address_1;
+            document.querySelector("#_2a").innerHTML = res.pickup_address_2;
+            document.querySelector("#_cn").innerHTML =
+              res.pickup_address_1 == null
+                ? "N/A"
+                : res.c_first_name + " " + res.c_last_name;
+            document.querySelector("#_cm").innerHTML =
+              res.pickup_address_1 == null ? "" : res.c_phone || res.c_email;
+            document.querySelector("#cn").innerHTML =
+              res.pickup_address_2 == null
+                ? "N/A"
+                : res.c_first_name + " " + res.c_last_name;
+            document.querySelector("#cm").innerHTML =
+              res.pickup_address_2 == null ? "" : res.c_phone || res.c_email;
+            document.getElementsByTagName("title")[0].innerHTML = `${
+              res.c_first_name + " " + res.c_last_name
+            } &commat; Yammie | online Store`;
+          }
+        };
+      }
+      document.querySelector("._ea-b").addEventListener("click", () => {
+        document.querySelector("#-edit-a").classList.toggle("dn");
+      });
+      document.querySelector("#-edit-a").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let _add = {};
+        _add.type = document.querySelector("#type").value || "Primary";
+        _add.add =
+          document.querySelector("#-ad").value ||
+          document.querySelector("#other-a").value;
+        xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            if (xhr.responseText == "Changed") {
+              window.location.reload();
+            }
+          }
+        };
+        xhr.open("POST", `/api/user/account/address/edit/${yammie}`, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(_add));
+      });
     </script>
     <!--scripts-->
   </body>

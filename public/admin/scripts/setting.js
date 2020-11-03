@@ -94,8 +94,6 @@ xhr.onreadystatechange = () => {
     });
     document.getElementById("pendingProducts").innerHTML = rows;
     document.getElementById("ppn").textContent = `(${pendingProducts.length})`;
-    // let deleteButtons = document.querySelectorAll(".-d-product");
-
     let deleteButtons = document.querySelectorAll(".-d-product");
     deleteButtons.forEach((deleteButton) => {
       deleteButton.addEventListener("click", (e) => {
