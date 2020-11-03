@@ -241,16 +241,11 @@ router.get("/totalProducts/:id", async (req, res) => {
     }
   );
 });
-<<<<<<< HEAD
-module.exports = router;
-=======
-router.get("/orderItems",(req,res)=>{
-  conn.query("SELECT order_items FROM pending_orders",(err,result)=>{
-    if(err) throw err;
+router.get("/orderItems", (req, res) => {
+  conn.query("SELECT order_items FROM pending_orders", (err, result) => {
+    if (err) throw err;
     res.send(result);
   });
 });
 
-
-module.exports=router;
->>>>>>> 10287041010cc34aa6f298c39691830723b387e0
+module.exports = router;
