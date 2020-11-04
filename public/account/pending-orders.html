@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/styles/header.css" />
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/font-awesome/css/all.css" />
-    <title>Samuel Josh &commat; Yammie | online Store</title>
+    <title>Yammie | online Store</title>
     <style>
       .pf-ctr {
         width: 75vw;
@@ -91,12 +91,18 @@
         transform: translateY(-7px);
         box-shadow: 5px 5px 7px #c3c3c3;
       }
-      .pf-details-ctr {
+      .pf-details-ctr.orders {
         padding: 10px 20px;
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         column-gap: 1.5rem;
         row-gap: 2rem;
+      }
+      .pf-details-ctr {
+        padding: 10px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       .-pdf-h {
         padding: 5px;
@@ -442,21 +448,15 @@
         <div class="right myorders -b-x">
           <h2 class="-pdf-h">Pending Orders</h2>
           <div class="pf-details-ctr">
-            <div class="pf-details -pfd">
-              <div class="-pdf-h pf-d">Your Account</div>
-              <div class="pf-name pf-d">Samuel Joshua</div>
-              <div class="pf-email pf-d">sam@gmail.com</div>
-              <div class="pf-phone pf-d">0789654356</div>
-            </div>
-            <div class="pf-address-dt -pfd">
-              <div class="-pdf-h">Default Address</div>
-              <div class="pf-d">Samuel Josh</div>
-              <div class="pf-d">Pioneer Hostel</div>
-              <div class="pf-d">Management Sciences</div>
-              <div class="pf-d">0789654356</div>
-            </div>
-            <div class="pf-address-dt">
-              <button class="pf-start-spg">START SHOPPING</button>
+            <div class="_blank-orders">
+              <img
+                src="../resources/undraw_blank_canvas_3rbb.svg"
+                alt=""
+                height="200px"
+                width="200px"
+              />
+              <h4>You haven't Made Any Order</h4>
+              <a href="/"><button class="btn">Start Shopping</button></a>
             </div>
           </div>
         </div>
