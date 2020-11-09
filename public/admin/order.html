@@ -57,7 +57,7 @@
                   height="50"
                   class="rounded-circle mr-3"
                 />
-                <a href="#" class="text-white">Hello Denis</a>
+                <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item current">
@@ -209,35 +209,12 @@
                       <tr>
                         <th>Name</th>
                         <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Discount(%)</th>
                         <th>Total</th>
                         <th>Seller</th>
-                        <th>NotifySeller</th>
+                        <th>Notify</th>
+                        <th>Clear</th>
                       </tr>
-<<<<<<< HEAD
-                      <tbody>
-                        <tr></tr>
-                          <td>1</td>
-                          <td>Soda</td>
-                          <td>4</td>
-                          <td>2000</td>
-                          <td>8000</td>
-                          <td>Denis</td>
-                          <td>0709857117</td>
-                          <td>
-                            <button
-                              type="button"
-                              class="btn btn-success btn-sm"
-                            >
-                              Approve
-                            </button>
-                          </td>
-                        </tr>
-                      </tbody>
-=======
                       <tbody id="id"></tbody>
->>>>>>> 10287041010cc34aa6f298c39691830723b387e0
                     </table>
                   </div>
                 </div>
@@ -248,6 +225,44 @@
       </div>
     </section>
     <!-- End details -->
+
+    <!-- seller Modal -->
+    <div class="modal fade" id="sellerInfo">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Seller Information</h5>
+          </div>
+          <div class="modal-body">
+            <table class="table text-center">
+              <tbody>
+                <tr>
+                  <td>Name: <span id="sn"></span></td>
+                </tr>
+                <tr>
+                  <td>Mobile Number: <span id="spn"></span></td>
+                </tr>
+                <tr>
+                  <td>Email: <span id="se"></span></td>
+                </tr>
+                <tr>
+                  <td>Location: <span id="sl"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -285,45 +300,6 @@
     </footer>
     <!-- End Footer -->
 
-    <!-- sellerInfo Modal -->
-    <div class="modal fade" id="sellerInfo">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Seller Information</h5>
-          </div>
-          <div class="modal-body">
-            <table class="table text-center">
-              <tbody>
-                <tr>
-                  <td>Name: <span id="sn"></span></td>
-                </tr>
-                <tr>
-                  <td>Mobile Number: <span id="spn"></span></td>
-                </tr>
-                <tr>
-                  <td>Email: <span id="se"></span></td>
-                </tr>
-                <tr>
-                  <td>Location: <span id="sl"></span></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--End sellerInfo Modal -->
-
     <!-- Scripts -->
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -346,12 +322,7 @@
       orders.onreadystatechange = () => {
         if (orders.status == 200 && orders.readyState == 4) {
           let [pendingOrders] = JSON.parse(orders.responseText);
-<<<<<<< HEAD
-          console.log(pendingOrders);
-=======
           let date = pendingOrders.order_date.slice(0, 10);
-
->>>>>>> 10287041010cc34aa6f298c39691830723b387e0
           document.getElementById("ordernumber").innerHTML =
             pendingOrders.order_number;
           document.getElementById("date").innerHTML = date;
@@ -380,8 +351,6 @@
             data += `<tr>
                           <td>${item.name}</td>
                           <td>${item.inCartNumber}</td>
-                          <td>${item.price}</td>
-                          <td>${item.discount}</td>
                           <td>${total}</td>
                           <td>
                             <button type="button" class="btn btn-sm btn-info"
@@ -389,11 +358,18 @@
                             data-it="${item.cartItemAdded}">Contact</button>
                           </td>
                           <td>
-                            <button type="button" 
-                            class="btn btn-sm btn-danger"data-name="${item.name}"
+                            <button type="button"
+                            class="btn btn-sm btn-primary"data-name="${item.name}"
                             data-no="${item.inCartNumber}"data-id="${item.cartItemAdded}"
                             data-dis="${item.discount}"data-price="${item.price}"
                             >Notify</button>
+                          </td>
+                          <td>
+                            <button type="button"
+                            class="btn btn-sm btn-success"data-dis="${item.discount}"
+                            data-itd="${item.cartItemAdded}"data-price="${item.price}"
+                            data-name="${item.name}"data-no="${item.inCartNumber}"
+                            >Clear</button>
                           </td>
                       </tr>`;
           });
@@ -417,7 +393,7 @@
               xhr.send();
             });
           });
-          let notifyButtons = document.querySelectorAll(".btn-danger");
+          let notifyButtons = document.querySelectorAll(".btn-primary");
           notifyButtons.forEach((notifyButton) => {
             notifyButton.addEventListener("click", (e) => {
               let order = {};
@@ -441,11 +417,40 @@
               orderA.send(orderString);
             });
           });
+
+          let clearButtons = document.querySelectorAll(".btn-success");
+          clearButtons.forEach((clearButton) => {
+            clearButton.addEventListener("click", (e) => {
+              let productId = e.target.dataset.itd;
+              const xhr1 = new XMLHttpRequest();
+              xhr1.onreadystatechange = () => {
+                if (xhr1.readyState == 4 && xhr1.status == 200) {
+                  let [results] = JSON.parse(xhr1.responseText);
+                  let res = results.id;
+
+                  const clearOrder = new XMLHttpRequest();
+                  clearOrder.onreadystatechange = () => {
+                    if (
+                      clearOrder.status == 200 &&
+                      clearOrder.readyState == 4
+                    ) {
+                      console.log(clearOrder.responseText);
+                    }
+                  };
+                  clearOrder.open("GET", `/api/admin/clearOrder/${res}`, true);
+                  clearOrder.send();
+                }
+              };
+              xhr1.open("GET", `/api/admin/product/${productId}`, true);
+              xhr1.send();
+            });
+          });
         }
       };
       orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);
       orders.send();
     </script>
+    <script src="scripts/account.js"></script>
     <!-- End Scripts -->
   </body>
 </html>

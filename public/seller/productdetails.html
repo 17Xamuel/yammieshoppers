@@ -175,8 +175,8 @@
               <div class="col-xl-10 mx-auto my-5">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-info text-center">Product Details</h4>
-                    <table class="table text-center">
+                    <h3 class="text-info text-center">Product Details</h3>
+                    <table class="table text-center text-muted">
                       <tbody>
                         <tr>
                           <td>ProductName:<span id="name"></span></td>
@@ -192,6 +192,9 @@
                         </tr>
                       </tbody>
                     </table>
+                    <div class="text-center">
+                      <ul class="list-inline" id="img"></ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -274,6 +277,15 @@
           let netPrice = result.price - discount;
           document.getElementById("netp").innerHTML = parseInt(netPrice);
           document.getElementById("desc").innerHTML = result.description;
+          let images = JSON.parse(result.images);
+          let img = "";
+          for (let i = 0; i < images.length; i++) {
+            img += `
+                <li class="list-inline-item">
+                <img src="/${images[i]}" width="150" height="150"/>
+                </li>`;
+          }
+          document.getElementById("img").innerHTML = img;
         }
       };
       pdetails.open("GET", `/api/sellers/pdetails/${apId}`, true);
@@ -296,6 +308,15 @@
           let netPrice = outcome.price - discount;
           document.getElementById("netp").innerHTML = parseInt(netPrice);
           document.getElementById("desc").innerHTML = outcome.description;
+          let images = JSON.parse(outcome.images);
+          let img = "";
+          for (let i = 0; i < images.length; i++) {
+            img += `
+                <li class="list-inline-item">
+                <img src="/${images[i]}" width="150" height="150"/>
+                </li>`;
+          }
+          document.getElementById("img").innerHTML = img;
         }
       };
       pendingdetails.open("GET", `/api/sellers/pendingDetails/${ppId}`, true);

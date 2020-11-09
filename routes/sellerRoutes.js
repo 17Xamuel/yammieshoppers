@@ -173,7 +173,7 @@ router.get("/totalProducts/:id", async (req, res) => {
 
 router.get("/pendingDetails/:id", async (req, res) => {
   conn.query(
-    "SELECT product,price,discount,quantity,description FROM pending_products WHERE id=?",
+    "SELECT * FROM pending_products WHERE id=?",
     [req.params.id],
     (error, results) => {
       if (error) throw error;
@@ -184,7 +184,7 @@ router.get("/pendingDetails/:id", async (req, res) => {
 
 router.get("/pdetails/:id", async (req, res) => {
   conn.query(
-    "SELECT product,price,discount,quantity,description FROM products WHERE id= ?",
+    "SELECT * FROM products WHERE id= ?",
     [req.params.id],
     (err, result) => {
       if (err) throw err;
@@ -192,16 +192,7 @@ router.get("/pdetails/:id", async (req, res) => {
     }
   );
 });
-router.get("/rejectedProduct/:id", async (req, res) => {
-  conn.query(
-    "SELECT product,price,quantity,images FROM rejected_products WHERE seller_id=?",
-    [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      res.send(result);
-    }
-  );
-});
+
 
 router.get("/totalProducts/:id", async (req, res) => {
   conn.query(
@@ -241,9 +232,66 @@ router.get("/totalProducts/:id", async (req, res) => {
     }
   );
 });
-router.get("/orderItems", (req, res) => {
-  conn.query("SELECT order_items FROM pending_orders", (err, result) => {
-    if (err) throw err;
+
+router.get("/orders/:id",(req,res)=>{
+  conn.query(`SELECT seller_orders.order_price,seller_orders.order_amount,
+  seller_orders.order_product,seller_orders.order_qty,seller_orders.order_discount
+   FROM seller_orders JOIN products ON seller_orders.product_id
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+ [req.params.id],(err,result)=>{
+   if(err) throw err;
+   res.send(result);
+ });
+});
+
+router.get("/pendingOrdernumber/:id",(req,res)=>{
+  conn.query(`SELECT*FROM seller_orders JOIN products ON seller_orders.product_id
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+ [req.params.id],(err,result)=>{
+   if(err) throw err;
+   res.json(result.length);
+ });
+});
+
+router.get("/doneOrder/:id",(req,res)=>{
+  conn.query(`SELECT cleared_orders.order_price,cleared_orders.order_amount,
+  cleared_orders.order_product,cleared_orders.order_qty,cleared_orders.order_discount
+   FROM cleared_orders JOIN products ON cleared_orders.product_id
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+ [req.params.id],(err,result)=>{
+   if(err) throw err;
+   res.send(result);
+ });
+});
+
+router.get("/doneOrdernumber/:id",async(req,res)=>{
+  conn.query(`SELECT *FROM cleared_orders JOIN products ON cleared_orders.product_id
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+ [req.params.id],(err,result)=>{
+   if(err) throw err;
+   res.json(result.length);
+ });
+});
+
+router.get("/totalOrders/:id",async(req,res)=>{
+  conn.query(`SELECT * FROM cleared_orders JOIN products ON cleared_orders.product_id
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+  [req.params.id],(err,result)=>{
+    if(err) throw err;
+    conn.query(`SELECT * FROM seller_orders JOIN products ON seller_orders.product_id
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+  [req.params.id],(error,results)=>{
+    if(error) throw error;
+    res.json(result.length+results.length);
+  });
+  });
+});
+
+router.get("/sales/:id" ,async(req,res)=>{
+  conn.query(`SELECT SUM(order_amount) AS Sales FROM cleared_orders JOIN
+  products ON cleared_orders.product_id=products.id JOIN sellers ON sellers.id=
+  products.seller_id WHERE sellers.id=?`,[req.params.id],
+  (err,result)=>{
     res.send(result);
   });
 });

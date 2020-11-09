@@ -59,7 +59,7 @@
                   height="50"
                   class="rounded-circle mr-3"
                 />
-                <a href="#" class="text-white">Hello Denis</a>
+                <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
@@ -173,7 +173,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-success">
               Stay Here
             </button>
-            <button type="button" data-dismiss="modal" class="btn btn-danger">
+            <button type="button" id="alg" class="btn btn-danger">
               Log Out
             </button>
           </div>
@@ -181,39 +181,12 @@
       </div>
     </div>
     <!-- End Modal -->
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3">
-              <div class="col-xl-12">
-                <h4 class="text-center my-3">
-                  Seller Requests <span id="psn"></span>
-                </h4>
-                <table class="table table-dark table-hover text-center">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Location</th>
-                      <th>Phonenumber</th>
-                      <th colspan="2">Operations</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sellerRequests"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <section>
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row">
+            <div class="row pt-md-5 mt-md-3">
               <div class="col-xl-12">
                 <h4 class="text-center">
                   Pending Items <span id="ppn"></span>
@@ -289,7 +262,8 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script src="./scripts/setting.js"></script>
+    <script src="scripts/setting.js"></script>
+    <script src="scripts/account.js"></script>
     <!-- End Scripts -->
   </body>
 </html>

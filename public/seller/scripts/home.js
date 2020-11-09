@@ -12,11 +12,11 @@ request.onreadystatechange = () => {
   if(request.responseText=""){
     items.forEach((item)=>{
       item.innerHTML=0;
-    })
+    });
   }else{
     items.forEach((item)=>{
       item.innerHTML=request.responseText;
-    })
+    });
   }
     
   }
@@ -61,11 +61,56 @@ const orders=new XMLHttpRequest();
 orders.onreadystatechange=()=>{
   if(orders.status==200 && orders.readyState==4){
      if(orders.responseText=""){
-       document.getElementById("ordernumber").innerHTML=0;
+       document.getElementById("approved").innerHTML=0;
      }else{
-       document.getElementById("ordernumber").innerHTML=orders.responseText;
+       document.getElementById("approved").innerHTML=orders.responseText;
      }
   }
 };
-orders.open("GET",`/api/sellers/ordernumber/${sellerId}`,true);
+orders.open("GET",`/api/sellers/doneOrdernumber/${sellerId}`,true);
 orders.send();
+
+const porders=new XMLHttpRequest();
+porders.onreadystatechange=()=>{
+  if(porders.status==200 && porders.readyState==4){
+     if(porders.responseText=""){
+       document.getElementById("opending").innerHTML=0;
+     }else{
+       document.getElementById("opending").innerHTML=porders.responseText;
+     }
+  }
+};
+porders.open("GET",`/api/sellers/pendingOrdernumber/${sellerId}`,true);
+porders.send();
+
+const totalOrders=new XMLHttpRequest();
+totalOrders.onreadystatechange=()=>{
+  if(totalOrders.status==200 && totalOrders.readyState==4){
+    let orders=document.querySelectorAll("#ordernumber");
+    if(totalOrders.responseText==""){
+       orders.forEach((order)=>{
+         order.innerHTML=0;
+       });
+    }else{
+      orders.forEach((order)=>{
+        order.innerHTML=totalOrders.responseText;
+      });
+    }
+  }
+};
+totalOrders.open("GET",`/api/sellers/totalOrders/${sellerId}`,true);
+totalOrders.send();
+
+ const sales = new XMLHttpRequest();
+      sales.onreadystatechange = () => {
+        if (sales.readyState == 4 && sales.status == 200) {
+          let [res]=JSON.parse(sales.responseText);
+          if(!res.Sales){
+            document.getElementById("sales").innerHTML="UGX"+0;
+          }else{
+            document.getElementById("sales").innerHTML="UGX"+res.Sales;
+          }
+        }
+      };
+      sales.open("GET", `/api/sellers/sales/${sellerId}`, true);
+      sales.send();

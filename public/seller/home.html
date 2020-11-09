@@ -201,7 +201,7 @@
                       <i class="fas fa-shopping-cart fa-3x text-info"></i>
                       <div class="text-right text-secondary">
                         <h4>Sales</h4>
-                        <h3>UGX1000</h3>
+                        <h3 id="sales"></h3>
                       </div>
                     </div>
                   </div>
@@ -235,61 +235,12 @@
     </section>
     <!-- End cards -->
 
-    <!--  Orders-->
     <section>
       <div class="container-fluid">
         <div class="row mb-5">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row align-items-center">
               <div class="col-xl-6 col-12 mb-4 mb-xl-0">
-                <h4 class="text-center">Orders</h4>
-                <div class="content">
-                  <canvas id="orders"></canvas>
-                </div>
-              </div>
-              <div class="col-xl-6 col-12">
-                <div class="card rounded">
-                  <div class="card-body">
-                    <h5 class="text-muted mb-4 text-center">Orders Summary</h5>
-                    <table class="table">
-                      <tr>
-                        <td>Total</td>
-                        <td>20</td>
-                      </tr>
-                      <tr>
-                        <td>Completed</td>
-                        <td>5</td>
-                      </tr>
-                      <tr>
-                        <td>Processed</td>
-                        <td>7</td>
-                      </tr>
-                      <tr>
-                        <td>Pending</td>
-                        <td>3</td>
-                      </tr>
-                      <tr>
-                        <td>Cancelled</td>
-                        <td>4</td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!--  orders -->
-
-    <!-- items -->
-    <section>
-      <div class="container-fluid">
-        <div class="row mb-5">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row align-items-center">
-              <div class="col-xl-6 col-12 mb-xl-0 mb-4">
                 <div class="card rounded">
                   <div class="card-body">
                     <h5 class="text-center text-dark mb-4">Products Summary</h5>
@@ -311,9 +262,24 @@
                 </div>
               </div>
               <div class="col-xl-6 col-12">
-                <h4 class="text-center">Sales</h4>
-                <div class="content">
-                  <canvas id="sales"></canvas>
+                <div class="card rounded">
+                  <div class="card-body">
+                    <h5 class="text-muted mb-4 text-center">Orders Summary</h5>
+                    <table class="table">
+                      <tr>
+                        <td>Total</td>
+                        <td id="ordernumber"></td>
+                      </tr>
+                      <tr>
+                        <td>Completed</td>
+                        <td id="approved"></td>
+                      </tr>
+                      <tr>
+                        <td>Pending</td>
+                        <td id="opending"></td>
+                      </tr>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -321,7 +287,6 @@
         </div>
       </div>
     </section>
-    <!-- End items -->
 
     <!-- Footer -->
     <footer>
@@ -375,74 +340,7 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script>
-      //Income
-      let myOrders = document.getElementById("orders").getContext("2d");
-      let Earning = new Chart(myOrders, {
-        type: "bar",
-        data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          datasets: [
-            {
-              label: "Orders",
-              backgroundColor: "rgba(3,88,106,0.3)",
-              borderColor: "rgba(3,88,106,0.7)",
-              pointBorderColor: "rgba(3,88,106,0.7)",
-              pointHoverBorderColor: "rgba(151,187,205,1)",
-              pointBackgroundColor: "rgba(3,88,106,0.7)",
-              pointHoverBackgroundColor: "#fff",
-              pointBoderWidth: 1,
-              data: [78, 45, 23, 67, 95, 87, 43, 54, 60, 13, 19, 34],
-            },
-          ],
-        },
-      });
-      let mySales = document.getElementById("sales").getContext("2d");
-      let sales = new Chart(mySales, {
-        type: "bar",
-        data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          datasets: [
-            {
-              label: "Sales",
-              backgroundColor: "rgba(38,185,154,0.31)",
-              borderColor: "rgba(38,185,154,0.7)",
-              pointBorderColor: "rgba(38,185,154,0.7)",
-              pointHoverBackgroundColor: "rgba(38,185,154,0.7)",
-              pointHoverBorderColor: "#fff",
-              borderWitdh: 1,
-              data: [45, 78, 56, 23, 67, 89, 95, 12, 45, 35, 54, 25],
-            },
-          ],
-        },
-      });
-    </script>
+
     <script src="scripts/home.js"></script>
     <script src="scripts/lg.js"></script>
 
