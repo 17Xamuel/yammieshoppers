@@ -120,6 +120,79 @@
         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         font-size: 17px;
       }
+      /*for pop up*/
+      /*Loader*/
+      #cartLoader {
+        border: 10px solid #f3f3f3;
+        border-top: 10px solid #ffbb00;
+        border-radius: 50%;
+        width: 75px;
+        height: 75px;
+        animation: spin 1.5s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      #pop-up-overlay.active {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 30;
+        transition: all 0.3s ease-in-out;
+      }
+      .close-pp {
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        font-size: 3.5rem;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-weight: 500;
+        background-color: #fff;
+      }
+      .popup {
+        background-color: white;
+        width: 35%;
+        height: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-radius: 5px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: 0.2s ease-in-out;
+        max-width: 90%;
+        z-index: 35;
+      }
+      .popup.pp-active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      .pp-content > a > button,
+      .pp-content > button {
+        cursor: pointer;
+        border: 0;
+        outline: 0;
+        background-color: #ffbb00;
+        padding: 10px 15px;
+        font-size: 20px;
+        margin: 20px 20px 20px 0px;
+        border-radius: 5px;
+        color: white;
+        box-shadow: 3px 3px 7px #c3c3c3;
+      }
+      /*for pop up*/
       @media screen and (max-width: 1024px) {
         .pf-ctr {
           width: 85vw;
@@ -142,6 +215,24 @@
     </style>
   </head>
   <body>
+    <!--add c popup-->
+    <div id="pop-up-overlay"></div>
+    <div class="popup">
+      <button class="close-pp" onclick="imageDialogClose()">&times;</button>
+      <div class="pp-content">
+        <h2 id="text-add">Log Out !!!!!!</h2>
+        <div id="text-add-m">
+          Thank You.
+          <br />
+          Click Check Cart to Continue OR continue Shopping
+        </div>
+        <button class="-b-pp">Check Cart</button>
+        <button class="-b-pp" onclick="imageDialogClose()">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+    <!--add c popup-->
     <div id="sidenav">
       <span class="-c-side" style="font-size: 35px">&times;</span>
       <ul class="s-n-1">
@@ -409,6 +500,12 @@
               <span> My Profile </span>
             </li>
           </a>
+          <a href="./pending-orders.html">
+            <li id="pf-pending">
+              <i class="fas fa-dolly-flatbed"></i>
+              <span>Pending Orders</span>
+            </li>
+          </a>
           <a href="./orders.html">
             <li id="pf-orders">
               <i class="fas fa-box"></i>
@@ -419,12 +516,6 @@
             <li id="pf-cart">
               <i class="fas fa-shopping-cart"></i>
               <span>My Cart</span>
-            </li>
-          </a>
-          <a href="./pending-orders.html">
-            <li id="pf-pending">
-              <i class="fas fa-dolly-flatbed"></i>
-              <span>Pending Orders</span>
             </li>
           </a>
           <a href="/">
@@ -445,7 +536,7 @@
               <span>Edit My Profile</span>
             </li>
           </a>
-          <button id="logout">LOG OUT</button>
+          <button id="logout" class="-lg">LOG OUT</button>
         </ul>
         <div class="right myorders -b-x">
           <h2 class="-pdf-h">My Profile</h2>
@@ -464,7 +555,9 @@
               <div class="pf-email pf-d" id="_2a"></div>
             </div>
             <div class="pf-address-dt">
-              <button class="pf-start-spg">START SHOPPING</button>
+              <a href="/">
+                <button class="pf-start-spg">START SHOPPING</button>
+              </a>
             </div>
           </div>
         </div>
@@ -610,7 +703,7 @@
               res.pickup_address_1 == null
                 ? "N/A"
                 : res.c_first_name + " " + res.c_last_name;
-            document.querySelector("#_cm").innerHTML =
+            document.querySelector("#cm").innerHTML =
               res.pickup_address_1 == null ? "" : res.c_phone || res.c_email;
             document.querySelector("#_cg").innerHTML = res.c_gender;
             document.querySelector("#_cn").innerHTML =
@@ -634,6 +727,7 @@
     <script>
       if (yammie) _up(`/api/user/account/address/${yammie}`);
     </script>
+    <script defer async src="../ym.min.js"></script>
     <!--scripts-->
   </body>
 </html>
