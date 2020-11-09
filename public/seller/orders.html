@@ -163,13 +163,16 @@
                 <table class="table table-dark table-hover text-center">
                   <thead>
                     <tr>
-                      <th>Order date</th>
-                      <th>Item Ordered</th>
+                      <th>Item</th>
+                      <th>Price</th>
+                      <th>Discount</th>
                       <th>Quantity</th>
+                      <th>Amount</th>
                       <th>Status</th>
                     </tr>
                   </thead>
                   <tbody id="body"></tbody>
+                  <tbody id="tbody"></tbody>
                 </table>
               </div>
             </div>
@@ -232,6 +235,56 @@
         localStorage.getItem("yammie/useLocalstorage/storage")
       );
       document.getElementById("User").innerHTML = seller.username;
+      let sellerId = seller.id;
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let results = JSON.parse(xhr.responseText);
+          let rows = "";
+          results.forEach((result) => {
+            rows += `
+            <tr>
+              <td>${result.order_product}</td>
+              <td>${result.order_price}</td>
+              <td>${result.order_discount}</td>
+              <td>${result.order_qty}</td>
+              <td>${result.order_amount}</td>
+              <td>
+                <span class="badge badge-danger w-75 py-2">Pending</span>
+              </td>
+            </tr>
+            `;
+          });
+          document.getElementById("body").innerHTML = rows;
+        }
+      };
+      xhr.open("GET", `/api/sellers/orders/${sellerId}`, true);
+      xhr.send();
+
+      const order = new XMLHttpRequest();
+      order.onreadystatechange = () => {
+        if (order.readyState == 4 && order.status == 200) {
+          let outcomes = JSON.parse(order.responseText);
+          let row = "";
+          outcomes.forEach((outcome) => {
+            row += `
+            <tr>
+              <td>${outcome.order_product}</td>
+              <td>${outcome.order_price}</td>
+              <td>${outcome.order_discount}</td>
+              <td>${outcome.order_qty}</td>
+              <td>${outcome.order_amount}</td>
+              <td>
+                <span class="badge badge-success w-75 py-2">Approved</span>
+              </td>
+            </tr>
+            `;
+          });
+          document.getElementById("tbody").innerHTML = row;
+        }
+      };
+      order.open("GET", `/api/sellers/doneOrder/${sellerId}`, true);
+      order.send();
     </script>
     <script src="scripts/lg.js"></script>
   </body>

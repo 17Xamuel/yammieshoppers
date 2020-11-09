@@ -61,7 +61,7 @@
                   height="50"
                   class="rounded-circle mr-3"
                 />
-                <a href="#" class="text-white">Hello Denis</a>
+                <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
@@ -175,7 +175,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-success">
               Stay Here
             </button>
-            <button type="button" data-dismiss="modal" class="btn btn-danger">
+            <button type="button" id="alg" class="btn btn-danger">
               Log Out
             </button>
           </div>
@@ -201,20 +201,20 @@
                     <table class="table my-2">
                       <tbody>
                         <tr>
-                          <td>Full Name</td>
-                          <td>Mulindwa Denis</td>
+                          <td>Name</td>
+                          <td id="am"></td>
                         </tr>
                         <tr>
                           <td>Email Address</td>
-                          <td>mulindwadenis@yahoo.com</td>
+                          <td id="ae"></td>
                         </tr>
                         <tr>
                           <td>Job Title</td>
-                          <td>Web Developer and Designer</td>
+                          <td id="at"></td>
                         </tr>
                         <tr>
                           <td>Mobile Number</td>
-                          <td>0709857117</td>
+                          <td id="aphn"></td>
                         </tr>
                       </tbody>
                     </table>
@@ -280,7 +280,7 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-
+    <script src="scripts/account.js"></script>
     <!-- End Scripts -->
   </body>
 </html>

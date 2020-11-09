@@ -57,7 +57,7 @@
                   height="50"
                   class="rounded-circle mr-3"
                 />
-                <a href="#" class="text-white">Hello Denis</a>
+                <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item current">
@@ -159,7 +159,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-success">
               Stay Here
             </button>
-            <button type="button" data-dismiss="modal" class="btn btn-danger">
+            <button type="button" id="alg" class="btn btn-danger">
               Log Out
             </button>
           </div>
@@ -561,6 +561,36 @@
     </section>
     <!-- End Activities/Quickpost -->
 
+    <!-- Seller Requests -->
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row">
+              <div class="col-xl-12">
+                <h4 class="text-center my-3">
+                  Seller Requests <span id="psn"></span>
+                </h4>
+                <table class="table table-dark table-hover text-center">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Location</th>
+                      <th>Phonenumber</th>
+                      <th colspan="2">Operations</th>
+                    </tr>
+                  </thead>
+                  <tbody id="sellerRequests"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Requests -->
+
     <!-- Footer -->
     <footer>
       <div class="container-fluid">
@@ -613,7 +643,70 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script src="./scripts/home.js"></script>
+    <script src="scripts/home.js"></script>
+    <script src="scripts/account.js"></script>
+    <script>
+      const srequest = new XMLHttpRequest();
+      srequest.onreadystatechange = () => {
+        if (srequest.readyState == 4 && srequest.status == 200) {
+          let pendingSellers = JSON.parse(srequest.responseText);
+          let row = "";
+          pendingSellers.forEach((pendingSeller) => {
+            row += ` <tr>
+                      <td>${pendingSeller.username}</td>
+                      <td>${pendingSeller.email}</td>
+                      <td>${pendingSeller.location}</td>
+                      <td>${pendingSeller.phonenumber}</td>
+                      <td>
+                        <button type="button" class="btn btn-primary btn-sm
+                        -c-seller" data-id="${pendingSeller.id}" id="confirmed">
+                          Confirm
+                        </button>
+                      </td>
+                      <td><button type="button" class="btn btn-danger btn-sm -d-seller" 
+                      data-id="${pendingSeller.id}" id="deleted">Delete</button></td>
+                    </tr>`;
+          });
+          document.getElementById("sellerRequests").innerHTML = row;
+          document.getElementById(
+            "psn"
+          ).textContent = `(${pendingSellers.length})`;
+          let deleteButtons = document.querySelectorAll(".-d-seller");
+          deleteButtons.forEach((deleteButton) => {
+            deleteButton.addEventListener("click", (e) => {
+              let deleteSeller = e.target.dataset.id;
+              srequest.onreadystatechange = () => {
+                if (srequest.readyState == 4 && srequest.status == 200) {
+                }
+              };
+              srequest.open(
+                "GET",
+                `/api/admin/deleteSeller/${deleteSeller}`,
+                true
+              );
+              srequest.send();
+            });
+          });
+          let confirmButtons = document.querySelectorAll(".-c-seller ");
+          confirmButtons.forEach((confirmButton) => {
+            confirmButton.addEventListener("click", (e) => {
+              let confirmSeller = e.target.dataset.id;
+              srequest.onreadystatechange = () => {
+                if (srequest.readyState == 4 && srequest.status == 200) {
+                  if (request.responseText == "Confirmed") {
+                    window.location.reload();
+                  }
+                }
+              };
+              srequest.open("GET", `/api/admin/confirmSeller/${confirmSeller}`);
+              srequest.send();
+            });
+          });
+        }
+      };
+      srequest.open("GET", "/api/admin/sellerRequests", true);
+      srequest.send();
+    </script>
     <!-- End Scripts -->
   </body>
 </html>

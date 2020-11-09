@@ -12,6 +12,11 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     />
     <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/home.css" />
+    <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
@@ -56,14 +61,16 @@
 
   <body>
     <div class="login-form">
-      <form action="#" method="post">
+      <form id="adminForm">
         <h2 class="text-center">Log in</h2>
         <div class="form-group">
           <input
             type="text"
             class="form-control"
             placeholder="Email"
+            autocomplete="off"
             required="required"
+            id="email"
           />
         </div>
         <div class="form-group">
@@ -71,7 +78,9 @@
             type="password"
             class="form-control"
             placeholder="Password"
+            autocomplete="off"
             required="required"
+            id="pwd"
           />
         </div>
         <div class="form-group">
@@ -89,7 +98,36 @@
           >
           <a href="#" class="float-right">Forgot Password?</a>
         </div>
+        <h5 class="text-center text-danger" id="message"></h5>
       </form>
     </div>
+    <script>
+      let adminForm = document.getElementById("adminForm");
+      adminForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let admin = {};
+        admin.email = document.getElementById("email").value;
+        admin.password = document.getElementById("pwd").value;
+        let adminString = JSON.stringify(admin);
+
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            localStorage.setItem("admin/yammie", xhr.responseText);
+            window.location.assign("http://localhost:8000/admin/home.html");
+          } else if (xhr.responseText == "User not Found") {
+            document.getElementById("message").innerHTML = xhr.responseText;
+          }
+        };
+        xhr.open("POST", "/api/admin/login", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(adminString);
+      });
+    </script>
   </body>
 </html>
+<!-- SELECT t1.col, t3.col FROM table1 join table2 ON table1.primarykey = table2.foreignkey
+                                  join table3 ON table2.primarykey = table3.foreignkey
+
+
+Read more: https://javarevisited.blogspot.com/2012/11/how-to-join-three-tables-in-sql-query-mysql-sqlserver.html#ixzz6cpbVvGuw -->

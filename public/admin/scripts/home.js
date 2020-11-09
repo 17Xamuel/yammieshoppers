@@ -96,4 +96,3 @@ if (hours == 0) {
 }
 document.getElementById("showTime").innerHTML =
   hours + ":" + minutes + " " + suffix;
-
