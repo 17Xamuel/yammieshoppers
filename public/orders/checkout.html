@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../resources/cartlink.png" />
     <link rel="stylesheet" href="../styles/footer2.css" />
-    <link rel="stylesheet" href="../styles/items.css" />
     <link rel="stylesheet" href="../styles/header.css" />
     <link rel="stylesheet" href="../styles/main.css" />
-    <link rel="stylesheet" href="../styles/products.css" />
     <link rel="stylesheet" href="../font-awesome/css/all.css" />
     <title>Yammie | checkout - complete your order</title>
 
@@ -243,34 +241,43 @@
     </style>
     <script>
       if (document.referrer == "") {
-        alert("Access Denied");
-        self.location = "../index.html";
+        self.location = "/";
       }
     </script>
   </head>
   <body>
-    <div class="search-nav">
-      <div class="logo">
-        <div href="../home/index.html">
+    <div class="nav">
+      <div class="search-nav">
+        <div class="logo">
           <img
             src="../resources/yammie.png"
-            alt="YUMMY"
+            alt="YAMMIE"
             width="200"
-            height="100%"
+            height="95%"
+            id="logo"
           />
         </div>
-      </div>
-      <div class="order-f">
-        <b>Process Your Order: </b>
-      </div>
-      <div class="cart-login">
-        <div class="login" id="login">
-          <img src="../resources/person.svg" alt="" />
-          <span class="login-text">Help</span>
+        <div class="order-f">
+          <b>Process Your Order: </b>
         </div>
-        <div class="cart">
-          <img src="../resources/shopping-cart.svg" alt="" />
-          <span class="cart-text">Call</span>
+        <div class="-account -user focus">
+          <a
+            href="../404.html"
+            style="margin-right: 20px"
+            onmouseover="this.style.color = '#ffbb00'"
+            onmouseout="this.style.color='#000'"
+          >
+            <i class="far fa-question-circle"></i>
+            Help Center
+          </a>
+          <a
+            href="../404.html"
+            onmouseover="this.style.color = '#ffbb00'"
+            onmouseout="this.style.color='#000'"
+          >
+            <i class="fas fa-phone-volume"></i>
+            Call Us
+          </a>
         </div>
       </div>
     </div>
@@ -570,15 +577,6 @@
           order.append("order", orderContent);
           order.append("amount", document.querySelector("#total").textContent);
           order.append("dm", orderInfo.dm);
-          function rs(l) {
-            var rc = "YAMMIESHOPPERS";
-            var r = "";
-            for (var i = 0; i < l; i++) {
-              r += rc.charAt(Math.floor(Math.random() * rc.length));
-            }
-            return "YAMMIE" + r + "S";
-          }
-          order.append("n", rs(5));
           order.forEach((key) => {
             multiOrder.push(key);
           });
@@ -600,6 +598,11 @@
           request.send(JSON.stringify(multiOrder));
         }
       });
+      if (screen.availWidth <= 768) {
+        document.querySelector("#logo").src = "../resources/cartlink.png";
+        document.querySelector("#logo").style.width = "60px";
+        document.querySelector("#logo").style.height = "30px";
+      }
     </script>
     <!--scripts-->
   </body>

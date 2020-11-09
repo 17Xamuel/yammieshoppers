@@ -8,11 +8,15 @@
     <link rel="stylesheet" href="/styles/header.css" />
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/font-awesome/css/all.css" />
-    <title>Yammie | Your online Store</title>
+    <link rel="stylesheet" href="../styles/products.css" />
+    <title>Yammie | online Store</title>
     <style>
-      .pf-ctr {
+      .pf-m-ctr {
         width: 75vw;
         margin: 30px auto;
+      }
+      .pf-ctr {
+        width: 100%;
         display: flex;
         min-height: fit-content;
       }
@@ -127,9 +131,11 @@
         font-size: 17px;
       }
       @media screen and (max-width: 1024px) {
-        .pf-ctr {
-          width: 85vw;
+        .pf-m-ctr {
+          width: 95vw;
           margin: 30px auto;
+        }
+        .pf-ctr {
           display: flex;
           height: fit-content;
         }
@@ -138,14 +144,32 @@
         }
       }
       @media screen and (max-width: 768px) {
-        .pf-ctr {
+        .pf-m-ctr {
           width: 95vw;
           margin: 30px auto;
+        }
+        .pf-ctr {
           display: flex;
           height: fit-content;
         }
       }
     </style>
+    <script>
+      if (
+        !localStorage.getItem(
+          "https://yammieshoppers.com/useLocalStorage/Storage"
+        )
+      ) {
+        window.location.replace("/");
+      }
+      document.addEventListener("DOMContentLoaded", (e) => {
+        sch(document.querySelector("#-is"), document.querySelector(".-sh"));
+        cnd(
+          localStorage.getItem("cartNumber"),
+          document.querySelector("#cartNumberItems")
+        );
+      });
+    </script>
   </head>
   <body>
     <div id="sidenav">
@@ -153,62 +177,62 @@
       <ul class="s-n-1">
         <h3 class="sn-categories">Categories</h3>
         <li class="n-l-itm">
-          <a href="./easy-market.html">
+          <a href="../easy-market.html">
             <i class="fas fa-shopping-basket ctg-icon"></i>
             EasyMarket with Yammie
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="quick-foods.html">
+          <a href="../quick-foods.html">
             <i class="fas fa-pizza-slice ctg-icon"></i>
             Fast Foods &amp; Drinks
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="phones.html">
+          <a href="../phones.html">
             <i class="fas fa-headphones-alt ctg-icon"></i>
             Phones &amp; Accessories
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="./electronics.html">
+          <a href="../electronics.html">
             <i class="fas fa-charging-station ctg-icon"></i>
             Electronics
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="./computing.html">
+          <a href="../computing.html">
             <i class="fas fa-desktop ctg-icon"></i>
             Computing &amp; Accessories
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="./stationery.html">
+          <a href="../stationery.html">
             <i class="fas fa-paperclip ctg-icon"></i>
             Stationery
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="./clothing.html">
+          <a href="../clothing.html">
             <i class="fas fa-tshirt ctg-icon"></i>
             Clothes &amp; Shoes
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="./kitchen.html">
+          <a href="../kitchen.html">
             <i class="fas fa-utensils ctg-icon"></i>
             Kitchen Staff &amp; Utensils
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="./kids.html">
+          <a href="../kids.html">
             <i class="fas fa-child ctg-icon"></i>
             Kid's Section
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="./diy.html">
-            <img src="./resources/clean-hands.png" alt="" />
+          <a href="../diy.html">
+            <img src="../resources/clean-hands.png" alt="" />
             Cleaning, Healthy &amp; Beauty
           </a>
         </li>
@@ -223,53 +247,57 @@
         <h3>My Account</h3>
         <li>
           <i class="fas fa-user"></i>
-          <span>My Profile</span>
+          <span><a href="./profile.html">My Profile</a></span>
         </li>
         <li>
           <i class="fas fa-box"></i>
-          <span>My Orders</span>
+          <span><a href="./orders.html">My Orders</a></span>
         </li>
 
         <li>
           <i class="fas fa-dolly-flatbed"></i>
-          <span>Pending Orders</span>
+          <span><a href="./pending-orders.html">Pending Orders</a></span>
         </li>
         <li>
           <i class="fas fa-thumbs-up"></i>
-          <span><a href="#">Liked Items</a></span>
+          <span><a href="/">Liked Items</a></span>
         </li>
         <li>
           <i class="fas fa-address-card"></i>
-          <span>My Address</span>
+          <span><a href="./address.html"> My Address</a></span>
         </li>
         <li>
           <i class="fas fa-user-edit"></i>
-          <span>Edit My Profile</span>
+          <span><a href="./edit.html">Edit My Profile</a></span>
         </li>
-        <button class="s-n-logout">LOG OUT</button>
+        <button class="s-n-logout -lg-o">LOG IN/OUT</button>
       </ul>
       <ul class="s-n-2">
         <h3 class="s-n-how">Products &amp; Groceries</h3>
-        <li><a href="#">Special Order</a></li>
-        <li><a href="#">Delivery Time</a></li>
-        <li><a href="#">Payment Methods</a></li>
-        <li><a href="#">Request An Item</a></li>
-        <li><a href="#">Report an Item</a></li>
-        <li><a href="#">Return Policy</a></li>
+        <li><a href="../404.html">Special Order</a></li>
+        <li><a href="../404.html">Delivery Time</a></li>
+        <li><a href="../404.html">Payment Methods</a></li>
+        <li><a href="../404.html">Request An Item</a></li>
+        <li><a href="../404.html">Report an Item</a></li>
+        <li><a href="../404.html">Return Policy</a></li>
       </ul>
       <ul class="s-n-3">
         <h3 class="s-n-how">Explore Yammie</h3>
-        <li><a href="#">About Yammie</a></li>
-        <li><a href="#">How to Order</a></li>
-        <li><a href="#">Our Partners</a></li>
-        <li><a href="#">Terms &amp; Conditions For Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="../404.html">About Yammie</a></li>
+        <li><a href="../404.html">How to Order</a></li>
+        <li><a href="../404.html">Our Partners</a></li>
+        <li><a href="../404.html">Terms &amp; Conditions For Use</a></li>
+        <li><a href="../404.html">Privacy Policy</a></li>
       </ul>
       <div class="ftr-down">
-        <div class="ftr-official">
+        <div class="ftr-official" style="color: black !important">
           &copy; 2020 Yammie. All rights reserved
           <div class="social-icons">
-            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
+            <a
+              href="https://www.facebook.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
             <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
             <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
             <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
@@ -286,9 +314,9 @@
             <div class="line2"></div>
             <div class="line3"></div>
           </div>
-          <a href="./">
+          <a href="/">
             <img
-              src="./resources/yammie.png"
+              src="../resources/yammie.png"
               alt="YAMMIE"
               width="200"
               height="95%"
@@ -300,112 +328,130 @@
           <form
             id="f-search"
             autocomplete="off"
-            action="./catalog.html"
+            action="../catalog.html"
             method="GET"
           >
             <input
               type="text"
               name="q"
               placeholder="Search Groceries...."
-              class="navsearch"
+              class="-ns"
               id="v-search"
             />
-            <button type="submit" id="search-button">
+            <button type="submit" class="search-button">
               <i class="fas fa-search"></i>
             </button>
           </form>
         </div>
-        <div class="-help -user">
+        <div class="-help -user -dp">
           <button class="-dropdown -hp">
             <i class="far fa-question-circle"></i>
             <span class="-c-text">Help</span>
             <i class="fas fa-chevron-down chev"></i>
           </button>
           <ul class="-help-list -hlp">
-            <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
+            <a href="../404.html">
+              <li class="-help">
+                <i class="fas fa-clock"></i>
                 How to Order
-              </a>
-            </li>
-            <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
+              </li>
+            </a>
+            <a href="../404.html">
+              <li class="-help">
+                <i class="fas fa-truck-loading"></i>
                 Delivery Times
-              </a>
-            </li>
-            <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
-                Request an Item
-              </a>
-            </li>
-            <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
+              </li>
+            </a>
+            <a href="../404.html">
+              <li class="-help">
+                <i class="far fa-question-circle"></i>
                 FAQs
-              </a>
-            </li>
+              </li>
+            </a>
             <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
-                Contact Us
-              </a>
+              <button class="-a-btn" style="width: 100%">
+                <i class="fas fa-sign-out-alt"></i>
+                Help Center
+              </button>
             </li>
           </ul>
         </div>
-        <div class="-account -user">
+        <div class="-account -user focus">
           <button class="-dropdown -acc">
             <i class="far fa-user"></i>
             <span class="-c-text -acc-name">My Account</span>
             <i class="fas fa-chevron-down chev-acc"></i>
           </button>
           <ul class="-help-list -acc-l">
-            <li class="-help">
-              <a href="">
+            <a href="./profile.html">
+              <li class="-help">
                 <i class="far fa-user"></i>
                 My Profile
-              </a>
-            </li>
-            <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
+              </li>
+            </a>
+            <a href="../cart.html">
+              <li class="-help">
+                <i class="fas fa-shopping-cart"></i>
                 My Cart
-              </a>
-            </li>
-            <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
+              </li>
+            </a>
+            <a href="../orders.html">
+              <li class="-help">
+                <i class="fas fa-gift"></i>
                 My Orders
-              </a>
-            </li>
+              </li>
+            </a>
+            <a href="../edit.html">
+              <li class="-help">
+                <i class="fas fa-user-edit"></i>
+                Edit Profile
+              </li>
+            </a>
             <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
-                My Profile
-              </a>
-            </li>
-            <li class="-help">
-              <a href="">
-                <i class="far fa-user"></i>
+              <button class="-a-btn -lg" style="width: 100%">
+                <i class="fas fa-sign-out-alt"></i>
                 Log Out
-              </a>
+              </button>
             </li>
           </ul>
         </div>
         <div class="-user -user-cart">
           <!--for small screens-->
-          <div class="-icon-sm">
+          <div class="-icon-sm" id="-is">
             <i class="fas fa-search"></i>
           </div>
-          <a href="./cart.html" style="position: relative">
-            <i class="fas fa-cart-plus" style="font-size: 24px"></i>
+          <a href="../cart.html" style="position: relative">
+            <img
+              src="../resources/shopping-cart.svg"
+              alt=""
+              width="25px"
+              height="25px"
+            />
             <span class="cart-number" id="cartNumberItems">0</span>
+            <span class="cart-label" style="padding-bottom: 10px"> Cart </span>
           </a>
         </div>
       </div>
     </div>
-
+    <div class="-sh">
+      <form
+        autocomplete="off"
+        action="../catalog.html"
+        method="GET"
+        class=""
+        id="-sm-s"
+      >
+        <input
+          type="text"
+          name="q"
+          placeholder="Search Groceries...."
+          class="-ns"
+        />
+        <button type="submit" class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
     <div class="pf-m-ctr">
       <div class="pf-ctr">
         <ul class="left -b-x">
@@ -454,7 +500,7 @@
           <button id="logout">LOG OUT</button>
         </ul>
         <div class="right myorders -b-x">
-          <h2 class="-pdf-h">My Orders</h2>
+          <h2 class="-pdf-h">Pending Orders</h2>
           <div class="pf-details-ctr">
             <div class="_blank-orders">
               <img
@@ -466,6 +512,146 @@
               <h4>You haven't Made Any Order</h4>
               <a href="/"><button class="btn">Start Shopping</button></a>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="-ct">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all -ch-all-w">
+          <span>Recently Viewed</span>
+          <a href="../catalog.html?q=recently_veiwed">
+            <span>
+              See All
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
+        </div>
+        <div class="-scroll -ct -ct-recently_viewed">
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="-ct">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all">
+          <span>Recomended For You</span>
+          <a href="../catalog.html?q=recommended_for_you">
+            <span>
+              See All
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
+        </div>
+        <div class="-scroll -ct -ct-rec">
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="../resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
           </div>
         </div>
       </div>
@@ -591,38 +777,11 @@
         </div>
       </div>
     </footer>
-
     <!--scripts-->
     <script>
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
-      function _up(url) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
-        xhr.send();
-        xhr.onreadystatechange = () => {
-          if (xhr.status == 200 && xhr.readyState == 4) {
-            let [res] = JSON.parse(xhr.responseText);
-            document.querySelector("#_2a").innerHTML =
-              res.pickup_address_1 || "";
-            document.querySelector("#cn").innerHTML =
-              res.pickup_address_1 == null
-                ? "N/A"
-                : res.c_first_name + " " + res.c_last_name;
-            document.querySelector("#_cm").innerHTML =
-              res.pickup_address_1 == null ? "" : res.c_phone || res.c_email;
-            document.querySelector("#_cg").innerHTML = res.c_gender;
-            document.querySelector("#_cn").innerHTML =
-              res.c_first_name + " " + res.c_last_name;
-            document.querySelector("#_ce").innerHTML = res.c_email;
-            document.querySelector("#_cm").innerHTML = res.c_phone;
-            document.getElementsByTagName("title")[0].innerHTML = `${
-              res.c_first_name + " " + res.c_last_name
-            } &commat; Yammie | online Store`;
-          }
-        };
-      }
       cartNumbersDisplay();
       function cartNumbersDisplay() {
         let cartNumber = parseInt(localStorage.getItem("cartNumber"));
@@ -630,9 +789,159 @@
           ? cartNumber
           : 0;
       }
+      function _uo(url) {}
+
+      scl(document.querySelectorAll(".-sc-n"));
+      scr(document.querySelectorAll(".-sc-b"));
+
+      ctg(document.querySelector(".-ct-rec"), "/api/user/ct/profile/rec");
+      ctg(
+        document.querySelector(".-ct-recently_viewed"),
+        "/api/user/ct/profile/recently_viewed"
+      );
+      function scr(b) {
+        b.forEach((sc) => {
+          sc.addEventListener("click", (e) => {
+            e.target.parentNode.querySelector(".-scroll").scrollBy({
+              top: 0,
+              left: -250,
+              behavior: "smooth",
+            });
+          });
+        });
+      }
+      function scl(b) {
+        b.forEach((sc) => {
+          sc.addEventListener("click", (e) => {
+            e.target.parentNode.querySelector(".-scroll").scrollBy({
+              top: 0,
+              left: 250,
+              behavior: "smooth",
+            });
+          });
+        });
+      }
+      function ctg(c, url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let _c = JSON.parse(xhr.responseText),
+              group = "";
+            _c.forEach((item) => {
+              group += `
+            <div class="item -ct-item">
+              <img
+                src="../${JSON.parse(item.images)[0]}"
+                alt="${item.name}"
+                width="180px"
+                height="150px"
+              />
+              <div class="-i-dtl">
+                <div class="it-nm">${item.product} - ${item.description}</div>
+                <div class="it-pr pr price-current">${
+                  "UGX " +
+                  (item.discount
+                    ? (item.price * (100 - item.discount)) / 100
+                    : item.price)
+                }</div>
+                  <div class="pre-it-pr pr price-prev">${
+                    item.discount ? "UGX " + item.price : ""
+                  }</div>
+              </div>
+            </div>
+            `;
+            });
+            c.innerHTML = group;
+          }
+        };
+        xhr.open("GET", url, true);
+        xhr.send();
+      }
     </script>
     <script>
-      // if (yammie) _up(`/api/user/account/address/${yammie}`);
+      let yammieUsr = "";
+      if (yammie) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            [yammieUsr] = JSON.parse(xhr.responseText);
+            let account = document.querySelector(".-acc-name");
+            account.innerHTML = "Hi, " + yammieUsr.c_first_name;
+          }
+        };
+        xhr.open("GET", `/api/user/customer/${yammie}`, true);
+        xhr.send();
+      }
+      const sch = (i, sch) => {
+        i.addEventListener("click", () => {
+          sch.classList.toggle("sch-s");
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
+        });
+      };
+      function cnd(i, c) {
+        i = parseInt(i);
+        c.textContent = i ? i : 0;
+        c.style.display = c.textContent == "0" ? "none" : "block";
+      }
+
+      const closeSide = document.querySelector(".-c-side");
+      const menu = document.querySelector(".menu");
+      const sidenav = document.querySelector("#sidenav");
+      menu.addEventListener("click", () => {
+        sidenav.classList.add("active");
+      });
+      closeSide.addEventListener("click", () => {
+        sidenav.classList.remove("active");
+      });
+      if (screen.availWidth <= 768) {
+        document.querySelector("#logo").src = "../resources/cartlink.png";
+        document.querySelector("#logo").style.width = "60px";
+        document.querySelector("#logo").style.height = "30px";
+      }
+      let acc = document.querySelector(".-acc");
+      let hp = document.querySelector(".-hp");
+      //check toggle a class
+      acc.addEventListener("focus", (e) => {
+        if (!yammie) {
+          window.location.assign("./account/login.html");
+        } else {
+          e.target.style.color = "#ffbb00";
+          document
+            .querySelector(".chev-acc")
+            .classList.replace("fa-chevron-down", "fa-chevron-up");
+          document.querySelector(".-acc-l").style.display = "flex";
+        }
+      });
+
+      acc.addEventListener("blur", (e) => {
+        setTimeout(() => {
+          e.target.style.color = "#000";
+          document
+            .querySelector(".chev-acc")
+            .classList.replace("fa-chevron-up", "fa-chevron-down");
+          document.querySelector(".-acc-l").style.display = "none";
+        }, 200);
+      });
+      hp.addEventListener("focus", (e) => {
+        e.target.style.color = "#ffbb00";
+        document
+          .querySelector(".chev")
+          .classList.replace("fa-chevron-down", "fa-chevron-up");
+        document.querySelector(".-hlp").style.display = "flex";
+      });
+      hp.addEventListener("blur", (e) => {
+        setTimeout(() => {
+          e.target.style.color = "#000";
+          document
+            .querySelector(".chev")
+            .classList.replace("fa-chevron-up", "fa-chevron-down");
+          document.querySelector(".-hlp").style.display = "none";
+        }, 200);
+      });
     </script>
     <!--scripts-->
   </body>

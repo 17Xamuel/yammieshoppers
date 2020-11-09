@@ -24,10 +24,11 @@
     <style>
       .back-to-top {
         position: absolute;
-        height: 40px;
-        width: 40px;
+        height: 35px;
+        width: 35px;
         background-color: #ffbb00;
         border-radius: 50%;
+        box-shadow: 0px 0px #adadad;
         right: -10%;
         bottom: 1%;
         z-index: 35;
@@ -36,6 +37,7 @@
         font-size: 20px;
         color: white;
         opacity: 0;
+        cursor: pointer;
       }
       /* Slideshow container */
       .slideshow-container {
@@ -433,30 +435,34 @@
           <i class="fas fa-user-edit"></i>
           <span><a href="./account/edit.html">Edit My Profile</a></span>
         </li>
-        <button class="s-n-logout">LOG OUT</button>
+        <button class="s-n-logout -lg-o">LOG IN/OUT</button>
       </ul>
       <ul class="s-n-2">
         <h3 class="s-n-how">Products &amp; Groceries</h3>
-        <li><a href="#">Special Order</a></li>
-        <li><a href="#">Delivery Time</a></li>
-        <li><a href="#">Payment Methods</a></li>
-        <li><a href="#">Request An Item</a></li>
-        <li><a href="#">Report an Item</a></li>
-        <li><a href="#">Return Policy</a></li>
+        <li><a href="./404.html">Special Order</a></li>
+        <li><a href="./404.html">Delivery Time</a></li>
+        <li><a href="./404.html">Payment Methods</a></li>
+        <li><a href="./404.html">Request An Item</a></li>
+        <li><a href="./404.html">Report an Item</a></li>
+        <li><a href="./404.html">Return Policy</a></li>
       </ul>
       <ul class="s-n-3">
         <h3 class="s-n-how">Explore Yammie</h3>
-        <li><a href="#">About Yammie</a></li>
-        <li><a href="#">How to Order</a></li>
-        <li><a href="#">Our Partners</a></li>
-        <li><a href="#">Terms &amp; Conditions For Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="./404.html">About Yammie</a></li>
+        <li><a href="./404.html">How to Order</a></li>
+        <li><a href="./404.html">Our Partners</a></li>
+        <li><a href="./404.html">Terms &amp; Conditions For Use</a></li>
+        <li><a href="./404.html">Privacy Policy</a></li>
       </ul>
       <div class="ftr-down">
         <div class="ftr-official" style="color: black !important">
           &copy; 2020 Yammie. All rights reserved
           <div class="social-icons">
-            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
+            <a
+              href="https://www.facebook.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
             <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
             <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
             <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
@@ -498,7 +504,7 @@
               class="-ns"
               id="v-search"
             />
-            <button type="submit" id="search-button">
+            <button type="submit" class="search-button">
               <i class="fas fa-search"></i>
             </button>
           </form>
@@ -510,19 +516,19 @@
             <i class="fas fa-chevron-down chev"></i>
           </button>
           <ul class="-help-list -hlp">
-            <a href="">
+            <a href="./404.html">
               <li class="-help">
                 <i class="fas fa-clock"></i>
                 How to Order
               </li>
             </a>
-            <a href="">
+            <a href="./404.html">
               <li class="-help">
                 <i class="fas fa-truck-loading"></i>
                 Delivery Times
               </li>
             </a>
-            <a href="">
+            <a href="./404.html">
               <li class="-help">
                 <i class="far fa-question-circle"></i>
                 FAQs
@@ -531,7 +537,7 @@
             <li class="-help">
               <button class="-a-btn" style="width: 100%">
                 <i class="fas fa-sign-out-alt"></i>
-                Log Out
+                Help Center
               </button>
             </li>
           </ul>
@@ -568,7 +574,7 @@
               </li>
             </a>
             <li class="-help">
-              <button class="-a-btn" style="width: 100%">
+              <button class="-a-btn -lg" style="width: 100%">
                 <i class="fas fa-sign-out-alt"></i>
                 Log Out
               </button>
@@ -607,7 +613,7 @@
           placeholder="Search Groceries...."
           class="-ns"
         />
-        <button type="submit" id="search-button">
+        <button type="submit" class="search-button">
           <i class="fas fa-search"></i>
         </button>
       </form>
@@ -989,10 +995,12 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <span>
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
+          <a href="./catalog.html?q=recently_viewed">
+            <span>
+              Check
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
         </div>
         <div class="-scroll -ct -ct-rv">
           <div class="item -ct-item -lazy">
@@ -1298,14 +1306,14 @@
         </a>
       </div>
       <div class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
+        <i class="fas fa-chevron-up"></i>
       </div>
     </div>
     <footer class="footer">
       <div class="ftr-sm-s">
-        <span> Terms &amp; Conditions </span>
-        <span> Help Center </span>
-        <span> Contact Us </span>
+        <span><a href="./404.html"> Terms &amp; Conditions </a></span>
+        <span><a href="./404.html"> Help Center</a></span>
+        <span><a href="./404.html"> Contact Us</a></span>
       </div>
       <div class="ftr-up">
         <div class="ftr-u-first">
@@ -1349,12 +1357,12 @@
         <div class="ftr-u-second">
           <h4 class="footer-h4">Explore Yammie</h4>
           <ul class="footer-list">
-            <li><a href="#">About Yammie</a></li>
-            <li><a href="#">How to Order</a></li>
-            <li><a href="#">Help &amp; FAQs</a></li>
-            <li><a href="#">Our Partners</a></li>
-            <li><a href="#">Terms &amp; Conditions For Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="./404.html">About Yammie</a></li>
+            <li><a href="./404.html">How to Order</a></li>
+            <li><a href="./404.html">Help &amp; FAQs</a></li>
+            <li><a href="./404.html">Our Partners</a></li>
+            <li><a href="./404.html">Terms &amp; Conditions For Use</a></li>
+            <li><a href="./404.html">Privacy Policy</a></li>
           </ul>
         </div>
         <div class="ftr-u-third">
@@ -1373,7 +1381,7 @@
               </a>
             </li>
             <li class="second-list">
-              <a href="#">
+              <a href="./404.html">
                 <i class="fas fa-map-marker-alt"></i>
                 Lira Campus
               </a>
@@ -1400,12 +1408,12 @@
         <div class="ftr-u-fourth">
           <h4 class="footer-h4">Products &amp; Groceries</h4>
           <ul class="footer-list">
-            <li><a href="#">Special Order</a></li>
-            <li><a href="#">Delivery Time</a></li>
-            <li><a href="#">Payment Methods</a></li>
-            <li><a href="#">Request An Item</a></li>
-            <li><a href="#">Report an Item</a></li>
-            <li><a href="#">Return Policy</a></li>
+            <li><a href="./404.html">Special Order</a></li>
+            <li><a href="./404.html">Delivery Time</a></li>
+            <li><a href="./404.html">Payment Methods</a></li>
+            <li><a href="./404.html">Request An Item</a></li>
+            <li><a href="./404.html">Report an Item</a></li>
+            <li><a href="./404.html">Return Policy</a></li>
           </ul>
         </div>
       </div>
@@ -1433,11 +1441,15 @@
       let hp = document.querySelector(".-hp");
       //check toggle a class
       acc.addEventListener("focus", (e) => {
-        e.target.style.color = "#ffbb00";
-        document
-          .querySelector(".chev-acc")
-          .classList.replace("fa-chevron-down", "fa-chevron-up");
-        document.querySelector(".-acc-l").style.display = "flex";
+        if (!yammie) {
+          window.location.assign("./account/login.html");
+        } else {
+          e.target.style.color = "#ffbb00";
+          document
+            .querySelector(".chev-acc")
+            .classList.replace("fa-chevron-down", "fa-chevron-up");
+          document.querySelector(".-acc-l").style.display = "flex";
+        }
       });
 
       acc.addEventListener("blur", (e) => {
@@ -1526,7 +1538,7 @@
     <script>
       let sliderCtr = document.querySelector(".slideshow-container");
       if (screen.availWidth <= 1024) {
-        console.log("Width: " + screen.availWidth);
+        //cl ws here
       } else {
         let slideIndex = 1;
         showSlides(slideIndex);
@@ -1701,7 +1713,7 @@
       // // PLATFORM
       // console.log(result.platform.type);
     </script>
-
+    <script defer async src="../ym.min.js"></script>
     <!--scripts-->
   </body>
 </html>

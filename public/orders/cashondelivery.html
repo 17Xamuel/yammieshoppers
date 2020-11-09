@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../resources/cartlink.png" />
     <link rel="stylesheet" href="../styles/footer2.css" />
-    <link rel="stylesheet" href="../styles/items.css" />
     <link rel="stylesheet" href="../styles/header.css" />
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="stylesheet" href="../styles/products.css" />
@@ -69,33 +68,56 @@
         align-items: center;
         justify-content: center;
       }
+      @media screen and (max-width: 500px) {
+        .logo {
+          display: none;
+        }
+        .search-nav {
+          padding: 0px 20px;
+        }
+        #thks_img {
+          height: 100%;
+          width: 100%;
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="search-nav">
-      <div class="logo">
-        <img
-          src="../resources/yammie.png"
-          alt="YAMMIE"
-          width="200"
-          height="100%"
-        />
-      </div>
-      <div class="order-f">
-        <h3>Yammie, Cash on Delivery:</h3>
-      </div>
-      <div class="cart-login">
-        <div class="login" id="login">
-          <img src="../resources/person.svg" alt="" />
-          <span class="login-text">Help</span>
+    <div class="nav">
+      <div class="search-nav">
+        <div class="logo">
+          <img
+            src="../resources/yammie.png"
+            alt="YAMMIE"
+            width="200"
+            height="95%"
+            id="logo"
+          />
         </div>
-        <div class="cart">
-          <img src="../resources/shopping-cart.svg" alt="" />
-          <span class="cart-text">Call</span>
+        <div class="order-f">
+          <b>YAMMIE <br />PAY ON DELIVERY </b>
+        </div>
+        <div class="-account -user focus">
+          <a
+            href="../404.html"
+            style="margin-right: 20px"
+            onmouseover="this.style.color = '#ffbb00'"
+            onmouseout="this.style.color='#000'"
+          >
+            <i class="far fa-question-circle"></i>
+            Help Center
+          </a>
+          <a
+            href="../404.html"
+            onmouseover="this.style.color = '#ffbb00'"
+            onmouseout="this.style.color='#000'"
+          >
+            <i class="fas fa-phone-volume"></i>
+            Call Us
+          </a>
         </div>
       </div>
     </div>
-
     <div class="-f-order -m">
       <div class="f-order-ctr">
         <div class="-f-order-l">
@@ -105,6 +127,7 @@
               alt=""
               width="30%"
               height="30%"
+              id="thks_img"
             />
           </div>
           <div class="">

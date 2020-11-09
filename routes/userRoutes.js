@@ -120,6 +120,21 @@ router.get("/customer/cart/amount/:id", (req, res) => {
 });
 
 // new order
+function rs(l) {
+  var rc = "abcdefgh14";
+  var r = "";
+  for (var i = 0; i < l; i++) {
+    r += rc.charAt(Math.floor(Math.random() * rc.length));
+  }
+  let date = new Date();
+  return (
+    (date.getDate() < 10
+      ? "0" + date.getDate().toString()
+      : date.getDate.toString()) +
+    (date.getMonth() + 1).toString() +
+    r
+  );
+}
 router.post("/customer/order", (req, res) => {
   const [
     order_payment_method,
@@ -127,7 +142,6 @@ router.post("/customer/order", (req, res) => {
     order_items,
     order_amount,
     order_delivery_method,
-    order_number,
   ] = req.body;
   conn.query(
     "INSERT INTO pending_orders SET ? ",
@@ -138,7 +152,7 @@ router.post("/customer/order", (req, res) => {
       order_amount,
       order_payment_method,
       c_id,
-      order_number,
+      order_number: rs(5),
     },
     (err, result) => {
       if (err) throw err;
