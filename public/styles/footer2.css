@@ -6,6 +6,10 @@
   padding: 25px 5px 40px 5px;
   font-size: 15px;
   opacity: 0.9;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 .ftr-app {
   margin-top: 10px;

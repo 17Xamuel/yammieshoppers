@@ -19,7 +19,8 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bowser@2.9.0/es5.js"></script>
     <title>
-      Yammie | Online Market For Groceries, Electric Appliances, and Other items
+      Yammie &#x2223; Online Market For Groceries, Electric Appliances, and
+      Other items
     </title>
     <style>
       .back-to-top {
@@ -225,6 +226,7 @@
       }
 
       .down-container {
+        position: relative;
         background-color: #fff;
         list-style-type: none;
         border-radius: 5px;
@@ -236,7 +238,45 @@
         height: 50%;
         box-shadow: 0px 0px 10px #cccbcb;
       }
-
+      ._gift-ctr {
+        position: relative;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      @keyframes letters {
+        0% {
+          letter-spacing: normal;
+        }
+        20% {
+          letter-spacing: 0.25px;
+        }
+        40% {
+          letter-spacing: 0.5px;
+        }
+        60% {
+          letter-spacing: 0.75px;
+        }
+        80% {
+          letter-spacing: 1px;
+        }
+        100% {
+          letter-spacing: 1.25px;
+        }
+      }
+      ._day-gift {
+        font-size: 17px;
+        margin-top: 10px;
+        margin-bottom: 2px;
+        animation: letters 1.5s 2s infinite reverse;
+        -webkit-animation: letters 1.5s 2s infinite reverse;
+      }
+      ._timer {
+        font-size: 17px;
+        font-weight: 600;
+      }
       .slideshow-container {
         width: 55%;
         min-width: 600px;
@@ -801,28 +841,27 @@
         <div class="categories">
           <div class="up-container">
             <img
-              src="./resources/image-slider/slider-image-2.jpg"
+              src="./resources/ct-clothing-1.jpg"
               alt=""
               width="100%"
               height="100%"
               style="border-radius: 5px"
             />
           </div>
-          <ul class="down-container">
+          <a class="down-container" href="./404.html">
             <li>
-              <i class="fas fa-clock fa-3x"></i>
-              <h4>FLASH SALES!!!</h4>
-              <div class="timer">
-                <h2 id="pms-timer"><small>Loading...</small></h2>
-              </div>
-              <span>Check Out <b>HERE</b></span>
-              <div class="d-m-u">
-                <h2>DON'T MISS OUT!!!</h2>
-                <i class="fas fa-map-marker-alt"></i>
-                <span class="location">Yammie Lira</span>
+              <div class="_gift-ctr">
+                <img
+                  src="./resources/gift_1.png"
+                  alt=""
+                  width="100px"
+                  height="100px"
+                />
+                <div class="_day-gift">Gift of the Day</div>
+                <div class="_timer" id="_timer">Starting....</div>
               </div>
             </li>
-          </ul>
+          </a>
         </div>
       </div>
       <div class="-ct -b-x">
@@ -996,7 +1035,7 @@
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
           <a href="./catalog.html?q=recently_viewed">
-            <span>
+            <span class="-ch-all-w-t">
               Check
               <i class="fas fa-chevron-right"></i>
             </span>
@@ -1065,10 +1104,12 @@
 
         <div class="-ch-all">
           <span>Trending On Yammie</span>
-          <span>
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
+          <a href="./catalog.html?q=trending">
+            <span class="-ch-all-t">
+              Check
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
         </div>
         <div class="-scroll -ct -ct-trending">
           <div class="item -ct-item -lazy">
@@ -1127,6 +1168,17 @@
           </div>
         </div>
       </div>
+      <div class="-img-l">
+        <a href="#" class="">
+          <img
+            src="./resources/kitchen.jpg"
+            alt="yammieshoppers"
+            width="100%"
+            height="100%"
+            style="border-radius: 5px"
+          />
+        </a>
+      </div>
       <div class="-img-ls">
         <a href="#" class="">
           <img
@@ -1154,10 +1206,12 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recommended For You</span>
-          <span>
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
+          <a href="./catalog.html?q=recommended_for_you">
+            <span class="-ch-all-w-t">
+              Check
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
         </div>
         <div class="-scroll -ct -ct-rec">
           <div class="item -ct-item -lazy">
@@ -1216,18 +1270,41 @@
           </div>
         </div>
       </div>
+      <div class="-img-ls -b-x">
+        <a href="#" class="">
+          <img
+            src="./resources/image-slider/mask.jpg"
+            alt="yammie"
+            style="border-radius: 5px"
+            width="100%"
+            height="100%"
+          />
+        </a>
+
+        <a href="#" class="">
+          <img
+            src="./resources/ct-clothing-1.jpg"
+            alt="yammie"
+            style="border-radius: 5px"
+            width="100%"
+            height="100%"
+          />
+        </a>
+      </div>
       <div class="-ct">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
 
         <div class="-ch-all">
-          <span>Enhance Your Phone</span>
-          <span>
-            See All
-            <i class="fas fa-chevron-right"></i>
-          </span>
+          <span>GAS COOKERS</span>
+          <a href="./catalog.html?q=gas-cookers">
+            <span class="-ch-all-t">
+              See All
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
         </div>
-        <div class="-scroll -ct -ct-phone-accessories">
+        <div class="-scroll -ct -ct-gas-cookers">
           <div class="item -ct-item -lazy">
             <img
               src="./resources/cart-link.png"
@@ -1304,6 +1381,76 @@
             height="100%"
           />
         </a>
+      </div>
+      <div class="-ct">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all">
+          <span>Enhance Your Phone</span>
+          <a href="./catalog.html?q=phone-accessories">
+            <span class="-ch-all-t">
+              See All
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
+        </div>
+        <div class="-scroll -ct -ct-phone-accessories">
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+        </div>
       </div>
       <div class="back-to-top">
         <i class="fas fa-chevron-up"></i>
@@ -1497,10 +1644,11 @@
 
       // Promotions timer
       const timerFunc = () => {
-        let timerDisplay = document.getElementById("pms-timer");
-        let timerHours = 14;
-        let timerMinutes = 15;
-        let timerSeconds = 7;
+        let _gift = document.getElementById("_timer");
+        let date = new Date();
+        let timerHours = 24 - date.getHours();
+        let timerMinutes = 60 - date.getMinutes();
+        let timerSeconds = 60 - date.getSeconds();
         let timer = setInterval(calcTimer, 1000);
         function calcTimer() {
           timerSeconds -= 1;
@@ -1517,9 +1665,9 @@
           }
           if (timerHours == 0 && timerMinutes == 0 && timerSeconds == 0) {
             clearInterval(timer);
-            timerDisplay.innerHTML = "Cleared";
+            _gift.innerHTML = "Cleared";
           }
-          timerDisplay.innerHTML =
+          _gift.innerHTML =
             timerHours + " : " + timerMinutes + " : " + timerSeconds;
         }
       };
@@ -1688,7 +1836,7 @@
           });
         });
       }
-      function _sclb() {}
+      function _gift() {}
       //depends on the url
       ctg(
         document.querySelector(".-ct-trending"),
@@ -1697,6 +1845,10 @@
       ctg(
         document.querySelector(".-ct-phone-accessories"),
         "/api/user/ct/index/phone-accessories"
+      );
+      ctg(
+        document.querySelector(".-ct-gas-cookers"),
+        "/api/user/ct/index/gas-cookers"
       );
       ctg(document.querySelector(".-ct-rv"), "/api/user/ct/index/rv");
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/index/rec");

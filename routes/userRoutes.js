@@ -10,7 +10,7 @@ router.post("/customer/insert", async (req, res) => {
     (err, results) => {
       if (err) throw err;
       if (results.length > 0) {
-        return res.status(401).send("This Email was Used");
+        return res.status(400).send("This Email was Used");
       } else {
         let {
           c_email,
@@ -41,7 +41,7 @@ router.post("/customer/insert", async (req, res) => {
                 if (error) throw error;
               }
             );
-            res.send("inserted");
+            res.status(200).send(c_id);
           }
         });
       }

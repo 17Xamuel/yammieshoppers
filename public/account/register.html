@@ -707,6 +707,9 @@
     <!--scripts-->
 
     <script>
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
       //input focus
       function focus(input, elMove, elMoveGroup, icon) {
         document.querySelector(input).addEventListener("focus", () => {
@@ -801,18 +804,21 @@
         } else {
           xhr = new XMLHttpRequest();
           xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 401) {
+            if (xhr.readyState == 4 && xhr.status == 400) {
               document.querySelector("#used-e").style.opacity = "1";
               document.querySelector("#used-e").innerHTML = xhr.responseText;
               setTimeout(() => {
                 document.querySelector("#used-e").style.opacity = "0";
               }, 10000);
             }
-            if (xhr.responseText === "inserted") {
+            if (xhr.status == 200) {
+              localStorage.setItem(
+                "https://yammieshoppers.com/useLocalStorage/Storage",
+                xhr.responseText
+              );
               location.replace("/");
             }
             if (xhr.responseText === "Error in Registering") {
-              alert(xhr.responseText);
               window.location.reload();
             }
           };

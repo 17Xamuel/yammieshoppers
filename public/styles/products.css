@@ -31,6 +31,15 @@
   font-size: 16px;
   font-weight: bold;
 }
+.-ch-all-t {
+  color: #fff;
+}
+.-ch-all-t:hover {
+  color: #000;
+}
+.-ch-all-w-t:hover {
+  color: #ffbb00;
+}
 .-scroll {
   margin-top: 50px;
   display: flex;
@@ -39,11 +48,10 @@
 }
 .-ct-item {
   border: none;
-  padding: 5px 10px;
   margin: auto 10px;
   border-radius: 5px;
   width: 200px;
-  height: 250px;
+  height: 270px;
   transition: all 0.3s ease-in-out;
 }
 .item:hover {
@@ -127,6 +135,13 @@
   height: 95%;
   width: 49%;
   margin: auto;
+}
+.-img-l {
+  height: 40vh;
+  margin: 15px 0px;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #fff;
 }
 @media screen and (max-width: 768px) {
   .m-ctr {
