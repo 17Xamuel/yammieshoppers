@@ -19,15 +19,17 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bowser@2.9.0/es5.js"></script>
     <title>
-      Yammie | Online Market For Groceries, Electric Appliances, and Other items
+      Yammie &#x2223; Online Market For Groceries, Electric Appliances, and
+      Other items
     </title>
     <style>
       .back-to-top {
         position: absolute;
-        height: 40px;
-        width: 40px;
+        height: 35px;
+        width: 35px;
         background-color: #ffbb00;
         border-radius: 50%;
+        box-shadow: 0px 0px #adadad;
         right: -10%;
         bottom: 1%;
         z-index: 35;
@@ -36,6 +38,7 @@
         font-size: 20px;
         color: white;
         opacity: 0;
+        cursor: pointer;
       }
       /* Slideshow container */
       .slideshow-container {
@@ -223,6 +226,7 @@
       }
 
       .down-container {
+        position: relative;
         background-color: #fff;
         list-style-type: none;
         border-radius: 5px;
@@ -234,7 +238,45 @@
         height: 50%;
         box-shadow: 0px 0px 10px #cccbcb;
       }
-
+      ._gift-ctr {
+        position: relative;
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      @keyframes letters {
+        0% {
+          letter-spacing: normal;
+        }
+        20% {
+          letter-spacing: 0.25px;
+        }
+        40% {
+          letter-spacing: 0.5px;
+        }
+        60% {
+          letter-spacing: 0.75px;
+        }
+        80% {
+          letter-spacing: 1px;
+        }
+        100% {
+          letter-spacing: 1.25px;
+        }
+      }
+      ._day-gift {
+        font-size: 17px;
+        margin-top: 10px;
+        margin-bottom: 2px;
+        animation: letters 1.5s 2s infinite reverse;
+        -webkit-animation: letters 1.5s 2s infinite reverse;
+      }
+      ._timer {
+        font-size: 17px;
+        font-weight: 600;
+      }
       .slideshow-container {
         width: 55%;
         min-width: 600px;
@@ -433,30 +475,34 @@
           <i class="fas fa-user-edit"></i>
           <span><a href="./account/edit.html">Edit My Profile</a></span>
         </li>
-        <button class="s-n-logout">LOG OUT</button>
+        <button class="s-n-logout -lg-o">LOG IN/OUT</button>
       </ul>
       <ul class="s-n-2">
         <h3 class="s-n-how">Products &amp; Groceries</h3>
-        <li><a href="#">Special Order</a></li>
-        <li><a href="#">Delivery Time</a></li>
-        <li><a href="#">Payment Methods</a></li>
-        <li><a href="#">Request An Item</a></li>
-        <li><a href="#">Report an Item</a></li>
-        <li><a href="#">Return Policy</a></li>
+        <li><a href="./404.html">Special Order</a></li>
+        <li><a href="./404.html">Delivery Time</a></li>
+        <li><a href="./404.html">Payment Methods</a></li>
+        <li><a href="./404.html">Request An Item</a></li>
+        <li><a href="./404.html">Report an Item</a></li>
+        <li><a href="./404.html">Return Policy</a></li>
       </ul>
       <ul class="s-n-3">
         <h3 class="s-n-how">Explore Yammie</h3>
-        <li><a href="#">About Yammie</a></li>
-        <li><a href="#">How to Order</a></li>
-        <li><a href="#">Our Partners</a></li>
-        <li><a href="#">Terms &amp; Conditions For Use</a></li>
-        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="./404.html">About Yammie</a></li>
+        <li><a href="./404.html">How to Order</a></li>
+        <li><a href="./404.html">Our Partners</a></li>
+        <li><a href="./404.html">Terms &amp; Conditions For Use</a></li>
+        <li><a href="./404.html">Privacy Policy</a></li>
       </ul>
       <div class="ftr-down">
         <div class="ftr-official" style="color: black !important">
           &copy; 2020 Yammie. All rights reserved
           <div class="social-icons">
-            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
+            <a
+              href="https://www.facebook.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
             <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
             <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
             <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
@@ -498,7 +544,7 @@
               class="-ns"
               id="v-search"
             />
-            <button type="submit" id="search-button">
+            <button type="submit" class="search-button">
               <i class="fas fa-search"></i>
             </button>
           </form>
@@ -510,19 +556,19 @@
             <i class="fas fa-chevron-down chev"></i>
           </button>
           <ul class="-help-list -hlp">
-            <a href="">
+            <a href="./404.html">
               <li class="-help">
                 <i class="fas fa-clock"></i>
                 How to Order
               </li>
             </a>
-            <a href="">
+            <a href="./404.html">
               <li class="-help">
                 <i class="fas fa-truck-loading"></i>
                 Delivery Times
               </li>
             </a>
-            <a href="">
+            <a href="./404.html">
               <li class="-help">
                 <i class="far fa-question-circle"></i>
                 FAQs
@@ -531,7 +577,7 @@
             <li class="-help">
               <button class="-a-btn" style="width: 100%">
                 <i class="fas fa-sign-out-alt"></i>
-                Log Out
+                Help Center
               </button>
             </li>
           </ul>
@@ -568,7 +614,7 @@
               </li>
             </a>
             <li class="-help">
-              <button class="-a-btn" style="width: 100%">
+              <button class="-a-btn -lg" style="width: 100%">
                 <i class="fas fa-sign-out-alt"></i>
                 Log Out
               </button>
@@ -607,7 +653,7 @@
           placeholder="Search Groceries...."
           class="-ns"
         />
-        <button type="submit" id="search-button">
+        <button type="submit" class="search-button">
           <i class="fas fa-search"></i>
         </button>
       </form>
@@ -795,28 +841,27 @@
         <div class="categories">
           <div class="up-container">
             <img
-              src="./resources/image-slider/slider-image-2.jpg"
+              src="./resources/ct-clothing-1.jpg"
               alt=""
               width="100%"
               height="100%"
               style="border-radius: 5px"
             />
           </div>
-          <ul class="down-container">
+          <a class="down-container" href="./404.html">
             <li>
-              <i class="fas fa-clock fa-3x"></i>
-              <h4>FLASH SALES!!!</h4>
-              <div class="timer">
-                <h2 id="pms-timer"><small>Loading...</small></h2>
-              </div>
-              <span>Check Out <b>HERE</b></span>
-              <div class="d-m-u">
-                <h2>DON'T MISS OUT!!!</h2>
-                <i class="fas fa-map-marker-alt"></i>
-                <span class="location">Yammie Lira</span>
+              <div class="_gift-ctr">
+                <img
+                  src="./resources/gift_1.png"
+                  alt=""
+                  width="100px"
+                  height="100px"
+                />
+                <div class="_day-gift">Gift of the Day</div>
+                <div class="_timer" id="_timer">Starting....</div>
               </div>
             </li>
-          </ul>
+          </a>
         </div>
       </div>
       <div class="-ct -b-x">
@@ -989,10 +1034,12 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <span>
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
+          <a href="./catalog.html?q=recently_viewed">
+            <span class="-ch-all-w-t">
+              Check
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
         </div>
         <div class="-scroll -ct -ct-rv">
           <div class="item -ct-item -lazy">
@@ -1057,10 +1104,12 @@
 
         <div class="-ch-all">
           <span>Trending On Yammie</span>
-          <span>
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
+          <a href="./catalog.html?q=trending">
+            <span class="-ch-all-t">
+              Check
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
         </div>
         <div class="-scroll -ct -ct-trending">
           <div class="item -ct-item -lazy">
@@ -1119,6 +1168,17 @@
           </div>
         </div>
       </div>
+      <div class="-img-l">
+        <a href="#" class="">
+          <img
+            src="./resources/kitchen.jpg"
+            alt="yammieshoppers"
+            width="100%"
+            height="100%"
+            style="border-radius: 5px"
+          />
+        </a>
+      </div>
       <div class="-img-ls">
         <a href="#" class="">
           <img
@@ -1146,10 +1206,12 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recommended For You</span>
-          <span>
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
+          <a href="./catalog.html?q=recommended_for_you">
+            <span class="-ch-all-w-t">
+              Check
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
         </div>
         <div class="-scroll -ct -ct-rec">
           <div class="item -ct-item -lazy">
@@ -1208,18 +1270,41 @@
           </div>
         </div>
       </div>
+      <div class="-img-ls -b-x">
+        <a href="#" class="">
+          <img
+            src="./resources/image-slider/mask.jpg"
+            alt="yammie"
+            style="border-radius: 5px"
+            width="100%"
+            height="100%"
+          />
+        </a>
+
+        <a href="#" class="">
+          <img
+            src="./resources/ct-clothing-1.jpg"
+            alt="yammie"
+            style="border-radius: 5px"
+            width="100%"
+            height="100%"
+          />
+        </a>
+      </div>
       <div class="-ct">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
 
         <div class="-ch-all">
-          <span>Enhance Your Phone</span>
-          <span>
-            See All
-            <i class="fas fa-chevron-right"></i>
-          </span>
+          <span>GAS COOKERS</span>
+          <a href="./catalog.html?q=gas-cookers">
+            <span class="-ch-all-t">
+              See All
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
         </div>
-        <div class="-scroll -ct -ct-phone-accessories">
+        <div class="-scroll -ct -ct-gas-cookers">
           <div class="item -ct-item -lazy">
             <img
               src="./resources/cart-link.png"
@@ -1297,15 +1382,85 @@
           />
         </a>
       </div>
+      <div class="-ct">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all">
+          <span>Enhance Your Phone</span>
+          <a href="./catalog.html?q=phone-accessories">
+            <span class="-ch-all-t">
+              See All
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
+        </div>
+        <div class="-scroll -ct -ct-phone-accessories">
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+        </div>
+      </div>
       <div class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
+        <i class="fas fa-chevron-up"></i>
       </div>
     </div>
     <footer class="footer">
       <div class="ftr-sm-s">
-        <span> Terms &amp; Conditions </span>
-        <span> Help Center </span>
-        <span> Contact Us </span>
+        <span><a href="./404.html"> Terms &amp; Conditions </a></span>
+        <span><a href="./404.html"> Help Center</a></span>
+        <span><a href="./404.html"> Contact Us</a></span>
       </div>
       <div class="ftr-up">
         <div class="ftr-u-first">
@@ -1349,12 +1504,12 @@
         <div class="ftr-u-second">
           <h4 class="footer-h4">Explore Yammie</h4>
           <ul class="footer-list">
-            <li><a href="#">About Yammie</a></li>
-            <li><a href="#">How to Order</a></li>
-            <li><a href="#">Help &amp; FAQs</a></li>
-            <li><a href="#">Our Partners</a></li>
-            <li><a href="#">Terms &amp; Conditions For Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="./404.html">About Yammie</a></li>
+            <li><a href="./404.html">How to Order</a></li>
+            <li><a href="./404.html">Help &amp; FAQs</a></li>
+            <li><a href="./404.html">Our Partners</a></li>
+            <li><a href="./404.html">Terms &amp; Conditions For Use</a></li>
+            <li><a href="./404.html">Privacy Policy</a></li>
           </ul>
         </div>
         <div class="ftr-u-third">
@@ -1373,7 +1528,7 @@
               </a>
             </li>
             <li class="second-list">
-              <a href="#">
+              <a href="./404.html">
                 <i class="fas fa-map-marker-alt"></i>
                 Lira Campus
               </a>
@@ -1400,12 +1555,12 @@
         <div class="ftr-u-fourth">
           <h4 class="footer-h4">Products &amp; Groceries</h4>
           <ul class="footer-list">
-            <li><a href="#">Special Order</a></li>
-            <li><a href="#">Delivery Time</a></li>
-            <li><a href="#">Payment Methods</a></li>
-            <li><a href="#">Request An Item</a></li>
-            <li><a href="#">Report an Item</a></li>
-            <li><a href="#">Return Policy</a></li>
+            <li><a href="./404.html">Special Order</a></li>
+            <li><a href="./404.html">Delivery Time</a></li>
+            <li><a href="./404.html">Payment Methods</a></li>
+            <li><a href="./404.html">Request An Item</a></li>
+            <li><a href="./404.html">Report an Item</a></li>
+            <li><a href="./404.html">Return Policy</a></li>
           </ul>
         </div>
       </div>
@@ -1433,11 +1588,15 @@
       let hp = document.querySelector(".-hp");
       //check toggle a class
       acc.addEventListener("focus", (e) => {
-        e.target.style.color = "#ffbb00";
-        document
-          .querySelector(".chev-acc")
-          .classList.replace("fa-chevron-down", "fa-chevron-up");
-        document.querySelector(".-acc-l").style.display = "flex";
+        if (!yammie) {
+          window.location.assign("./account/login.html");
+        } else {
+          e.target.style.color = "#ffbb00";
+          document
+            .querySelector(".chev-acc")
+            .classList.replace("fa-chevron-down", "fa-chevron-up");
+          document.querySelector(".-acc-l").style.display = "flex";
+        }
       });
 
       acc.addEventListener("blur", (e) => {
@@ -1485,10 +1644,11 @@
 
       // Promotions timer
       const timerFunc = () => {
-        let timerDisplay = document.getElementById("pms-timer");
-        let timerHours = 14;
-        let timerMinutes = 15;
-        let timerSeconds = 7;
+        let _gift = document.getElementById("_timer");
+        let date = new Date();
+        let timerHours = 24 - date.getHours();
+        let timerMinutes = 60 - date.getMinutes();
+        let timerSeconds = 60 - date.getSeconds();
         let timer = setInterval(calcTimer, 1000);
         function calcTimer() {
           timerSeconds -= 1;
@@ -1505,9 +1665,9 @@
           }
           if (timerHours == 0 && timerMinutes == 0 && timerSeconds == 0) {
             clearInterval(timer);
-            timerDisplay.innerHTML = "Cleared";
+            _gift.innerHTML = "Cleared";
           }
-          timerDisplay.innerHTML =
+          _gift.innerHTML =
             timerHours + " : " + timerMinutes + " : " + timerSeconds;
         }
       };
@@ -1526,7 +1686,7 @@
     <script>
       let sliderCtr = document.querySelector(".slideshow-container");
       if (screen.availWidth <= 1024) {
-        console.log("Width: " + screen.availWidth);
+        //cl ws here
       } else {
         let slideIndex = 1;
         showSlides(slideIndex);
@@ -1676,7 +1836,7 @@
           });
         });
       }
-      function _sclb() {}
+      function _gift() {}
       //depends on the url
       ctg(
         document.querySelector(".-ct-trending"),
@@ -1685,6 +1845,10 @@
       ctg(
         document.querySelector(".-ct-phone-accessories"),
         "/api/user/ct/index/phone-accessories"
+      );
+      ctg(
+        document.querySelector(".-ct-gas-cookers"),
+        "/api/user/ct/index/gas-cookers"
       );
       ctg(document.querySelector(".-ct-rv"), "/api/user/ct/index/rv");
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/index/rec");
@@ -1701,7 +1865,7 @@
       // // PLATFORM
       // console.log(result.platform.type);
     </script>
-
+    <script defer async src="../ym.min.js"></script>
     <!--scripts-->
   </body>
 </html>

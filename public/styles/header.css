@@ -2,7 +2,7 @@
   height: 50px;
   background-color: #000;
   color: white;
-  padding: 0px 350px;
+  padding: 0px 180px;
 }
 .-s-sm {
   display: none;
@@ -91,8 +91,8 @@
   position: absolute;
   background-color: #ffbb00;
   border-radius: 50%;
-  width: 17px;
-  height: 17px;
+  width: 18px;
+  height: 18px;
   text-align: center;
   top: -8px;
   left: 15px;
@@ -132,12 +132,13 @@
   width: 90%;
   margin: 0px auto;
 }
-#search-button {
+.search-button {
+  cursor: pointer;
   background-color: #fff;
   border: 0;
   font-size: 20px;
 }
-#search-button:focus {
+.search-button:focus {
   outline: none;
 }
 .search-nav {

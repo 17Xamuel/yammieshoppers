@@ -3,14 +3,10 @@ const path = require("path");
 const fs = require("fs");
 const multer = require("multer");
 const uuid = require("uuid");
-const mysql = require("mysql");
-const { Storage } = require("@google-cloud/storage");
 const conn = require("./database/db.js");
-
 const PORT = process.env.PORT || 8000;
 const app = express();
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/admin/", require("./routes/adminRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
@@ -126,7 +122,6 @@ app.get("/uploads/images/products/:imageName", (req, res) => {
     path.join(__dirname, "uploads", "images", "products", req.params.imageName)
   );
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}...`);
