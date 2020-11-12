@@ -35,6 +35,7 @@ function getUpload(id) {
 app.use(express.static("public"));
 
 app.post("/addProduct", async (req, res) => {
+ 
   let productId = uuid.v4();
 
   let upload = getUpload(productId);
@@ -56,7 +57,10 @@ app.post("/addProduct", async (req, res) => {
       discount,
       seller_id,
       quantity,
+      specification
     } = req.body;
+    
+    let specify=JSON.stringify(req.body.specification);
 
     conn.query(
       "INSERT INTO pending_products SET ? ",
@@ -72,6 +76,7 @@ app.post("/addProduct", async (req, res) => {
         images: path,
         seller_id: seller_id,
         quantity: quantity,
+        specifications:specify,
       },
       (err, results) => {
         if (err) {

@@ -319,6 +319,17 @@
                       />
                     </div>
                   </div>
+                  <label for="Specifications">Specifications</label>
+                  <div id="specifications" class="form-group">
+                    <button
+                      type="button"
+                      class="btn btn-warning btn-block text-light my-2"
+                      id="specification"
+                    >
+                      Click to Add Specifications Eg:size,quality and others
+                    </button>
+                  </div>
+
                   <label for="Poduct Images">Product Images</label>
                   <br />
 
@@ -468,6 +479,18 @@
       );
       document.getElementById("User").innerHTML = seller.username;
       document.getElementById("auth").value = seller.id;
+
+      const specifications = document.getElementById("specifications");
+
+      let newSpecification = document.getElementById("specification");
+      newSpecification.addEventListener("click", (e) => {
+        let specification = document.createElement("input");
+        specification.classList.add("form-control", "my-2");
+        specification.setAttribute("type", "text");
+        specification.setAttribute("placeholder", "Specification");
+        specification.setAttribute("name", "specification");
+        specifications.appendChild(specification);
+      });
     </script>
     <script src="scripts/lg.js"></script>
     <!-- End Scripts -->
