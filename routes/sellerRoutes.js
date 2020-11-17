@@ -296,4 +296,14 @@ router.get("/sales/:id" ,async(req,res)=>{
   });
 });
 
+router.get("/getRejProducts/:id", async(req,res)=>{
+  conn.query(`SELECT rejected_products.id,rejected_products.name,images,
+  rejected_products.quantity,rejected_products.reason,rejected_products.price FROM rejected_products JOIN sellers
+  ON sellers.id=rejected_products.seller_id WHERE sellers.id=?`,[req.params.id],
+  (err,result)=>{
+    if(err) throw err;
+    res.send(result);
+  });
+});
+
 module.exports = router;

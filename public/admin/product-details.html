@@ -227,6 +227,13 @@
                     >
                       Accept
                     </button>
+                    <button
+                      class="btn btn-info btn-block"
+                      data-target="#reject"
+                      data-toggle="modal"
+                    >
+                      Reject
+                    </button>
                   </div>
                 </div>
               </div>
@@ -287,6 +294,62 @@
       </div>
     </div>
     <!-- End Accept Modal -->
+
+    <!-- Reject Modal -->
+    <div class="modal fade" id="reject">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Want to reject Product?</h5>
+          </div>
+          <div class="modal-body">
+            <form id="rejForm">
+              <label for="name">Product name</label>
+              <input
+                name="name"
+                type="text"
+                class="form-control my-1"
+                id="rname"
+              />
+              <label for="price">Price</label>
+              <input
+                name="price"
+                type="text"
+                class="form-control my-1"
+                id="rprice"
+              />
+              <label for="qty">Quantity</label>
+              <input
+                name="Quantity"
+                type="text"
+                class="form-control my-1"
+                id="rqty"
+              />
+              <label for="reason">Reason</label>
+              <textarea
+                name="reason"
+                id="reason"
+                cols="30"
+                rows="4"
+                class="form-control"
+                id="reason"
+              ></textarea>
+              <input type="hidden" name="seller_id" id="seller_id" />
+
+              <button type="submit" class="btn btn-primary btn-block my-2">
+                Reject
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Reject Modal -->
 
     <!-- End Footer -->
 
@@ -350,6 +413,42 @@
         accept.open("GET", `/api/admin/confirmProduct/${pId}`, true);
         accept.send();
       });
+
+      const rejected = new XMLHttpRequest();
+      rejected.onreadystatechange = () => {
+        if (rejected.status == 200 && rejected.readyState == 4) {
+          let [result] = JSON.parse(rejected.responseText);
+          document.getElementById("rname").value = result.product;
+          document.getElementById("rprice").value = result.price;
+          document.getElementById("rqty").value = result.quantity;
+          document.getElementById("seller_id").value = result.seller_id;
+        }
+      };
+      rejected.open("GET", `/api/admin/rejected/${pId}`, true);
+      rejected.send();
+
+      let rejectForm = document.getElementById("rejForm");
+      rejectForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let rejData = {};
+        rejData.name = document.getElementById("rname").value;
+        rejData.price = document.getElementById("rprice").value;
+        rejData.quantity = document.getElementById("rqty").value;
+        rejData.reason = document.getElementById("reason").value;
+        rejData.seller_id = document.getElementById("seller_id").value;
+        let rejString = JSON.stringify(rejData);
+
+        const rejPost = new XMLHttpRequest();
+        rejPost.onreadystatechange = () => {
+          if (rejPost.readyState == 4 && rejPost.status == 200) {
+            console.log(rejPost.responseText);
+          }
+        };
+        rejPost.open("POST", `/api/admin/rejPost/${pId}`, true);
+        rejPost.setRequestHeader("Content-Type", "application/json");
+        rejPost.send(rejString);
+      });
+
       function acp() {
         let acceptProduct = document.getElementById("acceptProduct");
         acceptProduct.addEventListener("click", (e) => {

@@ -198,6 +198,39 @@ router.get("/clearOrder/:id",async(req,res)=>{
   });
 });
 
+router.get("/rejected/:id",async(req,res)=>{
+  conn.query(`SELECT product,price,quantity,seller_id FROM pending_products
+  WHERE id=?`,[req.params.id],(err,result)=>{
+    if(err) throw err;
+    res.send(result);
+  });
+});
+
+router.post("/rejPost/:id",async(req,res)=>{
+  const {name,price,quantity,reason,seller_id}=req.body;
+  conn.query(`SELECT images FROM pending_products WHERE id=?`,[req.params.id],
+  (err,result)=>{
+    if(err) throw err;
+    let image=JSON.stringify(result);
+    conn.query(`INSERT INTO rejected_products SET ?`,{
+      id:uuid.v4(),
+      name:name,
+      price:price,
+      quantity:quantity,
+      images:image,
+      seller_id:seller_id,
+      reason:reason,
+    },(error,results)=>{
+      if(error) throw error;
+      conn.query(`DELETE FROM pending_products WHERE id=?`,[req.params.id],
+      (errs,queryResult)=>{
+        if(errs) throw errs;
+        res.send("Product Rejected");
+      });
+    });
+  });
+});
+
 
 
 module.exports = router;

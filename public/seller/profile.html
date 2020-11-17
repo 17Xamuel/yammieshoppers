@@ -267,8 +267,17 @@
       document.getElementById("email").innerHTML = seller.email;
       document.getElementById("phonenumber").innerHTML = seller.phonenumber;
       document.getElementById("location").innerHTML = seller.location;
+
+      function lg() {
+        let lg = document.getElementById("slg");
+        lg.addEventListener("click", (e) => {
+          localStorage.removeItem("yammie/useLocalstorage/storage");
+          window.location.assign("index.html");
+        });
+      }
+      lg();
     </script>
-    <script src="scripts/lg.js"></script>
+
     <!-- End Scripts -->
   </body>
 </html>

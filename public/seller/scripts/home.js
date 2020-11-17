@@ -106,11 +106,20 @@ totalOrders.send();
         if (sales.readyState == 4 && sales.status == 200) {
           let [res]=JSON.parse(sales.responseText);
           if(!res.Sales){
-            document.getElementById("sales").innerHTML="UGX"+0;
+            document.getElementById("sales").innerHTML="UGX "+0;
           }else{
-            document.getElementById("sales").innerHTML="UGX"+res.Sales;
+            document.getElementById("sales").innerHTML="UGX "+res.Sales;
           }
         }
       };
       sales.open("GET", `/api/sellers/sales/${sellerId}`, true);
       sales.send();
+
+      function lg() {
+        let lg = document.getElementById("slg");
+        lg.addEventListener("click", (e) => {
+          localStorage.removeItem("yammie/useLocalstorage/storage");
+          window.location.assign("index.html");
+        });
+      }
+      lg();

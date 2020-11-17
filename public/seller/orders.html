@@ -285,7 +285,15 @@
       };
       order.open("GET", `/api/sellers/doneOrder/${sellerId}`, true);
       order.send();
+
+      function lg() {
+        let lg = document.getElementById("slg");
+        lg.addEventListener("click", (e) => {
+          localStorage.removeItem("yammie/useLocalstorage/storage");
+          window.location.assign("index.html");
+        });
+      }
+      lg();
     </script>
-    <script src="scripts/lg.js"></script>
   </body>
 </html>

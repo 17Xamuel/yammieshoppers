@@ -189,6 +189,23 @@
         </div>
       </div>
     </section>
+    <!-- Reject Modal -->
+    <div class="modal fade" id="rejReason">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Reject Reason</h5>
+          </div>
+          <div class="modal-body" id="rejectReason" class="text-center"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Modal -->
     <!-- Footer -->
     <footer>
       <div class="container-fluid">
@@ -240,7 +257,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="./scripts/product.js"></script>
-    <script src="scripts/lg.js"></script>
+
     <script>
       const req = new XMLHttpRequest();
 
@@ -277,6 +294,61 @@
       };
       req.open("GET", `/api/sellers/getApprovedProducts/${sellerId}`, true);
       req.send();
+    </script>
+    <script>
+      const rejProducts = new XMLHttpRequest();
+      rejProducts.onreadystatechange = () => {
+        if (rejProducts.status == 200 && rejProducts.readyState == 4) {
+          let outcomes = JSON.parse(rejProducts.responseText);
+          let rejectedProducts = "";
+
+          outcomes.forEach((outcome) => {
+            let rejectedimage = JSON.parse(outcome.images);
+            rejectedProducts += `<tr>
+                <td>
+                  <img src="/${JSON.parse(rejectedimage[0].images)[0]}"
+                  width="50" height="50"
+                  class="rounded-circle"/>
+                </td>
+                <td>${outcome.name}</td>
+                <td>${outcome.quantity}</td>
+                <td>${outcome.price}</td>
+                <td>
+                  <span class="badge badge-primary w-75 py-2">Rejected</span>
+                </td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-sm"
+                    data-target="#rejReason" data-toggle="modal"
+                    id="reasonbtn" data-reason="${
+                      outcome.reason
+                    }">Reason</button>
+                  </td>
+                </tr>`;
+          });
+          document.getElementById("rejected").innerHTML = rejectedProducts;
+          let reasonBtns = document.querySelectorAll("#reasonbtn");
+          reasonBtns.forEach((reasonBtn) => {
+            reasonBtn.addEventListener("click", (e) => {
+              let reasons = e.target.dataset.reason;
+              document.getElementById(
+                "rejectReason"
+              ).innerHTML = `${reasons}.You are
+              advised to upload the product again correcting the mistake noted.Thanks`;
+            });
+          });
+        }
+      };
+      rejProducts.open("GET", `/api/sellers/getRejProducts/${sellerId}`, true);
+      rejProducts.send();
+
+      function lg() {
+        let lg = document.getElementById("slg");
+        lg.addEventListener("click", (e) => {
+          localStorage.removeItem("yammie/useLocalstorage/storage");
+          window.location.assign("index.html");
+        });
+      }
+      lg();
     </script>
   </body>
 </html>
