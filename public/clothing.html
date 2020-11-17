@@ -762,89 +762,37 @@
               <input type="text" id="lower-p" value="0" name="lp" />
               <input type="text" id="higher-p" name="hp" />
             </div>
-            <button class="sort-btn" type="submit">Apply</button>
+            <button class="sort-btn" type="submit" id="_sbp">Apply</button>
           </form>
           <h3>Sort By Discount</h3>
-          <form action="" method="POST">
+          <form id="_sdiscount">
             <ul class="sort-list">
               <li class="input-field">
-                <input type="checkbox" name="" id="" />
+                <input type="radio" name="_discount" id="" value="1" />
                 <label for="discount"> &lt; 10%</label>
               </li>
               <li class="input-field">
-                <input type="checkbox" name="" id="" />
+                <input type="radio" name="_discount" id="" value="2" />
                 <label for="discount">10% - 20%</label>
               </li>
               <li class="input-field">
-                <input type="checkbox" name="" id="" />
+                <input type="radio" name="_discount" id="" value="3" />
                 <label for="discount">20% - 30%</label>
               </li>
               <li class="input-field">
-                <input type="checkbox" name="" id="" />
+                <input type="radio" name="_discount" id="" value="4" />
                 <label for="discount">30% - 40%</label>
               </li>
               <li class="input-field">
-                <input type="checkbox" name="" id="" />
+                <input type="radio" name="_discount" id="" value="5" />
                 <label for="discount">40% - 50%</label>
               </li>
               <li class="input-field">
-                <input type="checkbox" name="" id="" />
+                <input type="radio" name="_discount" id="" value="6" />
                 <label for="discount"> &gt; 50%</label>
               </li>
             </ul>
-            <button class="sort-btn">Apply</button>
-          </form>
-          <h3>Sort By Brand</h3>
-          <form action="#" method="POST">
-            <ul class="sort-list">
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="brand">SkyWorth</label>
-              </li>
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="brand">Hisense</label>
-              </li>
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="brand">Acer</label>
-              </li>
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="brand">GlobalStar</label>
-              </li>
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="brand">Sky</label>
-              </li>
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="brand">Sumsung</label>
-              </li>
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="brand">Startimes</label>
-              </li>
-            </ul>
-            <button class="sort-btn">Apply</button>
-          </form>
-          <h3>Sort By Seller Location</h3>
-          <form action="#" method="POST" style="border: none">
-            <ul class="sort-list">
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="seller-location">Lira Campus</label>
-              </li>
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="seller-location">Lira</label>
-              </li>
-              <li class="input-field">
-                <input type="checkbox" name="" id="" />
-                <label for="seller-location">Kampala</label>
-              </li>
-            </ul>
-            <button class="sort-btn">Apply</button>
+            <button class="sort-btn" type="submit">Apply</button>
           </form>
         </div>
       </div>
@@ -1006,12 +954,12 @@
               group = "";
             _c.forEach((item) => {
               group += `
-                    <div class="item -ct-item">
+                    <a class="item -ct-item" href="./item.html?item=${item.id}">
                       <img
                         src="${JSON.parse(item.images)[0]}"
                         alt="${item.name}"
-                        width="150px"
-                        height="120px"
+                        width="180px"
+                        height="150px"
                       />
                       <div class="-i-dtl">
                         <div class="it-nm">${item.product} - ${
@@ -1027,7 +975,7 @@
                            item.discount ? "UGX " + item.price : ""
                          }</div>
                       </div>
-                    </div>
+                    </a>
                     `;
             });
             c.innerHTML = group;
@@ -1059,171 +1007,65 @@
         });
       }
       //depends on the url
-      ctg(document.querySelector(".-ct-casual"), "/api/user/ct/cl/casual");
-      ctg(document.querySelector(".-ct-trending"), "/api/user/ct/cl/trending");
+      ctg(
+        document.querySelector(".-ct-casual"),
+        "/api/user/ct/clothing/casual"
+      );
+      ctg(
+        document.querySelector(".-ct-trending"),
+        "/api/user/ct/clothing/trending"
+      );
       ctg(
         document.querySelector(".-ct-african-wear"),
-        "/api/user/ct/cl/african-wear"
+        "/api/user/ct/clothing/african-wear"
       );
       ctg(
         document.querySelector(".-ct-foot-wear"),
-        "/api/user/ct/cl/foot-wear"
+        "/api/user/ct/clothing/foot-wear"
       );
-      ctg(document.querySelector(".-ct-jackets"), "/api/user/ct/cl/jackets");
-      ctg(document.querySelector(".-ct-jeans"), "/api/user/ct/cl/jeans");
+      ctg(
+        document.querySelector(".-ct-jackets"),
+        "/api/user/ct/clothing/jackets"
+      );
+      ctg(document.querySelector(".-ct-jeans"), "/api/user/ct/clothing/jeans");
       scl(document.querySelectorAll(".-sc-n"));
       scr(document.querySelectorAll(".-sc-b"));
 
       let validSearch = "s";
+      window.addEventListener("DOMContentLoaded", () => {
+        search(`/api/user/search/min-max?q=${validSearch}`);
+      });
 
-      xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          let searchData = JSON.parse(xhr.responseText);
-          let itmsSearched = "";
-          searchData.forEach((itm) => {
-            itmsSearched += `
-              <article class="-test -catalog itm-searched">
-              <div class="a-s-discount">
-                <span class="d">
-                  ${itm.discount !== null ? "-" + itm.discount + "%" : ""}
-                </span>
-              </div>
-              <div class="itm-s-img">
-                <img
-                  src="${JSON.parse(itm.images)[0]}"
-                  alt="${itm.name}"
-                  width="100%"
-                  height="75%"
-                />
-              </div>
-              <div class="itm-s-dtl">
-                <div class="seller">
-                  <b>Seller:</b> Yammie Shoppers
-                </div>
-                <div class="itm-name" style="font-size:13.5px;">
-                  ${itm.product} - ${itm.description}
-                </div>
-                <div class="price-current">${
-                  "UGX " +
-                  (itm.discount
-                    ? new Intl.NumberFormat().format(
-                        (itm.price * (100 - itm.discount)) / 100
-                      )
-                    : new Intl.NumberFormat().format(itm.price))
-                }</div>
-                <div class="price-prev">${
-                  itm.discount ? "UGX " + itm.price : ""
-                }</div>
-                <div class="location">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>Lira</span>
-                </div>
-                <div class="delivery-by">
-                  <i class="fab fa-telegram-plane"></i>
-                  Yammie Delivery
-                </div>
-                <div class="a-t-c add-to-c"
-                  data-item=${itm.id}
-                  data-name=${itm.product.replace(/ /g, "_")}
-                  data-price=${itm.price}
-                  data-description=${itm.description.replace(/ /g, "_")}
-                  data-im=${JSON.parse(itm.images)[0]}
-                  data-discount=${itm.discount}
-                >
-                  <img
-                    src="./resources/shopping_cart_add_white.svg"
-                    alt=""
-                    width="25px"
-                    height="25px"
-                    data-item=${itm.id}
-                    data-name=${itm.product.replace(/ /g, "_")}
-                    data-price=${itm.price}
-                    data-description=${itm.description.replace(/ /g, "_")}
-                    data-im=${JSON.parse(itm.images)[0]}
-                    data-discount=${itm.discount}
-                  />
-                  Add to Cart
-                </div>
-              </div>
-            </article>`;
-          });
-          document.getElementById("s-itms-ctr").innerHTML = itmsSearched;
-
-          let btns = document.querySelectorAll(".add-to-c");
-          if (screen.availWidth < 768) {
-            btns.forEach((btn) => {
-              btn.innerHTML = "Add To Cart";
-            });
-          }
-          btns.forEach((btn) => {
-            btn.addEventListener("click", (e) => {
-              let cartItem = {
-                name: e.target.dataset.name,
-                price: e.target.dataset.price,
-                discount: parseInt(e.target.dataset.discount),
-                cartItemAdded: e.target.dataset.item,
-                description: e.target.dataset.description,
-                inCartNumber: 0,
-                display: e.target.dataset.im,
-              };
-              cartNumbers(cartItem);
-              wait();
-            });
-          });
-          function wait() {
-            let popUp = document.querySelector(".popup");
-            let pContent = popUp.innerHTML;
-            popUp.innerHTML = `
-              <div>
-              <div id="cartLoader"></div>
-              <br />
-              <div>Adding to Cart . . .
-              </div>
-              </div>`;
-            setTimeout(() => {
-              popUp.innerHTML = pContent;
-            }, 2000);
-          }
-          function cartNumbers(item) {
-            let cartNumber = parseInt(localStorage.getItem("cartNumber"));
-            if (cartNumber) {
-              localStorage.setItem("cartNumber", cartNumber + 1);
-              document.querySelector("#cartNumberItems").textContent =
-                cartNumber + 1;
-            } else {
-              localStorage.setItem("cartNumber", 1);
-              document.querySelector("#cartNumberItems").textContent = 1;
-            }
-            setItem(item);
-          }
-          function setItem(item) {
-            let cartItems = localStorage.getItem("cartItems");
-            cartItems = JSON.parse(cartItems);
-            if (cartItems != null) {
-              if (cartItems[item.cartItemAdded] == undefined) {
-                cartItems = {
-                  ...cartItems,
-                  [item.cartItemAdded]: item,
-                };
-              }
-              cartItems[item.cartItemAdded].inCartNumber += 1;
-            } else {
-              item.inCartNumber = 1;
-              cartItems = {
-                [item.cartItemAdded]: item,
-              };
-            }
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-            document.querySelector("#pop-up-overlay").classList.add("active");
-            document.querySelector(".popup").classList.add("pp-active");
-          }
+      let _sp = document.querySelector("#sort-price-form");
+      _sp.addEventListener("submit", (e) => {
+        e.preventDefault();
+        l = document.querySelector("#lower-p").value;
+        h = document.querySelector("#higher-p").value;
+        search(`/api/user/search/${l}-${h}?q=${validSearch}`);
+      });
+      let _sd = document.querySelector("#_sdiscount");
+      _sd.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let value =
+          Array.from(document.getElementsByName("_discount")).find(
+            (item) => item.checked
+          ).value || 120;
+        if (value == 1) {
+          search(`/api/user/search/${0}-${0.09}?q=${validSearch}`);
+        } else if (value == 2) {
+          search(`/api/user/search/${0.1}-${0.19}?q=${validSearch}`);
+        } else if (value == 3) {
+          search(`/api/user/search/${0.2}-${0.29}?q=${validSearch}`);
+        } else if (value == 4) {
+          search(`/api/user/search/${0.3}-${0.39}?q=${validSearch}`);
+        } else if (value == 5) {
+          search(`/api/user/search/${0.4}-${0.49}?q=${validSearch}`);
+        } else {
+          search(`/api/user/search/${0.5}-${1}?q=${validSearch}`);
+          console.log(value);
         }
-      };
+      });
 
-      xhr.open("GET", `/api/user/search?q=${validSearch}`, true);
-      xhr.send();
       //search end
       //price slider
       let inputLeft = document.getElementById("input-slide-left");
@@ -1369,6 +1211,188 @@
       });
 
       //new header
+    </script>
+    <script>
+      //search function
+
+      function search(url) {
+        xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let searchData = JSON.parse(xhr.responseText);
+            if (searchData.length === 0) {
+              let noData = `<div class="no-itms">
+              <img
+                src="./resources/undraw_blank_canvas_3rbb.svg"
+                width="50%"
+                height="50%"
+                alt=""
+              />
+                <span>Sorry, Your Sort did not match any item.
+                <br/>
+                Try Making a request.
+                </span>
+                <button id="ctlg-rq-btn">Make A Request</button>
+            </div>`;
+              document.getElementById("ctlg-ctr").innerHTML = noData;
+              document.getElementById("ctlg-ctr").style.justifyContent =
+                "center";
+              document.getElementById("ctlg-ctr").style.justifyContent =
+                "center";
+            } else {
+              let itmsSearched = "";
+              searchData.forEach((itm) => {
+                itmsSearched += `
+              <a class="-test -catalog itm-searched" href="./item.html?item=${
+                itm.id
+              }">
+              <div class="a-s-discount">
+                <span class="d">
+                  ${itm.discount !== null ? "-" + itm.discount + "%" : ""}
+                </span>
+              </div>
+              <div class="itm-s-img">
+                <img
+                  src="${JSON.parse(itm.images)[0]}"
+                  alt="${itm.name}"
+                  width="100%"
+                  height="75%"
+                />
+              </div>
+              <div class="itm-s-dtl">
+                <div class="seller">
+                  <b>Seller:</b> Yammie Shoppers
+                </div>
+                <div class="itm-name" style="font-size:13.5px;">
+                  ${itm.product} - ${itm.description}
+                </div>
+                <div class="price-current">${
+                  "UGX " +
+                  (itm.discount
+                    ? new Intl.NumberFormat().format(
+                        (itm.price * (100 - itm.discount)) / 100
+                      )
+                    : new Intl.NumberFormat().format(itm.price))
+                }</div>
+                <div class="price-prev">${
+                  itm.discount ? "UGX " + itm.price : ""
+                }</div>
+                <div class="location">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Lira</span>
+                </div>
+                <div class="delivery-by">
+                  <i class="fab fa-telegram-plane"></i>
+                  Yammie Delivery
+                </div>
+                <div class="a-t-c add-to-c"
+                  data-item=${itm.id}
+                  data-name=${itm.product.replace(/ /g, "_")}
+                  data-price=${itm.price}
+                  data-description=${itm.description.replace(/ /g, "_")}
+                  data-im=${JSON.parse(itm.images)[0]}
+                  data-discount=${itm.discount}
+                >
+                  <img
+                    src="./resources/shopping_cart_add_white.svg"
+                    alt=""
+                    width="25px"
+                    height="25px"
+                    data-item=${itm.id}
+                    data-name=${itm.product.replace(/ /g, "_")}
+                    data-price=${itm.price}
+                    data-description=${itm.description.replace(/ /g, "_")}
+                    data-im=${JSON.parse(itm.images)[0]}
+                    data-discount=${itm.discount}
+                  />
+                  Add to Cart
+                </div>
+              </div>
+            </a>`;
+              });
+              document.getElementById("s-itms-ctr").innerHTML = itmsSearched;
+              let btns = document.querySelectorAll(".add-to-c");
+              if (screen.availWidth < 768) {
+                btns.forEach((btn) => {
+                  btn.innerHTML = "Add To Cart";
+                });
+              }
+              btns.forEach((btn) => {
+                btn.addEventListener("click", (e) => {
+                  let cartItem = {
+                    name: e.target.dataset.name,
+                    price: e.target.dataset.price,
+                    discount: parseInt(e.target.dataset.discount),
+                    cartItemAdded: e.target.dataset.item,
+                    description: e.target.dataset.description,
+                    inCartNumber: 0,
+                    display: e.target.dataset.im,
+                  };
+                  cartNumbers(cartItem);
+                  wait();
+                });
+              });
+              function wait() {
+                let popUp = document.querySelector(".popup");
+                let pContent = popUp.innerHTML;
+                popUp.innerHTML = `
+              <div>
+              <div id="cartLoader"></div>
+              <br />
+              <div>Adding to Cart . . .
+              </div>
+              </div>`;
+                setTimeout(() => {
+                  popUp.innerHTML = pContent;
+                }, 2000);
+              }
+              function cartNumbers(item) {
+                let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+                if (cartNumber) {
+                  localStorage.setItem("cartNumber", cartNumber + 1);
+                  document.querySelector("#cartNumberItems").textContent =
+                    cartNumber + 1;
+                } else {
+                  localStorage.setItem("cartNumber", 1);
+                  document.querySelector("#cartNumberItems").textContent = 1;
+                }
+                setItem(item);
+              }
+              function setItem(item) {
+                let cartItems = localStorage.getItem("cartItems");
+                cartItems = JSON.parse(cartItems);
+                if (cartItems != null) {
+                  if (cartItems[item.cartItemAdded] == undefined) {
+                    cartItems = {
+                      ...cartItems,
+                      [item.cartItemAdded]: item,
+                    };
+                  }
+                  cartItems[item.cartItemAdded].inCartNumber += 1;
+                } else {
+                  item.inCartNumber = 1;
+                  cartItems = {
+                    [item.cartItemAdded]: item,
+                  };
+                }
+                localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+                document
+                  .querySelector("#pop-up-overlay")
+                  .classList.add("active");
+                document.querySelector(".popup").classList.add("pp-active");
+              }
+            }
+          }
+        };
+        xhr.open("GET", url, true);
+        xhr.send();
+      }
+      function imageDialogClose() {
+        document.querySelector(".popup").classList.remove("pp-active");
+        document.querySelector("#pop-up-overlay").classList.remove("active");
+        window.location.reload();
+      }
     </script>
     <script src="./ym.min.js"></script>
   </body>

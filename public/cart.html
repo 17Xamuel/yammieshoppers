@@ -284,6 +284,10 @@
         width: 70vw;
         margin: 30px auto;
       }
+      .itm-r-lg:hover {
+        cursor: pointer;
+        color: #ffbb00;
+      }
       /*media*/
       @media screen and (max-width: 1024px) {
         .cart-itm-sm {
@@ -353,6 +357,15 @@
       }
       /*media end*/
     </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", (e) => {
+        sch(document.querySelector("#-is"), document.querySelector(".-sh"));
+        cnd(
+          localStorage.getItem("cartNumber"),
+          document.querySelector("#cartNumberItems")
+        );
+      });
+    </script>
   </head>
   <body>
     <div id="pop-up-overlay"></div>
@@ -673,23 +686,23 @@
           <button id="-o-st">Start Order</button>
         </div>
       </div>
-      <div class="-ct">
+      <div class="-ct -b-x">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <a href="../catalog.html?q=recently_veiwed">
-            <span>
-              See All
+          <a href="./catalog.html?q=recentlyviewed">
+            <span class="-ch-all-w-t">
+              Check
               <i class="fas fa-chevron-right"></i>
             </span>
           </a>
         </div>
-        <div class="-scroll -ct -ct-recently_viewed">
+        <div class="-scroll -ct -ct-recentlyviewed">
           <div class="item -ct-item -lazy">
             <img
-              src="../resources/cart-link.png"
+              src="./resources/cart-link.png"
               alt=""
               width="100px"
               height="75px"
@@ -698,7 +711,7 @@
           </div>
           <div class="item -ct-item -lazy">
             <img
-              src="../resources/cart-link.png"
+              src="./resources/cart-link.png"
               alt=""
               width="100px"
               height="75px"
@@ -707,7 +720,7 @@
           </div>
           <div class="item -ct-item -lazy">
             <img
-              src="../resources/cart-link.png"
+              src="./resources/cart-link.png"
               alt=""
               width="100px"
               height="75px"
@@ -716,7 +729,7 @@
           </div>
           <div class="item -ct-item -lazy">
             <img
-              src="../resources/cart-link.png"
+              src="./resources/cart-link.png"
               alt=""
               width="100px"
               height="75px"
@@ -725,7 +738,7 @@
           </div>
           <div class="item -ct-item -lazy">
             <img
-              src="../resources/cart-link.png"
+              src="./resources/cart-link.png"
               alt=""
               width="100px"
               height="75px"
@@ -734,7 +747,7 @@
           </div>
           <div class="item -ct-item -lazy">
             <img
-              src="../resources/cart-link.png"
+              src="./resources/cart-link.png"
               alt=""
               width="100px"
               height="75px"
@@ -746,12 +759,11 @@
       <div class="-ct">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
-
-        <div class="-ch-all">
-          <span>Recomended For You</span>
-          <a href="../catalog.html?q=recommended_for_you">
-            <span>
-              See All
+        <div class="-ch-all -ch-all-w">
+          <span>Recommended For You</span>
+          <a href="./catalog.html?q=recommendedforyou">
+            <span class="-ch-all-w-t">
+              Check
               <i class="fas fa-chevron-right"></i>
             </span>
           </a>
@@ -1236,8 +1248,8 @@
 
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/profile/rec");
       ctg(
-        document.querySelector(".-ct-recently_viewed"),
-        "/api/user/ct/profile/recently_viewed"
+        document.querySelector(".-ct-recentlyviewed"),
+        "/api/user/ct/profile/recentlyviewed"
       );
       function scr(b) {
         b.forEach((sc) => {
@@ -1269,7 +1281,7 @@
               group = "";
             _c.forEach((item) => {
               group += `
-            <div class="item -ct-item">
+            <a class="item -ct-item" href="./item.html?item=${item.id}">
               <img
                 src="../${JSON.parse(item.images)[0]}"
                 alt="${item.name}"
@@ -1288,7 +1300,7 @@
                     item.discount ? "UGX " + item.price : ""
                   }</div>
               </div>
-            </div>
+            </a>
             `;
             });
             c.innerHTML = group;
@@ -1369,8 +1381,13 @@
           document.querySelector(".-hlp").style.display = "none";
         }, 200);
       });
-
       //new header
+
+      //login_dialog
+      function imageDialogClose() {
+        document.querySelector(".popup").classList.remove("pp-active");
+        document.querySelector("#pop-up-overlay").classList.remove("active");
+      }
     </script>
     <script src="./ym.min.js"></script>
   </body>

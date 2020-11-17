@@ -21,6 +21,9 @@
   box-shadow: 0px 0px 5px #e2e2e2;
   border-radius: 5px;
 }
+.btn-add-to-cart:hover {
+  opacity: 0.8;
+}
 .current-price {
   border-top: 1px solid #c2c2c2;
   padding-top: 5px;
@@ -86,7 +89,7 @@
 }
 /*image dialog*/
 
-#pop-up-overlay.active {
+#pop-up-overlay-i.active {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -96,7 +99,7 @@
   z-index: 30;
   transition: all 0.3s ease-in-out;
 }
-.close-pp {
+.close-pp-i {
   position: absolute;
   top: 5px;
   right: 15px;
@@ -118,7 +121,7 @@
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.7);
 }
-.popup {
+.popup-i {
   background-color: white;
   width: 50vw;
   height: 75vh;
@@ -135,7 +138,7 @@
   max-width: 90%;
   z-index: 35;
 }
-.popup.pp-active {
+.popup-i.pp-active {
   transform: translate(-50%, -50%) scale(1);
 }
 /*image dialog*/
@@ -144,14 +147,20 @@
 }
 .other-img {
   border-radius: 5px;
+  margin: 1px 2px;
 }
 .other-img:hover {
   cursor: pointer;
   border: 1px solid #c2c2c2;
 }
 .product-name-dtl {
+  list-style-type: circle;
   padding: 2px 0px 5px 20px;
   border-bottom: 1px solid #c2c2c2;
+}
+.product-name-dt {
+  list-style-type: disc;
+  padding: 2px 0px 5px 20px;
 }
 
 @media screen and (max-width: 1024px) {

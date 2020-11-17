@@ -48,8 +48,20 @@ router.post("/customer/insert", async (req, res) => {
     }
   );
 });
-
-router.get("/search", async (req, res) => {
+router.get("/item/:id", (req, res) => {
+  conn.query(
+    `SELECT * FROM products WHERE id = ? `,
+    [req.params.id],
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+router.get("/search/:l-:h", async (req, res) => {
   let query = req.query.q;
   let patt = /\W/g;
   let checkQuery = patt.test(query);
@@ -57,16 +69,67 @@ router.get("/search", async (req, res) => {
     res.send([]);
     return;
   } else {
-    conn.query(
-      `SELECT * FROM products 
-        WHERE product LIKE '%${query}%' 
-          OR brand LIKE '%${query}%'
-          OR description LIKE '%${query}%'`,
-      (err, result) => {
-        if (err) throw err;
-        res.send(result);
+    // this query will be edited later when products increase number
+    let _query = "";
+    _query =
+      query == "foods" ||
+      query == "sandals" ||
+      query == "electronics" ||
+      query == "tshirts" ||
+      query == "shoes" ||
+      query == "phoneaccessories" ||
+      query == "phones" ||
+      query == "music" ||
+      query == "drinks" ||
+      query == "utensils" ||
+      query == "diy" ||
+      query == "stationery" ||
+      query == "laptopaccessories" ||
+      query == "computers" ||
+      query == "allproducts" ||
+      query == "all" ||
+      query == "recentlyviewed" ||
+      query == "recommendedforyou" ||
+      query == "gascookers" ||
+      query == "trending"
+        ? "SELECT * FROM products"
+        : `SELECT * FROM products 
+          WHERE product LIKE '%${query}%' 
+            OR brand LIKE '%${query}%'
+            OR description LIKE '%${query}%'`;
+    conn.query(_query, (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        if (req.params.l == "min") {
+          res.send(result);
+        } else {
+          if (parseInt(req.params.h) > 1) {
+            let newResult = result
+              .filter((item) => item.price >= parseInt(req.params.l))
+              .filter((item) => item.price <= parseInt(req.params.h));
+            if (newResult.length == 0) {
+              res.send([]);
+            } else {
+              res.send(newResult);
+            }
+          } else {
+            let newResult = result
+              .filter((item) => item.discount >= parseFloat(req.params.l) * 100)
+              .filter(
+                (item) => item.discount <= parseFloat(req.params.h) * 100
+              );
+            console.log(req.params.l, req.params.h);
+            if (newResult.length == 0) {
+              res.send([]);
+            } else {
+              console.log(newResult);
+              res.send(newResult);
+            }
+          }
+        }
       }
-    );
+    });
   }
 });
 
@@ -130,7 +193,7 @@ function rs(l) {
   return (
     (date.getDate() < 10
       ? "0" + date.getDate().toString()
-      : date.getDate.toString()) +
+      : date.getDate().toString()) +
     (date.getMonth() + 1).toString() +
     r
   );
@@ -163,11 +226,17 @@ router.post("/customer/order", (req, res) => {
 
 //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
-router.get("/ct/:ct/:nature", (req, res) => {
-  conn.query("SELECT * FROM products", (err, result) => {
-    if (err) throw err;
-    res.status(200).send(result);
+function category(ct, nature, res) {
+  conn.query(`SELECT * FROM products`, (err, result) => {
+    if (err) {
+      throw err;
+    } else {
+      res.send(result);
+    }
   });
+}
+router.get("/ct/:ct/:nature", (req, res) => {
+  category(req.params.ct, req.params.nature, res);
 });
 router.post("/customer/edit/:id", (req, res) => {
   conn.query(

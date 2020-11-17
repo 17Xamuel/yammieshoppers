@@ -528,7 +528,7 @@
             </span>
           </a>
         </div>
-        <div class="-scroll -ct -ct-recently_viewed">
+        <div class="-scroll -ct -ct-recentlyviewed">
           <div class="item -ct-item -lazy">
             <img
               src="../resources/cart-link.png"
@@ -591,7 +591,7 @@
 
         <div class="-ch-all">
           <span>Recomended For You</span>
-          <a href="../catalog.html?q=recommended_for_you">
+          <a href="../catalog.html?q=recommendedforyou">
             <span>
               See All
               <i class="fas fa-chevron-right"></i>
@@ -796,8 +796,8 @@
 
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/profile/rec");
       ctg(
-        document.querySelector(".-ct-recently_viewed"),
-        "/api/user/ct/profile/recently_viewed"
+        document.querySelector(".-ct-recentlyviewed"),
+        "/api/user/ct/profile/recentlyviewed"
       );
       function scr(b) {
         b.forEach((sc) => {
@@ -829,7 +829,7 @@
               group = "";
             _c.forEach((item) => {
               group += `
-            <div class="item -ct-item">
+            <a class="item -ct-item" href="../item.html?item=${item.id}">
               <img
                 src="../${JSON.parse(item.images)[0]}"
                 alt="${item.name}"
@@ -848,7 +848,7 @@
                     item.discount ? "UGX " + item.price : ""
                   }</div>
               </div>
-            </div>
+            </a>
             `;
             });
             c.innerHTML = group;
@@ -941,6 +941,14 @@
             .classList.replace("fa-chevron-up", "fa-chevron-down");
           document.querySelector(".-hlp").style.display = "none";
         }, 200);
+      });
+    </script>
+    <script>
+      document.querySelector("#logout").addEventListener("click", () => {
+        localStorage.removeItem(
+          "https://yammieshoppers.com/useLocalStorage/Storage"
+        );
+        window.location.assign("/");
       });
     </script>
     <!--scripts-->

@@ -936,7 +936,7 @@
               <div class="-i-item it-nm">Shoe Center</div>
             </div>
           </a>
-          <a class="" href="./catalog.html?q=phone-accessories">
+          <a class="" href="./catalog.html?q=phoneaccessories">
             <img
               src="./resources/studio-speech.png"
               alt="Phone Accessories"
@@ -1004,10 +1004,10 @@
               <div class="-i-item it-nm">Stationery</div>
             </div>
           </a>
-          <a class="" href="./catalog.html?q=laptop-accessories">
+          <a class="" href="./catalog.html?q=laptopaccessories">
             <img
               src="./resources/hp_battery.jpg"
-              alt="laptop-accessories"
+              alt="laptopaccessories"
               width="120"
               height="100"
             />
@@ -1034,7 +1034,7 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <a href="./catalog.html?q=recently_viewed">
+          <a href="./catalog.html?q=recentlyviewed">
             <span class="-ch-all-w-t">
               Check
               <i class="fas fa-chevron-right"></i>
@@ -1206,7 +1206,7 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recommended For You</span>
-          <a href="./catalog.html?q=recommended_for_you">
+          <a href="./catalog.html?q=recommendedforyou">
             <span class="-ch-all-w-t">
               Check
               <i class="fas fa-chevron-right"></i>
@@ -1297,14 +1297,14 @@
 
         <div class="-ch-all">
           <span>GAS COOKERS</span>
-          <a href="./catalog.html?q=gas-cookers">
+          <a href="./catalog.html?q=gascookers">
             <span class="-ch-all-t">
               See All
               <i class="fas fa-chevron-right"></i>
             </span>
           </a>
         </div>
-        <div class="-scroll -ct -ct-gas-cookers">
+        <div class="-scroll -ct -ct-gascookers">
           <div class="item -ct-item -lazy">
             <img
               src="./resources/cart-link.png"
@@ -1388,14 +1388,14 @@
 
         <div class="-ch-all">
           <span>Enhance Your Phone</span>
-          <a href="./catalog.html?q=phone-accessories">
+          <a href="./catalog.html?q=phoneaccessories">
             <span class="-ch-all-t">
               See All
               <i class="fas fa-chevron-right"></i>
             </span>
           </a>
         </div>
-        <div class="-scroll -ct -ct-phone-accessories">
+        <div class="-scroll -ct -ct-phoneaccessories">
           <div class="item -ct-item -lazy">
             <img
               src="./resources/cart-link.png"
@@ -1784,7 +1784,7 @@
               group = "";
             _c.forEach((item) => {
               group += `
-                    <div class="item -ct-item">
+                    <a class="item -ct-item" href="./item.html?item=${item.id}">
                       <img
                         src="${JSON.parse(item.images)[0]}"
                         alt="${item.name}"
@@ -1805,7 +1805,7 @@
                            item.discount ? "UGX " + item.price : ""
                          }</div>
                       </div>
-                    </div>
+                    </a>
                     `;
             });
             c.innerHTML = group;
@@ -1843,12 +1843,12 @@
         "/api/user/ct/index/trending"
       );
       ctg(
-        document.querySelector(".-ct-phone-accessories"),
-        "/api/user/ct/index/phone-accessories"
+        document.querySelector(".-ct-phoneaccessories"),
+        "/api/user/ct/index/phoneaccessories"
       );
       ctg(
-        document.querySelector(".-ct-gas-cookers"),
-        "/api/user/ct/index/gas-cookers"
+        document.querySelector(".-ct-gascookers"),
+        "/api/user/ct/index/gascookers"
       );
       ctg(document.querySelector(".-ct-rv"), "/api/user/ct/index/rv");
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/index/rec");

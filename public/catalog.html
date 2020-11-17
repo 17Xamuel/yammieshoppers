@@ -25,8 +25,15 @@
       .ctlg-ctr {
         display: flex;
       }
+      .-sr,
+      .-srpc {
+        display: none;
+      }
       .ctlg-nav-panel {
         padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
       .ctlg-itm-ctr {
         flex: 5;
@@ -96,7 +103,7 @@
           rgba(250, 164, 6, 0.9),
           rgba(250, 164, 6, 0.7)
         );
-        transform: scale(1.04);
+        opacity: 0.8;
       }
 
       /* price slider*/
@@ -790,9 +797,25 @@
     </div>
     <div class="ctlg-m-ctr" id="ctlg-m-ctr">
       <div class="ctlg-nav-panel">
-        <a href="/">Home</a> &gt;
-        <a href="./catalog.html?q=all-products">Catalog</a> &gt;
-        <span id="_sq"></span>
+        <div class="ctgl-nav">
+          <a href="/">Home</a> &gt;
+          <a href="./catalog.html?q=allproducts">Catalog</a> &gt;
+          <span id="_sq"></span>
+        </div>
+        <div class="ctlg-nav">
+          <div class="ctgl-nav -sr">
+            Sorting:
+            <span id="_ls"></span>
+            -
+            <span id="_hs"></span>
+          </div>
+          <div class="ctgl-nav -srpc">
+            & Sorting:
+            <span id="_lspc"></span>
+            -
+            <span id="_hspc"></span>
+          </div>
+        </div>
       </div>
       <div class="ctlg-ctr" id="ctlg-ctr">
         <div class="ctlg-itm-ctr">
@@ -838,37 +861,37 @@
               <input type="text" id="lower-p" value="0" name="lp" />
               <input type="text" id="higher-p" name="hp" />
             </div>
-            <button class="sort-btn" type="submit">Apply</button>
+            <button class="sort-btn" type="submit" id="_sbp">Apply</button>
           </form>
           <h3>Sort By Discount</h3>
-          <form action="" method="POST">
+          <form id="_sdiscount">
             <ul class="sort-list">
               <li class="input-field">
-                <input type="radio" name="_discount" id="" value="-10" />
+                <input type="radio" name="_discount" id="" value="1" />
                 <label for="discount"> &lt; 10%</label>
               </li>
               <li class="input-field">
-                <input type="radio" name="_discount" id="" value="10-20" />
+                <input type="radio" name="_discount" id="" value="2" />
                 <label for="discount">10% - 20%</label>
               </li>
               <li class="input-field">
-                <input type="radio" name="_discount" id="" value="20-30" />
+                <input type="radio" name="_discount" id="" value="3" />
                 <label for="discount">20% - 30%</label>
               </li>
               <li class="input-field">
-                <input type="radio" name="_discount" id="" value="30-40" />
+                <input type="radio" name="_discount" id="" value="4" />
                 <label for="discount">30% - 40%</label>
               </li>
               <li class="input-field">
-                <input type="radio" name="_discount" id="" value="40-50" />
+                <input type="radio" name="_discount" id="" value="5" />
                 <label for="discount">40% - 50%</label>
               </li>
               <li class="input-field">
-                <input type="radio" name="_discount" id="" value="50" />
+                <input type="radio" name="_discount" id="" value="6" />
                 <label for="discount"> &gt; 50%</label>
               </li>
             </ul>
-            <button class="sort-btn">Apply</button>
+            <button class="sort-btn" type="submit">Apply</button>
           </form>
         </div>
       </div>
@@ -878,7 +901,7 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <a href="./catalog.html?q=recently_viewed"></a>
+          <a href="./catalog.html?q=recentlyviewed"></a>
           <span class="-ch-all-w-t">
             Check
             <i class="fas fa-chevron-right"></i>
@@ -947,7 +970,7 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recommended For You</span>
-          <a href="./catalog.html?q=recommended_for_you"></a>
+          <a href="./catalog.html?q=recommendedforyou"></a>
           <span class="-ch-all-w-t">
             Check
             <i class="fas fa-chevron-right"></i>
@@ -1278,9 +1301,60 @@
       document.getElementById("s-word").innerText = validSearch;
       document.getElementById("_sq").innerHTML = `"${validSearch}"`;
       window.addEventListener("DOMContentLoaded", () => {
-        search(`/api/user/search?q=${validSearch}`);
+        search(`/api/user/search/min-max?q=${validSearch}`);
       });
       //search end
+      //sort
+      let _sp = document.querySelector("#sort-price-form");
+      _sp.addEventListener("submit", (e) => {
+        e.preventDefault();
+        l = document.querySelector("#lower-p").value;
+        h = document.querySelector("#higher-p").value;
+        search(`/api/user/search/${l}-${h}?q=${validSearch}`);
+        document.querySelector(".-sr").style.display = "inline-block";
+        document.querySelector("#_ls").innerHTML = l;
+        document.querySelector("#_hs").innerHTML = h;
+      });
+      let _sd = document.querySelector("#_sdiscount");
+      _sd.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let value =
+          Array.from(document.getElementsByName("_discount")).find(
+            (item) => item.checked
+          ).value || 120;
+        if (value == 1) {
+          search(`/api/user/search/${0}-${0.09}?q=${validSearch}`);
+          document.querySelector(".-srpc").style.display = "inline-block";
+          document.querySelector("#_lspc").innerHTML = "0%";
+          document.querySelector("#_hspc").innerHTML = "10%";
+        } else if (value == 2) {
+          search(`/api/user/search/${0.1}-${0.19}?q=${validSearch}`);
+          document.querySelector(".-srpc").style.display = "inline-block";
+          document.querySelector("#_lspc").innerHTML = "10%";
+          document.querySelector("#_hspc").innerHTML = "20%";
+        } else if (value == 3) {
+          search(`/api/user/search/${0.2}-${0.29}?q=${validSearch}`);
+          document.querySelector(".-srpc").style.display = "inline-block";
+          document.querySelector("#_lspc").innerHTML = "20%";
+          document.querySelector("#_hspc").innerHTML = "30%";
+        } else if (value == 4) {
+          search(`/api/user/search/${0.3}-${0.39}?q=${validSearch}`);
+          document.querySelector(".-srpc").style.display = "inline-block";
+          document.querySelector("#_lspc").innerHTML = "30%";
+          document.querySelector("#_hspc").innerHTML = "40%";
+        } else if (value == 5) {
+          search(`/api/user/search/${0.4}-${0.49}?q=${validSearch}`);
+          document.querySelector(".-srpc").style.display = "inline-block";
+          document.querySelector("#_lspc").innerHTML = "40%";
+          document.querySelector("#_hspc").innerHTML = "50%";
+        } else {
+          search(`/api/user/search/${0.5}-${1}?q=${validSearch}`);
+          document.querySelector(".-srpc").style.display = "inline-block";
+          document.querySelector("#_lspc").innerHTML = "50%";
+          document.querySelector("#_hspc").innerHTML = "100%";
+          console.log(value);
+        }
+      });
     </script>
     <script>
       function waitClose() {
@@ -1297,6 +1371,7 @@
       function imageDialogClose() {
         document.querySelector(".popup").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay").classList.remove("active");
+        window.location.reload();
       }
       //cart Display
       cartNumbersDisplay();
@@ -1411,7 +1486,7 @@
               group = "";
             _c.forEach((item) => {
               group += `
-                    <div class="item -ct-item">
+                   <a class="item -ct-item" href="./item.html?item=${item.id}">
                       <img
                         src="${JSON.parse(item.images)[0]}"
                         alt="${item.name}"
@@ -1432,7 +1507,7 @@
                            item.discount ? "UGX " + item.price : ""
                          }</div>
                       </div>
-                    </div>
+                    </a>
                     `;
             });
             c.innerHTML = group;
@@ -1485,7 +1560,7 @@
                 height="50%"
                 alt=""
               />
-                <span>Sorry, "${validSearch}" did not match any item.
+                <span>Sorry, "${validSearch}" OR your Sort did not match any item.
                 <br/>
                 Try Requesting Your Item.
                 </span>
@@ -1503,27 +1578,28 @@
                 searchData.length + " Products Got";
               searchData.forEach((itm) => {
                 itmsSearched += `
-              <article class="-test -catalog itm-searched">
+              <div class="-test -catalog itm-searched">
               <div class="a-s-discount">
                 <span class="d">
                   ${itm.discount !== null ? "-" + itm.discount + "%" : ""}
                 </span>
               </div>
-              <div class="itm-s-img">
+              <a class="itm-s-img" href="./item.html?item=${itm.id}">
                 <img
                   src="${JSON.parse(itm.images)[0]}"
                   alt="${itm.name}"
                   width="100%"
                   height="75%"
                 />
-              </div>
+              </a>
               <div class="itm-s-dtl">
                 <div class="seller">
                   <b>Seller:</b> Yammie Shoppers
                 </div>
-                <div class="itm-name" style="font-size:13.5px;">
+                <a class="itm-name" style="font-size:13.5px;" 
+                  href="./item.html?item=${itm.id}">
                   ${itm.product} - ${itm.description}
-                </div>
+                </a>
                 <div class="price-current">${
                   "UGX " +
                   (itm.discount
@@ -1566,13 +1642,12 @@
                   Add to Cart
                 </div>
               </div>
-            </article>`;
+            </div>`;
               });
               document.getElementById("s-itms-ctr").innerHTML = itmsSearched;
               document.getElementById(
                 "title"
               ).innerHTML = `${validSearch} &commat; Yammie. Online Shopping for Groceries`;
-
               let btns = document.querySelectorAll(".add-to-c");
               if (screen.availWidth < 768) {
                 btns.forEach((btn) => {
@@ -1606,7 +1681,7 @@
               </div>`;
                 setTimeout(() => {
                   popUp.innerHTML = pContent;
-                }, 2000);
+                }, 1500);
               }
               function cartNumbers(item) {
                 let cartNumber = parseInt(localStorage.getItem("cartNumber"));
