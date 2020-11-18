@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link
+      rel="shortcut icon"
+      href="./resources/cartlink.png"
+      type="image/x-icon"
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -61,6 +66,7 @@
                     class="form-control"
                     id="name"
                     autocomplete="off"
+                    required
                   />
                 </div>
                 <div class="form-group col-md-6">
@@ -70,6 +76,7 @@
                     class="form-control"
                     id="phone"
                     autocomplete="off"
+                    required
                   />
                 </div>
               </div>
@@ -81,6 +88,7 @@
                   id="email"
                   placeholder="Email"
                   autocomplete="off"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -91,6 +99,7 @@
                   id="bname"
                   placeholder="Business Name"
                   autocomplete="off"
+                  required
                 />
               </div>
               <div class="form-group">
@@ -101,11 +110,17 @@
                   id="location"
                   placeholder="Business Location"
                   autocomplete="off"
+                  required
                 />
               </div>
               <label for="Category">Category of Goods Sold</label>
               <div class="form-group">
-                <select name="category" class="form-control" id="category">
+                <select
+                  name="category"
+                  class="form-control"
+                  id="category"
+                  required
+                >
                   <option selected hidden value="">
                     Please Select Category
                   </option>
@@ -137,6 +152,7 @@
                     class="form-control"
                     id="password"
                     autocomplete="off"
+                    required
                   />
                 </div>
                 <div class="form-group col-md-6">
@@ -146,6 +162,7 @@
                     class="form-control"
                     id="pass-repeat"
                     autocomplete="off"
+                    required
                   />
                 </div>
               </div>

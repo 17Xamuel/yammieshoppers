@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="./images/letter_b_PNG27.png" />
+    <link rel="shortcut icon" href="../resources/cart-link.png" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
@@ -264,6 +264,50 @@
       </div>
     </div>
 
+    <!-- Notify Message -->
+    <div class="modal fade" id="notify">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Response</h5>
+          </div>
+          <div class="modal-body" id="notifyMessage"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End -->
+
+    <!-- clear -->
+    <div class="modal fade" id="clear">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Response</h5>
+          </div>
+          <div class="modal-body" id="clearMessage"></div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-danger"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end -->
+
     <!-- Footer -->
     <footer>
       <div class="container-fluid">
@@ -362,13 +406,13 @@
                             class="btn btn-sm btn-primary"data-name="${item.name}"
                             data-no="${item.inCartNumber}"data-id="${item.cartItemAdded}"
                             data-dis="${item.discount}"data-price="${item.price}"
+                            data-target="#notify" data-toggle="modal"
                             >Notify</button>
                           </td>
                           <td>
                             <button type="button"
-                            class="btn btn-sm btn-success"data-dis="${item.discount}"
-                            data-itd="${item.cartItemAdded}"data-price="${item.price}"
-                            data-name="${item.name}"data-no="${item.inCartNumber}"
+                            class="btn btn-sm btn-success" data-toggle="modal"
+                            data-itd="${item.cartItemAdded}"data-target="#clear"
                             >Clear</button>
                           </td>
                       </tr>`;
@@ -409,7 +453,8 @@
               const orderA = new XMLHttpRequest();
               orderA.onreadystatechange = () => {
                 if (orderA.status == 200 && orderA.readyState == 4) {
-                  console.log(orderA.responseText);
+                  document.getElementById("notifyMessage").innerHTML =
+                    orderA.responseText;
                 }
               };
               orderA.open("POST", "/api/admin/notifyOrder", true);

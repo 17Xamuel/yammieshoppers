@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="shortcut icon" href="./images/letter_b_PNG27.png" />
+    <link rel="shortcut icon" href="../resources/cart-link.png" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
@@ -339,6 +339,7 @@
               <button type="submit" class="btn btn-primary btn-block my-2">
                 Reject
               </button>
+              <h5 class="text-center text-danger" id="rejMessage"></h5>
             </form>
           </div>
           <div class="modal-footer">
@@ -441,7 +442,8 @@
         const rejPost = new XMLHttpRequest();
         rejPost.onreadystatechange = () => {
           if (rejPost.readyState == 4 && rejPost.status == 200) {
-            console.log(rejPost.responseText);
+            document.getElementById("rejMessage").innerHTML =
+              rejPost.responseText;
           }
         };
         rejPost.open("POST", `/api/admin/rejPost/${pId}`, true);

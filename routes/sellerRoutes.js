@@ -14,6 +14,8 @@ try {
       email,
       password,
       passwordConfirm,
+      category,
+      businessname,
     } = req.body;
     conn.query(
       "SELECT email FROM sellers  WHERE email=?",
@@ -42,6 +44,8 @@ try {
             phonenumber: phonenumber,
             location: location,
             password: hashedPassword,
+            businessname:businessname,
+            category:category
           },
           (err, results) => {
             if (err) {
