@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../admin/styles/home.css" />
     <style>
       .register {
-        width: 40%;
+        width: 80%;
         margin: auto;
       }
       @media (max-width: 768px) {
@@ -32,88 +32,129 @@
   </head>
   <body style="background-color: #eee">
     <section>
-      <div class="container mt-5 register">
+      <div class="container-fluid mt-1">
+        <div class="card card-common">
+          <div class="card-body text-center">
+            <img src="../resources/yammie.png" width="400" height="100" />
+            <div class="clearfix">
+              <a href="index.html" class="float-right font-weight-bold"
+                >Login</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container mt-3 register">
         <div class="card card-common">
           <div class="card-body">
-            <h4 class="text-center text-warning">Register</h4>
+            <h4 class="text-center text-warning">
+              Register to Sell on YammieShoppers
+            </h4>
             <form id="sellerForm">
-              <div class="form-group">
-                <label>Username</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  autocomplete="off"
-                  placeholder="Username"
-                  id="name"
-                  name="username"
-                  required
-                />
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="username">Username</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="Phonenumber">Phonenumber</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phone"
+                    autocomplete="off"
+                  />
+                </div>
               </div>
               <div class="form-group">
-                <label>Email</label>
+                <label for="email">Email</label>
                 <input
                   type="email"
                   class="form-control"
-                  autocomplete="off"
-                  placeholder="Email"
                   id="email"
-                  name="email"
-                  required
+                  placeholder="Email"
+                  autocomplete="off"
                 />
               </div>
               <div class="form-group">
-                <label>Location</label>
+                <label for="businessname">Business Name</label>
                 <input
                   type="text"
                   class="form-control"
+                  id="bname"
+                  placeholder="Business Name"
                   autocomplete="off"
-                  placeholder="Business Location"
-                  id="location"
-                  name="location"
-                  required
                 />
+              </div>
+              <div class="form-group">
+                <label for="businesslocation">Business Location</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="location"
+                  placeholder="Business Location"
+                  autocomplete="off"
+                />
+              </div>
+              <label for="Category">Category of Goods Sold</label>
+              <div class="form-group">
+                <select name="category" class="form-control" id="category">
+                  <option selected hidden value="">
+                    Please Select Category
+                  </option>
+                  <option value="Easy Market">Easy Market</option>
+                  <option value="Food & Drinks">Fast Food & Drinks</option>
+                  <option value="Computing & Accessories">
+                    Computing & Accessories
+                  </option>
+                  <option value="Phone & Accessories">
+                    Phone & Accessories
+                  </option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Kids section">Kids Section</option>
+                  <option value="Kitchen Staff & Utensils">
+                    Kitchen Staff & Utensils
+                  </option>
+                  <option value="Stationery">Stationery</option>
+                  <option value="Cleaning, Healthy & Beauty">
+                    Cleaning, Healthy & Beauty
+                  </option>
+                </select>
               </div>
 
-              <div class="form-group">
-                <label>Mobile Number</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  autocomplete="off"
-                  placeholder="Mobile Number"
-                  id="phone"
-                  name="phonenumber"
-                  required
-                />
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="password">Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="Phonenumber">Confirm Password</label>
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="pass-repeat"
+                    autocomplete="off"
+                  />
+                </div>
               </div>
-              <div class="form-group">
-                <label>Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  autocomplete="off"
-                  placeholder="Password"
-                  id="password"
-                  name="password"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label>Repeat Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  autocomplete="off"
-                  placeholder="Repeat Password"
-                  id="pass-repeat"
-                  required
-                />
-              </div>
+
               <button
                 type="submit"
                 class="btn btn-warning btn-block text-light"
-                data-toggle="modal"
                 data-target="#alert"
+                data-toggle="modal"
               >
                 Register
               </button>

@@ -7,6 +7,8 @@ sellerForm.addEventListener("submit", (e) => {
   seller.phonenumber = document.getElementById("phone").value;
   seller.location = document.getElementById("location").value;
   seller.password = document.getElementById("password").value;
+  seller.businessname = document.getElementById("bname").value;
+  seller.category = document.getElementById("category").value;
   seller.passwordConfirm = document.getElementById("pass-repeat").value;
 
   let sellerString = JSON.stringify(seller);
