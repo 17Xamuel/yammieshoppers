@@ -2,10 +2,10 @@ const express = require("express");
 const mysql = require("mysql");
 
 const conn = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "",
-  database: "check_cloud",
+  host: "us-cdbr-east-02.cleardb.com",
+  user: "b838eb930c84a9",
+  password: "3af0fe60",
+  database: "heroku_f4061a257bbaada",
 });
 
 conn.connect((err) => {
