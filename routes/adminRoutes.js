@@ -187,6 +187,9 @@ router.get("/clearOrder/:id",async(req,res)=>{
   conn.query("SELECT * FROM seller_orders WHERE id=?",[req.params.id],
   (err,result)=>{
     if(err) throw err;
+    if(!result){
+      return res.send("Order Already Cleared");
+    }
     conn.query("INSERT INTO cleared_orders SET ?",result,(error,results)=>{
       if(error) throw error;
       conn.query("DELETE FROM seller_orders WHERE id=?",[req.params.id],

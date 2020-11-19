@@ -216,6 +216,7 @@ router.post("/customer/order", (req, res) => {
       order_payment_method,
       c_id,
       order_number: rs(5),
+      order_date:new Date()
     },
     (err, result) => {
       if (err) throw err;
