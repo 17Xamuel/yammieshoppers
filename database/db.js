@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-const mysql = require("mysql");
+const mysql = require("mysql8");
 
 const MYSQL_CONFIG = {
   host: "yammie-db-secure-do-user-8336351-0.b.db.ondigitalocean.com",
@@ -15,7 +15,7 @@ const MYSQL_CONFIG = {
 const conn = mysql.createConnection(MYSQL_CONFIG);
 
 conn.connect((err) => {
-  if (err) throw err;
+  if (err) throw "An Error Occured: " + err;
   console.log("Database connected....");
 });
 
