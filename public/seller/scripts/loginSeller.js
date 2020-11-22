@@ -18,7 +18,7 @@ login.addEventListener("submit", (e) => {
           xhr.responseText
         );
 
-        window.location.assign("http://localhost:8000/seller/home.html");
+        window.location.assign("../home.html");
       }
     }
   };
