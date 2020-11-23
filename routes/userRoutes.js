@@ -32,6 +32,7 @@ router.post("/customer/insert", async (req, res) => {
         };
         conn.query("INSERT INTO customers SET ?", newUser, (err) => {
           if (err) {
+            console.log("Error: ", err);
             return res.status(500).send("Error in Registering");
           } else {
             conn.query(

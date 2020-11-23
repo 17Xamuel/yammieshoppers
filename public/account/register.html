@@ -816,11 +816,11 @@
                 "https://yammieshoppers.com/useLocalStorage/Storage",
                 xhr.responseText
               );
-              // location.replace("/");
+              location.replace("/");
             }
-            if (xhr.responseText === "Error in Registering") {
+            if (xhr.status == 500) {
               alert("An error Occured");
-              // window.location.reload();
+              window.location.reload();
             }
           };
           xhr.open("POST", "/api/user/customer/insert", true);
