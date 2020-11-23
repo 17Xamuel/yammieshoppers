@@ -32,7 +32,7 @@ router.post("/customer/insert", async (req, res) => {
         };
         conn.query("INSERT INTO customers SET ?", newUser, (err) => {
           if (err) {
-            return res.send("Error in Registering");
+            return res.status(500).send("Error in Registering");
           } else {
             conn.query(
               "INSERT INTO customer_address SET c_id = ?",
@@ -216,7 +216,7 @@ router.post("/customer/order", (req, res) => {
       order_payment_method,
       c_id,
       order_number: rs(5),
-      order_date:new Date()
+      order_date: new Date(),
     },
     (err, result) => {
       if (err) throw err;
