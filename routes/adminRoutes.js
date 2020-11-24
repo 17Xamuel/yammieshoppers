@@ -1,18 +1,18 @@
 const express = require("express");
 const conn = require("../database/db");
-const uuid=require("uuid");
+const uuid = require("uuid");
 
 const router = express.Router();
 
-router.post("/login",(req,res)=>{
-  const {email,password}=req.body;
-  let user=[];
-    if(email=="sam@mail.com" && password=="sam256"){
-       user=["Samuel","0756234512","Technician","sam@mail.com"];
-       res.send(user);
-    }else{
-      res.send("User Not Found");
-    }
+router.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  let user = [];
+  if (email == "yammieshoppers@gmail.com" && password == "yammieshoppers") {
+    user = ["Yammie", "0756234512", "Technician", "yammieshoppers@gmail.com"];
+    res.send(user);
+  } else {
+    res.send("User Not Found");
+  }
 });
 
 router.get("/customers", async (req, res) => {
@@ -22,11 +22,11 @@ router.get("/customers", async (req, res) => {
   });
 });
 
-router.get("/allProducts", async (req,res)=>{
-  conn.query("SELECT * FROM products", async (error,results)=>{
-    if(error) throw error;
-        res.json(results.length);
-      });
+router.get("/allProducts", async (req, res) => {
+  conn.query("SELECT * FROM products", async (error, results) => {
+    if (error) throw error;
+    res.json(results.length);
+  });
 });
 
 router.get("/sellerRequests", async (req, res) => {
@@ -41,7 +41,7 @@ router.get("/sellerRequests", async (req, res) => {
 
 router.get("/confirmSeller/:id", async (req, res) => {
   conn.query(
-    "SELECT *FROM pending_sellers WHERE id=?",
+    "SELECT * FROM pending_sellers WHERE id = ? ",
     [req.params.id],
     (err, result) => {
       if (err) {
@@ -73,7 +73,6 @@ router.get("/deleteSeller/:id", async (req, res) => {
     }
   );
 });
-
 
 router.get("/pendingProduct", async (req, res) => {
   conn.query(
@@ -121,8 +120,6 @@ router.get("/confirmProduct/:id", async (req, res) => {
   );
 });
 
-
-
 router.get("/orderNumber", async (req, res) => {
   conn.query(`SELECT * FROM pending_orders`, (err, result) => {
     if (err) throw err;
@@ -136,104 +133,143 @@ router.get("/pendingOrders", async (req, res) => {
     res.json(results);
   });
 });
-router.get("/pendingOrders/:id", async (req,res) =>{
-  conn.query(`SELECT * FROM pending_orders JOIN customers ON customers.c_id=pending_orders.c_id WHERE order_id=?`,[req.params.id], (err,results) =>{
-    if(err) throw err;
-    res.json(results);
-  });
-});
-
-router.get("/sellerInfo/:id",async(req,res)=>{
-  conn.query("SELECT sellers.id,username,phonenumber,location,email FROM sellers JOIN products ON sellers.id=products.seller_id WHERE products.id=?",
-  [req.params.id],(err,result)=>{
-    if(err) throw err;
-    res.send(result);
-  });
-});
-
-router.post("/notifyOrder",async (req,res)=>{
-  const {id,qty,product,price,amount,discount}=req.body;
-  conn.query(`INSERT INTO seller_orders SET ?`,{
-    id:uuid.v4(),
-    product_id:id,
-    order_price:price,
-    order_product:product,
-    order_qty:qty,
-    order_discount:discount,
-    order_amount:amount,
-  },(err,result)=>{
-    if(err) throw err;
-    res.send("Seller Notified");
-  });
-});
-
-router.get("/orderId/:id",async(req,res)=>{
-  conn.query("SELECT id FROM seller_orders WHERE product_id=?",[req.params.id],
-  (err,result)=>{
-    if(err) throw err;
-    res.send(result);
-  });
-});
-
-router.get("/product/:id",async(req,res)=>{
-  conn.query("SELECT id FROM seller_orders WHERE product_id=?",[req.params.id],
-  (err,result)=>{
-    if(err) throw err;
-    res.send(result);
-  });
-});
-
-router.get("/clearOrder/:id",async(req,res)=>{
-  conn.query("SELECT * FROM seller_orders WHERE id=?",[req.params.id],
-  (err,result)=>{
-    if(err) throw err;
-    if(!result){
-      return res.send("Order Already Cleared");
+router.get("/pendingOrders/:id", async (req, res) => {
+  conn.query(
+    `SELECT * FROM pending_orders JOIN customers ON customers.c_id=pending_orders.c_id WHERE order_id=?`,
+    [req.params.id],
+    (err, results) => {
+      if (err) throw err;
+      res.json(results);
     }
-    conn.query("INSERT INTO cleared_orders SET ?",result,(error,results)=>{
-      if(error) throw error;
-      conn.query("DELETE FROM seller_orders WHERE id=?",[req.params.id],
-      (errs,queryResult)=>{
-        if(errs) throw errs;
-        res.send("Order Cleared");
-      });
-    });
-  });
+  );
 });
 
-router.get("/rejected/:id",async(req,res)=>{
-  conn.query(`SELECT product,price,quantity,seller_id FROM pending_products
-  WHERE id=?`,[req.params.id],(err,result)=>{
-    if(err) throw err;
-    res.send(result);
-  });
+router.get("/sellerInfo/:id", async (req, res) => {
+  conn.query(
+    "SELECT sellers.id,username,phonenumber,location,email FROM sellers JOIN products ON sellers.id=products.seller_id WHERE products.id=?",
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
 });
 
-router.post("/rejPost/:id",async(req,res)=>{
-  const {name,price,quantity,reason,seller_id}=req.body;
-  conn.query(`SELECT images FROM pending_products WHERE id=?`,[req.params.id],
-  (err,result)=>{
-    if(err) throw err;
-    let image=JSON.stringify(result);
-    conn.query(`INSERT INTO rejected_products SET ?`,{
-      id:uuid.v4(),
-      name:name,
-      price:price,
-      quantity:quantity,
-      images:image,
-      seller_id:seller_id,
-      reason:reason,
-    },(error,results)=>{
-      if(error) throw error;
-      conn.query(`DELETE FROM pending_products WHERE id=?`,[req.params.id],
-      (errs,queryResult)=>{
-        if(errs) throw errs;
-        res.send("Product Rejected");
-      });
-    });
-  });
+router.post("/notifyOrder", async (req, res) => {
+  const { id, qty, product, price, amount, discount } = req.body;
+  conn.query(
+    `INSERT INTO seller_orders SET ?`,
+    {
+      id: uuid.v4(),
+      product_id: id,
+      order_price: price,
+      order_product: product,
+      order_qty: qty,
+      order_discount: discount,
+      order_amount: amount,
+    },
+    (err, result) => {
+      if (err) throw err;
+      res.send("Seller Notified");
+    }
+  );
 });
 
+router.get("/orderId/:id", async (req, res) => {
+  conn.query(
+    "SELECT id FROM seller_orders WHERE product_id=?",
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
 
+router.get("/product/:id", async (req, res) => {
+  conn.query(
+    "SELECT id FROM seller_orders WHERE product_id=?",
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.get("/clearOrder/:id", async (req, res) => {
+  conn.query(
+    "SELECT * FROM seller_orders WHERE id=?",
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      if (!result) {
+        return res.send("Order Already Cleared");
+      }
+      conn.query(
+        "INSERT INTO cleared_orders SET ?",
+        result,
+        (error, results) => {
+          if (error) throw error;
+          conn.query(
+            "DELETE FROM seller_orders WHERE id=?",
+            [req.params.id],
+            (errs, queryResult) => {
+              if (errs) throw errs;
+              res.send("Order Cleared");
+            }
+          );
+        }
+      );
+    }
+  );
+});
+
+router.get("/rejected/:id", async (req, res) => {
+  conn.query(
+    `SELECT product,price,quantity,seller_id FROM pending_products
+  WHERE id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.post("/rejPost/:id", async (req, res) => {
+  const { name, price, quantity, reason, seller_id } = req.body;
+  conn.query(
+    `SELECT images FROM pending_products WHERE id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      let image = JSON.stringify(result);
+      conn.query(
+        `INSERT INTO rejected_products SET ?`,
+        {
+          id: uuid.v4(),
+          name: name,
+          price: price,
+          quantity: quantity,
+          images: image,
+          seller_id: seller_id,
+          reason: reason,
+        },
+        (error, results) => {
+          if (error) throw error;
+          conn.query(
+            `DELETE FROM pending_products WHERE id=?`,
+            [req.params.id],
+            (errs, queryResult) => {
+              if (errs) throw errs;
+              res.send("Product Rejected");
+            }
+          );
+        }
+      );
+    }
+  );
+});
 
 module.exports = router;
