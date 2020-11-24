@@ -16,7 +16,7 @@ app.use("/api/sellers/", require("./routes/sellerRoutes"));
 function getStorage(id) {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "uploads/images/products/");
+      cb(null, "/uploads/images/products/");
     },
     filename: (req, file, cb) => {
       cb(null, id + "-" + file.originalname);
@@ -32,7 +32,6 @@ function getUpload(id) {
 app.use(express.static("public"));
 
 app.post("/addProduct", async (req, res) => {
- 
   let productId = uuid.v4();
 
   let upload = getUpload(productId);
@@ -54,10 +53,10 @@ app.post("/addProduct", async (req, res) => {
       discount,
       seller_id,
       quantity,
-      specification
+      specification,
     } = req.body;
-    
-    let specify=JSON.stringify(req.body.specification);
+
+    let specify = JSON.stringify(req.body.specification);
 
     conn.query(
       "INSERT INTO pending_products SET ? ",
@@ -73,7 +72,7 @@ app.post("/addProduct", async (req, res) => {
         images: path,
         seller_id: seller_id,
         quantity: quantity,
-        specifications:specify,
+        specifications: specify,
       },
       (err, results) => {
         if (err) {
