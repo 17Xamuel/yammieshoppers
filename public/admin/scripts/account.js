@@ -2,7 +2,7 @@ function logout() {
   let logout = document.getElementById("alg");
   logout.addEventListener("click", (e) => {
     localStorage.removeItem("admin/yammie");
-    window.location.assign("index.html");
+    window.location.assign("index");
   });
 }
 logout();

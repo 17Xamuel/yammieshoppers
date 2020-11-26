@@ -14,7 +14,7 @@ xhr.onreadystatechange = () => {
       row += `<tr>
                       <td>
                         <img
-                          src="/${images[0]}"
+                          src="${images[0]}"
                           width="50"
                           height="50"
                           class="rounded-circle"
@@ -26,7 +26,7 @@ xhr.onreadystatechange = () => {
                       <td>
                         <span class="badge badge-danger w-75 py-2">Pending</span>
                       </td>
-                      <td><a href="productdetails.html?pendingProduct=${PendingProduct.id}">
+                      <td><a href="productdetails?pendingProduct=${PendingProduct.id}">
                       <button type="button" class="btn btn-info btn-sm">Details</button>
                       </a></td>
                     </tr>`;
@@ -36,7 +36,3 @@ xhr.onreadystatechange = () => {
 };
 xhr.open("GET", `/api/sellers/getPendingProducts/${sellerId}`, true);
 xhr.send();
-
-
-
-

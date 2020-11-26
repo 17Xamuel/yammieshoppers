@@ -42,7 +42,7 @@
     <title>Yammie | Add Your Item</title>
     <script>
       if (document.referrer == "") {
-        self.location = "index.html";
+        self.location = "index";
       }
     </script>
   </head>
@@ -75,16 +75,14 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a
-                    href="home.html"
-                    class="nav-link text-white p-3 mb-2 current"
+                  <a href="home" class="nav-link text-white p-3 mb-2 current"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
                   >
                 </li>
                 <li class="nav-item current">
                   <a
-                    href="product.html"
+                    href="product"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-table text-light fa-lg mr-3"></i>My
                     Products</a
@@ -93,7 +91,7 @@
 
                 <li class="nav-item">
                   <a
-                    href="orders.html"
+                    href="orders"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-bag text-light fa-lg mr-3"></i>My
                     Orders</a
@@ -102,7 +100,7 @@
 
                 <li class="nav-item">
                   <a
-                    href="profile.html"
+                    href="profile"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-user text-light fa-lg mr-3"></i>My
                     Profile</a
@@ -500,7 +498,7 @@
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("index.html");
+          window.location.assign("index");
         });
       }
       lg();
@@ -508,7 +506,7 @@
       function ref() {
         let page = document.getElementById("air");
         page.addEventListener("click", (e) => {
-          window.location.reload("add-item.html");
+          window.location.reload("add-item");
         });
       }
       ref();

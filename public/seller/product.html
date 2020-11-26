@@ -37,7 +37,7 @@
     />
     <script>
       if (document.referrer == "") {
-        self.location = "index.html";
+        self.location = "index";
       }
     </script>
   </head>
@@ -67,27 +67,27 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a href="home.html" class="nav-link text-white p-3 mb-2"
+                  <a href="home" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
                   >
                 </li>
                 <li class="nav-item current">
-                  <a href="product.html" class="nav-link text-white p-3 mb-2"
+                  <a href="product" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-table text-light fa-lg mr-3"></i>My
                     Products</a
                   >
                 </li>
 
                 <li class="nav-item">
-                  <a href="orders.html" class="nav-link text-white p-3 mb-2"
+                  <a href="orders" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-shopping-bag text-light fa-lg mr-3"></i>My
                     Orders</a
                   >
                 </li>
 
                 <li class="nav-item">
-                  <a href="profile.html" class="nav-link text-white p-3 mb-2"
+                  <a href="profile" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-user text-light fa-lg mr-3"></i>My
                     Profile</a
                   >
@@ -169,7 +169,7 @@
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-12">
-                <a href="add-item.html"
+                <a href="add-item"
                   ><button
                     type="button"
                     class="btn btn-info btn-md my-3 ml-auto"
@@ -281,7 +281,7 @@
            <tr>
                 <td>
                   <img
-                    src="/${image[0]}"
+                    src="${image[0]}"
                     width="50"
                     height="50"
                     class="rounded-circle"
@@ -294,7 +294,7 @@
                   <span class="badge badge-success w-75 py-2">Approved</span>
                 </td>
                   <td>
-                    <a href="productdetails.html?approvedProduct=${approvedProduct.id}">
+                    <a href="productdetails?approvedProduct=${approvedProduct.id}">
                     <button type="button" class="btn btn-info btn-sm">Details</button></a>
                   </td>
                 </tr>`;
@@ -316,7 +316,7 @@
             let rejectedimage = JSON.parse(outcome.images);
             rejectedProducts += `<tr>
                 <td>
-                  <img src="/${JSON.parse(rejectedimage[0].images)[0]}"
+                  <img src="${JSON.parse(rejectedimage[0].images)[0]}"
                   width="50" height="50"
                   class="rounded-circle"/>
                 </td>
@@ -355,7 +355,7 @@
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("index.html");
+          window.location.assign("index");
         });
       }
       lg();

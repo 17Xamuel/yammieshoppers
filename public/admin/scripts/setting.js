@@ -1,4 +1,3 @@
-
 const xhr = new XMLHttpRequest();
 xhr.onreadystatechange = () => {
   if (xhr.readyState == 4 && xhr.status == 200) {
@@ -11,7 +10,7 @@ xhr.onreadystatechange = () => {
       rows += ` <tr>
                       <td>
                         <img
-                          src="/${images[0]}"
+                          src="${images[0]}"
                           width="50"
                           height="50"
                           class="rounded-circle"
@@ -21,7 +20,7 @@ xhr.onreadystatechange = () => {
                       <td>${pendingProduct.price}</td>
                       <td>${pendingProduct.description}</td>
                       <td>
-                      <a href="product-details.html?item=${pendingProduct.id}">
+                      <a href="product-details?item=${pendingProduct.id}">
                       <button type="submit" class="btn btn-info btn-sm"
                         data-id="${pendingProduct.id}">
                           Details

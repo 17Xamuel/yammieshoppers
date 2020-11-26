@@ -34,7 +34,7 @@
 
     <title>Product Details</title>
     <script>
-      if (document.referrer == "") window.location.assign("./index.html");
+      if (document.referrer == "") window.location.assign("./index");
     </script>
   </head>
 
@@ -70,16 +70,14 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a
-                    href="home.html"
-                    class="nav-link text-white p-3 mb-2 current"
+                  <a href="home" class="nav-link text-white p-3 mb-2 current"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
                 </li>
 
                 <li class="nav-item">
                   <a
-                    href="sales.html"
+                    href="sales"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
@@ -87,7 +85,7 @@
                 </li>
                 <li class="nav-item">
                   <a
-                    href="analytics.html"
+                    href="analytics"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-chart-line text-light fa-lg mr-3"></i
                     >Analytics</a
@@ -96,14 +94,14 @@
 
                 <li class="nav-item">
                   <a
-                    href="profile.html"
+                    href="profile"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
                   >
                 </li>
                 <li class="nav-item current">
                   <a
-                    href="settings.html"
+                    href="settings"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Settings</a
@@ -111,7 +109,7 @@
                 </li>
                 <li class="nav-item">
                   <a
-                    href="upload.html"
+                    href="upload"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
                     >Uploads</a
@@ -401,7 +399,7 @@
           for (i = 0; i < images.length; i++) {
             data += `
               <li class="list-inline-item">
-                <img src="/${images[i]}" width="100" height="100"/>
+                <img src="${images[i]}" width="100" height="100"/>
                 </li>`;
           }
           document.getElementById("-img").innerHTML = data;
@@ -461,7 +459,7 @@
       function acp() {
         let acceptProduct = document.getElementById("acceptProduct");
         acceptProduct.addEventListener("click", (e) => {
-          window.location.assign("settings.html");
+          window.location.assign("settings");
         });
       }
       acp();

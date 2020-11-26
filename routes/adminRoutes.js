@@ -135,7 +135,8 @@ router.get("/pendingOrders", async (req, res) => {
 });
 router.get("/pendingOrders/:id", async (req, res) => {
   conn.query(
-    `SELECT * FROM pending_orders JOIN customers ON customers.c_id=pending_orders.c_id WHERE order_id=?`,
+    `SELECT * FROM pending_orders JOIN customers ON customers.c_id=pending_orders.c_id 
+    JOIN customer_address ON customers.c_id=customer_address.c_id WHERE order_id=?`,
     [req.params.id],
     (err, results) => {
       if (err) throw err;

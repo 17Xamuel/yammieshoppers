@@ -1,9 +1,9 @@
 const express = require("express");
-const path = require("path");
-const fs = require("fs");
 const multer = require("multer");
 const uuid = require("uuid");
 const conn = require("./database/db.js");
+const aws = require("aws-sdk");
+const multerS3 = require("multer-s3");
 const PORT = process.env.PORT || 8000;
 
 const app = express();
@@ -13,23 +13,48 @@ app.use("/api/admin/", require("./routes/adminRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
 app.use("/api/sellers/", require("./routes/sellerRoutes"));
 
-function getStorage(id) {
-  const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "/uploads/images/products/");
-    },
-    filename: (req, file, cb) => {
-      cb(null, id + "-" + file.originalname);
-    },
-  });
-  return storage;
-}
+app.use(express.static("public", { extensions: ["html", "htm"] }));
+
+//spaces for image files
+
+// Set S3 endpoint to DigitalOcean Spaces
+const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
+const s3 = new aws.S3({
+  endpoint: spacesEndpoint,
+});
+
+// Change bucket property to your Space name
 function getUpload(id) {
-  const upload = multer({ storage: getStorage(id) }).array("images");
+  let upload = multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: "yammie",
+      acl: "public-read",
+      key: function (request, file, cb) {
+        cb(null, id + "-" + file.originalname);
+      },
+    }),
+  }).array("images");
   return upload;
 }
 
-app.use(express.static("public"));
+//spaces for image files
+
+// function getStorage(id) {
+//   const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//       cb(null, "/uploads/images/products/");
+//     },
+//     filename: (req, file, cb) => {
+//       cb(null, id + "-" + file.originalname);
+//     },
+//   });
+//   return storage;
+// }
+// function getUpload(id) {
+//   const upload = multer({ storage: getStorage(id) }).array("images");
+//   return upload;
+// }
 
 app.post("/addProduct", async (req, res) => {
   let productId = uuid.v4();
@@ -39,9 +64,8 @@ app.post("/addProduct", async (req, res) => {
     if (err) throw err;
     let imagePaths = [];
     req.files.forEach((file) => {
-      imagePaths.push(file.path);
+      imagePaths.push("https://yammie.nyc3.digitaloceanspaces.com/" + file.key);
     });
-
     let path = JSON.stringify(imagePaths);
     const {
       product,
@@ -56,8 +80,7 @@ app.post("/addProduct", async (req, res) => {
       specification,
     } = req.body;
 
-    let specify = JSON.stringify(req.body.specification);
-
+    let specifyProduct = JSON.stringify(specification);
     conn.query(
       "INSERT INTO pending_products SET ? ",
       {
@@ -72,7 +95,7 @@ app.post("/addProduct", async (req, res) => {
         images: path,
         seller_id: seller_id,
         quantity: quantity,
-        specifications: specify,
+        specifications: specifyProduct,
       },
       (err, results) => {
         if (err) {
@@ -82,29 +105,29 @@ app.post("/addProduct", async (req, res) => {
     );
   });
 });
-app.get("/uploads/images/products/:imageName", async (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "uploads", "images", "products", req.params.imageName)
-  );
-});
+// app.get("image/:imageName", async (req, res) => {
+//   res.sendFile(
+//     path.join(__dirname, "uploads", "images", "products", req.params.imageName)
+//   );
+// });
 
 // delete image function'?
-function deleteImages(image) {
-  let imagePath = path.join(__dirname, image);
-  fs.unlink(imagePath, (err) => {
-    if (err) throw err;
-  });
-}
+// function deleteImages(image) {
+//   let imagePath = path.join(__dirname, image);
+//   fs.unlink(imagePath, (err) => {
+//     if (err) throw err;
+//   });
+// }
 app.delete("/deleteProduct/:id", async (req, res) => {
   conn.query(
     "SELECT images from pending_products WHERE id = ? ",
     [req.params.id],
     (err, results) => {
       if (err) throw "Error" + err;
-      let images = JSON.parse(results[0].images);
-      images.forEach((image) => {
-        deleteImages(image);
-      });
+      // let images = JSON.parse(results[0].images);
+      // images.forEach((image) => {
+      //   deleteImages(image);
+      // });
       conn.query(
         "DELETE FROM pending_products WHERE id = ? ",
         [req.params.id],
@@ -117,11 +140,11 @@ app.delete("/deleteProduct/:id", async (req, res) => {
   );
 });
 
-app.get("/uploads/images/products/:imageName", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "uploads", "images", "products", req.params.imageName)
-  );
-});
+// app.get("/uploads/images/products/:imageName", (req, res) => {
+//   res.sendFile(
+//     path.join(__dirname, "uploads", "images", "products", req.params.imageName)
+//   );
+// });
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}...`);
