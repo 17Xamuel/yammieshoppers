@@ -4,6 +4,10 @@
   color: white;
   padding: 0px 180px;
 }
+.-b-ctr {
+  width: 1200px;
+  margin: 0px auto;
+}
 .-s-sm {
   display: none;
 }
@@ -143,12 +147,12 @@
 }
 .search-nav {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   margin: 0px auto;
   height: 8vh;
   min-height: fit-content;
-  width: 80vw;
+  width: 1200px;
 }
 .nav {
   z-index: 20;
