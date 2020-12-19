@@ -31,7 +31,6 @@
     <style>
       body {
         background-color: #eee;
-        
       }
       .login-form {
         width: 340px;
@@ -64,62 +63,67 @@
   </head>
 
   <body>
-     
     <section>
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row text-center">
+            <div class="row mt-md-3 pt-md-5">
               <div class="col-xl-6 col-12 mb-4 mb-xl-0">
-                <img src="../resources/Artboard 1.png" heihght="500" width="500" alt="logo">
+                <img
+                  src="../resources/Artboard 1.png"
+                  heihght="500"
+                  width="500"
+                  alt="logo"
+                />
+              </div>
+              <div class="col-xl-6 col-12 login-form">
+                <form id="loginForm">
+                  <h2 class="text-center">Log in</h2>
+                  <div class="form-group">
+                    <input
+                      type="email"
+                      class="form-control"
+                      placeholder="Email"
+                      required="required"
+                      id="email"
+                      name="email"
+                      autocomplete="off"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      placeholder="Password"
+                      required="required"
+                      id="password"
+                      name="password"
+                      autocomplete="off"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <button
+                      type="submit"
+                      class="btn btn-block text-light"
+                      style="background-color: orange"
+                    >
+                      Log in
+                    </button>
+                  </div>
+                  <div class="clearfix">
+                    <label class="float-left form-check-label"
+                      ><input type="checkbox" /> Remember me</label
+                    >
+                    <a href="#" class="float-right">Forgot Password?</a>
+                  </div>
+                  <h5 class="text-center text-danger" id="message"></h5>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    <div class="col-xl-6 col-12 login-form">
-      <form id="loginForm">
-        <h2 class="text-center">Log in</h2>
-        <div class="form-group">
-          <input
-            type="email"
-            class="form-control"
-            placeholder="Email"
-            required="required"
-            id="email"
-            name="email"
-            autocomplete="off"
-          />
-        </div>
-        <div class="form-group">
-          <input
-            type="password"
-            class="form-control"
-            placeholder="Password"
-            required="required"
-            id="password"
-            name="password"
-            autocomplete="off"
-          />
-        </div>
-        <div class="form-group">
-          <button
-            type="submit"
-            class="btn btn-block text-light"
-            style="background-color: orange"
-          >
-            Log in
-          </button>
-        </div>
-        <div class="clearfix">
-          <label class="float-left form-check-label"
-            ><input type="checkbox" /> Remember me</label
-          >
-          <a href="#" class="float-right">Forgot Password?</a>
-        </div>
-        <h5 class="text-center text-danger" id="message"></h5>
-      </form>
-    </div>
+    </section>
     <script src="scripts/loginSeller.js"></script>
   </body>
 </html>
