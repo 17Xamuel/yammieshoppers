@@ -118,10 +118,12 @@
         const xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
-            localStorage.setItem("admin/yammie", xhr.responseText);
-            window.location.assign("http://localhost:8000/admin/home");
-          } else if (xhr.responseText == "User not Found") {
-            document.getElementById("message").innerHTML = xhr.responseText;
+            if (xhr.responseText == "User not Found") {
+              document.getElementById("message").innerHTML = xhr.responseText;
+            } else {
+              localStorage.setItem("admin/yammie", xhr.responseText);
+              window.location.assign("./home");
+            }
           }
         };
         xhr.open("POST", "/api/admin/login", true);

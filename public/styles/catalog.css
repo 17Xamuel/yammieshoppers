@@ -337,8 +337,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .popup {
   background-color: white;
-  width: 35%;
-  height: 30%;
+  width: 500px;
+  height: 250px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -374,7 +374,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 @media screen and (max-width: 768px) {
   .popup {
-    width: 75%;
+    width: 320px;
     height: 40%;
     padding-left: 20px;
     padding-top: 30px;
