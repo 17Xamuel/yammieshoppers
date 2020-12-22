@@ -11,7 +11,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <title>Login</title>
+    <title>Yammie-Login or SignUp</title>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
@@ -42,10 +42,6 @@
         padding: 30px;
       }
 
-      .login-form h2 {
-        margin: 0 0 15px;
-      }
-
       .form-control,
       .btn {
         min-height: 38px;
@@ -55,6 +51,12 @@
       .btn {
         font-size: 15px;
         font-weight: bold;
+      }
+      hr {
+        border: 0.5px solid;
+      }
+      link {
+        border-radius: 5px;
       }
     </style>
   </head>
@@ -75,7 +77,6 @@
               </div>
               <div class="col-xl-6 col-12 login-form text-center">
                 <form id="loginForm">
-                  <h2 class="text-center">Log in</h2>
                   <div class="form-group">
                     <input
                       type="email"
@@ -116,6 +117,15 @@
                     >
                     <a href="#" class="float-right">Forgot Password?</a>
                   </div>
+                  <hr />
+                  <a href="register.html">
+                    <button
+                      type="button"
+                      class="btn btn-warning btn-sm w-100 text-center link text-light"
+                    >
+                      Register
+                    </button></a
+                  >
                 </form>
               </div>
             </div>
@@ -125,26 +135,7 @@
     </section>
 
     <script src="scripts/loginSeller.js"></script>
-    <script>
-      function spinner() {
-        let loading = document.getElementById("loginButton");
-        let modalLoader = "";
-        loading.addEventListener("click", (e) => {
-          modalLoader = `
-        <div class="modal fade" id="alert">
-           <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-body">
-                <div class="spinner-border text-warning"></div>
-              </div>
-            </div>
-           </div>
-        </div>
-        `;
-        });
-      }
-      setTimeout(spinner, 5000);
-    </script>
+
     <div class="modal fade" id="loginResponse">
       <div class="modal-dialog">
         <div class="modal-content">

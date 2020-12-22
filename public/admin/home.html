@@ -32,6 +32,32 @@
     <link rel="stylesheet" href="./styles/home.css" />
 
     <title>Dashboard | Yammie, Online shopping platform</title>
+    <style>
+      .loader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 99;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .loader span {
+        width: 30px;
+      }
+      .loader .hidden {
+        animation: fadeOut 1s;
+        animation-fill-mode: forwards;
+      }
+      @keyframes fadeOut {
+        100% {
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+    </style>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -299,6 +325,12 @@
       </div>
     </section>
     <!-- End Tables -->
+
+    <!-- loader -->
+    <div class="loader">
+      <span class="spinner-border text-warning"></span>
+    </div>
+    <!-- End loader -->
 
     <!-- Activities/Quickpost -->
     <section>
@@ -677,6 +709,14 @@
       };
       srequest.open("GET", "/api/admin/sellerRequests", true);
       srequest.send();
+
+      function spinner() {
+        window.addEventListener("load", (e) => {
+          let loader = document.querySelector(".loader");
+          loader.className += "hidden";
+        });
+      }
+      setTimeout(spinner, 3000);
     </script>
     <!-- End Scripts -->
   </body>
