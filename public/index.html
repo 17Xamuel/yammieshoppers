@@ -3,44 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="keywords" content="yammieshoppers yammie lira uganda" />
+    <meta name="keywords" content="yammieshoppers, yammie lira uganda" />
+    <meta name="keywords" content="yammie, uganda online shop in uganda" />
     <link rel="shortcut icon" href="./resources/cartlink.png" />
     <link rel="stylesheet" href="./styles/footer2.css" />
     <link rel="stylesheet" href="./styles/header.css" />
     <link rel="stylesheet" href="./styles/main.css" />
     <link rel="stylesheet" href="./styles/products.css" />
-    <link
-      rel="stylesheet"
-      href="https://maxst.icons8.com/vue-static/landings/line-awesome/font-awesome-line-awesome/css/all.min.css"
-    />
     <link rel="stylesheet" href="./font-awesome/css/all.css" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/bowser@2.9.0/es5.js"></script>
     <title>
       Yammie &#x2223; Online Market For Groceries, Electric Appliances, and
       Other items
     </title>
     <style>
-      .back-to-top {
-        position: absolute;
-        height: 35px;
-        width: 35px;
-        background-color: #ffbb00;
-        border-radius: 50%;
-        box-shadow: 0px 0px #adadad;
-        right: -10%;
-        bottom: 1%;
-        z-index: 35;
-        text-align: center;
-        padding: 5px;
-        font-size: 20px;
-        color: white;
-        opacity: 0;
-        cursor: pointer;
-      }
       /* Slideshow container */
       .slideshow-container {
         position: relative;
@@ -316,12 +291,6 @@
         /*-ct-index*/
       }
       @media screen and (max-width: 1024px) {
-        .back-to-top {
-          position: relative;
-          border-radius: 5%;
-          width: 80%;
-          margin: 10px 0px;
-        }
         .container1 {
           height: 15vh;
         }
@@ -1453,9 +1422,6 @@
           </div>
         </div>
       </div>
-      <div class="back-to-top">
-        <i class="fas fa-chevron-up"></i>
-      </div>
     </div>
     <footer class="footer">
       <div class="ftr-sm-s">
@@ -1744,24 +1710,12 @@
       }
     </script>
     <script>
-      let topBtn = document.querySelector(".back-to-top");
       if (screen.availWidth <= 768) {
-        topBtn.innerHTML = `<i class="fas fa-arrow-up"></i> Back To Top`;
         document.querySelector("#logo").src = "./resources/cartlink.png";
         document.querySelector("#logo").style.width = "60px";
         document.querySelector("#logo").style.height = "30px";
       }
 
-      window.addEventListener("scroll", () => {
-        topBtn.style.opacity = 1;
-      });
-      topBtn.addEventListener("click", (e) => {
-        window.scroll({
-          top: 0,
-          left: 0,
-          behavior: "smooth",
-        });
-      });
       //scrolling through
       scl(document.querySelectorAll(".-sc-n"));
       scr(document.querySelectorAll(".-sc-b"));
@@ -1853,18 +1807,6 @@
       );
       ctg(document.querySelector(".-ct-rv"), "/api/user/ct/index/rv");
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/index/rec");
-      // PARSE USER AGENT
-      // let result = bowser.getParser(navigator.userAgent).getResult();
-      // // BROWSER INFO
-      // console.log(result.browser.name);
-      // console.log(result.browser.version);
-      // console.log(result.engine);
-      // // OPERATING SYSTEM
-      // console.log(result.os.name);
-      // console.log(result.os.version);
-      // console.log(result.os.versionName);
-      // // PLATFORM
-      // console.log(result.platform.type);
     </script>
     <script defer async src="../ym.min.js"></script>
     <!--scripts-->

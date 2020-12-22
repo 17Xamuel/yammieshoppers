@@ -42,18 +42,6 @@
   </head>
   <body style="background-color: #eee">
     <section>
-      <div class="container-fluid mt-1">
-        <div class="card card-common">
-          <div class="card-body text-center">
-            <img src="../resources/yammie.png" width="400" height="100" />
-            <div class="clearfix">
-              <a href="index" class="float-right font-weight-bold">Login</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section>
       <div class="container mt-3 register">
         <div class="card card-common">
           <div class="card-body">
@@ -117,34 +105,104 @@
                 />
               </div>
               <label for="Category">Category of Goods Sold</label>
-              <div class="form-group">
-                <select
-                  name="category"
-                  class="form-control"
-                  id="category"
-                  required
-                >
-                  <option selected hidden value="">
-                    Please Select Category
-                  </option>
-                  <option value="Easy Market">Easy Market</option>
-                  <option value="Food & Drinks">Fast Food & Drinks</option>
-                  <option value="Computing & Accessories">
-                    Computing & Accessories
-                  </option>
-                  <option value="Phone & Accessories">
-                    Phone & Accessories
-                  </option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Kids section">Kids Section</option>
-                  <option value="Kitchen Staff & Utensils">
-                    Kitchen Staff & Utensils
-                  </option>
-                  <option value="Stationery">Stationery</option>
-                  <option value="Cleaning, Healthy & Beauty">
-                    Cleaning, Healthy & Beauty
-                  </option>
-                </select>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckDefault"
+                />
+                <label class="form-check-label" for="flexCheckDefault">
+                  Clothes & Shoes
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  Cleaning,Health & Beauty
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  Kid's Section
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  Computing & Accessories
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  Electronics
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  Fast Food & Drinks
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  Stationery
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  Phone & Accessories
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="flexCheckChecked"
+                />
+                <label class="form-check-label" for="flexCheckChecked">
+                  Kitchenstaff & Utensils
+                </label>
               </div>
 
               <div class="form-row">
@@ -175,6 +233,7 @@
                 class="btn btn-warning btn-block text-light"
                 data-target="#alert"
                 data-toggle="modal"
+                id="registerButton"
               >
                 Register
               </button>
@@ -189,7 +248,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">YammieShoppers Response</h5>
+          <h5 class="modal-title">YammieShoppers</h5>
 
           <button type="button" class="close" data-dismiss="modal">
             &times;
@@ -197,13 +256,33 @@
         </div>
         <div class="modal-body text-center" id="outcome"></div>
         <div class="modal-footer">
-          <a href="/">
-            <button type="button" class="btn btn-danger">
-              Wait for Response
+          <a href="#">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              OK
             </button>
           </a>
         </div>
       </div>
     </div>
   </div>
+  <script>
+    function spinner() {
+      let loading = document.getElementById("registerButton");
+      let modalLoader = "";
+      loading.addEventListener("click", (e) => {
+        modalLoader = `
+        <div class="modal fade" id="alert">
+           <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="spinner-border text-warning"></div>
+              </div>
+            </div>
+           </div>
+        </div>
+        `;
+      });
+    }
+    setTimeout(spinner, 6000);
+  </script>
 </html>

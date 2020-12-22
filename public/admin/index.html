@@ -93,8 +93,10 @@
             type="submit"
             class="btn btn-block"
             style="background-color: orange"
+            data-toggle="modal"
+            data-target="logAlert"
           >
-            Log in
+            <span class="logText">Log in</span>
           </button>
         </div>
         <div class="clearfix">
@@ -130,6 +132,30 @@
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.send(adminString);
       });
+
+      // function load() {
+      //   let btns = document.getElementById("logBtn");
+      //   btns.classList.toggle("logButton");
+      // }
+
+      // function spinner() {
+      //   let load = document.getElementById("logButton");
+      //   let loader = "";
+      //   load.addEventListener("click", (e) => {
+      //     loader = `
+      //     <div class="modal fade" id="logAlert">
+      //       <div class="modal-dialog">
+      //         <div class="modal-content">
+      //           <div class="modal-body">
+      //             <div class="spinner-border text-warning"></div>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </div>
+      //     `;
+      //   });
+      // }
+      // setTimeout(spinner, 5000);
     </script>
   </body>
 </html>

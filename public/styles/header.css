@@ -2,7 +2,6 @@
   height: 50px;
   background-color: #000;
   color: white;
-  padding: 0px 180px;
 }
 .-b-ctr {
   width: 1200px;
@@ -150,8 +149,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 0px auto;
-  height: 8vh;
-  min-height: fit-content;
+  padding: 5px 0px;
   width: 1200px;
 }
 .nav {
@@ -163,7 +161,7 @@
 }
 .search {
   border: 1px solid rgb(0, 0, 0, 0.1);
-  padding: 5px 0px 5px 20px;
+  padding: 5px 0px 5px 15px;
   margin: 0px;
   border-radius: 30px;
   width: 32vw;

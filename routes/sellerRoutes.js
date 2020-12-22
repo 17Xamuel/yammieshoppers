@@ -18,7 +18,7 @@ try {
       businessname,
     } = req.body;
     conn.query(
-      "SELECT email FROM sellers  WHERE email=?",
+      "SELECT sellers.email,pending_sellers.email FROM sellers JOIN pending_sellers WHERE sellers.email=?",
       [email],
       async (err, results) => {
         if (err) {
@@ -71,7 +71,8 @@ try {
       [email],
       async (err, results) => {
         if (results.length == 0) {
-          return res.send("User not Found");
+          return res.send(`Your account hasnot been confirmed!! Please Wait if you had registered.
+          You can contact us on 0709857117 for assistance.Thanks`);
         } else {
           conn.query(
             "SELECT * FROM sellers WHERE email=?",

@@ -1,6 +1,7 @@
 .m-ctr {
   margin: 20px auto;
   width: 1200px;
+  min-width: 90vw;
 }
 .-ct {
   background-color: #fff;
