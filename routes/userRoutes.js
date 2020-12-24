@@ -1,6 +1,7 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
+const nodemailer = require("nodemailer");
 const router = express.Router();
 
 router.post("/customer/insert", async (req, res) => {
@@ -199,7 +200,7 @@ function rs(l) {
     r
   );
 }
-router.post("/customer/order", (req, res) => {
+router.post("/customer/order", async(req, res) => {
   const [
     order_payment_method,
     c_id,
@@ -222,9 +223,31 @@ router.post("/customer/order", (req, res) => {
     (err, result) => {
       if (err) throw err;
       res.send(order_payment_method);
-    }
+}
   );
 });
+   // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    service:"gmail",
+    auth: {
+      user: "theyammieinc@gmail.com",
+      pass: "yammieInc",
+    },
+  });
+
+  // send mail with defined transport object
+  let info = {
+    from:"theyammieinc@gmail.com",
+    to: "nzekakooza@gmail.com",
+    subject: "Yammie Order", 
+    text: "Hello Kakooza, your order has been successfully placed.Thanks", 
+  };
+
+ transporter.sendMail(info).then(function(response){
+   console.log("Email Sent!!!")
+ }).catch(function(err){
+   console.log("Error Ocurred!!!")
+ });
 
 //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
