@@ -1,8 +1,34 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
+const nodemailer = require('nodemailer');
 const router = express.Router();
 
+//for new user
+let newUser = {};
+let code = _c(7);
+//code
+function _c(l) {
+  let rc = "1927384560";
+  let r = "";
+  for (let i = 0; i < l; i++) {
+    r += rc.charAt(Math.floor(Math.random() * rc.length));
+  }
+  return (
+    "Y-" + r
+  );
+}
+//mailer
+let transporter = nodemailer.createTransport({
+  host:"smtp.domain.com",
+  secureConnection:false,
+  port:465,
+  auth: {
+    user: "info@yammieshoppers.com",
+    pass: "yammieShoppers@1"
+  }
+})
+//mailer
 router.post("/customer/insert", async (req, res) => {
   conn.query(
     `SELECT c_email FROM customers WHERE c_email = ?`,
@@ -21,7 +47,7 @@ router.post("/customer/insert", async (req, res) => {
           c_last_name,
         } = req.body;
         let c_id = uuid.v4();
-        let newUser = {
+        newUser = {
           c_id,
           c_email,
           c_gender,
@@ -30,25 +56,43 @@ router.post("/customer/insert", async (req, res) => {
           c_first_name,
           c_last_name,
         };
-        conn.query("INSERT INTO customers SET ?", newUser, (err) => {
-          if (err) {
-            console.log("Error: ", err);
-            return res.status(500).send("Error in Registering");
-          } else {
-            conn.query(
-              "INSERT INTO customer_address SET c_id = ?",
-              newUser.c_id,
-              (error) => {
-                if (error) throw error;
-              }
-            );
-            res.status(200).send(c_id);
-          }
+        let info = {
+          from: '"Yammie Shoppers"<info@yammieshoppers.com>',
+          to: c_email,
+          subject: "Confirming Your Account",
+          text: `Hello ${c_first_name}, confirm your email with this ${code}`,
+        };
+        transporter.sendMail(info).then(function (response) {
+          res.status(200).send('ok')
+        }).catch(function (err) {
+          console.log("Error Ocurred!!!")
         });
       }
     }
   );
 });
+router.post('/customer/confirm', (req, res) => {
+  if (req.body.fn == code) {
+    conn.query("INSERT INTO customers SET ?", newUser, (err) => {
+      if (err) {
+        return res.status(500).send("Error in Registering");
+      } else {
+        conn.query(
+          "INSERT INTO customer_address SET c_id = ?",
+          newUser.c_id,
+          (error) => {
+            if (error) throw error;
+          }
+        );
+        let id = newUser.c_id;
+        code, newUser = "";
+        res.status(200).send(id);
+      }
+    });
+  } else {
+    res.send("nm")
+  }
+})
 router.get("/item/:id", (req, res) => {
   conn.query(
     `SELECT * FROM products WHERE id = ? `,
@@ -74,25 +118,25 @@ router.get("/search/:l-:h", async (req, res) => {
     let _query = "";
     _query =
       query == "foods" ||
-      query == "sandals" ||
-      query == "electronics" ||
-      query == "tshirts" ||
-      query == "shoes" ||
-      query == "phoneaccessories" ||
-      query == "phones" ||
-      query == "music" ||
-      query == "drinks" ||
-      query == "utensils" ||
-      query == "diy" ||
-      query == "stationery" ||
-      query == "laptopaccessories" ||
-      query == "computers" ||
-      query == "allproducts" ||
-      query == "all" ||
-      query == "recentlyviewed" ||
-      query == "recommendedforyou" ||
-      query == "gascookers" ||
-      query == "trending"
+        query == "sandals" ||
+        query == "electronics" ||
+        query == "tshirts" ||
+        query == "shoes" ||
+        query == "phoneaccessories" ||
+        query == "phones" ||
+        query == "music" ||
+        query == "drinks" ||
+        query == "utensils" ||
+        query == "diy" ||
+        query == "stationery" ||
+        query == "laptopaccessories" ||
+        query == "computers" ||
+        query == "allproducts" ||
+        query == "all" ||
+        query == "recentlyviewed" ||
+        query == "recommendedforyou" ||
+        query == "gascookers" ||
+        query == "trending"
         ? "SELECT * FROM products"
         : `SELECT * FROM products 
           WHERE product LIKE '%${query}%' 

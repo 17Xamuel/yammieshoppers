@@ -2,7 +2,7 @@
   background-color: #000;
   color: #fff;
   height: fit-content;
-  margin-top: 15px;
+  /* margin-top: 15px; */
   padding: 25px 5px 40px 5px;
   font-size: 15px;
   opacity: 0.9;
@@ -10,7 +10,14 @@
 .ftr-app {
   margin-top: 10px;
 }
-
+.ftr-app > h3 {
+  padding-top: 10px;
+}
+.footer-h4 {
+  font-size: 17px;
+  opacity: 0.95;
+  font-weight: 400;
+}
 .ftr-sm-s {
   display: none;
 }
@@ -27,20 +34,28 @@
   align-items: flex-start;
 }
 #comment {
-  border: 0px;
+  font-size: 15px;
   outline: none;
   padding: 10px 5px;
   width: 250px;
   margin: 10px 5px;
-  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 #customer-email {
-  border: 0px;
+  font-size: 15px;
   outline: none;
-  padding: 8px 5px;
+  padding: 10px 5px;
   width: 250px;
-  margin: 15px 5px;
-  border-radius: 3px;
+  margin: 10px 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+#comment:focus,
+#customer-email:focus {
+  border: 1px solid #ffbb00;
+  box-shadow: 0px 0px 5px #ffbb00;
 }
 .icon-button > .fab {
   font-size: 1.5rem;
@@ -63,15 +78,17 @@
   outline: none;
   background-color: #ffbb00;
   margin: 5px 5px;
-  border-radius: 25px;
+  border-radius: 5px;
   width: 40%;
+  opacity: 0.8;
   transition: all 0.4s ease-in-out;
-  transform: scale(0.9);
 }
 .footer-form-button:hover {
-  transform: translateY(-2px);
-  transform: scale(1);
+  opacity: 1;
   cursor: pointer;
+}
+.ftr-message {
+  opacity: 0.8;
 }
 .footer-list {
   list-style-type: none;
@@ -87,9 +104,9 @@
 }
 .footer-list > li > a {
   color: white;
-
   transition: all 0.3s ease-in;
   text-decoration: none;
+  opacity: 0.8;
 }
 .footer-list > li > a:hover {
   text-decoration: none;

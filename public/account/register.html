@@ -156,6 +156,15 @@
         font-weight: bold;
         margin: 10px 20px;
       }
+      .-ldr{
+        margin: 5px 0px;
+        justify-content:center;
+        display: none;
+      }
+      .-confirm{
+        width: 100%;
+        border: 1px solid black;
+      }
       @media screen and (max-width: 1024px) {
         .cr-m-ctr {
           display: block;
@@ -565,6 +574,9 @@
               </datalist>
             </div>
           </div>
+          <div class="-ldr">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
           <div class="cr-btn-c">
             <button type="submit" class="cr-btn">Create Your Account</button>
             <span style="align-self: flex-end">
@@ -802,6 +814,11 @@
         } else {
           xhr = new XMLHttpRequest();
           xhr.onreadystatechange = () => {
+            if(xhr.readyState < 4){
+              document.querySelector('.-ldr').style.display = "flex";
+            }else{
+              document.querySelector('.-ldr').style.display = "none";
+            }
             if (xhr.readyState == 4 && xhr.status == 400) {
               document.querySelector("#used-e").style.opacity = "1";
               document.querySelector("#used-e").innerHTML = xhr.responseText;
@@ -809,16 +826,11 @@
                 document.querySelector("#used-e").style.opacity = "0";
               }, 10000);
             }
-            if (xhr.status == 200) {
-              localStorage.setItem(
-                "https://yammieshoppers.com/useLocalStorage/Storage",
-                xhr.responseText
-              );
-              location.replace("/");
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              location.replace("./confirm");
             }
-            if (xhr.status == 500) {
-              alert("An error Occured");
-              window.location.reload();
+            if (xhr.status != 200 && xhr.readyState == 4 && xhr.status != 400) {
+                window.alert("An Error Occurred...");
             }
           };
           xhr.open("POST", "/api/user/customer/insert", true);
@@ -877,7 +889,7 @@
       //check toggle a class
       acc.addEventListener("focus", (e) => {
         if (!yammie) {
-          window.location.assign("./account/login");
+          window.location.assign("./login");
         } else {
           e.target.style.color = "#ffbb00";
           document

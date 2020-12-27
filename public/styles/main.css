@@ -25,6 +25,7 @@ a {
 body {
   font-family: "Roboto", sans-serif;
   background-color: #faf5f5;
+  font-size: 14.5px;
 }
 .-b-x {
   box-shadow: 0px 0px 10px #cccbcb;
@@ -48,6 +49,33 @@ body {
 .btn:hover {
   opacity: 0.7;
 }
+
+.-is {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 17px;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  width: 200px;
+}
+/*no width*/
+.-is-nw {
+  outline: none;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.-is-nw:focus {
+  border: 1px solid #ffbb00;
+  box-shadow: 0px 0px 5px #ffbb00;
+}
+/*no width*/
+
+.-is:focus {
+  border: 1px solid #ffbb00;
+  box-shadow: 0px 0px 5px #ffbb00;
+}
+
 @media screen and (max-width: 768px) {
   body {
     background-color: #eee;
