@@ -226,30 +226,7 @@ router.post("/customer/order", async(req, res) => {
 }
   );
 });
-   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    service:"gmail",
-    auth: {
-      user: "theyammieinc@gmail.com",
-      pass: "yammieInc",
-    },
-  });
-
-  // send mail with defined transport object
-  let info = {
-    from:"theyammieinc@gmail.com",
-    to: "nzekakooza@gmail.com",
-    subject: "Yammie Order", 
-    text: "Hello Kakooza, your order has been successfully placed.Thanks", 
-  };
-
- transporter.sendMail(info).then(function(response){
-   console.log("Email Sent!!!")
- }).catch(function(err){
-   console.log("Error Ocurred!!!")
- });
-
-//trending category items
+ //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
 function category(ct, nature, res) {
   conn.query(`SELECT * FROM products`, (err, result) => {
