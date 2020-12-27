@@ -1,11 +1,7 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
-<<<<<<< HEAD
 const nodemailer = require('nodemailer');
-=======
-const nodemailer = require("nodemailer");
->>>>>>> 81b7c93b3ef96da8831c35c1381c2206f6687650
 const router = express.Router();
 
 //for new user
