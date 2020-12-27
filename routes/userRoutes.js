@@ -1,7 +1,11 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
+<<<<<<< HEAD
 const nodemailer = require('nodemailer');
+=======
+const nodemailer = require("nodemailer");
+>>>>>>> 81b7c93b3ef96da8831c35c1381c2206f6687650
 const router = express.Router();
 
 //for new user
@@ -243,7 +247,7 @@ function rs(l) {
     r
   );
 }
-router.post("/customer/order", (req, res) => {
+router.post("/customer/order", async(req, res) => {
   const [
     order_payment_method,
     c_id,
@@ -266,11 +270,10 @@ router.post("/customer/order", (req, res) => {
     (err, result) => {
       if (err) throw err;
       res.send(order_payment_method);
-    }
+}
   );
 });
-
-//trending category items
+ //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
 function category(ct, nature, res) {
   conn.query(`SELECT * FROM products`, (err, result) => {
