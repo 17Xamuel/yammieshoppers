@@ -1,101 +1,101 @@
-// function _dtmn(){
-
-// }
 class Deduct{
     constructor(product){
         this.product = product;
     }
     urgency(){
         if(this.product.urgent == 'express'){
-            return this.product.price * 0.02;
+            return 0.02;
         }
         else{
-            return this.product.price * 0.01;
+            return 0.01;
         }
     }
     qty(){
         if(this.product.qty == 'few'){
-            return this.product.price * 0.03;
+            return 0.03;
         }
         else{
-            return this.product.price * 0.01;
+            return 0.01;
         }
     }
     size(){
         if(this.product.size == 'big'){
-            return this.product.price * 0.02;
+            return 0.02;
         }
         else{
-            return this.product.price * 0.01;
+            return 0.01;
         }
     }
     weight(){
         if(this.product.weight == 'heavy'){
-            return this.product.price * 0.02;
+            return 0.02;
         }
         else{
-            return this.product.price * 0.01;
+            return 0.01;
         }
     }
     fragile(){
         if(this.product.fragile == true)
-            return this.product.price * 0.02;
+            return 0.02;
         else
-            return this.product.price * 0.01;
+            return 0.01;
     }
     location(){
         if(this.product.location == 'kla')
-            return this.product.price * 0.05;
+            return 0.05;
         else
-            return this.product.price * 0.02;
+            return 0.02;
     }
     userLocation(){
         let delivery = 0;
         switch (this.product.user) {
             case 'keturah':
-                delivery = this.product.price * 0.002
+                delivery = 0.002
                 break;
             case 'royal':
-                delivery = this.product.price * 0.002
+                delivery = 0.002
                 break;
             case 'maisha':
-                delivery = this.product.price * 0.0001
+                delivery = 0.0001
                 break;
             case 'pioneer':
-                delivery = this.product.price * 0.001
+                delivery = 0.001
                 break;
             case 'washington':
-                delivery = this.product.price * 0.0015
+                delivery = 0.0015
                 break;
             case 'st. peters':
-                delivery = this.product.price * 0.002
+                delivery = 0.002
                 break;
             case 'pacuwa':
-                delivery = this.product.price * 0.0025
+                delivery = 0.0025
                 break;
             case 'northern elite':
-                delivery = this.product.price * 0.001
+                delivery = 0.001
                 break;
             case 'jeremiah':
-                delivery = this.product.price * 0.0015
+                delivery = 0.0015
                 break;
             case 'hospital':
-                delivery = this.product.price * 0.002
+                delivery = 0.002
                 break;
             case 'management':
-                delivery = this.product.price * 0.0015
+                delivery = 0.0015
                 break;
             case 'education':
-                delivery = this.product.price * 0.002
+                delivery = 0.002
                 break;
             default:
-                delivery = this.product.price * 0.001
+                delivery = 0.001
                 break;
         }
         return delivery;
     }
     get factorPrice(){
-        return this.location()+this.fragile()+this.qty()+this.urgency()+this.size()+this.userLocation();
+        
+        return (this.product.price *
+            (this.location()+this.fragile()+this.qty()+this.urgency()+this.size()+this.userLocation())
+            );
     }
     index(){
         if(this.product.price >= 5000 && this.product.price <=20000){
@@ -132,22 +132,4 @@ class Deduct{
     }
 
 }
-
-console.log("try",new Deduct({
-    location:'lira',
-    urgent:'normal',
-    qty:'few',
-    size:'small',
-    fragile:false,
-    price:13000,
-    user:'maisha'
-}).total)
-console.log("try",new Deduct({
-    location:'Lira',
-    urgent:'normal',
-    qty:'few',
-    size:'small',
-    fragile:false,
-    price:13000,
-    user:'maisha'
-}).index())
+module.exports = Deduct;

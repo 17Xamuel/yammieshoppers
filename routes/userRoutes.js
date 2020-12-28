@@ -3,6 +3,7 @@ const conn = require("../database/db");
 const uuid = require("uuid");
 const nodemailer = require("nodemailer");
 const router = express.Router();
+const charge = require('./charges')
 
 //for new user
 let newUser = {};
@@ -295,7 +296,6 @@ router.post("/customer/order", async (req, res) => {
     }
   );
 });
-
 //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
 function category(ct, nature, res) {
@@ -345,10 +345,8 @@ router.post("/account/address/edit/:id", (req, res) => {
       let newAddress = {};
       if (result.length == 0) {
         newAddress.c_id = req.params.id;
-        newAddress.pickup_address_1 =
-          req.body.type == "Primary" ? req.body.add : "";
-        newAddress.pickup_address_2 =
-          req.body.type == "Primary" ? "" : req.body.add;
+        newAddress.pickup_address_1 = req.body.add;
+        newAddress.zone = req.body.zone;
         conn.query(
           `INSERT INTO customer_address SET ? `,
           newAddress,
@@ -358,11 +356,8 @@ router.post("/account/address/edit/:id", (req, res) => {
           }
         );
       } else {
-        if (req.body.type == "Primary") {
-          newAddress.pickup_address_1 = req.body.add;
-        } else {
-          newAddress.pickup_address_2 = req.body.add;
-        }
+        newAddress.pickup_address_1 = req.body.add;
+        newAddress.zone = req.body.zone;
         conn.query(
           `UPDATE customer_address SET ? WHERE c_id = ?`,
           [newAddress, req.params.id],
@@ -375,4 +370,16 @@ router.post("/account/address/edit/:id", (req, res) => {
     }
   );
 });
+router.get('/shipping',(req,res)=>{
+  let charge = new charge(req.body).total;
+  res.send(charge);
+})
+console.log(new charge({ location:'lira',
+    urgent:'normal',
+    qty:'few',
+    size:'small',
+    fragile:false,
+    price:350000,
+    weight:'light',
+    user:'maisha'}).total)
 module.exports = router;
