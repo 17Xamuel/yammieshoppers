@@ -9,7 +9,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>My Products</title>
+    <title>Yammie | My Products</title>
 
     <link
       rel="stylesheet"
@@ -166,39 +166,125 @@
     <section>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+          <div class="col-xl-10 col-md-8 col-lg-9 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
-              <div class="col-xl-12">
-                <a href="add-item"
-                  ><button
-                    type="button"
-                    class="btn btn-info btn-md my-3 ml-auto"
-                  >
-                    Add Product
-                  </button></a
-                >
-
-                <table class="table table-dark table-hover text-center">
-                  <thead>
-                    <tr>
-                      <th>Images</th>
-                      <th>Item Name</th>
-                      <th>Quantity</th>
-                      <th>Price</th>
-                      <th>Status</th>
-                      <th>Details</th>
-                    </tr>
-                  </thead>
-                  <tbody class="sellerProducts"></tbody>
-                  <tbody id="products"></tbody>
-                  <tbody id="rejected"></tbody>
-                </table>
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded my-3">
+                  <div class="card-body">
+                    <h4 class="text-center my-3">
+                      Pending Products <span id="ppn"></span>
+                    </h4>
+                    <table class="table table-dark table-hover text-center">
+                      <thead>
+                        <tr>
+                          <th>Images</th>
+                          <th>Item Name</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
+                          <th>Status</th>
+                          <th>Details</th>
+                        </tr>
+                      </thead>
+                      <tbody class="sellerProducts"></tbody>
+                    </table>
+                    <div class="text-center" id="icon1"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-md-8 col-lg-9 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded my-3">
+                  <div class="card-body">
+                    <h4 class="text-center my-3">
+                      Approved Products <span id="apn"></span>
+                    </h4>
+                    <table class="table table-striped bg-light text-center">
+                      <thead>
+                        <tr>
+                          <th>Images</th>
+                          <th>Item Name</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
+                          <th>Status</th>
+                          <th>Details</th>
+                        </tr>
+                      </thead>
+                      <tbody id="products"></tbody>
+                    </table>
+                    <div class="text-center" id="icon2"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-md-8 col-lg-9 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded my-3">
+                  <div class="card-body">
+                    <h4 class="text-center my-3">
+                      Rejected Products <span id="rpn"></span>
+                    </h4>
+                    <table class="table table-dark table-hover text-center">
+                      <thead>
+                        <tr>
+                          <th>Images</th>
+                          <th>Item Name</th>
+                          <th>Quantity</th>
+                          <th>Price</th>
+                          <th>Status</th>
+                          <th>Details</th>
+                        </tr>
+                      </thead>
+                      <tbody id="rejected"></tbody>
+                    </table>
+                    <div class="text-center" id="icon3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <a style="text-decoration: none" href="add-item.html">
+                  <button
+                    type="button"
+                    class="btn btn-warning btn-block my-3 text-light font-weight-bold"
+                  >
+                    Add Product
+                  </button></a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Reject Modal -->
     <div class="modal fade" id="rejReason">
       <div class="modal-dialog">
@@ -266,12 +352,65 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script src="./scripts/product.js"></script>
 
     <script>
-      const req = new XMLHttpRequest();
+      const [seller] = JSON.parse(
+        localStorage.getItem("yammie/useLocalstorage/storage")
+      );
+      document.getElementById("User").innerHTML = seller.username;
+      let sellerId = seller.id;
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState < 4) {
+          document.getElementById(
+            "icon1"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (xhr.status == 200 && xhr.readyState == 4) {
+          let PendingProducts = JSON.parse(xhr.responseText);
+          let row = "";
+          PendingProducts.forEach((PendingProduct) => {
+            let images = JSON.parse(PendingProduct.images);
+            row += `<tr>
+                      <td>
+                        <img
+                          src="${images[0]}"
+                          width="50"
+                          height="50"
+                          class="rounded-circle"
+                        />
+                      </td>
+                      <td>${PendingProduct.product}</td>
+                      <td>${PendingProduct.quantity}</td>
+                      <td>${PendingProduct.price}</td>
+                      <td>
+                        <span class="badge badge-danger w-75 py-2">Pending</span>
+                      </td>
+                      <td><a href="productdetails?pendingProduct=${PendingProduct.id}">
+                      <button type="button" class="btn btn-info btn-sm">Details</button>
+                      </a></td>
+                    </tr>`;
+          });
+          document.querySelector(".sellerProducts").innerHTML = row;
+          document.getElementById(
+            "ppn"
+          ).textContent = `(${PendingProducts.length})`;
+          if (`${PendingProducts.length}` == 0) {
+            document.getElementById("icon1").innerHTML =
+              "No pending Product Found";
+          }
+        }
+      };
+      xhr.open("GET", `/api/sellers/getPendingProducts/${sellerId}`, true);
+      xhr.send();
 
+      const req = new XMLHttpRequest();
       req.onreadystatechange = () => {
+        if (req.readyState < 4) {
+          document.getElementById(
+            "icon2"
+          ).innerHTML = `<i class="fas fa-spinner fa-2x fa-spin text-warning"></i>`;
+        }
         if (req.status == 200 && req.readyState == 4) {
           let approvedProducts = JSON.parse(req.responseText);
           let rows = "";
@@ -300,14 +439,25 @@
                 </tr>`;
           });
           document.getElementById("products").innerHTML = rows;
+          document.getElementById(
+            "apn"
+          ).innerHTML = `(${approvedProducts.length})`;
+          if (`${approvedProducts.length}`) {
+            document.getElementById("icon2").textContent =
+              "No Approved Product Found";
+          }
         }
       };
       req.open("GET", `/api/sellers/getApprovedProducts/${sellerId}`, true);
       req.send();
-    </script>
-    <script>
+
       const rejProducts = new XMLHttpRequest();
       rejProducts.onreadystatechange = () => {
+        if (rejProducts.readyState < 4) {
+          document.getElementById(
+            "icon3"
+          ).innerHTML = `<i class="fas fa-spinner fa-2x fa-spin text-warning"></i>`;
+        }
         if (rejProducts.status == 200 && rejProducts.readyState == 4) {
           let outcomes = JSON.parse(rejProducts.responseText);
           let rejectedProducts = "";
@@ -336,6 +486,11 @@
                 </tr>`;
           });
           document.getElementById("rejected").innerHTML = rejectedProducts;
+          document.getElementById("rpn").textContent = `(${outcomes.length})`;
+          if (`${outcomes.length}` == 0) {
+            document.getElementById("icon3").innerHTML =
+              "No Rejected Products Found";
+          }
           let reasonBtns = document.querySelectorAll("#reasonbtn");
           reasonBtns.forEach((reasonBtn) => {
             reasonBtn.addEventListener("click", (e) => {

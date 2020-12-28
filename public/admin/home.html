@@ -32,32 +32,6 @@
     <link rel="stylesheet" href="./styles/home.css" />
 
     <title>Dashboard | Yammie, Online shopping platform</title>
-    <style>
-      .loader {
-        position: fixed;
-        left: 0;
-        top: 0;
-        z-index: 99;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .loader span {
-        width: 30px;
-      }
-      .loader .hidden {
-        animation: fadeOut 1s;
-        animation-fill-mode: forwards;
-      }
-      @keyframes fadeOut {
-        100% {
-          opacity: 0;
-          visibility: hidden;
-        }
-      }
-    </style>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -113,9 +87,9 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="settings" class="nav-link text-white p-3 mb-2"
+                  <a href="products.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
-                    >Settings</a
+                    >Products</a
                   >
                 </li>
                 <li class="nav-item">
@@ -248,7 +222,7 @@
                       <i class="fas fa-users fa-3x text-info"></i>
                       <div class="text-right text-secondary">
                         <h4>Users</h4>
-                        <h3 id="users-number">1000</h3>
+                        <h3 id="users-number"></h3>
                       </div>
                     </div>
                   </div>
@@ -288,36 +262,59 @@
         <div class="row mb-5">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row align-items-center">
-              <div class="col-xl-6 col-12 mb-4 mb-xl-0">
-                <h4 class="text-muted mb-3 text-center">Pending Orders</h4>
-                <table class="table table-striped bg-light text-center">
-                  <thead>
-                    <tr class="text-muted">
-                      <th>OrderNumber</th>
-                      <th>OrderAmount</th>
-                      <th>DeliveryMethod</th>
-                      <th>Details</th>
-                      <th>Finish</th>
-                    </tr>
-                  </thead>
-                  <tbody id="pendingOrders"></tbody>
-                </table>
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <h4 class="text-muted mb-3 text-center">
+                      Pending Orders <span id="ordersn"></span>
+                    </h4>
+                    <table class="table table-striped bg-light text-center">
+                      <thead>
+                        <tr class="text-muted">
+                          <th>OrderNumber</th>
+                          <th>OrderAmount</th>
+                          <th>DeliveryMethod</th>
+                          <th>Details</th>
+                        </tr>
+                      </thead>
+                      <tbody id="pendingOrders"></tbody>
+                    </table>
+                    <div id="orderLoading" class="text-center"></div>
+                  </div>
+                </div>
               </div>
-              <div class="col-xl-6 col-12">
-                <h4 class="text-muted mb-3 text-center">
-                  Pending Sellers <span id="psns"></span>
-                </h4>
-                <table class="table table-dark table-hover text-center">
-                  <thead>
-                    <tr class="text-muted">
-                      <th>Name</th>
-                      <th>Confirm</th>
-                      <th>Details</th>
-                      <th>Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody id="sellerRequests"></tbody>
-                </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-xl-10 col-md-8 col-lg-9 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <h4 class="text-muted mb-3 text-center">
+                      Pending Sellers <span id="psns"></span>
+                    </h4>
+                    <table class="table table-dark table-hover text-center">
+                      <thead>
+                        <tr class="text-muted">
+                          <th>Name</th>
+                          <th>Contact</th>
+                          <th>Confirm</th>
+                          <th>Details</th>
+                          <th>Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody id="sellerRequests"></tbody>
+                    </table>
+                    <div id="sellerLoading" class="text-center"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -326,200 +323,166 @@
     </section>
     <!-- End Tables -->
 
-    <!-- loader -->
-    <div class="loader">
-      <span class="spinner-border text-warning"></span>
-    </div>
-    <!-- End loader -->
-
-    <!-- Activities/Quickpost -->
+    <!-- Comments -->
     <section>
       <div class="container-fluid">
-        <div class="row">
+        <div class="row mb-5">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row align-items-center mb-5">
-              <div class="col-xl-7">
-                <h4 class="text-muted mb-4">Recent Customer Activities</h4>
-                <div id="accordion">
-                  <div class="card">
-                    <div class="card-header">
-                      <button
-                        class="btn btn-block bg-secondary text-light text-left"
-                        data-toggle="collapse"
-                        data-target="#collapseOne"
-                      >
-                        <img
-                          src="./images/user-1.jpg "
-                          width="50"
-                          height="50"
-                          class="mr-3 rounded"
-                        />
-                        Livingstone posted a new comment
-                      </button>
-                    </div>
-                    <div
-                      class="collapse show"
-                      id="collapseOne"
-                      data-parent="#accordion"
-                    >
-                      <div class="card-body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Deserunt natus neque doloribus, atque voluptatum et
-                        nulla nobis ipsum consectetur quibusdam est laboriosam.
-                        Atque placeat accusamus ad. Suscipit rerum deleniti
-                        expedita.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <button
-                        class="btn btn-block bg-secondary text-light text-left"
-                        data-toggle="collapse"
-                        data-target="#collapseTwo"
-                      >
-                        <img
-                          src="./images/user-1.jpg"
-                          width="50"
-                          height="50"
-                          class="mr-3 rounded"
-                        />
-                        Denis posted a new comment
-                      </button>
-                    </div>
-                    <div
-                      class="collapse"
-                      id="collapseTwo"
-                      data-parent="#accordion"
-                    >
-                      <div class="card-body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Deserunt natus neque doloribus, atque voluptatum et
-                        nulla nobis ipsum consectetur quibusdam est laboriosam.
-                        Atque placeat accusamus ad. Suscipit rerum deleniti
-                        expedita.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <button
-                        class="btn btn-block bg-secondary text-light text-left"
-                        data-toggle="collapse"
-                        data-target="#collapseThree"
-                      >
-                        <img
-                          src="./images/user-1.jpg "
-                          width="50"
-                          height="50"
-                          class="mr-3 rounded"
-                        />
-                        Sam posted a new comment
-                      </button>
-                    </div>
-                    <div
-                      class="collapse"
-                      id="collapseThree"
-                      data-parent="#accordion"
-                    >
-                      <div class="card-body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Deserunt natus neque doloribus, atque voluptatum et
-                        nulla nobis ipsum consectetur quibusdam est laboriosam.
-                        Atque placeat accusamus ad. Suscipit rerum deleniti
-                        expedita.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <button
-                        class="btn btn-block bg-secondary text-light text-left"
-                        data-toggle="collapse"
-                        data-target="#collapseFour"
-                      >
-                        <img
-                          src="./images/user-1.jpg "
-                          width="50"
-                          height="50"
-                          class="mr-3 rounded"
-                        />
-                        Maureen posted a new comment
-                      </button>
-                    </div>
-                    <div
-                      class="collapse"
-                      id="collapseFour"
-                      data-parent="#accordion"
-                    >
-                      <div class="card-body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Deserunt natus neque doloribus, atque voluptatum et
-                        nulla nobis ipsum consectetur quibusdam est laboriosam.
-                        Atque placeat accusamus ad. Suscipit rerum deleniti
-                        expedita.
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <button
-                        class="btn btn-block bg-secondary text-light text-left"
-                        data-toggle="collapse"
-                        data-target="#collapseFive"
-                      >
-                        <img
-                          src="./images/user-1.jpg "
-                          width="50"
-                          height="50"
-                          class="mr-3 rounded"
-                        />
-                        Stephen posted a new comment
-                      </button>
-                    </div>
-                    <div
-                      class="collapse"
-                      id="collapseFive"
-                      data-parent="#accordion"
-                    >
-                      <div class="card-body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Deserunt natus neque doloribus, atque voluptatum et
-                        nulla nobis ipsum consectetur quibusdam est laboriosam.
-                        Atque placeat accusamus ad. Suscipit rerum deleniti
-                        expedita.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-xl-5 mt-5">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <div class="row">
-                      <div class="col-6">
-                        <div class="card bg-light">
-                          <i
-                            class="far fa-calendar-alt fa-8x text-warning d-block m-auto py-3"
-                          ></i>
+                    <h4 class="text-muted text-center mb-4">
+                      Recent Customer Comments
+                    </h4>
+                    <div id="accordion">
+                      <div class="card">
+                        <div class="card-header">
+                          <button
+                            class="btn btn-block bg-secondary text-light text-left"
+                            data-toggle="collapse"
+                            data-target="#collapseOne"
+                          >
+                            <img
+                              src="./images/user-1.jpg "
+                              width="50"
+                              height="50"
+                              class="mr-3 rounded"
+                            />
+                            Livingstone posted a new comment
+                          </button>
+                        </div>
+                        <div
+                          class="collapse show"
+                          id="collapseOne"
+                          data-parent="#accordion"
+                        >
                           <div class="card-body">
-                            <p
-                              class="card-text text-center font-weight-bold text-uppercase"
-                              id="showDate"
-                            ></p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Deserunt natus neque doloribus, atque
+                            voluptatum et nulla nobis ipsum consectetur
+                            quibusdam est laboriosam. Atque placeat accusamus
+                            ad. Suscipit rerum deleniti expedita.
                           </div>
                         </div>
                       </div>
-                      <div class="col-6">
-                        <div class="card bg-light">
-                          <i
-                            class="far fa-clock fa-8x text-danger d-block m-auto py-3"
-                          ></i>
+                      <div class="card">
+                        <div class="card-header">
+                          <button
+                            class="btn btn-block bg-secondary text-light text-left"
+                            data-toggle="collapse"
+                            data-target="#collapseTwo"
+                          >
+                            <img
+                              src="./images/user-1.jpg"
+                              width="50"
+                              height="50"
+                              class="mr-3 rounded"
+                            />
+                            Denis posted a new comment
+                          </button>
+                        </div>
+                        <div
+                          class="collapse"
+                          id="collapseTwo"
+                          data-parent="#accordion"
+                        >
                           <div class="card-body">
-                            <p
-                              class="card-text text-center font-weight-bold text-uppercase"
-                              id="showTime"
-                            ></p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Deserunt natus neque doloribus, atque
+                            voluptatum et nulla nobis ipsum consectetur
+                            quibusdam est laboriosam. Atque placeat accusamus
+                            ad. Suscipit rerum deleniti expedita.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <button
+                            class="btn btn-block bg-secondary text-light text-left"
+                            data-toggle="collapse"
+                            data-target="#collapseThree"
+                          >
+                            <img
+                              src="./images/user-1.jpg "
+                              width="50"
+                              height="50"
+                              class="mr-3 rounded"
+                            />
+                            Sam posted a new comment
+                          </button>
+                        </div>
+                        <div
+                          class="collapse"
+                          id="collapseThree"
+                          data-parent="#accordion"
+                        >
+                          <div class="card-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Deserunt natus neque doloribus, atque
+                            voluptatum et nulla nobis ipsum consectetur
+                            quibusdam est laboriosam. Atque placeat accusamus
+                            ad. Suscipit rerum deleniti expedita.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <button
+                            class="btn btn-block bg-secondary text-light text-left"
+                            data-toggle="collapse"
+                            data-target="#collapseFour"
+                          >
+                            <img
+                              src="./images/user-1.jpg "
+                              width="50"
+                              height="50"
+                              class="mr-3 rounded"
+                            />
+                            Maureen posted a new comment
+                          </button>
+                        </div>
+                        <div
+                          class="collapse"
+                          id="collapseFour"
+                          data-parent="#accordion"
+                        >
+                          <div class="card-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Deserunt natus neque doloribus, atque
+                            voluptatum et nulla nobis ipsum consectetur
+                            quibusdam est laboriosam. Atque placeat accusamus
+                            ad. Suscipit rerum deleniti expedita.
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card">
+                        <div class="card-header">
+                          <button
+                            class="btn btn-block bg-secondary text-light text-left"
+                            data-toggle="collapse"
+                            data-target="#collapseFive"
+                          >
+                            <img
+                              src="./images/user-1.jpg "
+                              width="50"
+                              height="50"
+                              class="mr-3 rounded"
+                            />
+                            Stephen posted a new comment
+                          </button>
+                        </div>
+                        <div
+                          class="collapse"
+                          id="collapseFive"
+                          data-parent="#accordion"
+                        >
+                          <div class="card-body">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Deserunt natus neque doloribus, atque
+                            voluptatum et nulla nobis ipsum consectetur
+                            quibusdam est laboriosam. Atque placeat accusamus
+                            ad. Suscipit rerum deleniti expedita.
                           </div>
                         </div>
                       </div>
@@ -532,7 +495,7 @@
         </div>
       </div>
     </section>
-    <!-- End Activities/Quickpost -->
+    <!-- End comments -->
 
     <!-- sellerModal -->
     <div class="modal fade" id="sellerInformation">
@@ -542,8 +505,11 @@
             <h5 class="modal-title">Seller Information</h5>
           </div>
           <div class="modal-body">
-            <table class="table text-center">
+            <table class="table text-left">
               <tbody>
+                <tr>
+                  <td>Username: <span id="sun"></span></td>
+                </tr>
                 <tr>
                   <td>Businessname: <span id="sbsn"></span></td>
                 </tr>
@@ -575,6 +541,63 @@
       </div>
     </div>
     <!-- End sellerModal -->
+
+    <!-- Confirm Modal -->
+    <div class="modal fade" id="confirm">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Seller Confirmation</h5>
+          </div>
+          <div class="modal-body text-center" id="confirmMessage">
+            Want to Confirm <span id="sellerName"></span> As a Yammie Seller?
+            <br />Press Yes to Continue.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" id="yesBtn">
+              Yes
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Confirm -->
+
+    <!-- Seller Delete -->
+    <div class="modal fade" id="delete">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete Seller</h5>
+          </div>
+          <div class="modal-body text-center" id="deleteMessage">
+            Want to Delete <span id="dSeller"></span> from Pending sellers?
+            <br />
+            Press Ok to continue
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" id="dBtn">
+              OK
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Delete -->
 
     <!-- Footer -->
     <footer>
@@ -628,21 +651,29 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script src="scripts/home.js"></script>
     <script src="scripts/account.js"></script>
     <script>
       const srequest = new XMLHttpRequest();
       srequest.onreadystatechange = () => {
+        if (srequest.readyState < 4) {
+          document.getElementById(
+            "sellerLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning></i>`;
+        }
         if (srequest.readyState == 4 && srequest.status == 200) {
           let pendingSellers = JSON.parse(srequest.responseText);
           let row = "";
+
           pendingSellers.forEach((pendingSeller) => {
             row += ` <tr>
                       <td>${pendingSeller.username}</td>
+                      <td>${pendingSeller.phonenumber}</td>
                        <td>
                         <button type="button" 
                           class="btn btn-primary btn-sm -c-seller" 
-                          data-id="${pendingSeller.id}">
+                          data-target="#confirm" data-toggle="modal"
+                          data-id="${pendingSeller.id}"
+                          data-sn="${pendingSeller.username}">
                           Confirm
                         </button>
                       </td>
@@ -651,20 +682,25 @@
                           type="button"
                           class="btn btn-info btn-sm"
                           data-target="#sellerInformation"
-                          data-toggle="modal"
+                          data-toggle="modal"data-id="${pendingSeller.id}"
                         >
                           Details
                         </button>
                       </td>
                       <td>
-                        <button type="button" class="btn btn-danger btn-sm -d-seller">
+                        <button type="button" class="btn btn-danger btn-sm -d-seller"
+                        data-target="#delete" data-toggle="modal"data-id="${pendingSeller.id}"
+                        data-sen="${pendingSeller.username}">
                           Delete
                         </button>
                       </td>
-                    </tr>`;
+                    </tr>
+                    `;
+            document.getElementById("sun").innerHTML = pendingSeller.username;
             document.getElementById("sbsn").innerHTML =
               pendingSeller.businessname;
-            document.getElementById("spn").innerHTML = pendingSeller.category;
+            let scategories = JSON.parse(pendingSeller.category);
+            document.getElementById("spn").innerHTML = scategories;
             document.getElementById("se").innerHTML = pendingSeller.email;
             document.getElementById("num").innerHTML =
               pendingSeller.phonenumber;
@@ -674,35 +710,66 @@
           document.getElementById(
             "psns"
           ).textContent = `(${pendingSellers.length})`;
+          if (`${pendingSellers.length}` == 0) {
+            document.getElementById("sellerLoading").innerHTML =
+              "No seller found";
+          }
           let confirmButtons = document.querySelectorAll(".-c-seller ");
           confirmButtons.forEach((confirmButton) => {
             confirmButton.addEventListener("click", (e) => {
+              document.getElementById("sellerName").innerHTML =
+                e.target.dataset.sn;
               let confirmSeller = e.target.dataset.id;
-              let _xhr = new XMLHttpRequest();
-              _xhr.onreadystatechange = () => {
-                if (_xhr.readyState == 4 && _xhr.status == 200) {
-                  window.location.reload();
-                }
-              };
+              let confirm = document.getElementById("yesBtn");
+              confirm.addEventListener("click", (e) => {
+                console.log(confirmSeller);
+                let _xhr = new XMLHttpRequest();
+                _xhr.onreadystatechange = () => {
+                  if (_xhr.readyState < 4) {
+                    document.getElementById(
+                      "confirmMessage"
+                    ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                  }
+                  if (_xhr.readyState == 4 && _xhr.status == 200) {
+                    document.getElementById("confirmMessage").innerHTML =
+                      _xhr.responseText;
+                    window.location.reload("home.html");
+                  }
+                };
 
-              _xhr.open("GET", `/api/admin/confirmSeller/${confirmSeller}`);
-              _xhr.send();
+                _xhr.open("GET", `/api/admin/confirmSeller/${confirmSeller}`);
+                _xhr.send();
+              });
             });
           });
           let deleteButtons = document.querySelectorAll(".-d-seller");
           deleteButtons.forEach((deleteButton) => {
             deleteButton.addEventListener("click", (e) => {
+              document.getElementById("dSeller").innerHTML =
+                e.target.dataset.sen;
               let deleteSeller = e.target.dataset.id;
-              _xhrDelete.onreadystatechange = () => {
-                if (_xhrDelete.readyState == 4 && _xhrDelete.status == 200) {
-                }
-              };
-              _xhrDelete.open(
-                "GET",
-                `/api/admin/deleteSeller/${deleteSeller}`,
-                true
-              );
-              _xhrDelete.send();
+              let deleting = document.getElementById("dBtn");
+              deleting.addEventListener("click", (e) => {
+                const _xhrDelete = new XMLHttpRequest();
+                _xhrDelete.onreadystatechange = () => {
+                  if (_xhrDelete.readyState < 4) {
+                    document.getElementById(
+                      "deleteMessage"
+                    ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                  }
+                  if (_xhrDelete.readyState == 4 && _xhrDelete.status == 200) {
+                    document.getElementById("deleteMessage").innerHTML =
+                      _xhrDelete.responseText;
+                    window.location.reload("home.html");
+                  }
+                };
+                _xhrDelete.open(
+                  "GET",
+                  `/api/admin/deleteSeller/${deleteSeller}`,
+                  true
+                );
+                _xhrDelete.send();
+              });
             });
           });
         }
@@ -710,13 +777,97 @@
       srequest.open("GET", "/api/admin/sellerRequests", true);
       srequest.send();
 
-      function spinner() {
-        window.addEventListener("load", (e) => {
-          let loader = document.querySelector(".loader");
-          loader.className += "hidden";
-        });
-      }
-      setTimeout(spinner, 3000);
+      const xhr1 = new XMLHttpRequest();
+      xhr1.onreadystatechange = () => {
+        if (xhr1.readyState < 4) {
+          document.getElementById(
+            "products"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
+        }
+        if (xhr1.readyState == 4 && xhr1.status == 200) {
+          if (xhr1.responseText == "") {
+            document.getElementById("products").innerHTML = 0;
+          } else {
+            document.getElementById("products").innerHTML = xhr1.responseText;
+          }
+        }
+      };
+      xhr1.open("GET", "/api/admin/allProducts", true);
+      xhr1.send();
+
+      //Number of Users
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState < 4) {
+          document.getElementById(
+            "users-number"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
+        }
+        if (xhr.status == 200 && xhr.readyState == 4) {
+          if (xhr.responseText == "") {
+            document.getElementById("users-number").innerHTML = 0;
+          } else {
+            let users = JSON.parse(xhr.responseText);
+            document.getElementById("users-number").innerHTML = users.length;
+          }
+        }
+      };
+      xhr.open("GET", "/api/admin/customers", true);
+      xhr.send();
+
+      const orders = new XMLHttpRequest();
+      orders.onreadystatechange = () => {
+        if (orders.readyState < 4) {
+          document.getElementById(
+            "orderLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (orders.status == 200 && orders.readyState == 4) {
+          let pendingOrders = JSON.parse(orders.responseText);
+          let row = "";
+          pendingOrders.forEach((order) => {
+            row += `<tr>
+       <td>${order.order_number}</td>
+       <td>${order.order_amount}</td>
+       <td>${order.order_delivery_method}</td>
+       <td>
+       <a href="order?order=${order.order_id}">
+         <button type="button" class="btn btn-info btn-sm">
+           Details
+         </button></a>
+       </td>
+     </tr>`;
+          });
+          document.getElementById("pendingOrders").innerHTML = row;
+          document.getElementById(
+            "ordersn"
+          ).textContent = `(${pendingOrders.length})`;
+          if (`${pendingOrders.length}` == 0) {
+            document.getElementById("orderLoading").innerHTML =
+              "No Order found";
+          }
+        }
+      };
+      orders.open("GET", "/api/admin/pendingOrders", true);
+      orders.send();
+
+      const request = new XMLHttpRequest();
+      request.onreadystatechange = () => {
+        if (request.readyState < 4) {
+          document.getElementById(
+            "orders"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
+        }
+        if (request.status == 200 && request.readyState == 4) {
+          if (request.responseText == "") {
+            document.getElementById("orders").innerHTML = 0;
+          } else {
+            document.getElementById("orders").innerHTML = request.responseText;
+          }
+        }
+      };
+      request.open("GET", "/api/admin/orderNumber", true);
+      request.send();
     </script>
     <!-- End Scripts -->
   </body>

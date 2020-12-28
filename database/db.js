@@ -2,7 +2,6 @@ const path = require("path");
 const fs = require("fs");
 const mysql = require("mysql8");
 
-
 const MYSQL_CONFIG = {
   host: "yammie-db-secure-do-user-8336351-0.b.db.ondigitalocean.com",
   user: "yammie",
@@ -10,10 +9,16 @@ const MYSQL_CONFIG = {
   database: "yammie_db",
   port: 25060,
   ssl: {
-    ca: fs.readFileSync(path.join(__dirname, "ca.crt")),
-  },
+    ca: fs.readFileSync(path.join(__dirname, "ca.crt"))
+  }
 };
 
+// const MYSQL_CONFIG={
+//   host:"localhost",
+//   user:"root",
+//   password:"",
+//   database:"yammie_db_secure",
+// }
 const conn = mysql.createConnection(MYSQL_CONFIG);
 
 conn.connect((err) => {

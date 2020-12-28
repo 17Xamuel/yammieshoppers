@@ -96,10 +96,10 @@
 
                 <li class="nav-item">
                   <a
-                    href="settings"
+                    href="products.html"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
-                    >Settings</a
+                    >Products</a
                   >
                 </li>
                 <li class="nav-item">
@@ -203,7 +203,7 @@
                       width="150"
                       height="150"
                     />
-                    <table class="table my-2">
+                    <table class="table text-left my-2">
                       <tbody>
                         <tr>
                           <td>Name</td>
@@ -287,8 +287,6 @@
     ></script>
     <script src="scripts/account.js"></script>
     <script>
-      let admin = JSON.parse(localStorage.getItem("admin/yammie"));
-
       document.getElementById("user").innerHTML = admin[0];
       document.getElementById("am").innerHTML = admin[0];
       document.getElementById("ae").innerHTML = admin[3];
