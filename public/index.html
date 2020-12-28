@@ -82,6 +82,7 @@
         display: inline-block;
         transition: background-color 0.6s ease;
       }
+
       .dots {
         position: absolute;
         bottom: 1%;
@@ -105,6 +106,7 @@
         from {
           opacity: 0.9;
         }
+
         to {
           opacity: 1;
         }
@@ -114,6 +116,7 @@
         from {
           opacity: 0.4;
         }
+
         to {
           opacity: 1;
         }
@@ -124,6 +127,7 @@
         background-color: white;
         color: black;
       }
+
       .-ct-index {
         align-items: center;
         justify-content: space-around;
@@ -136,6 +140,7 @@
         min-width: 1024px;
         position: relative;
       }
+
       .container1 {
         display: flex;
         height: 380px;
@@ -144,6 +149,7 @@
         margin: 20px 0px;
         min-width: 100%;
       }
+
       .categories {
         display: flex;
         flex-direction: column;
@@ -152,6 +158,7 @@
         width: 18%;
         min-width: 180px;
       }
+
       .ctg-li {
         list-style-type: none;
         display: flex;
@@ -166,29 +173,36 @@
         font-size: 14px;
         box-shadow: 0px 0px 10px #cccbcb;
       }
+
       .ctg-name {
         padding: 10px 0px 10px 5px;
         transition: all 0.1s ease-in-out;
       }
+
       .ctg-name > a {
         text-decoration: none;
         color: black;
       }
+
       .ctg-name > a:hover {
         color: #ffbb00;
         cursor: pointer;
       }
+
       .ctg-icon {
         padding-right: 5px;
       }
+
       .ctg-name:hover {
         color: #ffbb00;
         cursor: pointer;
       }
+
       /*ct*/
       .-i-item {
         text-align: center;
       }
+
       .up-container {
         background-color: #fff;
         list-style-type: none;
@@ -214,6 +228,7 @@
         height: 50%;
         box-shadow: 0px 0px 10px #cccbcb;
       }
+
       ._gift-ctr {
         position: relative;
         width: 200px;
@@ -222,26 +237,33 @@
         align-items: center;
         flex-direction: column;
       }
+
       @keyframes letters {
         0% {
           letter-spacing: normal;
         }
+
         20% {
           letter-spacing: 0.25px;
         }
+
         40% {
           letter-spacing: 0.5px;
         }
+
         60% {
           letter-spacing: 0.75px;
         }
+
         80% {
           letter-spacing: 1px;
         }
+
         100% {
           letter-spacing: 1.25px;
         }
       }
+
       ._day-gift {
         font-size: 17px;
         margin-top: 10px;
@@ -249,10 +271,12 @@
         animation: letters 1.5s 2s infinite reverse;
         -webkit-animation: letters 1.5s 2s infinite reverse;
       }
+
       ._timer {
         font-size: 17px;
         font-weight: 600;
       }
+
       .slideshow-container {
         width: 55%;
         min-width: 600px;
@@ -260,48 +284,59 @@
         border-radius: 5px;
         box-shadow: 0px 0px 10px #cccbcb;
       }
+
       .mySlides {
         height: 100%;
         border-radius: 10px;
         display: none;
       }
+
       @media screen and (max-width: 768px) {
         .slideshow-container {
           min-width: 95vw;
           width: 95vw;
           /* overflow-x: scroll; */
         }
+
         .mySlides {
           height: 90%;
           margin: auto 10px;
         }
+
         .numbertext,
         .prev,
         .next,
         .dots {
           display: none;
         }
+
         /*-ct-index*/
         .-ct-index {
           justify-content: right;
         }
+
         .-d-none {
           display: none;
         }
+
         /*-ct-index*/
       }
+
       @media screen and (max-width: 1024px) {
         .container1 {
           height: 15vh;
         }
+
         .ctg-li,
         .categories {
           display: none;
         }
+
         .m-ctr {
           width: 95vw;
           min-width: 95vw;
         }
+
         .slideshow-container {
           /* min-width: 95vw; */
           width: 95vw;
@@ -309,12 +344,14 @@
           /* justify-content: space-around; */
           overflow-x: scroll;
         }
+
         .mySlides {
           display: block;
           width: 40%;
           height: 90%;
           margin: auto 10px;
         }
+
         .text,
         .numbertext,
         .prev,
@@ -323,10 +360,12 @@
           display: none;
         }
       }
+
       @media screen and (max-width: 500px) {
         .container1 {
           height: 30vh;
         }
+
         .mySlides {
           min-width: 75%;
           height: 90%;
@@ -344,6 +383,7 @@
       });
     </script>
   </head>
+
   <body>
     <div id="sidenav">
       <span class="-c-side" style="font-size: 35px">&times;</span>
@@ -1446,7 +1486,7 @@
             </p>
           </div>
           <div class="ftr-app">
-            <h3>Get the Yammie App On . . . .</h3>
+            <h3 class="footer-h4">Download the Yammie App For FREE</h3>
             <div class="ftr-app-stores" style="margin-top: 15px">
               <a href="">
                 <img
@@ -1469,7 +1509,7 @@
           </div>
         </div>
         <div class="ftr-u-second">
-          <h4 class="footer-h4">Explore Yammie</h4>
+          <div class="footer-h4">Explore Yammie</div>
           <ul class="footer-list">
             <li><a href="./404">About Yammie</a></li>
             <li><a href="./404">How to Order</a></li>
@@ -1505,6 +1545,7 @@
             <input
               type="text"
               name=""
+              autocomplete="off"
               id="comment"
               placeholder="How do you feel?"
             />
@@ -1512,6 +1553,7 @@
             <input
               type="text"
               name=""
+              autocomplete="off"
               id="customer-email"
               placeholder="Email or Phone Number(Optional)"
             />
@@ -1738,14 +1780,20 @@
             let _c = JSON.parse(xhr.responseText),
               group = "";
             _c.forEach((item) => {
+              // src = "${JSON.parse(item.images)[0]}"
+              //src="./resources/cart-link.png"
               group += `
                     <a class="item -ct-item" href="./item?item=${item.id}">
-                      <img
-                        src="${JSON.parse(item.images)[0]}"
-                        alt="${item.name}"
-                        width="180px"
-                        height="150px"
-                      />
+                      <div class="-img">
+                         <img
+                            alt="${item.product}"
+                            data-src="./resources/cart-link.png"
+                            src = "${JSON.parse(item.images)[0]}"
+                            width="100%"
+                            height="100%"
+                            class="-ct-image lazy"
+                        />
+                      </div>
                       <div class="-i-dtl">
                         <div class="it-nm">${item.product} - ${
                 item.description
@@ -1764,6 +1812,10 @@
                     `;
             });
             c.innerHTML = group;
+            _load(
+              document.querySelector(".lazy"),
+              document.querySelector(".lazy").dataset.src
+            );
           }
         };
         xhr.open("GET", url, true);

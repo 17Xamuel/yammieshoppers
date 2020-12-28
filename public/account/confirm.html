@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../resources/cartlink.png" />
+    <link rel="stylesheet" href="../styles/footer2.css" />
+    <link rel="stylesheet" href="../styles/header.css" />
+    <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../font-awesome/css/all.css" />
+    <title>Yammie | Confirm My Account</title>
+    <style>
+        body {
+            background-color: #fff;
+        }
+
+        .cr-m-ctr {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+        }
+
+        .cr-ctr {
+            border: 1px solid rgb(0, 0, 0, 0.1);
+            border-radius: 5px;
+            width: 400px;
+            height: 80%;
+            margin: auto;
+        }
+
+        .-confirm-ctr {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .-confirm-ctr>h3,
+        .-confirm-ctr>p {
+            text-align: center;
+        }
+
+        .btn-sm {
+            color: white;
+            width: 120px;
+            height: 35px;
+            cursor: pointer;
+            outline: none;
+            border: 0px;
+            font-size: 15px;
+            border-radius: 5px;
+            margin: 5px;
+            background-color: #ffbb00;
+        }
+
+        .btn-w {
+            width: fit-content;
+            font-size: 18px;
+            height: 40px;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .-bx {
+            box-shadow: 0px 0px 5px #e4e2e2;
+        }
+
+        .ldr {
+            margin: 20px 0px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", (e) => {
+            sch(document.querySelector("#-is"), document.querySelector(".-sh"));
+            cnd(
+                localStorage.getItem("cartNumber"),
+                document.querySelector("#cartNumberItems")
+            );
+        });
+    </script>
+</head>
+
+<body>
+    <div id="sidenav">
+        <span class="-c-side" style="font-size: 35px">&times;</span>
+        <ul class="s-n-1">
+            <h3 class="sn-categories">Categories</h3>
+            <li class="n-l-itm">
+                <a href="../easy-market">
+                    <i class="fas fa-shopping-basket ctg-icon"></i>
+                    EasyMarket with Yammie
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../quick-foods">
+                    <i class="fas fa-pizza-slice ctg-icon"></i>
+                    Fast Foods &amp; Drinks
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../phones">
+                    <i class="fas fa-headphones-alt ctg-icon"></i>
+                    Phones &amp; Accessories
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../electronics">
+                    <i class="fas fa-charging-station ctg-icon"></i>
+                    Electronics
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../computing">
+                    <i class="fas fa-desktop ctg-icon"></i>
+                    Computing &amp; Accessories
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../stationery">
+                    <i class="fas fa-paperclip ctg-icon"></i>
+                    Stationery
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../clothing">
+                    <i class="fas fa-tshirt ctg-icon"></i>
+                    Clothes &amp; Shoes
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../kitchen">
+                    <i class="fas fa-utensils ctg-icon"></i>
+                    Kitchen Staff &amp; Utensils
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../kids">
+                    <i class="fas fa-child ctg-icon"></i>
+                    Kid's Section
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="../diy">
+                    <img src="../resources/clean-hands.png" alt="" />
+                    Cleaning, Healthy &amp; Beauty
+                </a>
+            </li>
+            <li class="n-l-itm">
+                <a href="/">
+                    <i class="fas fa-layer-group ctg-icon"></i>
+                    All Items
+                </a>
+            </li>
+        </ul>
+        <ul class="s-n-4">
+            <h3>My Account</h3>
+            <li>
+                <i class="fas fa-user"></i>
+                <span><a href="../account/profile">My Profile</a></span>
+            </li>
+            <li>
+                <i class="fas fa-box"></i>
+                <span><a href="../account/orders">My Orders</a></span>
+            </li>
+
+            <li>
+                <i class="fas fa-dolly-flatbed"></i>
+                <span><a href="../account/pending-orders">Pending Orders</a></span>
+            </li>
+            <li>
+                <i class="fas fa-thumbs-up"></i>
+                <span><a href="/">Liked Items</a></span>
+            </li>
+            <li>
+                <i class="fas fa-address-card"></i>
+                <span><a href="../account/address"> My Address</a></span>
+            </li>
+            <li>
+                <i class="fas fa-user-edit"></i>
+                <span><a href="../account/edit">Edit My Profile</a></span>
+            </li>
+            <button class="s-n-logout -lg-o">LOG IN/OUT</button>
+        </ul>
+        <ul class="s-n-2">
+            <h3 class="s-n-how">Products &amp; Groceries</h3>
+            <li><a href="../404">Special Order</a></li>
+            <li><a href="../404">Delivery Time</a></li>
+            <li><a href="../404">Payment Methods</a></li>
+            <li><a href="../404">Request An Item</a></li>
+            <li><a href="../404">Report an Item</a></li>
+            <li><a href="../404">Return Policy</a></li>
+        </ul>
+        <ul class="s-n-3">
+            <h3 class="s-n-how">Explore Yammie</h3>
+            <li><a href="../404">About Yammie</a></li>
+            <li><a href="../404">How to Order</a></li>
+            <li><a href="../404">Our Partners</a></li>
+            <li><a href="../404">Terms &amp; Conditions For Use</a></li>
+            <li><a href="../404">Privacy Policy</a></li>
+        </ul>
+        <div class="ftr-down">
+            <div class="ftr-official" style="color: black !important">
+                &copy; 2020 Yammie. All rights reserved
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/yammieshoppers" class="icon-button"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
+                    <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
+                    <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+                    <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav">
+        <div class="search-nav">
+            <div class="logo">
+                <div class="menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+                <a href="/">
+                    <img src="../resources/yammie.png" alt="YAMMIE" width="200" height="95%" id="logo" />
+                </a>
+            </div>
+            <div class="search">
+                <form id="f-search" autocomplete="off" action="../catalog" method="GET">
+                    <input type="text" name="q" placeholder="Search Groceries...." class="-ns" id="v-search" />
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="-help -user -dp">
+                <button class="-dropdown -hp">
+                    <i class="far fa-question-circle"></i>
+                    <span class="-c-text">Help</span>
+                    <i class="fas fa-chevron-down chev"></i>
+                </button>
+                <ul class="-help-list -hlp">
+                    <a href="../404">
+                        <li class="-help">
+                            <i class="fas fa-clock"></i>
+                            How to Order
+                        </li>
+                    </a>
+                    <a href="../404">
+                        <li class="-help">
+                            <i class="fas fa-truck-loading"></i>
+                            Delivery Times
+                        </li>
+                    </a>
+                    <a href="../404">
+                        <li class="-help">
+                            <i class="far fa-question-circle"></i>
+                            FAQs
+                        </li>
+                    </a>
+                    <li class="-help">
+                        <button class="-a-btn" style="width: 100%">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Help Center
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="-account -user focus">
+                <button class="-dropdown -acc">
+                    <i class="far fa-user"></i>
+                    <span class="-c-text -acc-name">My Account</span>
+                    <i class="fas fa-chevron-down chev-acc"></i>
+                </button>
+                <ul class="-help-list -acc-l">
+                    <a href="./account/profile">
+                        <li class="-help">
+                            <i class="far fa-user"></i>
+                            My Profile
+                        </li>
+                    </a>
+                    <a href="./cart">
+                        <li class="-help">
+                            <i class="fas fa-shopping-cart"></i>
+                            My Cart
+                        </li>
+                    </a>
+                    <a href="./account/orders">
+                        <li class="-help">
+                            <i class="fas fa-gift"></i>
+                            My Orders
+                        </li>
+                    </a>
+                    <a href="./account/edit">
+                        <li class="-help">
+                            <i class="fas fa-user-edit"></i>
+                            Edit Profile
+                        </li>
+                    </a>
+                    <li class="-help">
+                        <button class="-a-btn -lg" style="width: 100%">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Log Out
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="-user -user-cart">
+                <!--for small screens-->
+                <div class="-icon-sm" id="-is">
+                    <i class="fas fa-search"></i>
+                </div>
+                <a href="../cart" style="position: relative">
+                    <img src="../resources/shopping-cart.svg" alt="" width="25px" height="25px" />
+                    <span class="cart-number" id="cartNumberItems">0</span>
+                    <span class="cart-label" style="padding-bottom: 10px"> Cart </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="-sh">
+        <form autocomplete="off" action="../catalog" method="GET" class="" id="-sm-s">
+            <input type="text" name="q" placeholder="Search Groceries...." class="-ns" />
+            <button type="submit" class="search-button">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+    <div class="cr-m-ctr">
+        <div class="cr-ctr">
+            <form class="-confirm-ctr" id="-code-ctr">
+                <br>
+                <h3>Now, lets confirm Your Email</h3>
+                <br>
+                <p>
+                    Enter the digit code sent to your Email
+                </p>
+                <br>
+                <input type="text" class="-is" id="-code" autocomplete="off">
+                <br>
+                <button class="btn btn-sm">Submit</button>
+            </form>
+            <div class="-ldr -confirm-ctr">
+
+            </div>
+
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="ftr-sm-s">
+            <span> Terms &amp; Conditions </span>
+            <span> Help Center </span>
+            <span> Contact Us </span>
+        </div>
+        <div class="ftr-up">
+            <div class="ftr-u-first">
+                <div class="ftr-logo">
+                    <img src="../resources/yammie.png" alt="YAMMIE" width="250px" height="100px" />
+                </div>
+                <div class="ftr-message">
+                    <p>
+                        Your online Market Store For Groceries, <br />
+                        Food Items, Clothings, Gadgets And Many More.
+                    </p>
+                </div>
+                <div class="ftr-app">
+                    <h3>Get the Yammie App On . . . .</h3>
+                    <div class="ftr-app-stores" style="margin-top: 15px">
+                        <a href="">
+                            <img src="../resources/play-store-3.jpg" alt="" height="45" width="150"
+                                style="margin-right: 5px" />
+                        </a>
+                        <a href="">
+                            <img src="../resources/apple-store.jpg" alt="" height="45" width="150" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="ftr-u-second">
+                <h4 class="footer-h4">Explore Yammie</h4>
+                <ul class="footer-list">
+                    <li><a href="#">About Yammie</a></li>
+                    <li><a href="#">How to Order</a></li>
+                    <li><a href="#">Help &amp; FAQs</a></li>
+                    <li><a href="#">Our Partners</a></li>
+                    <li><a href="#">Terms &amp; Conditions For Use</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="ftr-u-third">
+                <h4 class="footer-h4">Contact Us</h4>
+                <ul class="footer-list">
+                    <li class="second-list">
+                        <a href="">
+                            <i class="fas fa-shopping-cart"></i>
+                            Yammie Shoppers
+                        </a>
+                    </li>
+                    <li class="second-list">
+                        <a href="mailto:#">
+                            <i class="fas fa-envelope"></i>
+                            customer@yammie.com
+                        </a>
+                    </li>
+                    <li class="second-list">
+                        <a href="#">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Lira Campus
+                        </a>
+                    </li>
+                </ul>
+                <form action="#">
+                    <input type="text" name="" id="comment" placeholder="How do you feel?" />
+                    <br />
+                    <input type="text" name="" id="customer-email" placeholder="Email or Phone Number(Optional)" />
+                    <br />
+                    <button class="footer-form-button">submit</button>
+                </form>
+            </div>
+            <div class="ftr-u-fourth">
+                <h4 class="footer-h4">Products &amp; Groceries</h4>
+                <ul class="footer-list">
+                    <li><a href="#">Special Order</a></li>
+                    <li><a href="#">Delivery Time</a></li>
+                    <li><a href="#">Payment Methods</a></li>
+                    <li><a href="#">Request An Item</a></li>
+                    <li><a href="#">Report an Item</a></li>
+                    <li><a href="#">Return Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="ftr-down">
+            <div class="ftr-official">
+                &copy; 2020 Yammie. All rights reserved
+                <div class="social-icons">
+                    <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
+                    <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
+                    <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
+                    <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+                    <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--scripts-->
+
+    <script>
+        let yammie = localStorage.getItem(
+            "https://yammieshoppers.com/useLocalStorage/Storage"
+        );
+
+        let fm = document.querySelector("#-code-ctr");
+        fm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let _cu = { fn: document.querySelector("#-code").value };
+
+            xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState < 4) {
+                    document.querySelector('.-ldr').innerHTML = 
+                    `<i class="fas fa-spinner fa-spin fa-2x"></i>`;
+                }
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    if(xhr.responseText != "nm"){
+                        document.querySelector('#-code-ctr').style.opacity = "0.3";
+                        document.querySelector('#-code-ctr').style.pointerEvents = "none";
+
+                        localStorage.setItem(
+                            "https://yammieshoppers.com/useLocalStorage/Storage",
+                            xhr.responseText
+                        );
+                        document.querySelector('.-ldr').innerHTML = `
+                        <br>
+                            <i class="far fa-check-circle fa-2x" style="color:green"></i>
+                        <br>
+                            <h4 style="text-align: center;">
+                                CONGRATULATIONS!
+                            </h4>
+                            <br> 
+                            <h5>
+                                Your Account has been Created Successfully!!
+                            <h5>
+                        <br>
+                        <a href="/">
+                            <button class="btn btn-sm btn-w">
+                                Let's Start Here <i class="fas fa-arrow-right"></i>    
+                            </button>
+                        </a>
+                        `;
+                    }else{
+                        document.querySelector('.-ldr').innerHTML = `
+                        <h5>
+                            The code did not Match Try Again!!
+                        <h5>
+                        `;
+                    }
+                    }
+                  
+                if (xhr.status != 200 && xhr.readyState == 4 && xhr.status != 400) {
+                    window.alert("An Error Occurred...");
+                }
+            };
+            xhr.open("POST", "/api/user/customer/confirm", true);
+            xhr.setRequestHeader("Content-type", "application/json");
+            xhr.send(JSON.stringify(_cu));
+
+        });
+      //form end
+    </script>
+    <script>
+        let yammieUsr = "";
+        if (yammie) {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    [yammieUsr] = JSON.parse(xhr.responseText);
+                    let account = document.querySelector(".-acc-name");
+                    account.innerHTML = "Hi, " + yammieUsr.c_first_name;
+                }
+            };
+            xhr.open("GET", `/api/user/customer/${yammie}`, true);
+            xhr.send();
+        }
+        const sch = (i, sch) => {
+            i.addEventListener("click", () => {
+                sch.classList.toggle("sch-s");
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth",
+                });
+            });
+        };
+        function cnd(i, c) {
+            i = parseInt(i);
+            c.textContent = i ? i : 0;
+            c.style.display = c.textContent == "0" ? "none" : "block";
+        }
+
+        const closeSide = document.querySelector(".-c-side");
+        const menu = document.querySelector(".menu");
+        const sidenav = document.querySelector("#sidenav");
+        menu.addEventListener("click", () => {
+            sidenav.classList.add("active");
+        });
+        closeSide.addEventListener("click", () => {
+            sidenav.classList.remove("active");
+        });
+        if (screen.availWidth <= 768) {
+            document.querySelector("#logo").src = "./resources/cartlink.png";
+            document.querySelector("#logo").style.width = "60px";
+            document.querySelector("#logo").style.height = "30px";
+        }
+        let acc = document.querySelector(".-acc");
+        let hp = document.querySelector(".-hp");
+        //check toggle a class
+        acc.addEventListener("focus", (e) => {
+            if (!yammie) {
+                window.location.assign("./login");
+            } else {
+                e.target.style.color = "#ffbb00";
+                document
+                    .querySelector(".chev-acc")
+                    .classList.replace("fa-chevron-down", "fa-chevron-up");
+                document.querySelector(".-acc-l").style.display = "flex";
+            }
+        });
+
+        acc.addEventListener("blur", (e) => {
+            setTimeout(() => {
+                e.target.style.color = "#000";
+                document
+                    .querySelector(".chev-acc")
+                    .classList.replace("fa-chevron-up", "fa-chevron-down");
+                document.querySelector(".-acc-l").style.display = "none";
+            }, 200);
+        });
+        hp.addEventListener("focus", (e) => {
+            e.target.style.color = "#ffbb00";
+            document
+                .querySelector(".chev")
+                .classList.replace("fa-chevron-down", "fa-chevron-up");
+            document.querySelector(".-hlp").style.display = "flex";
+        });
+        hp.addEventListener("blur", (e) => {
+            setTimeout(() => {
+                e.target.style.color = "#000";
+                document
+                    .querySelector(".chev")
+                    .classList.replace("fa-chevron-up", "fa-chevron-down");
+                document.querySelector(".-hlp").style.display = "none";
+            }, 200);
+        });
+    </script>
+    <!--scripts-->
+</body>
+
+</html>

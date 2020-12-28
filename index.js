@@ -10,8 +10,15 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/admin/", require("./routes/adminRoutes"));
-app.use("/api/user/", require("./routes/userRoutes"));
+app.use("/api/user/", require("./routes/userRoutes")); 
 app.use("/api/sellers/", require("./routes/sellerRoutes"));
+app.use("/api/products/", require("./routes/products"));
+app.use("/api/orders/", require("./routes/orders"));
+app.use("/api/users/", require("./routes/users"));
+
+
+
+
 
 app.use(express.static("public", { extensions: ["html", "htm"] }));
 
