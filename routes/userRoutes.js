@@ -1,10 +1,7 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
-<<<<<<< HEAD
 const nodemailer = require("nodemailer");
-=======
->>>>>>> c5011c9ba5a53d4d91382c0085a05331604149f2
 const router = express.Router();
 const charge = require('./charges')
 
@@ -27,13 +24,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-<<<<<<< HEAD
-    pass: "yammieShoppers@1",
-  },
-=======
     pass: "yammieShoppers@1"
   }
->>>>>>> c5011c9ba5a53d4d91382c0085a05331604149f2
 });
 //mailer
 router.post("/customer/insert", async (req, res) => {
@@ -304,10 +296,6 @@ router.post("/customer/order", async (req, res) => {
     }
   );
 });
-<<<<<<< HEAD
-=======
-
->>>>>>> c5011c9ba5a53d4d91382c0085a05331604149f2
 //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
 function category(ct, nature, res) {
