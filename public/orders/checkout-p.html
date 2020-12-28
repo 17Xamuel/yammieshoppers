@@ -40,7 +40,7 @@
       }
       .p-order-progress-b {
         height: 7px;
-        width: 5%;
+        width: 100%;
         background-color: #ffbb00;
         border-radius: 40px;
         transition: all 0.5s ease-in-out;
@@ -240,12 +240,12 @@
         border: 1px solid rgb(0, 0, 0, 0.2);
         border-radius: 10px;
       }
-      #other-a {
+      #other {
         border: 0;
         outline: none;
         width: 70%;
         border-bottom: 1px solid rgb(0, 0, 0, 0.3);
-        margin-top: 10%;
+        margin-top: 5px;
         font-size: 17px;
         padding: 5px;
       }
@@ -304,14 +304,21 @@
         padding: 5px;
       }
       ._check-item > .img {
-        width: 25%;
+        width: 120px;
         display: flex;
         align-items: center;
         justify-content: center;
       }
+      ._check-item > .img > div {
+        background-color: rgba(0, 0, 0, 0.1);
+        width: 85px;
+        height: 85px;
+      }
       .-item {
-        width: 75%;
         height: fit-content;
+      }
+      .-item > div {
+        padding-top: 5px;
       }
       .-st > .-st-content {
         display: flex;
@@ -375,7 +382,7 @@
     </div>
     <div class="p-order-m-ctr">
       <div class="p-order-ctr">
-        <h3 class="current-s">1. ADDRESS</h3>
+        <h3 class="current-s">Order CheckOut</h3>
         <div class="p-order-progress">
           <div class="p-order-progress-b"></div>
         </div>
@@ -390,37 +397,45 @@
                 <b class="edit edit-a-b">Edit</b>
               </div>
               <div class="_ca">
-                <div class="_cn _cad">Samuel Wekobosya</div>
-                <div class="_cr _cad">Pioneer</div>
-                <div class="_cz _cad">Pioneer Zone, Lira University</div>
+                <b><div class="_cn _cad _cn">N/A</div></b>
+                <div class="_cr _cad _1a"></div>
+                <div class="_cz _cad _cmz"></div>
+                <div class="_cz _cad _cmn"></div>
               </div>
-              <form class="_ca">
+              <form class="_ca _dn _ea" style="display: none">
                 <div class="_cad">
-                  <label for="">Location/Residence</label>
+                  <h4 style="margin: 10px 0px">Add/Change Your Address</h4>
+                  <label for="">Type</label>
                   <br />
                   <select
                     name=""
-                    id=""
+                    id="type"
                     required
-                    class="-is"
+                    class="-is type"
                     style="width: 250px"
                   >
-                    <option value="" hidden>Select Your Residence</option>
-                    <option value="primary">Primary</option>
-                    <option value="other">Other</option>
+                    <option value="" hidden>Select Type</option>
+                    <option value="Primary">Primary Address</option>
+                    <option value="guest">Guest Address</option>
                   </select>
+                  <div style="color: red; display: none" class="_guest">
+                    Guest Addresses are just temporary
+                  </div>
                 </div>
                 <div class="_cad">
                   <label for="">Location/Residence</label>
                   <br />
                   <select
                     name=""
-                    id=""
+                    id="location"
                     required
                     class="-is ca"
                     style="width: 250px"
                   >
                     <option value="" hidden>Select Your Residence</option>
+                    <option value="Management">Management Sciences</option>
+                    <option value="Hospital">Hospital</option>
+                    <option value="Education">Education</option>
                     <option value="keturah">keturah</option>
                     <option value="Wilson">Wilson</option>
                     <option value="Royal">Royal</option>
@@ -451,10 +466,19 @@
                     placeholder="Zone"
                     type="text"
                     name=""
-                    id=""
+                    id="zone"
                     class="-is cz"
                     style="width: 250px"
                     readonly
+                  />
+                </div>
+                <div class="_cad">
+                  <label for="other-a">Other:</label>
+                  <input
+                    type="text"
+                    name=""
+                    id="other"
+                    placeholder="(Specify)"
                   />
                 </div>
                 <button class="_ca-btn">Ok</button>
@@ -468,10 +492,15 @@
                 </span>
                 <span class="-edit-d edit"> Edit </span>
               </div>
-              <form class="p-order-address deliver _ca" id="-df">
+              <div
+                class="_ca _dm-r p-order-address deliver"
+                style="display: none"
+              ></div>
+              <form class="p-order-address deliver _ca _dm" id="-df">
                 <b>Select Your Preferred Delivery Method</b>
                 <div class="p-order-name">
                   <input
+                    required
                     type="radio"
                     name="d-method"
                     id="-d1"
@@ -487,6 +516,7 @@
                 </div>
                 <div class="p-order-name">
                   <input
+                    required
                     type="radio"
                     name="d-method"
                     id="-d2"
@@ -506,11 +536,23 @@
                 <div class="_u">
                   <b>Is your Order Urgent</b>
                   <div class="p-order-name">
-                    <input type="radio" name="d-u" id="-ug" value="u" />
+                    <input
+                      type="radio"
+                      name="d-u"
+                      id="-ug"
+                      value="u"
+                      required
+                    />
                     <span class="-d-u">Urgent</span>
                   </div>
                   <div class="p-order-name">
-                    <input type="radio" name="d-u" id="-ug" value="-u" />
+                    <input
+                      type="radio"
+                      name="d-u"
+                      id="-ug"
+                      value="-u"
+                      required
+                    />
                     <span class="-d-u">Not Urgent</span>
                   </div>
                 </div>
@@ -525,13 +567,14 @@
                   <b>Payment Details</b>
                 </span>
               </div>
-              <div class="p-order-address payment _ca">
+              <div class="p-order-address payment _ca" style="display: none">
                 <div class="p-order-name">
                   <b>Select Your Preferred Payment Method</b>
                 </div>
-                <form id="pay-form">
+                <form id="pay-form" class="_pf">
                   <div class="mm-input">
                     <input
+                      required
                       type="radio"
                       name="payment_method"
                       id="payment_method_mm"
@@ -560,6 +603,7 @@
                   </div>
                   <div class="mm-input">
                     <input
+                      required
                       type="radio"
                       name="payment_method"
                       id="payment_method"
@@ -657,6 +701,55 @@
     </div>
     <!--scripts-->
     <script>
+      //static
+      let numberFormat = new Intl.NumberFormat();
+      let _upa = true;
+      let _add = {};
+      let _dm = {};
+      let _ony;
+      displayCart();
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
+      let cartItems = localStorage.getItem("cartItems");
+      function displayCart() {
+        let cartItems = JSON.parse(localStorage.getItem("cartItems"));
+        let cartDom = document.querySelector(".items");
+        cartDom.innerHTML = "";
+        Object.values(cartItems).forEach((item) => {
+          cartDom.innerHTML += `
+            <div class="_check-item">
+                    <div class="img">
+                      <div class="">
+                      <img
+                        src="${item.display}"
+                        alt=""
+                        width="100%"
+                        height="100%"
+                      />
+                      </div>
+                    </div>
+                    <div class="-item">
+                      <div class="name" style="overflow: hidden">
+                        ${item.name.replace(/_/g, " ")}
+                      </div>
+                      <div class="price _usp">Price: ${
+                        "UGX " +
+                        numberFormat.format(
+                          item.discount
+                            ? (item.price * (100 - item.discount)) / 100
+                            : item.price
+                        )
+                      }</div>
+                      <div class="qty _usq">Quantity: ${item.inCartNumber}</div>
+                      <div class="shipping-fees">Shipping Fees: 7000</div>
+                    </div>
+                  </div>
+            `;
+        });
+      }
+    </script>
+    <script>
       function _ca(i, z) {
         i.addEventListener("change", (e) => {
           z.value =
@@ -697,10 +790,128 @@
               ? "Management Sciences"
               : i.value == "Education"
               ? "Education Block"
-              : "Just Enter";
+              : "Other";
         });
       }
+      document.querySelector(".type").addEventListener("change", () => {
+        document.querySelector("._guest").style.display =
+          document.querySelector(".type").value == "guest" ? "block" : "none";
+      });
+      document.querySelector(".edit-a-b").addEventListener("click", () => {
+        document.querySelector("._dn").style.display =
+          document.querySelector("._dn").style.display == "none"
+            ? "block"
+            : "none";
+      });
+      document.querySelector(".-edit-d").addEventListener("click", () => {
+        document.querySelector("._dm").style.display =
+          document.querySelector("._dm").style.display == "none"
+            ? "block"
+            : "none";
+      });
       _ca(document.querySelector(".ca"), document.querySelector(".cz"));
+    </script>
+    <script>
+      document.querySelector("._ea").addEventListener("submit", (e) => {
+        e.preventDefault();
+        _add.type = document.querySelector("#type").value || "Primary";
+        _add.add =
+          document.querySelector("#location").value ||
+          document.querySelector("#other").value;
+        _add.zone = document.querySelector("#zone").value || "default";
+        _upa = _add.type == "guest" ? false : true;
+        if (_upa == true) {
+          xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              if (xhr.responseText == "Changed") {
+                window.location.reload();
+              }
+            }
+          };
+          xhr.open("POST", `/api/user/account/address/edit/${yammie}`, true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.send(JSON.stringify(_add));
+        } else {
+          document.querySelector("._cr").innerHTML = _add.add;
+          document.querySelector("._cz").innerHTML = _add.zone;
+          document.querySelector("._ea").style.display = "none";
+        }
+      });
+      //address
+      function _ua(url) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.send();
+        xhr.onreadystatechange = () => {
+          if (xhr.status == 200 && xhr.readyState == 4) {
+            let [res] = JSON.parse(xhr.responseText);
+            document.querySelector("._1a").innerHTML =
+              res.pickup_address_1 == null ? "" : res.pickup_address_1;
+            document.querySelector("._cn").innerHTML =
+              res.pickup_address_1 == null
+                ? ""
+                : res.c_first_name + " " + res.c_last_name;
+            document.querySelector("._cmz").innerHTML =
+              res.pickup_address_1 == null ? "N/A" : res.zone;
+            document.querySelector("._cmn").innerHTML =
+              res.pickup_address_1 == null
+                ? "Please, Click on Edit"
+                : res.c_phone;
+          }
+        };
+      }
+      //address
+
+      document.querySelector("._dm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let dm = new FormData(document.querySelector("._dm"));
+        _dm.dm = dm.get("d-method");
+        _dm.u = dm.get("d-u");
+        document.querySelector("._dm").style.display = "none";
+        document.querySelector("._dm-r").style.display =
+          document.querySelector("._dm").style.display == "none"
+            ? "block"
+            : "none";
+        document.querySelector(
+          "._dm-r"
+        ).innerHTML = `<b>Delivery Method: </b>${_dm.dm}`;
+        document.querySelector(".payment").style.display = "block";
+      });
+      document.querySelector("._pf").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let pf = new FormData(document.querySelector("._pf"));
+        pf.append("yammie", yammie);
+        pf.append(
+          "order",
+          localStorage.getItem("cartItems")
+            ? localStorage.getItem("cartItems")
+            : "Error"
+        );
+        pf.append("amount", document.querySelector("#total").textContent);
+        pf.append("dm", _dm);
+        pf.forEach((key) => console.log(key));
+      });
+    </script>
+    <script>
+      _ua(`/api/user/account/address/${yammie}`);
+      if (screen.availWidth <= 768) {
+        document.querySelector("#logo").src = "../resources/cartlink.png";
+        document.querySelector("#logo").style.width = "60px";
+        document.querySelector("#logo").style.height = "30px";
+      }
+      //shipping
+      function _us(url, product) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(product));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            return parseInt(xhr.responseText);
+          }
+        };
+      }
     </script>
     <!--scripts-->
   </body>

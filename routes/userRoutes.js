@@ -1,8 +1,9 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 const router = express.Router();
+const charge = require('./charges')
 
 //for new user
 let newUser = {};
@@ -14,20 +15,18 @@ function _c(l) {
   for (let i = 0; i < l; i++) {
     r += rc.charAt(Math.floor(Math.random() * rc.length));
   }
-  return (
-    "Y-" + r
-  );
+  return "Y-" + r;
 }
 //mailer
 let transporter = nodemailer.createTransport({
-  host:"smtp.domain.com",
-  secureConnection:false,
-  port:465,
+  host: "smtp.domain.com",
+  secureConnection: false,
+  port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1"
-  }
-})
+    pass: "yammieShoppers@1",
+  },
+});
 //mailer
 router.post("/customer/insert", async (req, res) => {
   conn.query(
@@ -62,16 +61,19 @@ router.post("/customer/insert", async (req, res) => {
           subject: "Confirming Your Account",
           text: `Hello ${c_first_name}, confirm your email with this ${code}`,
         };
-        transporter.sendMail(info).then(function (response) {
-          res.status(200).send('ok')
-        }).catch(function (err) {
-          console.log("Error Ocurred!!!")
-        });
+        transporter
+          .sendMail(info)
+          .then(function (response) {
+            res.status(200).send("ok");
+          })
+          .catch(function (err) {
+            console.log("Error Ocurred!!!");
+          });
       }
     }
   );
 });
-router.post('/customer/confirm', (req, res) => {
+router.post("/customer/confirm", (req, res) => {
   if (req.body.fn == code) {
     conn.query("INSERT INTO customers SET ?", newUser, (err) => {
       if (err) {
@@ -85,14 +87,14 @@ router.post('/customer/confirm', (req, res) => {
           }
         );
         let id = newUser.c_id;
-        code, newUser = "";
+        code, (newUser = "");
         res.status(200).send(id);
       }
     });
   } else {
-    res.send("nm")
+    res.send("nm");
   }
-})
+});
 router.get("/item/:id", (req, res) => {
   conn.query(
     `SELECT * FROM products WHERE id = ? `,
@@ -118,25 +120,25 @@ router.get("/search/:l-:h", async (req, res) => {
     let _query = "";
     _query =
       query == "foods" ||
-        query == "sandals" ||
-        query == "electronics" ||
-        query == "tshirts" ||
-        query == "shoes" ||
-        query == "phoneaccessories" ||
-        query == "phones" ||
-        query == "music" ||
-        query == "drinks" ||
-        query == "utensils" ||
-        query == "diy" ||
-        query == "stationery" ||
-        query == "laptopaccessories" ||
-        query == "computers" ||
-        query == "allproducts" ||
-        query == "all" ||
-        query == "recentlyviewed" ||
-        query == "recommendedforyou" ||
-        query == "gascookers" ||
-        query == "trending"
+      query == "sandals" ||
+      query == "electronics" ||
+      query == "tshirts" ||
+      query == "shoes" ||
+      query == "phoneaccessories" ||
+      query == "phones" ||
+      query == "music" ||
+      query == "drinks" ||
+      query == "utensils" ||
+      query == "diy" ||
+      query == "stationery" ||
+      query == "laptopaccessories" ||
+      query == "computers" ||
+      query == "allproducts" ||
+      query == "all" ||
+      query == "recentlyviewed" ||
+      query == "recommendedforyou" ||
+      query == "gascookers" ||
+      query == "trending"
         ? "SELECT * FROM products"
         : `SELECT * FROM products 
           WHERE product LIKE '%${query}%' 
@@ -243,7 +245,7 @@ function rs(l) {
     r
   );
 }
-router.post("/customer/order", async(req, res) => {
+router.post("/customer/order", async (req, res) => {
   const [
     order_payment_method,
     c_id,
@@ -266,10 +268,10 @@ router.post("/customer/order", async(req, res) => {
     (err, result) => {
       if (err) throw err;
       res.send(order_payment_method);
-}
+    }
   );
 });
- //trending category items
+//trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
 function category(ct, nature, res) {
   conn.query(`SELECT * FROM products`, (err, result) => {
@@ -318,10 +320,8 @@ router.post("/account/address/edit/:id", (req, res) => {
       let newAddress = {};
       if (result.length == 0) {
         newAddress.c_id = req.params.id;
-        newAddress.pickup_address_1 =
-          req.body.type == "Primary" ? req.body.add : "";
-        newAddress.pickup_address_2 =
-          req.body.type == "Primary" ? "" : req.body.add;
+        newAddress.pickup_address_1 = req.body.add;
+        newAddress.zone = req.body.zone;
         conn.query(
           `INSERT INTO customer_address SET ? `,
           newAddress,
@@ -331,11 +331,8 @@ router.post("/account/address/edit/:id", (req, res) => {
           }
         );
       } else {
-        if (req.body.type == "Primary") {
-          newAddress.pickup_address_1 = req.body.add;
-        } else {
-          newAddress.pickup_address_2 = req.body.add;
-        }
+        newAddress.pickup_address_1 = req.body.add;
+        newAddress.zone = req.body.zone;
         conn.query(
           `UPDATE customer_address SET ? WHERE c_id = ?`,
           [newAddress, req.params.id],
@@ -348,4 +345,16 @@ router.post("/account/address/edit/:id", (req, res) => {
     }
   );
 });
+router.get('/shipping',(req,res)=>{
+  let charge = new charge(req.body).total;
+  res.send(charge);
+})
+console.log(new charge({ location:'lira',
+    urgent:'normal',
+    qty:'few',
+    size:'small',
+    fragile:false,
+    price:350000,
+    weight:'light',
+    user:'maisha'}).total)
 module.exports = router;

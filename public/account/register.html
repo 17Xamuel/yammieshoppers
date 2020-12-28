@@ -156,12 +156,12 @@
         font-weight: bold;
         margin: 10px 20px;
       }
-      .-ldr{
+      .-ldr {
         margin: 5px 0px;
-        justify-content:center;
+        justify-content: center;
         display: none;
       }
-      .-confirm{
+      .-confirm {
         width: 100%;
         border: 1px solid black;
       }
@@ -665,7 +665,7 @@
               </a>
             </li>
             <li class="second-list">
-              <a href="#">
+              <a href="https://g.page/yammie-shoppers?share">
                 <i class="fas fa-map-marker-alt"></i>
                 Lira Campus
               </a>
@@ -814,10 +814,10 @@
         } else {
           xhr = new XMLHttpRequest();
           xhr.onreadystatechange = () => {
-            if(xhr.readyState < 4){
-              document.querySelector('.-ldr').style.display = "flex";
-            }else{
-              document.querySelector('.-ldr').style.display = "none";
+            if (xhr.readyState < 4) {
+              document.querySelector(".-ldr").style.display = "flex";
+            } else {
+              document.querySelector(".-ldr").style.display = "none";
             }
             if (xhr.readyState == 4 && xhr.status == 400) {
               document.querySelector("#used-e").style.opacity = "1";
@@ -830,7 +830,7 @@
               location.replace("./confirm");
             }
             if (xhr.status != 200 && xhr.readyState == 4 && xhr.status != 400) {
-                window.alert("An Error Occurred...");
+              window.alert("An Error Occurred...");
             }
           };
           xhr.open("POST", "/api/user/customer/insert", true);
