@@ -706,17 +706,43 @@
       let _upa = true;
       let _add = {};
       let _dm = {};
-      let _ony;
-      displayCart();
+      let _ony = {};
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
+      displayCart();
       let cartItems = localStorage.getItem("cartItems");
       function displayCart() {
         let cartItems = JSON.parse(localStorage.getItem("cartItems"));
         let cartDom = document.querySelector(".items");
         cartDom.innerHTML = "";
+        //shipping
+        function _us(url, product, i) {
+          let xhr = new XMLHttpRequest();
+          xhr.open("POST", url, true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.send(JSON.stringify(product));
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              i.innerHTML = `Shipping Fees: ${
+                JSON.parse(xhr.responseText).cost
+              }`;
+            }
+          };
+        }
+        //shipping
         Object.values(cartItems).forEach((item) => {
+          let product = {
+            price: item.discount
+              ? (item.price * (100 - item.discount)) / 100
+              : item.price,
+            urgent: "normal",
+            qty: "few",
+            size: "small",
+            weight: "light",
+            fragile: false,
+            location: "lira",
+          };
           cartDom.innerHTML += `
             <div class="_check-item">
                     <div class="img">
@@ -742,10 +768,16 @@
                         )
                       }</div>
                       <div class="qty _usq">Quantity: ${item.inCartNumber}</div>
-                      <div class="shipping-fees">Shipping Fees: 7000</div>
+                      <div class="shipping-fees _shp">
+                      </div>
                     </div>
                   </div>
             `;
+          _us(
+            `/api/user/shipping/${yammie}`,
+            product,
+            document.querySelector("._shp")
+          );
         });
       }
     </script>
@@ -901,17 +933,6 @@
         document.querySelector("#logo").style.height = "30px";
       }
       //shipping
-      function _us(url, product) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(JSON.stringify(product));
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            return parseInt(xhr.responseText);
-          }
-        };
-      }
     </script>
     <!--scripts-->
   </body>
