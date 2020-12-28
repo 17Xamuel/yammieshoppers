@@ -238,7 +238,7 @@
                           <th>Name</th>
                           <th>Price</th>
                           <th>Description</th>
-                          <th>Status</th>
+                          <th colspan="2">Operations</th>
                         </tr>
                       </thead>
                       <tbody id="onlineProducts"></tbody>
@@ -422,8 +422,7 @@
           document.getElementById(
             "onlineLoading"
           ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-        }
-        if (load.readyState == 4 && load.status == 200) {
+        } else if (load.readyState == 4 && load.status == 200) {
           let online = JSON.parse(load.responseText);
           let row = "";
           online.forEach((onlineProduct) => {
@@ -463,6 +462,8 @@
           if (`${online.length}` == 0) {
             document.getElementById("onlineLoading").innerHTML =
               "No Online product found";
+          } else {
+            document.getElementById("onlineLoading").innerHTML = "";
           }
         }
       };

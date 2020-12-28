@@ -156,6 +156,7 @@ router.get("/pendingOrders/:id", async (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) throw err;
+      console.log(results);
       res.json(results);
     }
   );
@@ -288,7 +289,7 @@ try {
           return res.send("Something Went Wrong Please try again");
         }
         conn.query(
-          "INSERT INTO doneOrders SET ?",
+          "INSERT INTO done_orders SET ?",
           {
             c_id: result.c_id,
             order_id: result.order_id,

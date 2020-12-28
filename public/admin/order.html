@@ -165,7 +165,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-success">
               Stay Here
             </button>
-            <button type="button" data-dismiss="modal" class="btn btn-danger">
+            <button type="button" id="alg" class="btn btn-danger">
               Log Out
             </button>
           </div>
@@ -380,7 +380,9 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      let orderId = new URLSearchParams(window.location.search).get("order");
+      let orderId = new URLSearchParams(window.location.search).get(
+        "pendingOrder"
+      );
       const orders = new XMLHttpRequest();
       orders.onreadystatechange = () => {
         if (orders.readyState < 4) {
@@ -389,6 +391,7 @@
           ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
         }
         if (orders.status == 200 && orders.readyState == 4) {
+          console.log(orders.responseText);
           let [pendingOrders] = JSON.parse(orders.responseText);
           let date = pendingOrders.order_date.slice(0, 10);
           document.getElementById("ordernumber").innerHTML =

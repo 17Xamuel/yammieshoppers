@@ -221,7 +221,7 @@
                     <div class="d-flex justify-content-between">
                       <i class="fas fa-users fa-3x text-info"></i>
                       <div class="text-right text-secondary">
-                        <h4>Users</h4>
+                        <h4>Customers</h4>
                         <h3 id="users-number"></h3>
                       </div>
                     </div>
@@ -265,9 +265,7 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-muted mb-3 text-center">
-                      Pending Orders <span id="ordersn"></span>
-                    </h4>
+                    <h4 class="text-muted mb-3 text-center">Pending Orders</h4>
                     <table class="table table-striped bg-light text-center">
                       <thead>
                         <tr class="text-muted">
@@ -298,7 +296,7 @@
                 <div class="card rounded">
                   <div class="card-body">
                     <h4 class="text-muted mb-3 text-center">
-                      Pending Sellers <span id="psns"></span>
+                      Pending Sellers <span id="seln"></span>
                     </h4>
                     <table class="table table-dark table-hover text-center">
                       <thead>
@@ -658,12 +656,12 @@
         if (srequest.readyState < 4) {
           document.getElementById(
             "sellerLoading"
-          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning></i>`;
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
         }
         if (srequest.readyState == 4 && srequest.status == 200) {
           let pendingSellers = JSON.parse(srequest.responseText);
-          let row = "";
 
+          let row = "";
           pendingSellers.forEach((pendingSeller) => {
             row += ` <tr>
                       <td>${pendingSeller.username}</td>
@@ -707,12 +705,14 @@
             document.getElementById("sl").innerHTML = pendingSeller.location;
           });
           document.getElementById("sellerRequests").innerHTML = row;
-          document.getElementById(
-            "psns"
-          ).textContent = `(${pendingSellers.length})`;
           if (`${pendingSellers.length}` == 0) {
             document.getElementById("sellerLoading").innerHTML =
               "No seller found";
+          } else {
+            document.getElementById(
+              "seln"
+            ).innerHTML = `(${pendingSellers.length})`;
+            document.getElementById("sellerLoading").innerHTML = "";
           }
           let confirmButtons = document.querySelectorAll(".-c-seller ");
           confirmButtons.forEach((confirmButton) => {
@@ -824,27 +824,25 @@
         }
         if (orders.status == 200 && orders.readyState == 4) {
           let pendingOrders = JSON.parse(orders.responseText);
-          let row = "";
-          pendingOrders.forEach((order) => {
-            row += `<tr>
-       <td>${order.order_number}</td>
-       <td>${order.order_amount}</td>
-       <td>${order.order_delivery_method}</td>
+          if (`${pendingOrders.length}` == 0) {
+            document.getElementById("orderLoading").innerHTML =
+              "No Order found";
+          } else {
+            let row = "";
+            pendingOrders.forEach((pendingOrder) => {
+              row += `<tr>
+       <td>${pendingOrder.order_number}</td>
+       <td>${pendingOrder.order_amount}</td>
+       <td>${pendingOrder.order_delivery_method}</td>
        <td>
-       <a href="order?order=${order.order_id}">
+       <a href="order?order=${pendingOrder.order_id}">
          <button type="button" class="btn btn-info btn-sm">
            Details
          </button></a>
        </td>
      </tr>`;
-          });
-          document.getElementById("pendingOrders").innerHTML = row;
-          document.getElementById(
-            "ordersn"
-          ).textContent = `(${pendingOrders.length})`;
-          if (`${pendingOrders.length}` == 0) {
-            document.getElementById("orderLoading").innerHTML =
-              "No Order found";
+            });
+            document.getElementById("pendingOrders").innerHTML = row;
           }
         }
       };

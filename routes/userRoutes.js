@@ -1,6 +1,7 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
+const nodemailer = require("nodemailer");
 const router = express.Router();
 
 //for new user
