@@ -265,9 +265,6 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-
-    <script src="scripts/home.js"></script>
-    <script src="scripts/lg.js"></script>
     <script>
       let apId = new URLSearchParams(window.location.search).get(
         "approvedProduct"
@@ -297,9 +294,7 @@
       };
       pdetails.open("GET", `/api/sellers/pdetails/${apId}`, true);
       pdetails.send();
-    </script>
 
-    <script>
       let ppId = new URLSearchParams(window.location.search).get(
         "pendingProduct"
       );

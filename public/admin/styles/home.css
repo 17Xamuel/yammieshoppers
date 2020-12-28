@@ -44,6 +44,12 @@ body {
     position: static;
   }
 }
+@media (min-width: 1800px) {
+  body {
+    width: fit-content;
+    margin: 0px auto;
+  }
+}
 /* End navbar */
 
 /* Cards */

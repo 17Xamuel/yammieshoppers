@@ -20,7 +20,7 @@ app.use(express.static("public", { extensions: ["html", "htm"] }));
 // Set S3 endpoint to DigitalOcean Spaces
 const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
-  endpoint: spacesEndpoint,
+  endpoint: spacesEndpoint
 });
 
 // Change bucket property to your Space name
@@ -32,8 +32,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      },
-    }),
+      }
+    })
   }).array("images");
   return upload;
 }
@@ -58,7 +58,6 @@ function getUpload(id) {
 
 app.post("/addProduct", async (req, res) => {
   let productId = uuid.v4();
-
   let upload = getUpload(productId);
   upload(req, res, (err) => {
     if (err) throw err;
@@ -77,7 +76,7 @@ app.post("/addProduct", async (req, res) => {
       discount,
       seller_id,
       quantity,
-      specification,
+      specification
     } = req.body;
 
     let specifyProduct = JSON.stringify(specification);
@@ -95,7 +94,7 @@ app.post("/addProduct", async (req, res) => {
         images: path,
         seller_id: seller_id,
         quantity: quantity,
-        specifications: specifyProduct,
+        specifications: specifyProduct
       },
       (err, results) => {
         if (err) {

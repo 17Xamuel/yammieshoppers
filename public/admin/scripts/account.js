@@ -8,5 +8,4 @@ function logout() {
 logout();
 
 let admin = JSON.parse(localStorage.getItem("admin/yammie"));
-
 document.getElementById("user").innerHTML = admin[0];

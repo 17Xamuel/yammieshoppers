@@ -86,9 +86,9 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="settings" class="nav-link text-white p-3 mb-2"
+                  <a href="products.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
-                    >Settings</a
+                    >Products</a
                   >
                 </li>
                 <li class="nav-item">
@@ -179,7 +179,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3">
+            <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-10 mx-auto my-5">
                 <div class="card rounded">
                   <div class="card-body">
@@ -211,10 +211,11 @@
                           </tr>
                           <tr>
                             <td>Payment Method:<span id="method"></span></td>
-                            <td>Order Status: <span>Undelivered</span></td>
+                            <td>Order Status: <span id="ostatus"></span></td>
                           </tr>
                         </tbody>
                       </table>
+                      <div id="detailLoading" class="text-center"></div>
                     </div>
 
                     <h6 class="text-center text-primary">Item details</h6>
@@ -222,13 +223,22 @@
                       <tr>
                         <th>Name</th>
                         <th>Quantity</th>
+                        <th>Price</th>
                         <th>Total</th>
                         <th>Seller</th>
-                        <th>Notify</th>
                         <th>Clear</th>
                       </tr>
                       <tbody id="id"></tbody>
                     </table>
+                    <button
+                      type="button"
+                      class="btn btn-success btn-block"
+                      id="finishOrder"
+                      data-target="#fOrder"
+                      data-toggle="modal"
+                    >
+                      Finish Order
+                    </button>
                   </div>
                 </div>
               </div>
@@ -239,6 +249,28 @@
     </section>
     <!-- End details -->
 
+    <!-- Finish Modal -->
+    <div class="modal fade" id="fOrder">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Yammie Shoppers Order</h5>
+          </div>
+          <div class="modal-body text-center" id="finishMessage"></div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            data-dismiss="modal"
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- End Finish -->
+
     <!-- seller Modal -->
     <div class="modal fade" id="sellerInfo">
       <div class="modal-dialog">
@@ -246,7 +278,7 @@
           <div class="modal-header">
             <h5 class="modal-title">Seller Information</h5>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="contentLoad">
             <table class="table text-center">
               <tbody>
                 <tr>
@@ -277,28 +309,6 @@
       </div>
     </div>
 
-    <!-- Notify Message -->
-    <div class="modal fade" id="notify">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Response</h5>
-          </div>
-          <div class="modal-body" id="notifyMessage"></div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              data-dismiss="modal"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End -->
-
     <!-- clear -->
     <div class="modal fade" id="clear">
       <div class="modal-dialog">
@@ -308,11 +318,7 @@
           </div>
           <div class="modal-body" id="clearMessage"></div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              data-dismiss="modal"
-            >
+            <button type="button" class="btn btn-sm btn-danger" id="clearModal">
               OK
             </button>
           </div>
@@ -377,6 +383,11 @@
       let orderId = new URLSearchParams(window.location.search).get("order");
       const orders = new XMLHttpRequest();
       orders.onreadystatechange = () => {
+        if (orders.readyState < 4) {
+          document.getElementById(
+            "detailLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
         if (orders.status == 200 && orders.readyState == 4) {
           let [pendingOrders] = JSON.parse(orders.responseText);
           let date = pendingOrders.order_date.slice(0, 10);
@@ -397,6 +408,8 @@
             "UGX" + pendingOrders.order_amount;
           document.getElementById("dmethod").innerHTML =
             pendingOrders.order_delivery_method;
+          document.getElementById("ostatus").innerHTML =
+            pendingOrders.order_status;
           let items = JSON.parse(pendingOrders.order_items);
           document.getElementById("items").innerHTML = Object.keys(
             items
@@ -411,20 +424,14 @@
             data += `<tr>
                           <td>${item.name}</td>
                           <td>${item.inCartNumber}</td>
+                          <td>${item.price}</td>
                           <td>${total}</td>
                           <td>
                             <button type="button" class="btn btn-sm btn-info"
                             data-toggle="modal" data-target="#sellerInfo"
                             data-it="${item.cartItemAdded}">Contact</button>
                           </td>
-                          <td>
-                            <button type="button"
-                            class="btn btn-sm btn-primary"data-name="${item.name}"
-                            data-no="${item.inCartNumber}"data-id="${item.cartItemAdded}"
-                            data-dis="${item.discount}"data-price="${item.price}"
-                            data-target="#notify" data-toggle="modal"
-                            >Notify</button>
-                          </td>
+                          
                           <td>
                             <button type="button"
                             class="btn btn-sm btn-success" data-toggle="modal"
@@ -441,6 +448,11 @@
               let contact = e.target.dataset.it;
               const xhr = new XMLHttpRequest();
               xhr.onreadystatechange = () => {
+                if (xhr.readyState < 4) {
+                  document.getElementById(
+                    "contentLoad"
+                  ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                }
                 if (xhr.readyState == 4 && xhr.status == 200) {
                   let [result] = JSON.parse(xhr.responseText);
                   document.getElementById("sn").innerHTML = result.username;
@@ -451,32 +463,6 @@
               };
               xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
               xhr.send();
-            });
-          });
-          let notifyButtons = document.querySelectorAll(".btn-primary");
-          notifyButtons.forEach((notifyButton) => {
-            notifyButton.addEventListener("click", (e) => {
-              let order = {};
-              order.id = e.target.dataset.id;
-              order.qty = e.target.dataset.no;
-              order.product = e.target.dataset.name;
-              order.price = e.target.dataset.price;
-              order.discount = e.target.dataset.dis;
-              order.amount =
-                (order.price - (order.discount / 100) * order.price) *
-                order.qty;
-              let orderString = JSON.stringify(order);
-              const orderA = new XMLHttpRequest();
-              orderA.onreadystatechange = () => {
-                if (orderA.status == 200 && orderA.readyState == 4) {
-                  document.getElementById("notifyMessage").innerHTML =
-                    orderA.responseText;
-                  e.target.style.pointerEvents = "none";
-                }
-              };
-              orderA.open("POST", "/api/admin/notifyOrder", true);
-              orderA.setRequestHeader("Content-Type", "application/json");
-              orderA.send(orderString);
             });
           });
 
@@ -492,6 +478,11 @@
 
                   const clearOrder = new XMLHttpRequest();
                   clearOrder.onreadystatechange = () => {
+                    if (clearOrder.readyState < 4) {
+                      document.getElementById(
+                        "clearMessage"
+                      ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                    }
                     if (
                       clearOrder.status == 200 &&
                       clearOrder.readyState == 4
@@ -512,6 +503,36 @@
       };
       orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);
       orders.send();
+
+      let finishOrder = document.getElementById("finishOrder");
+      finishOrder.addEventListener("click", (e) => {
+        const orderFinish = new XMLHttpRequest();
+        orderFinish.onreadystatechange = () => {
+          if (orderFinish.readyState < 4) {
+            document.getElementById(
+              "finishMessage"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (
+            finishOrder.responseText == "Something Went Wrong Please try again"
+          ) {
+            document.getElementById("finishMessage").innerHTML =
+              finishOrder.responseText;
+          } else if (orderFinish.readyState == 4 && orderFinish.status == 200) {
+            window.location.assign("home.html");
+          }
+        };
+        orderFinish.open("GET", `/api/admin/finishOrder/${orderId}`, true);
+        orderFinish.send();
+      });
+
+      function reload() {
+        let pageReload = document.getElementById("clearModal");
+        pageReload.addEventListener("click", (e) => {
+          window.location.reload("order.html");
+        });
+      }
+      reload();
     </script>
     <script src="scripts/account.js"></script>
     <!-- End Scripts -->

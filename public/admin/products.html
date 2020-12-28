@@ -32,7 +32,7 @@
     />
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Settings</title>
+    <title>Yammie | Products</title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -94,10 +94,10 @@
 
                 <li class="nav-item current">
                   <a
-                    href="settings"
+                    href="products.html"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
-                    >Settings</a
+                    >Products</a
                   >
                 </li>
                 <li class="nav-item">
@@ -189,31 +189,95 @@
 
     <section>
       <div class="container-fluid">
-        <div class="row">
+        <div class="row mb-3">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3">
-              <div class="col-xl-12">
-                <h4 class="text-center my-3">
-                  Pending Items <span id="ppn"></span>
-                </h4>
-                <table class="table table-striped bg-light text-center">
-                  <thead>
-                    <tr>
-                      <th>Images</th>
-                      <th>Name</th>
-                      <th>Price</th>
-                      <th>Description</th>
-                      <th colspan="2">Operations</th>
-                    </tr>
-                  </thead>
-                  <tbody id="pendingProducts"></tbody>
-                </table>
+            <div class="row pt-md-5 mt-md-3 align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded my-3">
+                  <div class="card-body">
+                    <h4 class="text-center my-3">
+                      Pending Products <span id="ppn"></span>
+                    </h4>
+                    <table class="table table-dark table-hover text-center">
+                      <thead>
+                        <tr>
+                          <th>Images</th>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Description</th>
+                          <th colspan="2">Operations</th>
+                        </tr>
+                      </thead>
+                      <tbody id="pendingProducts"></tbody>
+                    </table>
+                    <div id="productLoading" class="text-center"></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <h4 class="text-center my-3">
+                      Online Products <span id="apn"></span>
+                    </h4>
+                    <table class="table table-striped bg-light text-center">
+                      <thead>
+                        <tr>
+                          <th>Images</th>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Description</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="onlineProducts"></tbody>
+                    </table>
+                    <div id="onlineLoading" class="text-center"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal fade" id="dPending">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5 class="modal-title">Delete Pending Product</h5>
+          </div>
+          <div class="modal-body">
+            Want to Delete <span id="pname"></span> from Pending Products?
+            <br />Press OK to continue
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" id="okBtn">
+              OK
+            </button>
+            <button
+              type="button"
+              class="btn-success btn-sm"
+              data-dismiss="modal"
+            >
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -267,8 +331,144 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script src="scripts/setting.js"></script>
     <script src="scripts/account.js"></script>
+    <script>
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState < 4) {
+          document.getElementById(
+            "productLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let pendingProducts = JSON.parse(xhr.responseText);
+
+          let rows = "";
+          pendingProducts.forEach((pendingProduct) => {
+            let images = JSON.parse(pendingProduct.images);
+
+            rows += ` <tr>
+                      <td>
+                        <img
+                          src="${images[0]}"
+                          width="50"
+                          height="50"
+                          class="rounded-circle"
+                        />
+                      </td>
+                      <td>${pendingProduct.product}</td>
+                      <td>${pendingProduct.price}</td>
+                      <td>${pendingProduct.description}</td>
+                      <td>
+                      <a href="product-details?item=${pendingProduct.id}">
+                      <button type="submit" class="btn btn-info btn-sm"
+                        data-id="${pendingProduct.id}">
+                          Details
+                        </button>
+                        </a>
+                        </td>
+                      <td>
+                      <button 
+                      type="submit" 
+                      class="btn btn-danger btn-sm -d-product" 
+                      data-target="#dPending" data-toggle="modal"
+                      data-name="${pendingProduct.product}"
+                      data-id="${pendingProduct.id}"
+                      data-images="${pendingProduct.images}">
+                        Delete
+                      </button></td>
+                    </tr>`;
+          });
+          document.getElementById("pendingProducts").innerHTML = rows;
+          document.getElementById(
+            "ppn"
+          ).textContent = `(${pendingProducts.length})`;
+          if (`${pendingProducts.length}` == 0) {
+            document.getElementById("productLoading").innerHTML =
+              "No Pending product found";
+          }
+          let deleteButtons = document.querySelectorAll(".-d-product");
+          deleteButtons.forEach((deleteButton) => {
+            deleteButton.addEventListener("click", (e) => {
+              document.getElementById("pname").innerHTML =
+                e.target.dataset.name;
+              let deleteProduct = e.target.dataset.id;
+              let deleting = document.getElementById("okBtn");
+              deleting.addEventListener("click", (e) => {
+                const _xhr = new XMLHttpRequest();
+                _xhr.onreadystatechange = () => {
+                  if (_xhr.readyState == 4 && _xhr.status == 200) {
+                    if (_xhr.responseText == "Deleted") {
+                      window.location.reload("products.html");
+                    } else {
+                      console.log("Error");
+                    }
+                  }
+                };
+                _xhr.open("DELETE", `/deleteProduct/${deleteProduct}`, true);
+                _xhr.send({});
+              });
+            });
+          });
+        }
+      };
+
+      xhr.open("GET", "/api/admin/pendingProduct", true);
+      xhr.send();
+
+      const load = new XMLHttpRequest();
+      load.onreadystatechange = () => {
+        if (load.readyState < 4) {
+          document.getElementById(
+            "onlineLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (load.readyState == 4 && load.status == 200) {
+          let online = JSON.parse(load.responseText);
+          let row = "";
+          online.forEach((onlineProduct) => {
+            let images = JSON.parse(onlineProduct.images);
+            row += `<tr>
+                      <td>
+                        <img
+                          src="${images[0]}"
+                          width="50"
+                          height="50"
+                          class="rounded-circle"
+                        />
+                      </td>
+                      <td>${onlineProduct.product}</td>
+                      <td>${onlineProduct.price}</td>
+                      <td>${onlineProduct.description}</td>
+                      <td>
+                      <a href="product-details?item=${onlineProduct.id}">
+                      <button type="submit" class="btn btn-info btn-sm"
+                        data-id="${onlineProduct.id}">
+                          Details
+                        </button>
+                        </a>
+                        </td>
+                      <td>
+                      <button 
+                      type="submit" 
+                      class="btn btn-danger btn-sm -delete-product" 
+                      data-id="${onlineProduct.id}"
+                      data-images="${onlineProduct.images}">
+                        Delete
+                      </button></td>
+                    </tr>`;
+          });
+          document.getElementById("onlineProducts").innerHTML = row;
+          document.getElementById("apn").textContent = `(${online.length})`;
+          if (`${online.length}` == 0) {
+            document.getElementById("onlineLoading").innerHTML =
+              "No Online product found";
+          }
+        }
+      };
+      load.open("GET", `/api/admin/getOnlineProducts`, true);
+      load.send();
+    </script>
     <!-- End Scripts -->
   </body>
 </html>

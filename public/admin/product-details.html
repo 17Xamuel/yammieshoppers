@@ -101,10 +101,10 @@
                 </li>
                 <li class="nav-item current">
                   <a
-                    href="settings"
+                    href="products.html"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
-                    >Settings</a
+                    >Products</a
                   >
                 </li>
                 <li class="nav-item">
@@ -220,6 +220,7 @@
                         </tr>
                       </tbody>
                     </table>
+                    <div id="productDetailLoading" class="text-center"></div>
                     <div class="text-center">
                       <ul class="list-inline" id="-img"></ul>
                     </div>
@@ -307,7 +308,7 @@
           <div class="modal-header">
             <h5 class="modal-title">Want to reject Product?</h5>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="rejBody">
             <form id="rejForm">
               <label for="name">Product name</label>
               <input
@@ -380,6 +381,11 @@
 
       const details = new XMLHttpRequest();
       details.onreadystatechange = () => {
+        if (details.readyState < 4) {
+          document.getElementById(
+            "productDetailLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
         if (details.status == 200 && details.readyState == 4) {
           let [outcome] = JSON.parse(details.responseText);
           document.getElementById("name").innerHTML = outcome.product;
@@ -412,6 +418,11 @@
       accp.addEventListener("click", (e) => {
         const accept = new XMLHttpRequest();
         accept.onreadystatechange = () => {
+          if (accept.readyState < 4) {
+            document.getElementById(
+              "messages"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
           if (accept.readyState == 4 && accept.status == 200) {
             document.getElementById("messages").innerHTML = accept.responseText;
           }
@@ -446,6 +457,11 @@
 
         const rejPost = new XMLHttpRequest();
         rejPost.onreadystatechange = () => {
+          if (rejPost.readyState < 4) {
+            document.getElementById(
+              "rejBody"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning text-center"></i>`;
+          }
           if (rejPost.readyState == 4 && rejPost.status == 200) {
             document.getElementById("rejMessage").innerHTML =
               rejPost.responseText;
@@ -459,7 +475,7 @@
       function acp() {
         let acceptProduct = document.getElementById("acceptProduct");
         acceptProduct.addEventListener("click", (e) => {
-          window.location.assign("settings");
+          window.location.assign("products.html");
         });
       }
       acp();

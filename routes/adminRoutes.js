@@ -10,15 +10,18 @@ router.post("/login", (req, res) => {
   if (email == "yammieshoppers@gmail.com" && password == "yammieshoppers") {
     user = ["Yammie", "0756234512", "Technician", "yammieshoppers@gmail.com"];
     res.send(user);
+  } else if (email == "admin@yammieshoppers.com" && password == "admin") {
+    user = ["Denis", "0709857117", "Developer", "admin@yammieshoppers.com"];
+    res.send(user);
   } else {
-    res.send("User Not Found");
+    res.send("Incorrect Email or Password");
   }
 });
 
 router.get("/customers", async (req, res) => {
   conn.query(`SELECT * FROM customers`, (err, result) => {
     if (err) throw err;
-    res.json(result.length);
+    res.json(result);
   });
 });
 
@@ -31,7 +34,7 @@ router.get("/allProducts", async (req, res) => {
 
 router.get("/sellerRequests", async (req, res) => {
   conn.query(
-    "SELECT id,username,email,phonenumber,location FROM pending_sellers",
+    "SELECT id,username,email,phonenumber,location,businessname,category FROM pending_sellers",
     (err, result) => {
       if (err) throw err;
       res.json(result);
@@ -39,40 +42,51 @@ router.get("/sellerRequests", async (req, res) => {
   );
 });
 
-router.get("/confirmSeller/:id", async (req, res) => {
-  conn.query(
-    "SELECT * FROM pending_sellers WHERE id = ? ",
-    [req.params.id],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        conn.query("INSERT INTO sellers SET ? ", result, (error, results) => {
-          if (error) throw error;
-          conn.query(
-            "DELETE FROM pending_sellers WHERE id = ? ",
-            [req.params.id],
-            (errs, queryResult) => {
-              if (errs) throw errs;
-              res.send("Confirmed");
+try {
+  router.get("/confirmSeller/:id", async (req, res) => {
+    conn.query(
+      "SELECT * FROM pending_sellers WHERE id = ? ",
+      [req.params.id],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result);
+          conn.query("INSERT INTO sellers SET ? ", result, (error, results) => {
+            if (error) {
+              console.log(error);
             }
-          );
-        });
+            conn.query(
+              "DELETE FROM pending_sellers WHERE id = ? ",
+              [req.params.id],
+              (errs, queryResult) => {
+                if (errs) throw errs;
+                res.send("Seller Successfully Confirmed");
+              }
+            );
+          });
+        }
       }
-    }
-  );
-});
+    );
+  });
+} catch (qerr) {
+  console.log(qerr);
+}
 
-router.get("/deleteSeller/:id", async (req, res) => {
-  conn.query(
-    "DELETE FROM pending_sellers WHERE id=?",
-    [req.params.id],
-    (err, results) => {
-      if (err) throw err;
-      res.send(" Product Deleted");
-    }
-  );
-});
+try {
+  router.get("/deleteSeller/:id", async (req, res) => {
+    conn.query(
+      "DELETE FROM pending_sellers WHERE id=?",
+      [req.params.id],
+      (err, results) => {
+        if (err) throw err;
+        res.send(" Seller Successfully Deleted");
+      }
+    );
+  });
+} catch (error) {
+  console.log(error);
+}
 
 router.get("/pendingProduct", async (req, res) => {
   conn.query(
@@ -133,9 +147,11 @@ router.get("/pendingOrders", async (req, res) => {
     res.json(results);
   });
 });
+
 router.get("/pendingOrders/:id", async (req, res) => {
   conn.query(
-    `SELECT * FROM pending_orders JOIN customers ON customers.c_id=pending_orders.c_id 
+    `SELECT * FROM pending_orders JOIN customers ON 
+    customers.c_id=pending_orders.c_id 
     JOIN customer_address ON customers.c_id=customer_address.c_id WHERE order_id=?`,
     [req.params.id],
     (err, results) => {
@@ -147,31 +163,12 @@ router.get("/pendingOrders/:id", async (req, res) => {
 
 router.get("/sellerInfo/:id", async (req, res) => {
   conn.query(
-    "SELECT sellers.id,username,phonenumber,location,email FROM sellers JOIN products ON sellers.id=products.seller_id WHERE products.id=?",
+    `SELECT sellers.id,username,phonenumber,location,email FROM sellers JOIN 
+    products ON sellers.id=products.seller_id WHERE products.id=?`,
     [req.params.id],
     (err, result) => {
       if (err) throw err;
       res.send(result);
-    }
-  );
-});
-
-router.post("/notifyOrder", async (req, res) => {
-  const { id, qty, product, price, amount, discount } = req.body;
-  conn.query(
-    `INSERT INTO seller_orders SET ?`,
-    {
-      id: uuid.v4(),
-      product_id: id,
-      order_price: price,
-      order_product: product,
-      order_qty: qty,
-      order_discount: discount,
-      order_amount: amount,
-    },
-    (err, result) => {
-      if (err) throw err;
-      res.send("Seller Notified");
     }
   );
 });
@@ -255,7 +252,7 @@ router.post("/rejPost/:id", async (req, res) => {
           quantity: quantity,
           images: image,
           seller_id: seller_id,
-          reason: reason,
+          reason: reason
         },
         (error, results) => {
           if (error) throw error;
@@ -272,5 +269,46 @@ router.post("/rejPost/:id", async (req, res) => {
     }
   );
 });
+
+router.get("/getOnlineProducts", async (req, res) => {
+  conn.query(`SELECT * FROM products`, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+try {
+  router.get("/finishOrder/:id", async (req, res) => {
+    conn.query(
+      "SELECT * FROM pending_orders WHERE id = ? ",
+      [req.params.id],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.send("Something Went Wrong Please try again");
+        }
+        conn.query(
+          "INSERT INTO doneOrders SET ?",
+          {
+            c_id: result.c_id,
+            order_id: result.order_id,
+            order_date: result.order_date,
+            order_amount: result.order_amount,
+            order_status: "Finished",
+            order_delivery_method: result.order_delivery_method,
+            order_number: result.order_number,
+            order_payment_method: result.order_payment_method
+          },
+          (errors, results) => {
+            if (errors) throw errors;
+            res.send("Order Finished Successfully");
+          }
+        );
+      }
+    );
+  });
+} catch (error) {
+  console.log(error);
+}
 
 module.exports = router;

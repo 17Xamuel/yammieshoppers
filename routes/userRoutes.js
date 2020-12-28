@@ -1,7 +1,6 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
-const nodemailer = require("nodemailer");
 const router = express.Router();
 
 router.post("/customer/insert", async (req, res) => {
@@ -19,7 +18,7 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name,
+          c_last_name
         } = req.body;
         let c_id = uuid.v4();
         let newUser = {
@@ -29,7 +28,7 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name,
+          c_last_name
         };
         conn.query("INSERT INTO customers SET ?", newUser, (err) => {
           if (err) {
@@ -134,7 +133,7 @@ router.get("/search/:l-:h", async (req, res) => {
     });
   }
 });
-
+//LogIn Api
 router.post("/customer/lg", (req, res) => {
   conn.query(
     "SELECT c_email, c_password, c_phone, c_id AS yammie FROM customers WHERE c_email = ? OR c_phone = ?",
@@ -153,6 +152,7 @@ router.post("/customer/lg", (req, res) => {
     }
   );
 });
+
 router.get("/customer/:id", (req, res) => {
   conn.query(
     "SELECT * FROM customers WHERE c_id = ?",
@@ -200,14 +200,15 @@ function rs(l) {
     r
   );
 }
-router.post("/customer/order", async(req, res) => {
+router.post("/customer/order", async (req, res) => {
   const [
     order_payment_method,
     c_id,
     order_items,
     order_amount,
-    order_delivery_method,
+    order_delivery_method
   ] = req.body;
+
   conn.query(
     "INSERT INTO pending_orders SET ? ",
     {
@@ -217,37 +218,38 @@ router.post("/customer/order", async(req, res) => {
       order_amount,
       order_payment_method,
       c_id,
+      order_status: "Pending",
       order_number: rs(5),
-      order_date: new Date(),
+      order_date: new Date()
     },
     (err, result) => {
       if (err) throw err;
+
+      let items = JSON.parse(order_items);
+      let itemdetails = Object.values(itemdetails);
+      itemdetails.forEach((item) => {
+        conn.query(
+          `INSERT INTO seller_orders SET ? `,
+          {
+            id: uuid.v4(),
+            product_id: item.cartItemAdded,
+            order_price: item.price,
+            order_product: item.name,
+            order_discount: item.discount,
+            order_qty: item.inCartNumber,
+            order_amount:
+              (item.price - (item.discount / 100) * item.price) *
+              item.inCartNumber
+          },
+          (error, results) => {
+            if (error) throw error;
+          }
+        );
+      });
       res.send(order_payment_method);
-}
+    }
   );
 });
-   // create reusable transporter object using the default SMTP transport
-  let transporter = nodemailer.createTransport({
-    service:"gmail",
-    auth: {
-      user: "theyammieinc@gmail.com",
-      pass: "yammieInc",
-    },
-  });
-
-  // send mail with defined transport object
-  let info = {
-    from:"theyammieinc@gmail.com",
-    to: "nzekakooza@gmail.com",
-    subject: "Yammie Order", 
-    text: "Hello Kakooza, your order has been successfully placed.Thanks", 
-  };
-
- transporter.sendMail(info).then(function(response){
-   console.log("Email Sent!!!")
- }).catch(function(err){
-   console.log("Error Ocurred!!!")
- });
 
 //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
