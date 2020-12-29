@@ -51,7 +51,6 @@ try {
         if (err) {
           console.log(err);
         } else {
-          console.log(result);
           conn.query("INSERT INTO sellers SET ? ", result, (error, results) => {
             if (error) {
               console.log(error);
@@ -311,5 +310,17 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+router.get("/productSeller/:id", async (req, res) => {
+  conn.query(
+    `SELECT username FROM sellers JOIN products ON products.seller_id=sellers.id WHERE sellers.id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      console.log(result[0]);
+      res.send(result[0]);
+    }
+  );
+});
 
 module.exports = router;
