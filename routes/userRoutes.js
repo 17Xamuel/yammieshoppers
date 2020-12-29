@@ -3,7 +3,7 @@ const conn = require("../database/db");
 const uuid = require("uuid");
 const nodemailer = require("nodemailer");
 const router = express.Router();
-const charge = require('./charges')
+const charge = require("./charges");
 
 //for new user
 let newUser = {};
@@ -24,8 +24,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1"
-  }
+    pass: "yammieShoppers@1",
+  },
 });
 //mailer
 router.post("/customer/insert", async (req, res) => {
@@ -43,7 +43,7 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name
+          c_last_name,
         } = req.body;
         let c_id = uuid.v4();
         newUser = {
@@ -53,13 +53,13 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name
+          c_last_name,
         };
         let info = {
           from: '"Yammie Shoppers"<info@yammieshoppers.com>',
           to: c_email,
           subject: "Confirming Your Account",
-          text: `Hello ${c_first_name}, confirm your email with this ${code}`
+          text: `Hello ${c_first_name}, confirm your email with this ${code}`,
         };
         transporter
           .sendMail(info)
@@ -252,7 +252,7 @@ router.post("/customer/order", async (req, res) => {
     c_id,
     order_items,
     order_amount,
-    order_delivery_method
+    order_delivery_method,
   ] = req.body;
 
   conn.query(
@@ -266,7 +266,7 @@ router.post("/customer/order", async (req, res) => {
       c_id,
       order_status: "Pending",
       order_number: rs(5),
-      order_date: new Date()
+      order_date: new Date(),
     },
     (err, result) => {
       if (err) throw err;
@@ -285,7 +285,7 @@ router.post("/customer/order", async (req, res) => {
             order_qty: item.inCartNumber,
             order_amount:
               (item.price - (item.discount / 100) * item.price) *
-              item.inCartNumber
+              item.inCartNumber,
           },
           (error, results) => {
             if (error) throw error;
@@ -370,16 +370,15 @@ router.post("/account/address/edit/:id", (req, res) => {
     }
   );
 });
-router.get('/shipping',(req,res)=>{
-  let charge = new charge(req.body).total;
-  res.send(charge);
-})
-console.log(new charge({ location:'lira',
-    urgent:'normal',
-    qty:'few',
-    size:'small',
-    fragile:false,
-    price:350000,
-    weight:'light',
-    user:'maisha'}).total)
+router.post("/shipping/:id", (req, res) => {
+  conn.query(`SELECT zone FROM customer_address WHERE c_id = ?`, [
+    req.params.id,
+    (err, result) => {
+      if (err) throw err;
+      req.body.user = result;
+    },
+  ]);
+  let cost = new charge(req.body).total;
+  res.send({ cost: cost });
+});
 module.exports = router;
