@@ -74,7 +74,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="sales" class="nav-link text-white p-3 mb-2"
+                  <a href="#" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
                   >
@@ -731,8 +731,6 @@
                     ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
                   }
                   if (_xhr.readyState == 4 && _xhr.status == 200) {
-                    document.getElementById("confirmMessage").innerHTML =
-                      _xhr.responseText;
                     window.location.reload("home.html");
                   }
                 };
@@ -758,8 +756,6 @@
                     ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
                   }
                   if (_xhrDelete.readyState == 4 && _xhrDelete.status == 200) {
-                    document.getElementById("deleteMessage").innerHTML =
-                      _xhrDelete.responseText;
                     window.location.reload("home.html");
                   }
                 };

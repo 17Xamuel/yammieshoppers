@@ -234,7 +234,7 @@
                       Accept
                     </button>
                     <button
-                      class="btn btn-info btn-block"
+                      class="btn btn-danger btn-block"
                       data-target="#reject"
                       data-toggle="modal"
                     >
@@ -342,10 +342,13 @@
               ></textarea>
               <input type="hidden" name="seller_id" id="seller_id" />
 
-              <button type="submit" class="btn btn-primary btn-block my-2">
+              <button type="submit" class="btn btn-danger btn-block my-2">
                 Reject
               </button>
-              <h5 class="text-center text-danger" id="rejMessage"></h5>
+              <h5
+                class="text-center text-danger font-weight-bold"
+                id="rejectedMessage"
+              ></h5>
             </form>
           </div>
           <div class="modal-footer">
@@ -409,6 +412,7 @@
                 </li>`;
           }
           document.getElementById("-img").innerHTML = data;
+          document.getElementById("productDetailLoading").innerHTML = "";
         }
       };
       details.open("GET", `/api/admin/pendingProduct/${pId}`, true);
@@ -463,7 +467,7 @@
             ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning text-center"></i>`;
           }
           if (rejPost.readyState == 4 && rejPost.status == 200) {
-            document.getElementById("rejMessage").innerHTML =
+            document.getElementById("rejectedMessage").innerHTML =
               rejPost.responseText;
           }
         };
