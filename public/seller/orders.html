@@ -347,8 +347,17 @@
           let outcomes = JSON.parse(order.responseText);
           let row = "";
           outcomes.forEach((outcome) => {
+            let image = JSON.parse(outcome.images);
             row += `
             <tr>
+              <td>
+                  <img
+                    src="${image[0]}"
+                    width="50"
+                    height="50"
+                    class="rounded-circle"
+                  />
+                </td>
               <td>${outcome.order_product}</td>
               <td>${outcome.order_price}</td>
               <td>${outcome.order_discount}</td>
