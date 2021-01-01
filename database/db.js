@@ -19,6 +19,7 @@ const MYSQL_CONFIG = {
 //   password:"",
 //   database:"yammie_db_secure",
 // }
+
 const conn = mysql.createConnection(MYSQL_CONFIG);
 
 conn.connect((err) => {

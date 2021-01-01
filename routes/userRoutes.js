@@ -24,8 +24,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1",
-  },
+    pass: "yammieShoppers@1"
+  }
 });
 //mailer
 router.post("/customer/insert", async (req, res) => {
@@ -43,7 +43,7 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name,
+          c_last_name
         } = req.body;
         let c_id = uuid.v4();
         newUser = {
@@ -53,13 +53,13 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name,
+          c_last_name
         };
         let info = {
           from: '"Yammie Shoppers"<info@yammieshoppers.com>',
           to: c_email,
           subject: "Confirming Your Account",
-          text: `Hello ${c_first_name}, confirm your email with this ${code}`,
+          text: `Hello ${c_first_name}, confirm your email with this ${code}`
         };
         transporter
           .sendMail(info)
@@ -252,7 +252,7 @@ router.post("/customer/order", async (req, res) => {
     c_id,
     order_items,
     order_amount,
-    order_delivery_method,
+    order_delivery_method
   ] = req.body;
 
   conn.query(
@@ -266,7 +266,7 @@ router.post("/customer/order", async (req, res) => {
       c_id,
       order_status: "Pending",
       order_number: rs(5),
-      order_date: new Date(),
+      order_date: new Date()
     },
     (err, result) => {
       if (err) throw err;
@@ -275,20 +275,42 @@ router.post("/customer/order", async (req, res) => {
       let itemdetails = Object.values(itemdetails);
       itemdetails.forEach((item) => {
         conn.query(
-          `INSERT INTO seller_orders SET ? `,
-          {
-            id: uuid.v4(),
-            product_id: item.cartItemAdded,
-            order_price: item.price,
-            order_product: item.name,
-            order_discount: item.discount,
-            order_qty: item.inCartNumber,
-            order_amount:
-              (item.price - (item.discount / 100) * item.price) *
-              item.inCartNumber,
-          },
-          (error, results) => {
+          `SELECT * FROM seller_orders WHERE product_id =${item.cartItemAdded}`,
+          (error, result) => {
             if (error) throw error;
+            if (result.length == 0) {
+              conn.query(
+                `INSERT INTO seller_orders SET ? `,
+                {
+                  id: uuid.v4(),
+                  product_id: item.cartItemAdded,
+                  order_price: item.price,
+                  order_product: item.name,
+                  order_discount: item.discount,
+                  order_qty: item.inCartNumber,
+                  order_amount:
+                    (item.price - (item.discount / 100) * item.price) *
+                    item.inCartNumber
+                },
+                (err, results) => {
+                  if (err) throw err;
+                }
+              );
+            } else if (result.length > 0) {
+              conn.query(
+                `SELECT order_qty FROM seller_orders WHERE product_id=${item.cartItemAdded}`,
+                (ers, Qresult) => {
+                  if (ers) throw ers;
+                  let finalQuantity = Qresult[0].order_qty + item.inCartNumber;
+                  conn.query(
+                    `UPDATE  seller_orders SET order_qty = ${finalQuantity}`,
+                    (sqerr, sqresult) => {
+                      if (sqerr) throw sqerr;
+                    }
+                  );
+                }
+              );
+            }
           }
         );
       });
@@ -376,7 +398,7 @@ router.post("/shipping/:id", (req, res) => {
     (err, result) => {
       if (err) throw err;
       req.body.user = result;
-    },
+    }
   ]);
   let cost = new charge(req.body).total;
   res.send({ cost: cost });

@@ -45,6 +45,13 @@
         self.location = "index";
       }
     </script>
+    <style>
+      @media (max-width: 768px) {
+        #category {
+          width: 100%;
+        }
+      }
+    </style>
   </head>
 
   <body class="bg-light">
@@ -204,13 +211,13 @@
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="price">Price</label>
+                      <label for="price">Quantity Available</label>
                       <input
                         type="number"
                         class="form-control"
                         required=""
-                        placeholder="Price(UGX)"
-                        name="price"
+                        placeholder="Quantity"
+                        name="quantity"
                         autocomplete="off"
                       />
                     </div>
@@ -228,24 +235,24 @@
                   </div>
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="Product Brand">Product Brand</label>
+                      <label for="Product Brand">Price</label>
                       <input
-                        type="text"
+                        type="number"
                         class="form-control"
                         required=""
-                        placeholder="Product Brand"
-                        name="brand"
+                        placeholder="Price(UGX)"
+                        name="price"
                         autocomplete="off"
                       />
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="Product Brand">Quantity</label>
+                      <label for="Product Brand">Discount(%)</label>
                       <input
-                        type="text"
+                        type="number"
                         class="form-control"
                         required=""
-                        placeholder="Quantity in Stock"
-                        name="quantity"
+                        placeholder="Discount(%) in terms of Price"
+                        name="discount"
                         autocomplete="off"
                       />
                     </div>
@@ -253,12 +260,14 @@
 
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="category">Category</label>
-                      <select class="form-control" required="" name="category">
-                        <option selected hidden value="">
-                          Please Select Category
-                        </option>
-                        <option value="Easy Market">Easy Market</option>
+                      <label for="category">Select Category</label>
+                      <select
+                        class="form-control"
+                        required=""
+                        name="category"
+                        id="category"
+                      >
+                        <!-- <option value="Easy Market">Easy Market</option>
                         <option value="Food & Drinks">
                           Fast Food & Drinks
                         </option>
@@ -277,10 +286,10 @@
                         <option value="Cleaning, Healthy & Beauty">
                           Cleaning, Healthy & Beauty
                         </option>
-                        <option value="Clothing">Clothing</option>
+                        <option value="Clothing">Clothing</option> -->
                       </select>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                       <label for="subcategory">Sub Category</label>
                       <select
                         class="form-control"
@@ -290,7 +299,7 @@
                         <option selected hidden value="">
                           Please Select SubCategory
                         </option>
-                        <option value="Easy Market">Easy Market</option>
+                        <!-- <option value="Easy Market">Easy Market</option>
                         <option value="Food & Drinks">
                           Fast Food & Drinks
                         </option>
@@ -308,29 +317,65 @@
                         <option value="Stationery">Stationery</option>
                         <option value="Cleaning, Healthy & Beauty">
                           Cleaning, Healthy & Beauty
-                        </option>
+                        </option> -->
                       </select>
                     </div>
-                    <div class="form-group col-md-2">
-                      <label for="discount">Discount (%)</label>
+                  </div>
+
+                  <label for="Specifications">Products Specifications</label>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="Brand">Brand</label>
                       <input
-                        type="number"
+                        type="text"
                         class="form-control"
-                        placeholder="Discount(%)"
-                        name="discount"
-                        autocomplete="off"
+                        placeholder="Brand"
+                        name="specifications"
+                      />
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="Colors">Colors</label>
+                      <input
+                        type="text"
+                        placeholder="Available Colors"
+                        class="form-control"
+                        name="specifications"
+                      />
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="Weight">Weight</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter NetWeight or Heavy or Light"
+                        name="specifications"
                       />
                     </div>
                   </div>
-                  <label for="Specifications">Specifications</label>
-                  <div id="specifications" class="form-group">
-                    <button
-                      type="button"
-                      class="btn btn-warning btn-block text-light my-2"
-                      id="specification"
-                    >
-                      Click to Add Specifications Eg:size,quality and others
-                    </button>
+                  <div class="form-row">
+                    <div id="specifications" class="form-group col-md-4">
+                      <button
+                        type="button"
+                        class="btn btn-warning text-light my-2"
+                        id="specification"
+                      >
+                        Click to Add More Specifications
+                      </button>
+                    </div>
+                  </div>
+
+                  <label for="Detailed Description"
+                    >Product Detailed Description</label
+                  >
+                  <div class="form-group">
+                    <textarea
+                      class="form-control"
+                      required
+                      placeholder="Detailed Description"
+                      name="detailedDescription"
+                      cols="30"
+                      rows="4"
+                    ></textarea>
                   </div>
 
                   <label for="Poduct Images">Product Images</label>
@@ -385,8 +430,6 @@
                   <button
                     type="submit"
                     class="btn btn-warning text-light btn-block my-3"
-                    data-target="#addProduct"
-                    data-toggle="modal"
                   >
                     Add Product
                   </button>
@@ -433,26 +476,6 @@
       </div>
     </footer>
 
-    <!-- Product Modal -->
-    <div class="modal fade" id="addProduct">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">YammieShoppers Response</h5>
-          </div>
-          <div class="modal-body text-center">
-            Your Product has been Submitted, please wait for Confirmation.
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" id="air">
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Modal -->
-
     <!-- End Footer -->
 
     <!-- Scripts -->
@@ -482,9 +505,15 @@
       );
       document.getElementById("User").innerHTML = seller.username;
       document.getElementById("auth").value = seller.id;
+      let categories = JSON.parse(seller.category);
+      let cat = "";
+      categories.forEach((category) => {
+        cat += `<option value="${category}">${category}</option>`;
+      });
+      console.log(cat);
+      document.getElementById("category").innerHTML = cat;
 
-      const specifications = document.getElementById("specifications");
-
+      let specifications = document.getElementById("specifications");
       let newSpecification = document.getElementById("specification");
       newSpecification.addEventListener("click", (e) => {
         let specification = document.createElement("input");
@@ -503,14 +532,6 @@
         });
       }
       lg();
-
-      function ref() {
-        let page = document.getElementById("air");
-        page.addEventListener("click", (e) => {
-          window.location.reload("addProduct");
-        });
-      }
-      ref();
     </script>
 
     <!-- End Scripts -->

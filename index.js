@@ -25,7 +25,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
 });
 
 // Change bucket property to your Space name
@@ -37,8 +37,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      },
-    }),
+      }
+    })
   }).array("images");
   return upload;
 }
@@ -81,7 +81,7 @@ app.post("/addProduct", async (req, res) => {
       discount,
       seller_id,
       quantity,
-      specification,
+      specification
     } = req.body;
 
     let specifyProduct = JSON.stringify(specification);
@@ -99,11 +99,13 @@ app.post("/addProduct", async (req, res) => {
         images: path,
         seller_id: seller_id,
         quantity: quantity,
-        specifications: specifyProduct,
+        specifications: specifyProduct
       },
       (err, results) => {
         if (err) {
           console.log(err);
+        } else {
+          res.redirect("product.html");
         }
       }
     );

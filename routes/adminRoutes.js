@@ -155,7 +155,6 @@ router.get("/pendingOrders/:id", async (req, res) => {
     [req.params.id],
     (err, results) => {
       if (err) throw err;
-      console.log(results);
       res.json(results);
     }
   );
@@ -277,39 +276,16 @@ router.get("/getOnlineProducts", async (req, res) => {
   });
 });
 
-try {
-  router.get("/finishOrder/:id", async (req, res) => {
-    conn.query(
-      "SELECT * FROM pending_orders WHERE id = ? ",
-      [req.params.id],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-          return res.send("Something Went Wrong Please try again");
-        }
-        conn.query(
-          "INSERT INTO done_orders SET ?",
-          {
-            c_id: result.c_id,
-            order_id: result.order_id,
-            order_date: result.order_date,
-            order_amount: result.order_amount,
-            order_status: "Finished",
-            order_delivery_method: result.order_delivery_method,
-            order_number: result.order_number,
-            order_payment_method: result.order_payment_method
-          },
-          (errors, results) => {
-            if (errors) throw errors;
-            res.send("Order Finished Successfully");
-          }
-        );
-      }
-    );
-  });
-} catch (error) {
-  console.log(error);
-}
+// router.get("/finishOrder/:id", async (req, res) => {
+//   conn.query(
+//     `UPDATE pending_orders SET order_status='Finished' WHERE order_id=?`,
+//     [req.params.id],
+//     (err, result) => {
+//       if (err) throw err;
+//       res.send("Order Successfully Finished");
+//     }
+//   );
+// });
 
 router.get("/productSeller/:id", async (req, res) => {
   conn.query(

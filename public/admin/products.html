@@ -252,10 +252,10 @@
     <div class="modal fade" id="dPending">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-body">
+          <div class="modal-header">
             <h5 class="modal-title">Delete Pending Product</h5>
           </div>
-          <div class="modal-body">
+          <div class="modal-body text-center">
             Want to Delete <span id="pname"></span> from Pending Products?
             <br />Press OK to continue
           </div>
@@ -265,7 +265,7 @@
             </button>
             <button
               type="button"
-              class="btn-success btn-sm"
+              class="btn-danger btn-sm"
               data-dismiss="modal"
             >
               NO
@@ -435,10 +435,14 @@
           document.getElementById(
             "ppn"
           ).textContent = `(${pendingProducts.length})`;
+
           if (`${pendingProducts.length}` == 0) {
             document.getElementById("productLoading").innerHTML =
               "No Pending product found";
+          } else {
+            document.getElementById("productLoading").innerHTML = "";
           }
+
           let deleteButtons = document.querySelectorAll(".-d-product");
           deleteButtons.forEach((deleteButton) => {
             deleteButton.addEventListener("click", (e) => {
@@ -553,6 +557,7 @@
       };
       load.open("GET", `/api/admin/getOnlineProducts`, true);
       load.send();
+      // window.location.reload("products.html");
     </script>
     <!-- End Scripts -->
   </body>

@@ -179,15 +179,17 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded my-3">
                   <div class="card-body">
-                    <h3 class="text-center text-danger my-3">
-                      Pending Orders <span id="pon"></span>
+                    <h3 class="text-danger text-center my-3">
+                      Pending Orders<span id="pon"></span>
                     </h3>
+
                     <table class="table table-dark table-hover text-center">
                       <thead>
                         <tr>
-                          <th>Item</th>
+                          <th>Image</th>
+                          <th>Name</th>
                           <th>Price</th>
-                          <th>Discount</th>
+                          <th>Discount(%)</th>
                           <th>Quantity</th>
                           <th>Amount</th>
                         </tr>
@@ -218,7 +220,7 @@
                       <tr>
                         <th>Item</th>
                         <th>Price</th>
-                        <th>Discount</th>
+                        <th>Discount(%)</th>
                         <th>Quantity</th>
                         <th>Amount</th>
                       </tr>
@@ -302,8 +304,17 @@
           let results = JSON.parse(xhr.responseText);
           let rows = "";
           results.forEach((result) => {
+            let image = JSON.parse(result.images);
             rows += `
             <tr>
+               <td>
+                  <img
+                    src="${image[0]}"
+                    width="50"
+                    height="50"
+                    class="rounded-circle"
+                  />
+                </td>
               <td>${result.order_product}</td>
               <td>${result.order_price}</td>
               <td>${result.order_discount}</td>

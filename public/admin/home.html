@@ -271,7 +271,7 @@
                         <tr class="text-muted">
                           <th>OrderNumber</th>
                           <th>OrderAmount</th>
-                          <th>DeliveryMethod</th>
+                          <th>OrderStatus</th>
                           <th>Details</th>
                         </tr>
                       </thead>
@@ -829,7 +829,7 @@
               row += `<tr>
        <td>${pendingOrder.order_number}</td>
        <td>${pendingOrder.order_amount}</td>
-       <td>${pendingOrder.order_delivery_method}</td>
+       <td>${pendingOrder.order_status}</td>
        <td>
        <a href="order?order=${pendingOrder.order_id}">
          <button type="button" class="btn btn-info btn-sm">
@@ -839,6 +839,7 @@
      </tr>`;
             });
             document.getElementById("pendingOrders").innerHTML = row;
+            document.getElementById("orderLoading").innerHTML = "";
           }
         }
       };

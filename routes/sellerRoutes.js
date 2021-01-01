@@ -14,8 +14,8 @@ let transporter = nodemailer.createTransport({
   secureConnection: false,
   port: 465,
   auth: {
-    user: process.env.EMAIL,
-    pass: process.env.PASSWORD
+    user: "info@yammieshoppers.com",
+    pass: "yammieShoppers@1"
   }
 });
 
@@ -91,7 +91,7 @@ router.post("/registerSeller", async (req, res) => {
   transporter.sendMail(mailOptions, (error, response) => {
     if (error) {
       console.log(error);
-      res.send("We are sorry something went wrong.Please check your email");
+      res.send("We are sorry something went wrong.Please  check your email");
     } else {
       res.status(200).send("Email Sent");
     }
@@ -149,7 +149,7 @@ try {
                       (await bycrpt.compare(password, result[0].password))
                     ) {
                       conn.query(
-                        "SELECT id,username,email,phonenumber,location FROM sellers WHERE email=?",
+                        "SELECT id,username,email,phonenumber,location,category FROM sellers WHERE email=?",
                         [email],
                         async (err, results) => {
                           if (err) throw err;
@@ -295,8 +295,8 @@ router.get("/totalProducts/:id", async (req, res) => {
 router.get("/orders/:id", async (req, res) => {
   conn.query(
     `SELECT seller_orders.order_price,seller_orders.order_amount,
-  seller_orders.order_product,seller_orders.order_qty
-   FROM seller_orders JOIN products ON seller_orders.product_id
+  seller_orders.order_product,seller_orders.order_qty,seller_orders.order_discount,
+  products.images FROM seller_orders JOIN products ON seller_orders.product_id
   =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
     [req.params.id],
     (err, result) => {

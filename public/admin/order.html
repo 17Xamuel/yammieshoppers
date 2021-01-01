@@ -31,7 +31,7 @@
 
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Order Details</title>
+    <title>Yammie | Order Details</title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -187,7 +187,7 @@
                       Order No: <span id="ordernumber"></span>
                     </h4>
                     <div>
-                      <table class="table text-center">
+                      <table class="table text-left">
                         <tbody>
                           <tr>
                             <td>Customer Name:<span id="name"></span></td>
@@ -205,13 +205,17 @@
                             </td>
                             <td>Order Date: <span id="date"></span></td>
                           </tr>
-                          <tr>
-                            <td>Order Amount: <span id="amount"></span></td>
-                            <td>Delivery Method: <span id="dmethod"></span></td>
-                          </tr>
+
                           <tr>
                             <td>Payment Method:<span id="method"></span></td>
                             <td>Order Status: <span id="ostatus"></span></td>
+                          </tr>
+                          <tr>
+                            <td>Order Amount: <span id="amount"></span></td>
+                            <td>Shipping Fee: <span id="sfee"></span></td>
+                          </tr>
+                          <tr>
+                            <td>Delivery Method: <span id="dmthd"></span></td>
                           </tr>
                         </tbody>
                       </table>
@@ -230,15 +234,24 @@
                       </tr>
                       <tbody id="id"></tbody>
                     </table>
-                    <button
-                      type="button"
-                      class="btn btn-success btn-block"
-                      id="finishOrder"
-                      data-target="#fOrder"
-                      data-toggle="modal"
-                    >
-                      Finish Order
-                    </button>
+                    <div class="text-center">
+                      <button
+                        type="button"
+                        class="btn btn-danger btn-lg"
+                        data-target="#cOrder"
+                        data-toggle="modal"
+                      >
+                        Cancel Order
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-success btn-lg"
+                        data-target="#fOrder"
+                        data-toggle="modal"
+                      >
+                        Finish Order
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -254,22 +267,62 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Yammie Shoppers Order</h5>
+            <h5 class="modal-title">Want to Finish Order?</h5>
           </div>
-          <div class="modal-body text-center" id="finishMessage"></div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-danger btn-sm"
-            data-dismiss="modal"
-          >
-            OK
-          </button>
+          <div class="modal-body text-center" id="finishMessage">
+            Press Ok to Continue
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-success btn-sm"
+              id="finishOrder"
+            >
+              Ok
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              No
+            </button>
+          </div>
         </div>
       </div>
     </div>
     <!-- End Finish -->
+
+    <!-- cancelOrder -->
+    <div class="modal fade" id="cOrder">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Want to Cancel Order?</h5>
+          </div>
+          <div class="modal-body text-center" id="cancelMessage">
+            Press Ok to Continue
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-success btn-sm"
+              id="cancelOrder"
+            >
+              Ok
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Cancel -->
 
     <!-- seller Modal -->
     <div class="modal fade" id="sellerInfo">
@@ -278,8 +331,8 @@
           <div class="modal-header">
             <h5 class="modal-title">Seller Information</h5>
           </div>
-          <div class="modal-body" id="contentLoad">
-            <table class="table text-center">
+          <div class="modal-body">
+            <table class="table text-left">
               <tbody>
                 <tr>
                   <td>Name: <span id="sn"></span></td>
@@ -295,6 +348,7 @@
                 </tr>
               </tbody>
             </table>
+            <div id="contentLoad" class="text-center"></div>
           </div>
           <div class="modal-footer">
             <button
@@ -380,9 +434,7 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      let orderId = new URLSearchParams(window.location.search).get(
-        "pendingOrder"
-      );
+      let orderId = new URLSearchParams(window.location.search).get("order");
       const orders = new XMLHttpRequest();
       orders.onreadystatechange = () => {
         if (orders.readyState < 4) {
@@ -391,8 +443,11 @@
           ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
         }
         if (orders.status == 200 && orders.readyState == 4) {
-          console.log(orders.responseText);
           let [pendingOrders] = JSON.parse(orders.responseText);
+          let info = JSON.parse(pendingOrders.order_info);
+          document.getElementById("sfee").innerHTML = info.shipping;
+          document.getElementById("dmthd").innerHTML =
+            info.order_delivery_method;
           let date = pendingOrders.order_date.slice(0, 10);
           document.getElementById("ordernumber").innerHTML =
             pendingOrders.order_number;
@@ -409,8 +464,6 @@
           }
           document.getElementById("amount").innerHTML =
             "UGX" + pendingOrders.order_amount;
-          document.getElementById("dmethod").innerHTML =
-            pendingOrders.order_delivery_method;
           document.getElementById("ostatus").innerHTML =
             pendingOrders.order_status;
           let items = JSON.parse(pendingOrders.order_items);
@@ -444,6 +497,7 @@
                       </tr>`;
           });
           document.getElementById("id").innerHTML = data;
+          document.getElementById("detailLoading").innerHTML = "";
 
           let contactButtons = document.querySelectorAll(".btn-info");
           contactButtons.forEach((contactButton) => {
@@ -462,6 +516,7 @@
                   document.getElementById("spn").innerHTML = result.phonenumber;
                   document.getElementById("se").innerHTML = result.email;
                   document.getElementById("sl").innerHTML = result.location;
+                  document.getElementById("contentLoad").innerHTML = "";
                 }
               };
               xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
@@ -469,65 +524,68 @@
             });
           });
 
-          let clearButtons = document.querySelectorAll(".btn-success");
-          clearButtons.forEach((clearButton) => {
-            clearButton.addEventListener("click", (e) => {
-              let productId = e.target.dataset.itd;
-              const xhr1 = new XMLHttpRequest();
-              xhr1.onreadystatechange = () => {
-                if (xhr1.readyState == 4 && xhr1.status == 200) {
-                  let [results] = JSON.parse(xhr1.responseText);
-                  let res = results.id;
+          // let clearButtons = document.querySelectorAll(".btn-success");
+          // clearButtons.forEach((clearButton) => {
+          //   clearButton.addEventListener("click", (e) => {
+          //     let productId = e.target.dataset.itd;
+          //     const xhr1 = new XMLHttpRequest();
+          //     xhr1.onreadystatechange = () => {
+          //       if (xhr1.readyState == 4 && xhr1.status == 200) {
+          //         let [results] = JSON.parse(xhr1.responseText);
+          //         let res = results.id;
+          //         console.log(res);
 
-                  const clearOrder = new XMLHttpRequest();
-                  clearOrder.onreadystatechange = () => {
-                    if (clearOrder.readyState < 4) {
-                      document.getElementById(
-                        "clearMessage"
-                      ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-                    }
-                    if (
-                      clearOrder.status == 200 &&
-                      clearOrder.readyState == 4
-                    ) {
-                      document.getElementById("clearMessage").innerHTML =
-                        clearOrder.responseText;
-                    }
-                  };
-                  clearOrder.open("GET", `/api/admin/clearOrder/${res}`, true);
-                  clearOrder.send();
-                }
-              };
-              xhr1.open("GET", `/api/admin/product/${productId}`, true);
-              xhr1.send();
-            });
-          });
+          //         const clearOrder = new XMLHttpRequest();
+          //         clearOrder.onreadystatechange = () => {
+          //           if (clearOrder.readyState < 4) {
+          //             document.getElementById(
+          //               "clearMessage"
+          //             ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          //           }
+          //           if (
+          //             clearOrder.status == 200 &&
+          //             clearOrder.readyState == 4
+          //           ) {
+          //             document.getElementById("clearMessage").innerHTML =
+          //               clearOrder.responseText;
+          //           }
+          //         };
+          //         clearOrder.open("GET", `/api/admin/clearOrder/${res}`, true);
+          //         clearOrder.send();
+          //       }
+          //     };
+          //     xhr1.open("GET", `/api/admin/product/${productId}`, true);
+          //     xhr1.send();
+          //   });
+          // });
         }
       };
       orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);
       orders.send();
 
-      let finishOrder = document.getElementById("finishOrder");
-      finishOrder.addEventListener("click", (e) => {
-        const orderFinish = new XMLHttpRequest();
-        orderFinish.onreadystatechange = () => {
-          if (orderFinish.readyState < 4) {
-            document.getElementById(
-              "finishMessage"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if (
-            finishOrder.responseText == "Something Went Wrong Please try again"
-          ) {
-            document.getElementById("finishMessage").innerHTML =
-              finishOrder.responseText;
-          } else if (orderFinish.readyState == 4 && orderFinish.status == 200) {
-            window.location.assign("home.html");
-          }
-        };
-        orderFinish.open("GET", `/api/admin/finishOrder/${orderId}`, true);
-        orderFinish.send();
-      });
+      // let finishOrder = document.getElementById("finishOrder");
+      // finishOrder.addEventListener("click", (e) => {
+      //   const orderFinish = new XMLHttpRequest();
+      //   orderFinish.onreadystatechange = () => {
+      //     if (orderFinish.readyState < 4) {
+      //       document.getElementById(
+      //         "finishMessage"
+      //       ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+      //     }
+      //     if (
+      //       finishOrder.responseText == "Something Went Wrong Please try again"
+      //     ) {
+      //       document.getElementById("finishMessage").innerHTML =
+      //         finishOrder.responseText;
+      //     } else if (orderFinish.readyState == 4 && orderFinish.status == 200) {
+      //       document.getElementById("finishMessage").innerHTML =
+      //         orderFinish.responseText;
+      //       // window.location.assign("home.html");
+      //     }
+      //   };
+      //   orderFinish.open("GET", `/api/admin/finishOrder/${orderId}`, true);
+      //   orderFinish.send();
+      // });
 
       function reload() {
         let pageReload = document.getElementById("clearModal");
