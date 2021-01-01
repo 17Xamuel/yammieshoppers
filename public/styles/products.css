@@ -48,15 +48,15 @@
 }
 .-ct-item {
   border: none;
-  margin: auto 10px;
+  margin: auto 5px;
   border-radius: 5px;
-  width: 180px;
+  width: 170px;
   height: 270px;
   transition: all 0.3s ease-in-out;
 }
 .item:hover {
   box-shadow: 0px 0px 5px #c2c2c2;
-  transform: scale(1.01);
+  transform: scale(1.001);
 }
 .-lazy {
   width: 100%;
@@ -144,13 +144,13 @@
   padding: 5px;
   background-color: #fff;
 }
-.-img {
+._image {
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgb(0, 0, 0, 0.1);
-  width: 100%;
-  height: 60%;
+  width: 170px;
+  height: 170px;
 }
 @media screen and (max-width: 768px) {
   .m-ctr {
@@ -171,8 +171,12 @@
     height: 30vh;
   }
   .-ct-item {
-    width: 150px;
-    height: 240px;
+    width: 120px;
+    height: 200px;
+  }
+  ._image {
+    width: 120px;
+    height: 120px;
   }
   /*for Chrome, Safari and Opera */
   .-scroll::-webkit-scrollbar {

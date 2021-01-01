@@ -1755,7 +1755,7 @@
       if (screen.availWidth <= 768) {
         document.querySelector("#logo").src = "./resources/cartlink.png";
         document.querySelector("#logo").style.width = "60px";
-        document.querySelector("#logo").style.height = "30px";
+        document.querySelector("#logo").style.height = "45px";
       }
 
       //scrolling through
@@ -1769,7 +1769,7 @@
           window.scroll({
             top: 0,
             left: 0,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         });
       };
@@ -1777,21 +1777,27 @@
         let xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
           if (xhr.readyState == 4 && xhr.status == 200) {
+            function _load(i, d) {
+              if (i.complete != true) {
+                i.height = "35%";
+                i.width = "35%";
+              }
+              i.src = i.complete != true ? d : i.src;
+              i.src = i.complete != true ? d : i.src;
+            }
             let _c = JSON.parse(xhr.responseText),
               group = "";
             _c.forEach((item) => {
               // src = "${JSON.parse(item.images)[0]}"
               //src="./resources/cart-link.png"
               group += `
-                    <a class="item -ct-item" href="./item?item=${item.id}">
-                      <div class="-img">
-                         <img
-                            alt="${item.product}"
-                            data-src="./resources/cart-link.png"
-                            src = "${JSON.parse(item.images)[0]}"
-                            width="100%"
-                            height="100%"
-                            class="-ct-image lazy"
+                     <a class="item -ct-item" href="./item?item=${item.id}">
+                      <div class="_image">
+                        <img
+                          src="${JSON.parse(item.images)[0]}"
+                          alt="${item.name}"
+                          width="100%"
+                          height="100%"
                         />
                       </div>
                       <div class="-i-dtl">
@@ -1809,13 +1815,10 @@
                          }</div>
                       </div>
                     </a>
+                    
                     `;
             });
             c.innerHTML = group;
-            _load(
-              document.querySelector(".lazy"),
-              document.querySelector(".lazy").dataset.src
-            );
           }
         };
         xhr.open("GET", url, true);
@@ -1827,7 +1830,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: -250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -1838,7 +1841,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: 250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });

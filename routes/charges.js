@@ -41,40 +41,40 @@ class Deduct {
   userLocation() {
     let delivery = 0;
     switch (this.product.user) {
-      case "keturah":
+      case "Keturah Zone":
         delivery = this.product.price * 0.002;
         break;
-      case "royal":
+      case "Royal Zone":
         delivery = this.product.price * 0.002;
         break;
-      case "maisha":
+      case "Maisha Zone":
         delivery = this.product.price * 0.0001;
         break;
-      case "pioneer":
+      case "Pioneer Zone":
         delivery = this.product.price * 0.001;
         break;
-      case "washington":
+      case "Washington Zone":
         delivery = this.product.price * 0.0015;
         break;
-      case "st. peters":
+      case "St. Peters Zone":
         delivery = this.product.price * 0.002;
         break;
-      case "pacuwa":
+      case "Pacuwa Zone":
         delivery = this.product.price * 0.0025;
         break;
-      case "northern elite":
+      case "Northern Elite Zone":
         delivery = this.product.price * 0.001;
         break;
-      case "jeremiah":
+      case "Jeremiah Zone":
         delivery = this.product.price * 0.0015;
         break;
-      case "hospital":
+      case "Hospital Side":
         delivery = this.product.price * 0.002;
         break;
-      case "management":
+      case "Management Sciences":
         delivery = this.product.price * 0.0015;
         break;
-      case "education":
+      case "Education Block":
         delivery = this.product.price * 0.002;
         break;
       default:
@@ -117,7 +117,12 @@ class Deduct {
   round(i) {
     if (i % 10 != 0 || (i / 10) % 10 != 0) {
       return parseInt(i / 100) * 100 + 100;
+    } else {
+      return i;
     }
+  }
+  get price() {
+    return this.round(this.product.price);
   }
   get total() {
     if (
@@ -131,5 +136,4 @@ class Deduct {
     }
   }
 }
-
 module.exports = Deduct;

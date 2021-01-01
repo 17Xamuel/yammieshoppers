@@ -165,6 +165,11 @@
         background-color: #ffbb00;
         cursor: pointer;
       }
+      .loader {
+        padding: 20px;
+        padding-left: 20px;
+        display: none;
+      }
       @media screen and (max-width: 1024px) {
         .pf-m-ctr {
           width: 95vw;
@@ -553,33 +558,66 @@
               <div class="pf-email pf-d" id="_1a"></div>
             </div>
             <div class="pf-details -pfd">
-              <div class="-pdf-h pf-d">Other Address</div>
-              <div class="pf-name pf-d" id="cn">N/A</div>
-              <div class="pf-email pf-d" id="cm"></div>
-              <div class="pf-email pf-d" id="_2a"></div>
+              <div class="-pdf-h pf-d">Zone</div>
+              <div class="pf-name pf-d" id="zn">N/A</div>
             </div>
             <form id="-edit-a" autocomplete="off">
               <b>Change Your Address</b>
-              <select id="type" class="_add" id="type">
-                <option value="" hidden>Select Type</option>
-                <option value="Primary">Primary</option>
-                <option value="Other">Other Address</option>
-              </select>
               <br />
-              <select class="_add" id="-ad">
-                <option value="" hidden>Select Your Address</option>
-                <option value="Royal">Royal</option>
-                <option value="Maroon">Maroon</option>
-                <option value="Pioneer">Pioneer</option>
-                <option value="Mandela">Mandela</option>
-                <option value="Pilipo">Pilipo</option>
-                <option value="Jeremiah">Jeremiah</option>
-                <option value="St. Peters">St. Peters</option>
-                <option value="Black Roof">Black Roof</option>
-              </select>
-              <br />
+              <div class="_cad">
+                <select
+                  name=""
+                  id="location"
+                  class="-is ca"
+                  style="width: 250px"
+                >
+                  <option value="" hidden>
+                    Select Your Residence/Location
+                  </option>
+                  <option value="Management">Management Sciences</option>
+                  <option value="Hospital">Hospital</option>
+                  <option value="Education">Education</option>
+                  <option value="keturah">keturah</option>
+                  <option value="Wilson">Wilson</option>
+                  <option value="Royal">Royal</option>
+                  <option value="Cosima">Cosima</option>
+                  <option value="Abraham">Abraham</option>
+                  <option value="Bako">Bako</option>
+                  <option value="Naphtali">Naphtali</option>
+                  <option value="God's Mercy">God's Mercy</option>
+                  <option value="Masengere">
+                    Masengere(These Funny Rentals)
+                  </option>
+                  <option value="Black Roof">Black Roof</option>
+                  <option value="Pioneer">Pioneer</option>
+                  <option value="Pilipo">Pilipo</option>
+                  <option value="Gloryianta">Gloryianta</option>
+                  <option value="Mandela">Mandela</option>
+                  <option value="Washington">Washington</option>
+                  <option value="St. Peters(Flat)">St. Peters(Flat)</option>
+                  <option value="St. Peters">St. Peters</option>
+                  <option value="Northern Elite">Northern Elite</option>
+                  <option value="Jeremiah">Jeremiah</option>
+                </select>
+              </div>
+              <div class="_cad">
+                <label for="">Your Zone</label>
+                <br />
+                <input
+                  placeholder="Zone"
+                  type="text"
+                  name=""
+                  id="zone"
+                  class="-is cz"
+                  style="width: 250px"
+                  readonly
+                />
+              </div>
               <label for="other-a">Other:</label>
               <input type="text" name="" id="other-a" placeholder="(Specify)" />
+              <div class="loader">
+                <i class="fas fa-spinner fa-spin"></i>
+              </div>
               <button type="submit" class="-btn-a-d">SUBMIT</button>
             </form>
             <button class="btn _ea-b">Change Your Address</button>
@@ -851,6 +889,51 @@
 
     <!--scripts-->
     <script>
+      // edit
+      function _ca(i, z) {
+        i.addEventListener("change", (e) => {
+          z.value =
+            i.value == "keturah" || i.value == "Wilson"
+              ? "Keturah Zone"
+              : i.value == "Royal" ||
+                i.value == "Cosima" ||
+                i.value == "Maroon" ||
+                i.value == "Abraham"
+              ? "Royal Zone"
+              : i.value == "Maisha" ||
+                i.value == "Bako" ||
+                i.value == "Naphtali" ||
+                i.value == "Masengere" ||
+                i.value == "God's Mercy"
+              ? "Maisha Zone"
+              : i.value == "Gloryianta" ||
+                i.value == "Mandela" ||
+                i.value == "Pilipo" ||
+                i.value == "Pioneer" ||
+                i.value == "Black Roof"
+              ? "Pioneer Zone"
+              : i.value == "Washington"
+              ? "Washington Zone"
+              : i.value == "St. Peters(Flat)"
+              ? "St. Peters Zone"
+              : i.value == "Pacuwa" ||
+                i.value == "St. Peters" ||
+                i.value == "Genesis"
+              ? "Pacuwa Zone"
+              : i.value == "Northern Elite"
+              ? "Northern Elite Zone"
+              : i.value == "Jeremiah"
+              ? "Jeremiah Zone"
+              : i.value == "Hospital"
+              ? "Hospital Side"
+              : i.value == "Management"
+              ? "Management Sciences"
+              : i.value == "Education"
+              ? "Education Block"
+              : "Other";
+        });
+      }
+      // edit
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
@@ -869,20 +952,12 @@
         xhr.onreadystatechange = () => {
           if (xhr.status == 200 && xhr.readyState == 4) {
             let [res] = JSON.parse(xhr.responseText);
-            document.querySelector("#_1a").innerHTML = res.pickup_address_1;
-            document.querySelector("#_2a").innerHTML = res.pickup_address_2;
+            document.querySelector("#_cm").innerHTML = res.pickup_address_1;
+            document.querySelector("#zn").innerHTML = res.zone;
             document.querySelector("#_cn").innerHTML =
-              res.pickup_address_1 == null
-                ? "N/A"
-                : res.c_first_name + " " + res.c_last_name;
-            document.querySelector("#_cm").innerHTML =
-              res.pickup_address_1 == null ? "" : res.c_phone || res.c_email;
-            document.querySelector("#cn").innerHTML =
-              res.pickup_address_2 == null
-                ? "N/A"
-                : res.c_first_name + " " + res.c_last_name;
-            document.querySelector("#cm").innerHTML =
-              res.pickup_address_2 == null ? "" : res.c_phone || res.c_email;
+              res.c_first_name + " " + res.c_last_name;
+            document.querySelector("#_1a").innerHTML =
+              res.c_phone || res.c_email;
             document.getElementsByTagName("title")[0].innerHTML = `${
               res.c_first_name + " " + res.c_last_name
             } &commat; Yammie | online Store`;
@@ -892,15 +967,19 @@
       document.querySelector("._ea-b").addEventListener("click", () => {
         document.querySelector("#-edit-a").classList.toggle("dn");
       });
+      _ca(document.querySelector(".ca"), document.querySelector(".cz"));
       document.querySelector("#-edit-a").addEventListener("submit", (e) => {
         e.preventDefault();
         let _add = {};
-        _add.type = document.querySelector("#type").value || "Primary";
+        _add.zone = document.querySelector("#zone").value || "No Zone";
         _add.add =
-          document.querySelector("#-ad").value ||
+          document.querySelector("#location").value ||
           document.querySelector("#other-a").value;
         xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
+          if (xhr.readyState < 4) {
+            document.querySelector(".loader").style.display = "block";
+          }
           if (xhr.readyState == 4 && xhr.status == 200) {
             if (xhr.responseText == "Changed") {
               window.location.reload();
