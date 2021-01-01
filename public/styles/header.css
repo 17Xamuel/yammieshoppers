@@ -188,8 +188,9 @@
   display: none;
 }
 @media screen and (max-width: 768px) {
-  .nav {
-    width: 100vw;
+  .-b-ctr {
+    width: 100%;
+    margin: 0px;
   }
   .cart-label {
     display: none;
@@ -202,7 +203,7 @@
 
   .banner {
     padding: 0px;
-    height: 5vh;
+    height: 6.5vh;
   }
   .search-nav {
     padding-top: 15px;

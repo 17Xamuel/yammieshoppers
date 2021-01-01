@@ -1486,13 +1486,15 @@
               group = "";
             _c.forEach((item) => {
               group += `
-                   <a class="item -ct-item" href="./item?item=${item.id}">
-                      <img
-                        src="${JSON.parse(item.images)[0]}"
-                        alt="${item.name}"
-                        width="180px"
-                        height="150px"
-                      />
+                    <a class="item -ct-item" href="./item?item=${item.id}">
+                      <div class="_image">
+                        <img
+                          src="${JSON.parse(item.images)[0]}"
+                          alt="${item.name}"
+                          width="100%"
+                          height="100%"
+                        />
+                      </div>
                       <div class="-i-dtl">
                         <div class="it-nm">${item.product} - ${
                 item.description
@@ -1508,6 +1510,7 @@
                          }</div>
                       </div>
                     </a>
+                    
                     `;
             });
             c.innerHTML = group;
@@ -1587,7 +1590,7 @@
               <a class="itm-s-img" href="./item?item=${itm.id}">
                 <img
                   src="${JSON.parse(itm.images)[0]}"
-                  alt="${itm.name}"
+                  alt="${itm.product}"
                   width="100%"
                   height="75%"
                 />

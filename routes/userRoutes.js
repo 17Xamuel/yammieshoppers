@@ -67,7 +67,7 @@ router.post("/customer/insert", async (req, res) => {
             res.status(200).send("ok");
           })
           .catch(function (err) {
-            console.log("Error Ocurred!!!");
+            console.log("Error");
           });
       }
     }
@@ -247,38 +247,41 @@ function rs(l) {
   );
 }
 router.post("/customer/order", async (req, res) => {
-  const [
-    order_payment_method,
-    c_id,
-    order_items,
-    order_amount,
-    order_delivery_method
-  ] = req.body;
-
+  let orderNumber = rs(5);
   conn.query(
-    "INSERT INTO pending_orders SET ? ",
-    {
-      order_id: uuid.v4(),
-      order_items,
-      order_delivery_method,
-      order_amount,
-      order_payment_method,
-      c_id,
-      order_status: "Pending",
-      order_number: rs(5),
-      order_date: new Date()
-    },
+    `SELECT * FROM customer_address 
+        JOIN customers ON customers.c_id=customer_address.c_id
+          WHERE customer_address.c_id = ? `,
+    req.body.yammie,
     (err, result) => {
-      if (err) throw err;
-
-      let items = JSON.parse(order_items);
-      let itemdetails = Object.values(itemdetails);
-      itemdetails.forEach((item) => {
+      if (err) {
+        throw err;
+      } else {
         conn.query(
-          `SELECT * FROM seller_orders WHERE product_id =${item.cartItemAdded}`,
-          (error, result) => {
-            if (error) throw error;
-            if (result.length == 0) {
+          "INSERT INTO pending_orders SET ? ",
+          {
+            order_id: uuid.v4(),
+            order_items: req.body.order,
+            order_amount: req.body._ttp,
+            order_payment_method: req.body.payment_method,
+            c_id: req.body.yammie,
+            order_status: req.body.u == "-u" ? "urgent" : "normal",
+            order_number: orderNumber,
+            order_date: new Date(),
+            order_info: JSON.stringify({
+              shipping: req.body._shp,
+              address:
+                req.body.add == "undefined"
+                  ? result[0].pickup_address_1
+                  : req.body.add,
+              order_delivery_method: req.body.dm
+            })
+          },
+          (err, result_1) => {
+            if (err) throw err;
+            let items = JSON.parse(req.body.order);
+            let itemdetails = Object.values(items);
+            itemdetails.forEach((item) => {
               conn.query(
                 `INSERT INTO seller_orders SET ? `,
                 {
@@ -292,29 +295,30 @@ router.post("/customer/order", async (req, res) => {
                     (item.price - (item.discount / 100) * item.price) *
                     item.inCartNumber
                 },
-                (err, results) => {
-                  if (err) throw err;
+                (error, result_3) => {
+                  if (error) throw error;
                 }
               );
-            } else if (result.length > 0) {
-              conn.query(
-                `SELECT order_qty FROM seller_orders WHERE product_id=${item.cartItemAdded}`,
-                (ers, Qresult) => {
-                  if (ers) throw ers;
-                  let finalQuantity = Qresult[0].order_qty + item.inCartNumber;
-                  conn.query(
-                    `UPDATE  seller_orders SET order_qty = ${finalQuantity}`,
-                    (sqerr, sqresult) => {
-                      if (sqerr) throw sqerr;
-                    }
-                  );
-                }
-              );
-            }
+            });
+            let info = {
+              from: '"Yammie Shoppers"<info@yammieshoppers.com>',
+              to: result[0].c_email,
+              subject: "Order Placement",
+              text: `Hello ${result[0].c_first_name},
+                      your order has been placed successfully and your
+                      order number is ${orderNumber}`
+            };
+            transporter
+              .sendMail(info)
+              .then(function (response) {
+                res.status(200).send(req.body.payment_method);
+              })
+              .catch(function (err) {
+                console.log("Error Ocurred!!!");
+              });
           }
         );
-      });
-      res.send(order_payment_method);
+      }
     }
   );
 });
@@ -393,14 +397,27 @@ router.post("/account/address/edit/:id", (req, res) => {
   );
 });
 router.post("/shipping/:id", (req, res) => {
-  conn.query(`SELECT zone FROM customer_address WHERE c_id = ?`, [
-    req.params.id,
+  let { price, qty, size, weight, fragile, location, urgent } = req.body;
+  conn.query(
+    `SELECT zone FROM customer_address WHERE c_id = ?`,
+    [req.params.id],
     (err, result) => {
       if (err) throw err;
-      req.body.user = result;
+      let product = {
+        user: result[0].zone,
+        price,
+        qty,
+        size,
+        weight,
+        fragile,
+        location,
+        urgent
+      };
+
+      let cost = new charge(product).total;
+      let _price = new charge(product).price;
+      res.send({ shipping: cost, totalPrice: _price });
     }
-  ]);
-  let cost = new charge(req.body).total;
-  res.send({ cost: cost });
+  );
 });
 module.exports = router;
