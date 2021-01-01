@@ -283,27 +283,26 @@ router.post("/customer/order", async (req, res) => {
             let itemdetails = Object.values(items);
             itemdetails.forEach((item) => {
               conn.query(
-                `SELECT * FROM products WHERE id = '${item.cartItemAdded}'`,
+                `SELECT * FROM products WHERE id= '${item.cartItemAdded}'`,
                 (qerr, qresult) => {
                   if (qerr) throw qerr;
                   if (qresult.length > 0) {
                     conn.query(
-                      `SELECT quantity FROM products WHERE id = '${item.cartItemAdded}'`,
+                      `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
                       (errq, resultq) => {
                         if (errq) throw errq;
-                        let quantityChange =
-                          resultq[0].quantity - item.inCartNumber;
+                        let quantityChange = resultq[0] - item.incartNumber;
                         conn.query(
-                          `UPDATE products SET quantity =${quantityChange} WHERE id = '${item.cartItemAdded}'`,
+                          `UPDATE products SET quantity =${quantityChange} WHERE id='${item.cartItemAdded}'`,
                           (q_err, q_result) => {
                             if (q_err) throw q_err;
                             conn.query(
-                              `SELECT * FROM seller_orders WHERE Product_id= ${item.cartItemadded}`,
+                              `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'`,
                               (errr, result_0) => {
                                 if (errr) throw errr;
                                 if (result_0.length == 0) {
                                   conn.query(
-                                    `INSERT INTO seller_orders SET ? `,
+                                    `INSERT INTO seller_orders SET ?`,
                                     {
                                       id: uuid.v4(),
                                       product_id: item.cartItemAdded,
@@ -322,15 +321,13 @@ router.post("/customer/order", async (req, res) => {
                                   );
                                 } else if (result_0.length > 0) {
                                   conn.query(
-                                    `SELECT order_qty FROM seller_orders 
-                                    WHERE product_id=${item.cartItemAdded}`,
+                                    `SELECT order_qty FROM seller_orders WHERE product_id='${item.cartItemAdded}'`,
                                     (err_0, res_0) => {
                                       if (err_0) throw err_0;
                                       let finalQuantity =
                                         res_0[0].order_qty + item.inCartNumber;
                                       conn.query(
-                                        `UPDATE seller_orders SET order_order_qty=${finalQuantity} WHERE 
-                                        product_id=${item.cartItemAdded}`,
+                                        `UPDATE seller_orders SET order_qty =${finalQuantity} WHERE product_id='${item.cartItemAdded}'`,
                                         (err_1, res_1) => {
                                           if (err_1) throw err_1;
                                         }
@@ -348,6 +345,7 @@ router.post("/customer/order", async (req, res) => {
                 }
               );
             });
+
             let info = {
               from: '"Yammie Shoppers"<info@yammieshoppers.com>',
               to: result[0].c_email,
@@ -444,6 +442,7 @@ router.post("/account/address/edit/:id", (req, res) => {
     }
   );
 });
+
 router.post("/shipping/:id", (req, res) => {
   let { price, qty, size, weight, fragile, location, urgent } = req.body;
   conn.query(
