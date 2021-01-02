@@ -321,8 +321,8 @@ router.get("/pendingOrdernumber/:id", (req, res) => {
 router.get("/doneOrder/:id", (req, res) => {
   conn.query(
     `SELECT cleared_orders.order_price,cleared_orders.order_amount,
-  cleared_orders.order_product,cleared_orders.order_qty,cleared_orders.order_discount
-   FROM cleared_orders JOIN products ON cleared_orders.product_id
+  cleared_orders.order_product,cleared_orders.order_qty,cleared_orders.order_discount,
+   products.images FROM cleared_orders JOIN products ON cleared_orders.product_id
   =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
     [req.params.id],
     (err, result) => {

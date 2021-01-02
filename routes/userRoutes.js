@@ -24,8 +24,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1",
-  },
+    pass: "yammieShoppers@1"
+  }
 });
 //mailer
 router.post("/customer/insert", async (req, res) => {
@@ -43,7 +43,7 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name,
+          c_last_name
         } = req.body;
         let c_id = uuid.v4();
         newUser = {
@@ -53,13 +53,13 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name,
+          c_last_name
         };
         let info = {
           from: '"Yammie Shoppers"<info@yammieshoppers.com>',
           to: c_email,
           subject: "Confirming Your Account",
-          text: `Hello ${c_first_name}, confirm your email with this ${code}`,
+          text: `Hello ${c_first_name}, confirm your email with this ${code}`
         };
         transporter
           .sendMail(info)
@@ -275,8 +275,8 @@ router.post("/customer/order", async (req, res) => {
                 req.body.add == "undefined"
                   ? result[0].pickup_address_1
                   : req.body.add,
-              order_delivery_method: req.body.dm,
-            }),
+              order_delivery_method: req.body.dm
+            })
           },
           (err, result_1) => {
             if (err) throw err;
@@ -284,41 +284,60 @@ router.post("/customer/order", async (req, res) => {
             let itemdetails = Object.values(items);
             itemdetails.forEach((item) => {
               conn.query(
-                `SELECT * FROM seller_orders WHERE Product_id = '${item.cartItemAdded}'`,
-                (errr, result_0) => {
-                  if (errr) throw errr;
-                  if (result_0.length == 0) {
+                `SELECT * FROM products WHERE id= '${item.cartItemAdded}'`,
+                (qerr, qresult) => {
+                  if (qerr) throw qerr;
+                  if (qresult.length > 0) {
                     conn.query(
-                      `INSERT INTO seller_orders SET ? `,
-                      {
-                        id: uuid.v4(),
-                        product_id: item.cartItemAdded,
-                        order_price: item.price,
-                        order_product: item.name,
-                        order_discount: item.discount,
-                        order_qty: item.inCartNumber,
-                        order_amount:
-                          (item.price - (item.discount / 100) * item.price) *
-                          item.inCartNumber,
-                      },
-                      (error, result_3) => {
-                        if (error) throw error;
-                      }
-                    );
-                  } else if (result_0.length > 0) {
-                    conn.query(
-                      `SELECT order_qty 
-                        FROM seller_orders WHERE product_id = '${item.cartItemAdded}'`,
-                      (err_0, res_0) => {
-                        if (err_0) throw err_0;
-                        let finalQuantity =
-                          res_0[0].order_qty + item.inCartNumber;
+                      `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
+                      (errq, resultq) => {
+                        if (errq) throw errq;
+                        let quantityChange = resultq[0] - item.incartNumber;
                         conn.query(
-                          `UPDATE seller_orders 
-                            SET order_qty = ${finalQuantity} 
-                            WHERE product_id = '${item.cartItemAdded}'`,
-                          (err_1, res_1) => {
-                            if (err_1) throw err_1;
+                          `UPDATE products SET quantity =${quantityChange} WHERE id='${item.cartItemAdded}'`,
+                          (q_err, q_result) => {
+                            if (q_err) throw q_err;
+                            conn.query(
+                              `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'`,
+                              (errr, result_0) => {
+                                if (errr) throw errr;
+                                if (result_0.length == 0) {
+                                  conn.query(
+                                    `INSERT INTO seller_orders SET ?`,
+                                    {
+                                      id: uuid.v4(),
+                                      product_id: item.cartItemAdded,
+                                      order_price: item.price,
+                                      order_product: item.name,
+                                      order_discount: item.discount,
+                                      order_qty: item.inCartNumber,
+                                      order_amount:
+                                        (item.price -
+                                          (item.discount / 100) * item.price) *
+                                        item.inCartNumber
+                                    },
+                                    (error, result_3) => {
+                                      if (error) throw error;
+                                    }
+                                  );
+                                } else if (result_0.length > 0) {
+                                  conn.query(
+                                    `SELECT order_qty FROM seller_orders WHERE product_id='${item.cartItemAdded}'`,
+                                    (err_0, res_0) => {
+                                      if (err_0) throw err_0;
+                                      let finalQuantity =
+                                        res_0[0].order_qty + item.inCartNumber;
+                                      conn.query(
+                                        `UPDATE seller_orders SET order_qty =${finalQuantity} WHERE product_id='${item.cartItemAdded}'`,
+                                        (err_1, res_1) => {
+                                          if (err_1) throw err_1;
+                                        }
+                                      );
+                                    }
+                                  );
+                                }
+                              }
+                            );
                           }
                         );
                       }
@@ -327,13 +346,14 @@ router.post("/customer/order", async (req, res) => {
                 }
               );
             });
+
             let info = {
               from: '"Yammie Shoppers"<info@yammieshoppers.com>',
               to: result[0].c_email,
               subject: "Order Placement",
               text: `Hello ${result[0].c_first_name},
                       your order has been placed successfully and your
-                      order number is ${orderNumber}`,
+                      order number is ${orderNumber}`
             };
             transporter
               .sendMail(info)
@@ -423,6 +443,7 @@ router.post("/account/address/edit/:id", (req, res) => {
     }
   );
 });
+
 router.post("/shipping/:id", (req, res) => {
   let { price, qty, size, weight, fragile, location, urgent } = req.body;
   conn.query(
@@ -438,7 +459,7 @@ router.post("/shipping/:id", (req, res) => {
         weight,
         fragile,
         location,
-        urgent,
+        urgent
       };
 
       let cost = new charge(product).total;
