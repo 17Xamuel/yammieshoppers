@@ -24,7 +24,7 @@ a {
 }
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #faf5f5;
+  background-color: rgba(0, 0, 0, 0.05);
   font-size: 14.5px;
 }
 .-b-x {
@@ -79,7 +79,7 @@ body {
 @media screen and (max-width: 768px) {
   body {
     width: 95vw;
-    background-color: #eee;
+    background-color: rgba(0, 0, 0, 0.05);
   }
 }
 @media screen and (min-width: 1800px) {

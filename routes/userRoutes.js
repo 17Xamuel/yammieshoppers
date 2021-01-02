@@ -67,13 +67,14 @@ router.post("/customer/insert", async (req, res) => {
             res.status(200).send("ok");
           })
           .catch(function (err) {
-            console.log("Error");
+            console.log(err);
           });
       }
     }
   );
 });
 router.post("/customer/confirm", (req, res) => {
+  ``;
   if (req.body.fn == code) {
     conn.query("INSERT INTO customers SET ?", newUser, (err) => {
       if (err) {
@@ -465,6 +466,75 @@ router.post("/shipping/:id", (req, res) => {
       let cost = new charge(product).total;
       let _price = new charge(product).price;
       res.send({ shipping: cost, totalPrice: _price });
+    }
+  );
+});
+router.post("/customer/cart/:id", (req, res) => {
+  conn.query(
+    `SELECT c_cart,c_cart_number FROM customers WHERE c_id = ?`,
+    req.params.id,
+    (err, result_0) => {
+      if (err) {
+        throw err;
+      } else {
+        let result = result_0[0];
+        let cart = JSON.parse(result.c_cart);
+        let newCart = {};
+        let cart_number = 0;
+        if (cart != null) {
+          for (let key in cart) {
+            newCart[key] = cart[key];
+          }
+          for (let item in req.body.cart) {
+            if (newCart[item] == req.body.cart[item]) {
+              newCart[item].inCartNumber += 1;
+            } else {
+              newCart[item] = req.body.cart[item];
+            }
+          }
+
+          for (let key in newCart) {
+            cart_number += newCart[key].inCartNumber;
+          }
+          conn.query(
+            `UPDATE customers SET ? WHERE c_id = ?`,
+            [
+              { c_cart: JSON.stringify(newCart), c_cart_number: cart_number },
+              req.params.id,
+            ],
+            (error, result_2) => {
+              if (error) {
+                throw error;
+              } else {
+                return res
+                  .status(200)
+                  .send({ newCart: newCart, cart_number: cart_number });
+              }
+            }
+          );
+        } else {
+          conn.query(
+            `UPDATE customers SET ? WHERE c_id = ?`,
+            [
+              {
+                c_cart: JSON.stringify(req.body.cart),
+                c_cart_number: req.body.cartNumber,
+              },
+              req.params.id,
+            ],
+            (error, result_2) => {
+              if (error) {
+                throw error;
+              } else {
+                res.status(200).send({
+                  newCart: req.body.cart,
+                  cart_number: req.body.cartNumber,
+                });
+              }
+            }
+          );
+        }
+      }
     }
   );
 });
