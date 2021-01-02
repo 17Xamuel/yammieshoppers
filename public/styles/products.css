@@ -60,10 +60,32 @@
 }
 .-lazy {
   width: 100%;
-  background-color: rgb(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #f6f7f8;
+  background-image: linear-gradient(
+    to right,
+    #f6f7f8 0%,
+    #edeef1 20%,
+    #eff1f3 40%,
+    #f6f7f8 100%
+  );
+  animation-duration: 4s;
+  background-size: contain;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeholderShimmer;
+  animation-timing-function: linear;
+}
+@keyframes placeholderShimmer {
+  0% {
+    background-position: -250px 0;
+  }
+
+  100% {
+    background-position: 250px 0;
+  }
 }
 .-i-dtl {
   font-size: 13px;
