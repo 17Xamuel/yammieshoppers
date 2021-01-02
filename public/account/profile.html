@@ -802,11 +802,15 @@
               res.pickup_address_1 == null ? "" : res.c_phone || res.c_email;
             document.querySelector("#_cg").innerHTML = res.c_gender;
             document.querySelector("#_cn").innerHTML =
-              res.c_first_name + " " + res.c_last_name;
+              res.c_last_name != null
+                ? res.c_first_name + " " + res.c_last_name
+                : res.c_first_name;
             document.querySelector("#_ce").innerHTML = res.c_email;
             document.querySelector("#_cm").innerHTML = res.c_phone;
             document.getElementsByTagName("title")[0].innerHTML = `${
-              res.c_first_name + " " + res.c_last_name
+              res.c_last_name != null
+                ? res.c_first_name + " " + res.c_last_name
+                : res.c_first_name
             } &commat; Yammie | online Store`;
           }
         };

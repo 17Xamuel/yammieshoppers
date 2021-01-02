@@ -374,6 +374,9 @@
       }
     </style>
     <script>
+      if (typeof Storage === "undefined") {
+        alert("Please Update Your browser To Continue With Yammie");
+      }
       document.addEventListener("DOMContentLoaded", (e) => {
         cnd(
           localStorage.getItem("cartNumber"),
@@ -1801,9 +1804,10 @@
                         />
                       </div>
                       <div class="-i-dtl">
-                        <div class="it-nm">${item.product} - ${
-                item.description
-              }</div>
+                        <div class="it-nm">
+                          ${item.product} - ${
+                          item.description}
+                        </div>
                         <div class="it-pr pr price-current">${
                           "UGX " +
                           (item.discount

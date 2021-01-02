@@ -786,7 +786,7 @@
             document.querySelector(".password").style.opacity = "1";
             setTimeout(() => {
               document.querySelector(".password").style.opacity = "0";
-            }, 8000);
+            }, 3000);
             return false;
           } else {
             user.c_password = pd.value;
@@ -798,7 +798,7 @@
             document.querySelector(".phone-m").style.opacity = "1";
             setTimeout(() => {
               document.querySelector(".phone-m").style.opacity = "0";
-            }, 8000);
+            }, 3000);
             return false;
           }
 
@@ -824,7 +824,7 @@
               document.querySelector("#used-e").innerHTML = xhr.responseText;
               setTimeout(() => {
                 document.querySelector("#used-e").style.opacity = "0";
-              }, 10000);
+              }, 4000);
             }
             if (xhr.readyState == 4 && xhr.status == 200) {
               location.replace("./confirm");

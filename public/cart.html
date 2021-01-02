@@ -956,6 +956,24 @@
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
+      //cart
+      function _cdb(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+            window.location.reload();
+          }
+        };
+      }
     </script>
     <script>
       let cartNumber = parseInt(localStorage.getItem("cartNumber"));
@@ -1116,9 +1134,16 @@
                 }
               }
             }
-            localStorage.setItem("cartNumber", JSON.stringify(cartNumber));
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
-            window.location.reload();
+            if (!yammie) {
+              localStorage.setItem("cartNumber", JSON.stringify(cartNumber));
+              localStorage.setItem("cartItems", JSON.stringify(cartItems));
+              window.location.reload();
+            } else {
+              _cdb(`/api/user/customer/cart/${yammie}`, {
+                cart: cartItems,
+                cartNumber: cartNumber,
+              });
+            }
           }
           function plus(id) {
             for (const item in cartItems) {
@@ -1131,9 +1156,17 @@
                 }
               }
             }
-            localStorage.setItem("cartNumber", JSON.stringify(cartNumber));
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
-            window.location.reload();
+            if (!yammie) {
+              localStorage.setItem("cartNumber", JSON.stringify(cartNumber));
+              localStorage.setItem("cartItems", JSON.stringify(cartItems));
+              window.location.reload();
+            } else {
+              console.log("true");
+              _cdb(`/api/user/customer/cart/${yammie}`, {
+                cart: cartItems,
+                cartNumber: cartNumber,
+              });
+            }
           }
           const removeItemLg = document.querySelectorAll(".itm-r-lg");
           for (let i = 0; i < removeItemLg.length; i++) {
@@ -1157,9 +1190,16 @@
                 delete cartItems[id];
               }
             }
-            localStorage.setItem("cartNumber", JSON.stringify(cartNumber));
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
-            window.location.reload();
+            if (!yammie) {
+              localStorage.setItem("cartNumber", JSON.stringify(cartNumber));
+              localStorage.setItem("cartItems", JSON.stringify(cartItems));
+              window.location.reload();
+            } else {
+              _cdb(`/api/user/customer/cart/${yammie}`, {
+                cart: cartItems,
+                cartNumber: cartNumber,
+              });
+            }
           }
           function totalAmount() {
             let total = 0;
@@ -1387,12 +1427,6 @@
       function imageDialogClose() {
         document.querySelector(".popup").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay").classList.remove("active");
-      }
-      //cart
-      function _cdb() {
-        if (true) {
-          console.log("true");
-        }
       }
     </script>
     <script src="./ym.min.js"></script>
