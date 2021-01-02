@@ -299,4 +299,25 @@ router.get("/productSeller/:id", async (req, res) => {
   );
 });
 
+router.post("/addCategory", async (req, res) => {
+  let = { catName } = req.body;
+  conn.query(
+    `INSERT INTO category SET ? `,
+    {
+      category_name: catName
+    },
+    (err, result) => {
+      if (err) throw err;
+      res.send("Category Added Successfully");
+    }
+  );
+});
+
+router.get("/getCategory", async (req, res) => {
+  conn.query("SELECT * FROM category", (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
 module.exports = router;
