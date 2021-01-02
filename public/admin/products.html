@@ -187,11 +187,127 @@
 
     <section>
       <div class="container-fluid">
-        <div class="row mb-3">
+        <div class="row mb-4">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
-              <div class="col-xl-11 mx-auto">
-                <div class="card rounded my-3">
+              <div class="col-xl-11 mx-auto my-3 text-center">
+                <button type="submit" class="btn btn-warning mr-2">
+                  Add New Product
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-info mr-2"
+                  data-target="#newCategory"
+                  data-toggle="modal"
+                >
+                  Add New Category
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-success mr-2"
+                  data-target="#newSubCategory"
+                  data-toggle="modal"
+                >
+                  Add New Subcategory
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Category Modal  -->
+    <div class="modal fade" id="newCategory">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Category</h5>
+          </div>
+          <div class="modal-body text-center" id="catFeedBack">
+            <form id="catForm">
+              <div class="form-group">
+                <input
+                  type="text"
+                  autocomplete="off"
+                  class="form-control"
+                  id="catname"
+                  placeholder="Enter Category Name"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-block btn-primary">
+                Submit
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn-danger btn btn-sm"
+              data-dismiss="modal"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Category -->
+
+    <!--Sub Category Modal  -->
+    <div class="modal fade" id="newSubCategory">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Sub Category</h5>
+          </div>
+          <div class="modal-body text-center" id="subCatFeedBack">
+            <form id="SubCatForm">
+              <div class="form-group">
+                <label for="Category">Select Category</label>
+                <select
+                  id="catSelection"
+                  required
+                  class="form-control"
+                ></select>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  autocomplete="off"
+                  class="form-control"
+                  id="subCatname"
+                  placeholder="Enter SubCategory Name"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-block btn-primary">
+                Submit
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn-danger btn btn-sm"
+              data-dismiss="modal"
+            >
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Sub Category -->
+
+    <section>
+      <div class="container-fluid">
+        <div class="row mb-3">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto text-center">
+                <div class="card rounded mb-3">
                   <div class="card-body">
                     <h4 class="text-center my-3">
                       Pending Products <span id="ppn"></span>
@@ -557,7 +673,71 @@
       };
       load.open("GET", `/api/admin/getOnlineProducts`, true);
       load.send();
-      // window.location.reload("products.html");
+
+      let catForm = document.getElementById("catForm");
+      catForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let category = {};
+        category.catName = document.getElementById("catname").value;
+
+        const catSubmit = new XMLHttpRequest();
+        catSubmit.onreadystatechange = () => {
+          if (catSubmit.readyState < 4) {
+            document.getElementById(
+              "catFeedBack"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (catSubmit.readyState == 4 && catSubmit.status == 200) {
+            document.getElementById("catFeedBack").innerHTML =
+              catSubmit.responseText;
+          }
+        };
+        let catString = JSON.stringify(category);
+        catSubmit.open("POST", "/api/admin/addCategory", true);
+        catSubmit.setRequestHeader("Content-Type", "application/json");
+        catSubmit.send(catString);
+      });
+
+      const catGet = new XMLHttpRequest();
+      catGet.onreadystatechange = () => {
+        if (catGet.readyState == 4 && catGet.status == 200) {
+          console.log(catGet.responseText);
+          let categories = JSON.parse(catGet.responseText);
+          let cat = "";
+          categories.forEach((cats) => {
+            cat += `<option value="${cats.category_name}">${cats.category_name}</option>`;
+          });
+          document.getElementById("catSelection").innerHTML = cat;
+        }
+      };
+      catGet.open("GET", "/api/admin/getCategory", true);
+      catGet.send();
+
+      let SubCatForm = document.getElementById("subCatForm");
+      SubCatForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let SubCategory = {};
+        SubCategory.categoryName = document.getElementById(
+          "catSelection"
+        ).value;
+        SubCategory.subName = document.getElementById("subCatname").value;
+        let subCatSubmit = new XMLHttpRequest();
+        subCatSubmit.onreadystatechange = () => {
+          if (subCatSubmit.readyState < 4) {
+            document.getElementById(
+              "subCatFeedBack"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if ((subCatSubmit.readyState == 4) & (subCatSubmit.status == 200)) {
+            document.getElementById("subCatFeedBack").innerHTML =
+              subCatSubmit.responseText;
+          }
+        };
+        let subString = JSON.stringify(SubCategory);
+        subCatSubmit.open("POST", "/api/admin/addSubCategory", true);
+        subCatSubmit.setRequestHeader("Content-Type", "application/json");
+        subCatSubmit.send(subString);
+      });
     </script>
     <!-- End Scripts -->
   </body>

@@ -291,7 +291,8 @@ router.post("/customer/order", async (req, res) => {
                       `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
                       (errq, resultq) => {
                         if (errq) throw errq;
-                        let quantityChange = resultq[0] - item.incartNumber;
+                        let quantityChange =
+                          resultq[0].quantity - item.inCartNumber;
                         conn.query(
                           `UPDATE products SET quantity =${quantityChange} WHERE id='${item.cartItemAdded}'`,
                           (q_err, q_result) => {
