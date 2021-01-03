@@ -7,7 +7,7 @@ const charge = require("./charges");
 
 //for new user
 let newUser = {};
-let code = _c(7);
+let code = _c(5);
 //code
 function _c(l) {
   let rc = "1927384560";
@@ -24,8 +24,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1"
-  }
+    pass: "yammieShoppers@1",
+  },
 });
 //mailer
 router.post("/customer/insert", async (req, res) => {
@@ -43,7 +43,7 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name
+          c_last_name,
         } = req.body;
         let c_id = uuid.v4();
         newUser = {
@@ -53,13 +53,13 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name
+          c_last_name,
         };
         let info = {
           from: '"Yammie Shoppers"<info@yammieshoppers.com>',
           to: c_email,
           subject: "Confirming Your Account",
-          text: `Hello ${c_first_name}, confirm your email with this ${code}`
+          text: `Hello ${c_first_name}, confirm your email with this ${code}`,
         };
         transporter
           .sendMail(info)
@@ -183,7 +183,7 @@ router.get("/search/:l-:h", async (req, res) => {
 //LogIn Api
 router.post("/customer/lg", (req, res) => {
   conn.query(
-    "SELECT c_email, c_password, c_phone, c_id AS yammie FROM customers WHERE c_email = ? OR c_phone = ?",
+    "SELECT * FROM customers WHERE c_email = ? OR c_phone = ?",
     [req.body.login, req.body.login],
     (err, result) => {
       if (err) throw err;
@@ -192,6 +192,7 @@ router.post("/customer/lg", (req, res) => {
       }
       const password = result.find((c) => c.c_password == req.body.auth);
       if (password) {
+        password.yammie = password.c_id;
         return res.send(password);
       } else {
         res.send("Wrong Password Used");
@@ -275,8 +276,8 @@ router.post("/customer/order", async (req, res) => {
                 req.body.add == "undefined"
                   ? result[0].pickup_address_1
                   : req.body.add,
-              order_delivery_method: req.body.dm
-            })
+              order_delivery_method: req.body.dm,
+            }),
           },
           (err, result_1) => {
             if (err) throw err;
@@ -315,7 +316,7 @@ router.post("/customer/order", async (req, res) => {
                                       order_amount:
                                         (item.price -
                                           (item.discount / 100) * item.price) *
-                                        item.inCartNumber
+                                        item.inCartNumber,
                                     },
                                     (error, result_3) => {
                                       if (error) throw error;
@@ -354,7 +355,7 @@ router.post("/customer/order", async (req, res) => {
               subject: "Order Placement",
               text: `Hello ${result[0].c_first_name},
                       your order has been placed successfully and your
-                      order number is ${orderNumber}`
+                      order number is ${orderNumber}`,
             };
             transporter
               .sendMail(info)
@@ -460,7 +461,7 @@ router.post("/shipping/:id", (req, res) => {
         weight,
         fragile,
         location,
-        urgent
+        urgent,
       };
 
       let cost = new charge(product).total;
@@ -492,10 +493,13 @@ router.post("/customer/cart/:id", (req, res) => {
               newCart[item] = req.body.cart[item];
             }
           }
-
+          if (req.body.delete == true) {
+            delete newCart[req.body.deleteId];
+          }
           for (let key in newCart) {
             cart_number += newCart[key].inCartNumber;
           }
+
           conn.query(
             `UPDATE customers SET ? WHERE c_id = ?`,
             [

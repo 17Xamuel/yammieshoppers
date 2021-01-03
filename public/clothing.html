@@ -932,6 +932,22 @@
       </div>
     </footer>
     <script>
+      function _cdb(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+          }
+        };
+      }
       let yammieUsr = "";
       if (yammie) {
         let xhr = new XMLHttpRequest();
@@ -1245,29 +1261,30 @@
               let itmsSearched = "";
               searchData.forEach((itm) => {
                 itmsSearched += `
-              <a class="-test -catalog itm-searched" href="./item?item=${
-                itm.id
-              }">
+              <div class="-test -catalog itm-searched">
               <div class="a-s-discount">
                 <span class="d">
                   ${itm.discount !== null ? "-" + itm.discount + "%" : ""}
                 </span>
               </div>
-              <div class="itm-s-img">
-                <img
-                  src="${JSON.parse(itm.images)[0]}"
-                  alt="${itm.name}"
-                  width="100%"
-                  height="75%"
-                />
-              </div>
+              <a class="itm-s-img" href="./item?item=${itm.id}">
+                 <div class="_img-ctr">
+                  <img
+                    src="${JSON.parse(itm.images)[0]}"
+                    alt="${itm.product}"
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
+              </a>
               <div class="itm-s-dtl">
                 <div class="seller">
                   <b>Seller:</b> Yammie Shoppers
                 </div>
-                <div class="itm-name" style="font-size:13.5px;">
+                <a class="itm-name" style="font-size:13.5px;" 
+                  href="./item?item=${itm.id}">
                   ${itm.product} - ${itm.description}
-                </div>
+                </a>
                 <div class="price-current">${
                   "UGX " +
                   (itm.discount
@@ -1292,7 +1309,7 @@
                   data-name=${itm.product.replace(/ /g, "_")}
                   data-price=${itm.price}
                   data-description=${itm.description.replace(/ /g, "_")}
-                  data-im=${JSON.parse(itm.images)[0]}
+                  data-im=${JSON.parse(itm.images)[0].replace(/ /g, "_")}
                   data-discount=${itm.discount}
                 >
                   <img
@@ -1304,13 +1321,13 @@
                     data-name=${itm.product.replace(/ /g, "_")}
                     data-price=${itm.price}
                     data-description=${itm.description.replace(/ /g, "_")}
-                    data-im=${JSON.parse(itm.images)[0]}
+                    data-im=${JSON.parse(itm.images)[0].replace(/ /g, "_")}
                     data-discount=${itm.discount}
                   />
                   Add to Cart
                 </div>
               </div>
-            </a>`;
+            </div>`;
               });
               document.getElementById("s-itms-ctr").innerHTML = itmsSearched;
               let btns = document.querySelectorAll(".add-to-c");
@@ -1377,7 +1394,15 @@
                     [item.cartItemAdded]: item,
                   };
                 }
-                localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                if (!yammie) {
+                  localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                } else {
+                  _cdb(`/api/user/customer/cart/${yammie}`, {
+                    cart: cartItems,
+                    cartNumber: localStorage.getItem("cartNumber"),
+                    delete: false,
+                  });
+                }
 
                 document
                   .querySelector("#pop-up-overlay")

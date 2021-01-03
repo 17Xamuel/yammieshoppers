@@ -288,6 +288,17 @@
         cursor: pointer;
         color: #ffbb00;
       }
+      ._wait {
+        align-items: center;
+        justify-content: center;
+        margin: 5px 0px;
+        padding: 10px;
+        font-size: 17px;
+        color: #ffbb00;
+        width: 100%;
+        border: 1px solid #ffbb00;
+        display: none;
+      }
       /*media*/
       @media screen and (max-width: 1024px) {
         .cart-itm-sm {
@@ -667,6 +678,8 @@
       </form>
     </div>
     <div class="ct-m-ctr">
+      <div class="_wait _wait-u">Updating Cart Please Wait...</div>
+      <div class="_wait">Your Cart Has Been Updated...</div>
       <div class="cart">
         <h3 class="ct-heading">My Cart</h3>
         <div class="head-ctr">
@@ -992,7 +1005,7 @@
             <div class="ct-sm-top">
               <div class="ct-sm-img">
                 <img
-                  src="${item.display}"
+                  src="${item.display.replace(/_/g, " ")}"
                   alt="cart-item"
                   width="100px"
                   height="100px"
@@ -1039,7 +1052,7 @@
           <div class="ct-itm-name">
             <div class="ct-left">
               <img
-                src="${item.display}"
+                src="${item.display.replace(/_/g, " ")}"
                 alt="Iphone"
                 width="120px"
                 height="100px"
@@ -1139,10 +1152,14 @@
               localStorage.setItem("cartItems", JSON.stringify(cartItems));
               window.location.reload();
             } else {
-              _cdb(`/api/user/customer/cart/${yammie}`, {
-                cart: cartItems,
-                cartNumber: cartNumber,
-              });
+              document.querySelector("._wait-u").style.display = "flex";
+              setTimeout(() => {
+                _cdb(`/api/user/customer/cart/${yammie}`, {
+                  cart: cartItems,
+                  cartNumber: cartNumber,
+                  delete: false,
+                });
+              }, 1500);
             }
           }
           function plus(id) {
@@ -1161,11 +1178,14 @@
               localStorage.setItem("cartItems", JSON.stringify(cartItems));
               window.location.reload();
             } else {
-              console.log("true");
-              _cdb(`/api/user/customer/cart/${yammie}`, {
-                cart: cartItems,
-                cartNumber: cartNumber,
-              });
+              document.querySelector("._wait-u").style.display = "flex";
+              setTimeout(() => {
+                _cdb(`/api/user/customer/cart/${yammie}`, {
+                  cart: cartItems,
+                  cartNumber: cartNumber,
+                  delete: false,
+                });
+              }, 1500);
             }
           }
           const removeItemLg = document.querySelectorAll(".itm-r-lg");
@@ -1184,21 +1204,26 @@
           }
 
           function removeItem(id) {
-            for (const item in cartItems) {
-              if (item == id) {
-                cartNumber -= cartItems[id].inCartNumber;
-                delete cartItems[id];
-              }
-            }
             if (!yammie) {
+              for (const item in cartItems) {
+                if (item == id) {
+                  cartNumber -= cartItems[id].inCartNumber;
+                  delete cartItems[id];
+                }
+              }
               localStorage.setItem("cartNumber", JSON.stringify(cartNumber));
               localStorage.setItem("cartItems", JSON.stringify(cartItems));
               window.location.reload();
             } else {
-              _cdb(`/api/user/customer/cart/${yammie}`, {
-                cart: cartItems,
-                cartNumber: cartNumber,
-              });
+              document.querySelector("._wait-u").style.display = "flex";
+              setTimeout(() => {
+                _cdb(`/api/user/customer/cart/${yammie}`, {
+                  cart: cartItems,
+                  cartNumber: cartNumber,
+                  deleteId: id,
+                  delete: true,
+                });
+              }, 1500);
             }
           }
           function totalAmount() {
