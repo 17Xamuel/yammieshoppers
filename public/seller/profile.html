@@ -39,7 +39,7 @@
     />
     <link rel="stylesheet" href="../admin/styles/home.css" />
 
-    <title>My Profile</title>
+    <title></title>
   </head>
 
   <body>
@@ -200,6 +200,14 @@
                           <td>Location</td>
                           <td id="location"></td>
                         </tr>
+                        <tr>
+                          <td>Business Name</td>
+                          <td id="bname"></td>
+                        </tr>
+                        <tr>
+                          <td>Category Of Products</td>
+                          <td id="cat"></td>
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -274,6 +282,11 @@
       document.getElementById("email").innerHTML = seller.email;
       document.getElementById("phonenumber").innerHTML = seller.phonenumber;
       document.getElementById("location").innerHTML = seller.location;
+      document.getElementById("bname").innerHTML = seller.businessname;
+      let categories = JSON.parse(seller.category);
+      document.getElementById("cat").innerHTML = categories;
+      document.getElementsByTagName("title")[0].text =
+        seller.username + " " + "@YammieShoppers";
 
       function lg() {
         let lg = document.getElementById("slg");

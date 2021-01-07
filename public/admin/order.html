@@ -228,9 +228,9 @@
                         <th>Name</th>
                         <th>Quantity</th>
                         <th>Price</th>
+                        <th>Discount(%)</th>
                         <th>Total</th>
                         <th>Seller</th>
-                        <th>Clear</th>
                       </tr>
                       <tbody id="id"></tbody>
                     </table>
@@ -474,90 +474,62 @@
           let itemdetails = Object.values(items);
           let data = "";
           itemdetails.forEach((item) => {
-            let total =
-              (item.price - (item.discount / 100) * item.price) *
-              item.inCartNumber;
-            data += `<tr>
-                          <td>${item.name}</td>
+            const orderProduct = new XMLHttpRequest();
+            orderProduct.onreadystatechange = () => {
+              if (orderProduct.readyState == 4 && orderProduct.status == 200) {
+                let [orderedProduct] = JSON.parse(orderProduct.responseText);
+                let total =
+                  (orderedProduct.price -
+                    (orderedProduct.discount / 100) * orderedProduct.price) *
+                  item.inCartNumber;
+                data += `<tr>
+                          <td>${orderedProduct.product}</td>
                           <td>${item.inCartNumber}</td>
-                          <td>${item.price}</td>
+                          <td>${orderedProduct.price}</td>
+                          <td>${orderedProduct.discount}</td>
                           <td>${total}</td>
                           <td>
                             <button type="button" class="btn btn-sm btn-info"
                             data-toggle="modal" data-target="#sellerInfo"
                             data-it="${item.cartItemAdded}">Contact</button>
                           </td>
-                          
-                          <td>
-                            <button type="button"
-                            class="btn btn-sm btn-success" data-toggle="modal"
-                            data-itd="${item.cartItemAdded}"data-target="#clear"
-                            >Clear</button>
-                          </td>
-                      </tr>`;
+                       </tr>`;
+              }
+              document.getElementById("id").innerHTML = data;
+              let contactButtons = document.querySelectorAll(".btn-info");
+              contactButtons.forEach((contactButton) => {
+                contactButton.addEventListener("click", (e) => {
+                  let contact = e.target.dataset.it;
+                  const xhr = new XMLHttpRequest();
+                  xhr.onreadystatechange = () => {
+                    if (xhr.readyState < 4) {
+                      document.getElementById(
+                        "contentLoad"
+                      ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                    }
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                      let [result] = JSON.parse(xhr.responseText);
+                      document.getElementById("sn").innerHTML = result.username;
+                      document.getElementById("spn").innerHTML =
+                        result.phonenumber;
+                      document.getElementById("se").innerHTML = result.email;
+                      document.getElementById("sl").innerHTML = result.location;
+                      document.getElementById("contentLoad").innerHTML = "";
+                    }
+                  };
+                  xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
+                  xhr.send();
+                });
+              });
+            };
+            orderProduct.open(
+              "GET",
+              `/api/admin/orderProduct/${item.cartItemAdded}`,
+              true
+            );
+            orderProduct.send();
           });
-          document.getElementById("id").innerHTML = data;
           document.getElementById("detailLoading").innerHTML = "";
-
-          let contactButtons = document.querySelectorAll(".btn-info");
-          contactButtons.forEach((contactButton) => {
-            contactButton.addEventListener("click", (e) => {
-              let contact = e.target.dataset.it;
-              const xhr = new XMLHttpRequest();
-              xhr.onreadystatechange = () => {
-                if (xhr.readyState < 4) {
-                  document.getElementById(
-                    "contentLoad"
-                  ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-                }
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                  let [result] = JSON.parse(xhr.responseText);
-                  document.getElementById("sn").innerHTML = result.username;
-                  document.getElementById("spn").innerHTML = result.phonenumber;
-                  document.getElementById("se").innerHTML = result.email;
-                  document.getElementById("sl").innerHTML = result.location;
-                  document.getElementById("contentLoad").innerHTML = "";
-                }
-              };
-              xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
-              xhr.send();
-            });
-          });
-
-          // let clearButtons = document.querySelectorAll(".btn-success");
-          // clearButtons.forEach((clearButton) => {
-          //   clearButton.addEventListener("click", (e) => {
-          //     let productId = e.target.dataset.itd;
-          //     const xhr1 = new XMLHttpRequest();
-          //     xhr1.onreadystatechange = () => {
-          //       if (xhr1.readyState == 4 && xhr1.status == 200) {
-          //         let [results] = JSON.parse(xhr1.responseText);
-          //         let res = results.id;
-          //         console.log(res);
-
-          //         const clearOrder = new XMLHttpRequest();
-          //         clearOrder.onreadystatechange = () => {
-          //           if (clearOrder.readyState < 4) {
-          //             document.getElementById(
-          //               "clearMessage"
-          //             ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          //           }
-          //           if (
-          //             clearOrder.status == 200 &&
-          //             clearOrder.readyState == 4
-          //           ) {
-          //             document.getElementById("clearMessage").innerHTML =
-          //               clearOrder.responseText;
-          //           }
-          //         };
-          //         clearOrder.open("GET", `/api/admin/clearOrder/${res}`, true);
-          //         clearOrder.send();
-          //       }
-          //     };
-          //     xhr1.open("GET", `/api/admin/product/${productId}`, true);
-          //     xhr1.send();
-          //   });
-          // });
         }
       };
       orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);

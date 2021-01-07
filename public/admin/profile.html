@@ -34,7 +34,7 @@
     />
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Profile</title>
+    <title></title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -290,6 +290,8 @@
       document.getElementById("ae").innerHTML = admin[3];
       document.getElementById("at").innerHTML = admin[2];
       document.getElementById("aphn").innerHTML = admin[1];
+      document.getElementsByTagName("title")[0].text =
+        admin[0] + " " + "|" + " " + "Admin Yammie Shoppers";
     </script>
     <!-- End Scripts -->
   </body>

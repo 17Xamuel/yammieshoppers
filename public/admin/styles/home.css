@@ -18,7 +18,7 @@ body {
 .navbar-nav > .current > a {
   transition: all 0.3s;
   border-radius: 7px;
-  background-color: #f44336;
+  background-color: #f66436;
   box-shadow: 2px 5px 10px #111;
 }
 
@@ -29,7 +29,7 @@ body {
   top: 4px;
   left: 25px;
   position: absolute;
-  background-color: #f44336;
+  background-color: #f66436;
   border-radius: 50%;
   width: 25px;
   height: 25px;

@@ -120,9 +120,13 @@
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
-                      <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">4</span
-                        ><i class="fas fa-comments text-muted fa-2x"></i
+                      <a
+                        href="#"
+                        class="nav-link"
+                        data-target="#order-search"
+                        data-toggle="modal"
+                      >
+                        <i class="fas fa-search text-muted fa-2x"></i
                       ></a>
                     </li>
                     <li class="list-item icon-parent">
@@ -174,6 +178,42 @@
       </div>
     </div>
     <!-- End Modal -->
+
+    <!-- Order Search -->
+    <div class="modal fade" id="order-search">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Search an Order</h5>
+          </div>
+          <div class="modal-body text-center" id="orderFeedBack">
+            <form id="order-form">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Order Number"
+                  id="orderNumber"
+                  autocomplete="off"
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-warning btn-block text-light"
+              >
+                Search
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" id="orderOk">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Order Search -->
 
     <!-- Cards -->
     <section>
@@ -863,6 +903,36 @@
       };
       request.open("GET", "/api/admin/orderNumber", true);
       request.send();
+
+      let orderSearch = document.getElementById("order-form");
+      orderSearch.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let number = document.getElementById("orderNumber").value;
+        const search = new XMLHttpRequest();
+        search.onreadystatechange = () => {
+          if (search.readyState < 4) {
+            document.getElementById(
+              "orderFeedBack"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (search.readyState == 4 && search.status == 200) {
+            if (
+              search.responseText ==
+              "No Order Matches that Number Please try again"
+            ) {
+              document.getElementById("orderFeedBack").innerHTML =
+                search.responseText;
+            } else {
+              let [orderSearching] = JSON.parse(search.responseText);
+              window.location.assign(
+                `order.html?order=${orderSearching.order_id}`
+              );
+            }
+          }
+        };
+        search.open("GET", `/api/admin/orderSearch/${number}`, true);
+        search.send();
+      });
     </script>
     <!-- End Scripts -->
   </body>

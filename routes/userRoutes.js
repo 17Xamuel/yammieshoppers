@@ -500,7 +500,7 @@ router.post("/customer/cart/:id", (req, res) => {
             `UPDATE customers SET ? WHERE c_id = ?`,
             [
               { c_cart: JSON.stringify(newCart), c_cart_number: cart_number },
-              req.params.id,
+              req.params.id
             ],
             (error, result_2) => {
               if (error) {
@@ -518,9 +518,9 @@ router.post("/customer/cart/:id", (req, res) => {
             [
               {
                 c_cart: JSON.stringify(req.body.cart),
-                c_cart_number: req.body.cartNumber,
+                c_cart_number: req.body.cartNumber
               },
-              req.params.id,
+              req.params.id
             ],
             (error, result_2) => {
               if (error) {
@@ -528,7 +528,7 @@ router.post("/customer/cart/:id", (req, res) => {
               } else {
                 res.status(200).send({
                   newCart: req.body.cart,
-                  cart_number: req.body.cartNumber,
+                  cart_number: req.body.cartNumber
                 });
               }
             }
