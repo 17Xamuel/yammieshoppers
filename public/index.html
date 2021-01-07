@@ -290,6 +290,17 @@
         border-radius: 10px;
         display: none;
       }
+      ._pl-p-image {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+      }
+      ._qlinks-image {
+        width: 120px;
+        background-color: rgba(0, 0, 0, 0.1);
+        height: 100px;
+      }
 
       @media screen and (max-width: 768px) {
         .slideshow-container {
@@ -773,11 +784,13 @@
         <div class="slideshow-container">
           <div class="mySlides fade">
             <div class="numbertext">1 / 6</div>
-            <img
-              src="./resources/ct-clothing-1.jpg"
-              style="width: 100%; border-radius: 5px"
-              height="100%"
-            />
+            <div class="_pl-p-image">
+              <img
+                src="./resources/ct-clothing-1.jpg"
+                style="width: 100%; border-radius: 5px; object-fit: cover"
+                height="100%"
+              />
+            </div>
             <div style="text-align: center" class="text">
               Buy From Yammie!!!
             </div>
@@ -785,54 +798,64 @@
 
           <div class="mySlides fade">
             <div class="numbertext">2 / 6</div>
-            <img
-              src="./resources/image-slider/slider-image-2.jpg"
-              style="width: 100%; border-radius: 5px"
-              height="100%"
-            />
+            <div class="_pl-p-image">
+              <img
+                src="./resources/image-slider/slider-image-2.jpg"
+                style="width: 100%; border-radius: 5px; object-fit: cover"
+                height="100%"
+              />
+            </div>
             <div style="text-align: center" class="text">Buy from Yammie</div>
           </div>
 
           <div class="mySlides fade">
             <div class="numbertext">3 / 6</div>
-            <img
-              src="./resources/image-slider/slider-image-3.jpg"
-              style="width: 100%; border-radius: 5px"
-              height="100%"
-            />
+            <div class="_pl-p-image">
+              <img
+                src="./resources/image-slider/slider-image-3.jpg"
+                style="width: 100%; border-radius: 5px; object-fit: cover"
+                height="100%"
+              />
+            </div>
             <div style="text-align: center" class="text">
               Buy this from yammieshoppers
             </div>
           </div>
           <div class="mySlides fade">
             <div class="numbertext">4 / 6</div>
-            <img
-              src="./resources/image-slider/slider-image-4.jpg"
-              style="width: 100%; border-radius: 5px"
-              height="100%"
-            />
+            <div class="_pl-p-image">
+              <img
+                src="./resources/image-slider/slider-image-4.jpg"
+                style="width: 100%; border-radius: 5px; object-fit: cover"
+                height="100%"
+              />
+            </div>
             <div style="text-align: center" class="text">
               Check Out this from yammieshoppers
             </div>
           </div>
           <div class="mySlides fade">
             <div class="numbertext">5 / 6</div>
-            <img
-              src="./resources/image-slider/slider-image-5.jpg"
-              style="width: 100%; border-radius: 5px"
-              height="100%"
-            />
+            <div class="_pl-p-image">
+              <img
+                src="./resources/image-slider/slider-image-5.jpg"
+                style="width: 100%; border-radius: 5px; object-fit: cover"
+                height="100%"
+              />
+            </div>
             <div style="text-align: center" class="text">
               Awesome Product from yammie
             </div>
           </div>
           <div class="mySlides fade">
             <div class="numbertext">6 / 6</div>
-            <img
-              src="./resources/image-slider/slider-image-6.jpg"
-              style="width: 100%; border-radius: 5px"
-              height="100%"
-            />
+            <div class="_pl-p-image">
+              <img
+                src="./resources/image-slider/slider-image-6.jpg"
+                style="width: 100%; border-radius: 5px; object-fit: cover"
+                height="100%"
+              />
+            </div>
             <div style="text-align: center" class="text">
               Outstanding Price from yammieshoppers
             </div>
@@ -852,15 +875,17 @@
           </div>
         </div>
         <div class="categories">
-          <div class="up-container">
-            <img
-              src="./resources/ct-clothing-1.jpg"
-              alt=""
-              width="100%"
-              height="100%"
-              style="border-radius: 5px"
-            />
-          </div>
+          <a class="up-container" href="./404">
+            <div class="_pl-p-image">
+              <img
+                src="./resources/ct-clothing-1.jpg"
+                alt=""
+                width="100%"
+                height="100%"
+                style="border-radius: 5px; object-fit: cover"
+              />
+            </div>
+          </a>
           <a class="down-container" href="./404">
             <li>
               <div class="_gift-ctr">
@@ -884,78 +909,99 @@
         </div>
         <div class="-scroll -ct -ct-index">
           <a class="" href="./catalog?q=foods">
-            <img
-              src="./resources/super_rice.png"
-              alt="Shop Foods"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/super_rice.png"
+                alt="Shop Foods"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Food Stuffs</div>
             </div>
           </a>
           <a class="" href="./catalog?q=sandals">
-            <img
-              src="./resources/men_sandals.jpg"
-              alt="For FootWear Image"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/men_sandals.jpg"
+                alt="For FootWear Image"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Sandals</div>
             </div>
           </a>
           <a class="" href="./catalog?q=electronics">
-            <img
-              src="./resources/tea.jpg"
-              alt="Electronics Image"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/tea.jpg"
+                alt="Electronics Image"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Electronics</div>
             </div>
           </a>
           <a class="" href="./catalog?q=tshirts">
-            <img
-              src="./resources/cloth4.jpg"
-              alt="For Computing"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/cloth4.jpg"
+                alt="For Computing"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Cool T-Shirts</div>
             </div>
           </a>
           <a class="" href="./catalog?q=phones">
-            <img
-              src="./resources/phone2.png"
-              alt="Phones Image"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/phone2.png"
+                alt="Phones Image"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Phones</div>
             </div>
           </a>
           <a class="" href="./catalog?q=shoes">
-            <img
-              src="./resources/image-slider/shoe.jpg"
-              alt="Shoes On Yammie"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/image-slider/shoe.jpg"
+                alt="Shoes On Yammie"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Shoe Center</div>
             </div>
           </a>
           <a class="" href="./catalog?q=phoneaccessories">
-            <img
-              src="./resources/studio-speech.png"
-              alt="Phone Accessories"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/studio-speech.png"
+                alt="Phone Accessories"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Phone Accessories</div>
             </div>
@@ -963,78 +1009,99 @@
         </div>
         <div class="-scroll -ct -ct-index">
           <a class="" href="./catalog?q=music">
-            <img
-              src="./resources/headsets.png"
-              alt="Check Your Music World"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/headsets.png"
+                alt="Check Your Music World"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Music World</div>
             </div>
           </a>
           <a class="" href="./catalog?q=drinks">
-            <img
-              src="./resources/milk.jpg"
-              alt="Drinks image"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/milk.jpg"
+                alt="Drinks image"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Drinks</div>
             </div>
           </a>
           <a class="" href="./catalog?q=utencils">
-            <img
-              src="./resources/utencils.jpg"
-              alt="Utencis Image"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/utencils.jpg"
+                alt="Utencis Image"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Utencis</div>
             </div>
           </a>
           <a class="" href="./catalog?q=diy">
-            <img
-              src="./resources/ariel.png"
-              alt="Clean Image"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/ariel.png"
+                alt="Clean Image"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Keep Clean</div>
             </div>
           </a>
           <a class="" href="./catalog?q=stationery">
-            <img
-              src="./resources/books.jpg"
-              alt="Stationery Image"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/books.jpg"
+                alt="Stationery Image"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Stationery</div>
             </div>
           </a>
           <a class="" href="./catalog?q=laptopaccessories">
-            <img
-              src="./resources/hp_battery.jpg"
-              alt="laptopaccessories"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/hp_battery.jpg"
+                alt="laptopaccessories"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">LapTop Accessories</div>
             </div>
           </a>
           <a class="" href="./catalog?q=computers">
-            <img
-              src="./resources/hp-elitebook.png"
-              alt="Computing"
-              width="120"
-              height="100"
-            />
+            <div class="_qlinks-image">
+              <img
+                src="./resources/hp-elitebook.png"
+                alt="Computing"
+                width="120"
+                height="100"
+                style="object-fit: fill"
+              />
+            </div>
             <div class="-i-dtl">
               <div class="-i-item it-nm">Computers</div>
             </div>
@@ -1658,7 +1725,7 @@
       const timerFunc = () => {
         let _gift = document.getElementById("_timer");
         let date = new Date();
-        let timerHours = 24 - date.getHours();
+        let timerHours = 23 - date.getHours();
         let timerMinutes = 60 - date.getMinutes();
         let timerSeconds = 60 - date.getSeconds();
         let timer = setInterval(calcTimer, 1000);
@@ -1791,10 +1858,15 @@
             let _c = JSON.parse(xhr.responseText),
               group = "";
             _c.forEach((item) => {
-              // src = "${JSON.parse(item.images)[0]}"
-              //src="./resources/cart-link.png"
               group += `
                      <a class="item -ct-item" href="./item?item=${item.id}">
+                      <div class="-d">
+                        ${
+                          item.discount !== null
+                            ? "-" + item.discount + "%"
+                            : ""
+                        }
+                      </div>
                       <div class="_image">
                         <img
                           src="${JSON.parse(item.images)[0]}"
@@ -1805,8 +1877,7 @@
                       </div>
                       <div class="-i-dtl">
                         <div class="it-nm">
-                          ${item.product} - ${
-                          item.description}
+                          ${item.product} - ${item.description}
                         </div>
                         <div class="it-pr pr price-current">${
                           "UGX " +
@@ -1819,7 +1890,6 @@
                          }</div>
                       </div>
                     </a>
-                    
                     `;
             });
             c.innerHTML = group;

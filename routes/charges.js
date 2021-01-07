@@ -3,7 +3,7 @@ class Deduct {
     this.product = product;
   }
   urgency() {
-    if (this.product.urgent == "express") {
+    if (this.product.urgent == true) {
       return this.product.price * 0.02;
     } else {
       return this.product.price * 0.01;
@@ -11,20 +11,20 @@ class Deduct {
   }
   qty() {
     if (this.product.qty == "few") {
-      return this.product.price * 0.03;
+      return this.product.price * 0.05;
     } else {
       return this.product.price * 0.01;
     }
   }
   size() {
-    if (this.product.size == "big") {
+    if (this.product.size == "Big") {
       return this.product.price * 0.02;
     } else {
       return this.product.price * 0.01;
     }
   }
   weight() {
-    if (this.product.weight == "heavy") {
+    if (this.product.weight == "Heavy") {
       return this.product.price * 0.02;
     } else {
       return this.product.price * 0.01;

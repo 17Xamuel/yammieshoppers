@@ -771,6 +771,13 @@
             _c.forEach((item) => {
               group += `
              <a class="item -ct-item" href="./item?item=${item.id}">
+                      <div class="-d">
+                        ${
+                          item.discount !== null
+                            ? "-" + item.discount + "%"
+                            : ""
+                        }
+                      </div>
                       <div class="_image">
                         <img
                           src="${JSON.parse(item.images)[0]}"
@@ -780,9 +787,9 @@
                         />
                       </div>
                       <div class="-i-dtl">
-                        <div class="it-nm">${item.product} - ${
-                item.description
-              }</div>
+                        <div class="it-nm">
+                          ${item.product} - ${item.description}
+                        </div>
                         <div class="it-pr pr price-current">${
                           "UGX " +
                           (item.discount
@@ -1011,13 +1018,8 @@
             //for the image pop-up end
             document.querySelector(".-cart").addEventListener("click", (e) => {
               let cartItem = {
-                name: item.product,
-                price: item.price,
-                discount: item.discount,
                 cartItemAdded: item.id,
-                description: item.description,
                 inCartNumber: 0,
-                display: JSON.parse(item.images)[0],
               };
               cartNumbers(cartItem);
               wait();

@@ -151,6 +151,12 @@
       .forgot-p:hover > a {
         color: #ffbb00;
       }
+      ._loader {
+        display: none;
+        align-items: center;
+        margin: 10px 0px;
+        justify-content: center;
+      }
       @media screen and (max-width: 1024px) {
         .lg-ctr {
           width: 70vw;
@@ -554,6 +560,9 @@
               <input type="checkbox" id="rem-me" checked />
               <span>Remember Me</span>
             </div>
+            <div class="_loader">
+              <i class="fas fa-spinner fa-spin"></i>
+            </div>
             <button type="submit" class="lg-btn">Login</button>
             <span class="forgot-p">
               <a href="#">Forgot Password?</a>
@@ -686,6 +695,28 @@
     <!--scripts-->
 
     <script>
+      //cart
+      function _cdb(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState < 4) {
+            document.querySelector("._loader").style.display = "flex";
+          }
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+            window.history.back();
+          }
+        };
+      }
+      //cart
       //input focus
       function focus(input, elMove, elMoveGroup, icon) {
         document.querySelector(input).addEventListener("focus", () => {
@@ -725,6 +756,9 @@
         user.auth = document.querySelector("#cr-l-name").value;
         xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function () {
+          if (xhr.readyState < 4) {
+            document.querySelector("._loader").style.display = "flex";
+          }
           if (xhr.readyState == 4 && xhr.status == 200) {
             if (xhr.responseText == "no email") {
               document.querySelector("#e-wr").style.opacity = "1";
@@ -733,14 +767,17 @@
                 document.querySelector("#p-wr").style.opacity = "0";
                 document.querySelector("#e-wr").style.opacity = "0";
               }, 10000);
-              console.log("Got");
             } else {
               const res = JSON.parse(xhr.responseText);
               localStorage.setItem(
                 "https://yammieshoppers.com/useLocalStorage/Storage",
                 res.yammie.toString()
               );
-              window.history.back();
+              _cdb(`/api/user/customer/cart/${res.yammie.toString()}`, {
+                cart: JSON.parse(localStorage.getItem("cartItems")),
+                cartNumber: parseInt(localStorage.getItem("cartNumber")),
+                delete: false,
+              });
               // TO BE COVERED LATER
               // if(document.querySelector('#rem-me').value == true){
               //   console.log('not true')
