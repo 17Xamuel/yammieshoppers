@@ -410,10 +410,6 @@
           margin: 10px 10px 10px 0px;
           width: 80%;
         }
-        .ctlg-ctr {
-          flex-direction: column;
-          justify-content: space-around;
-        }
         .search-input {
           display: none;
         }
@@ -457,6 +453,10 @@
         }
       }
       @media screen and (max-width: 1024px) {
+        .ctlg-ctr {
+          flex-direction: column;
+          justify-content: space-around;
+        }
         .-sort-s {
           display: block;
           margin: 20px 15px;
@@ -1508,6 +1508,13 @@
             _c.forEach((item) => {
               group += `
                     <a class="item -ct-item" href="./item?item=${item.id}">
+                      <div class="-d">
+                        ${
+                          item.discount !== null
+                            ? "-" + item.discount + "%"
+                            : ""
+                        }
+                      </div>
                       <div class="_image">
                         <img
                           src="${JSON.parse(item.images)[0]}"
@@ -1517,9 +1524,9 @@
                         />
                       </div>
                       <div class="-i-dtl">
-                        <div class="it-nm">${item.product} - ${
-                item.description
-              }</div>
+                        <div class="it-nm">
+                          ${item.product} - ${item.description}
+                        </div>
                         <div class="it-pr pr price-current">${
                           "UGX " +
                           (item.discount
@@ -1647,11 +1654,6 @@
                 </div>
                 <div class="a-t-c add-to-c"
                   data-item=${itm.id}
-                  data-name=${itm.product.replace(/ /g, "_")}
-                  data-price=${itm.price}
-                  data-description=${itm.description.replace(/ /g, "_")}
-                  data-im=${JSON.parse(itm.images)[0].replace(/ /g, "_")}
-                  data-discount=${itm.discount}
                 >
                   <img
                     src="./resources/shopping_cart_add_white.svg"
@@ -1659,11 +1661,6 @@
                     width="25px"
                     height="25px"
                     data-item=${itm.id}
-                    data-name=${itm.product.replace(/ /g, "_")}
-                    data-price=${itm.price}
-                    data-description=${itm.description.replace(/ /g, "_")}
-                    data-im=${JSON.parse(itm.images)[0].replace(/ /g, "_")}
-                    data-discount=${itm.discount}
                   />
                   Add to Cart
                 </div>
@@ -1683,13 +1680,8 @@
               btns.forEach((btn) => {
                 btn.addEventListener("click", (e) => {
                   let cartItem = {
-                    name: e.target.dataset.name,
-                    price: e.target.dataset.price,
-                    discount: parseInt(e.target.dataset.discount),
                     cartItemAdded: e.target.dataset.item,
-                    description: e.target.dataset.description,
                     inCartNumber: 0,
-                    display: e.target.dataset.im,
                   };
                   cartNumbers(cartItem);
                   wait();

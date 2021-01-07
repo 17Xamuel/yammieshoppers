@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../resources/cartlink.png" />
-    <!-- <link rel="stylesheet" href="../styles/footer2.css" /> -->
-    <!-- <link rel="stylesheet" href="../styles/header.css" /> -->
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="stylesheet" href="../font-awesome/css/all.css" />
     <title>Yammie | checkout - complete your order</title>
     <style>
+      .-disabled {
+        pointer-events: none;
+        opacity: 0.4;
+      }
       .search-nav {
         display: flex;
         align-items: center;
@@ -365,12 +367,19 @@
         .-od-ctr.active {
           display: block;
         }
+        .show_order {
+          display: block;
+          opacity: 1;
+        }
+        .show_order:hover {
+          opacity: 1;
+        }
       }
     </style>
     <script>
-      if (document.referrer == "") {
-        self.location = "/";
-      }
+      // if (document.referrer == "") {
+      //   self.location = "/";
+      // }
     </script>
   </head>
   <body>
@@ -540,9 +549,6 @@
                 </div>
                 <div class="p-order-residence">We Reach At Your Residence.</div>
                 <div class="p-order-residence">
-                  Fees: <span class="d-fees rfees">UGX 550</span>
-                </div>
-                <div class="p-order-residence">
                   Delivered By: <span class="d-fees">Yammie Delivery</span>
                 </div>
                 <div class="p-order-name">
@@ -558,9 +564,6 @@
                   Get your items at the Yammie Store
                 </div>
                 <div class="p-order-residence">
-                  Fees: <span class="d-fees">UGX 300</span>
-                </div>
-                <div class="p-order-residence">
                   Location:
                   <span class="d-fees">Next to Yammie SuperMarket</span>
                 </div>
@@ -572,7 +575,6 @@
                   </div>
                 </div>
                 <button class="_ca-btn" type="submit">Proceed</button>
-                <div class="-dm-e">Please Select a Delivery Method.</div>
               </form>
             </div>
             <div class="p-order-s-1">
@@ -587,7 +589,7 @@
                   <b>Select Your Preferred Payment Method</b>
                 </div>
                 <form id="pay-form" class="_pf">
-                  <div class="mm-input">
+                  <div class="mm-input -disabled">
                     <input
                       required
                       type="radio"
@@ -595,14 +597,14 @@
                       id="payment_method_mm"
                       value="mm"
                     />
-                    <label for="payment_method" class="-mm-l">
-                      <b>Mobile Money</b> - MTN / AIRTEL
+                    <label for="payment_method" class="-mm-l -disabled">
+                      <b>Mobile Money</b> - MTN (Disabled for a moment...)
                     </label>
                   </div>
-                  <div class="-mm-img">
+                  <div class="-mm-img -disabled">
                     <img src="../resources/mtn-mm.png" alt="" />
                   </div>
-                  <div class="p-order-procedure">
+                  <div class="p-order-procedure -disabled">
                     <b>Mobile Money Payment Procedure:</b>
                     <ol>
                       <li>Click 'Finish Your Order'</li>
@@ -652,7 +654,6 @@
                   <button type="submit" class="-btn-s-pyf">
                     FINISH YOUR ORDER
                   </button>
-                  <div class="-pm">Please Select a Payment Method.</div>
                 </form>
               </div>
             </div>
@@ -684,7 +685,7 @@
                   <div class="-st-totals -st">
                     <div class="-st-content -o-total">
                       <span>Total</span>
-                      <span class="">UGX <span class="_ony-tt">...</span></span>
+                      <span class=""><span class="_ony-tt">UGX ...</span></span>
                     </div>
                   </div>
                 </div>
@@ -714,26 +715,21 @@
         let cartItems = JSON.parse(localStorage.getItem("cartItems"));
         let cartDom = document.querySelector(".items");
         cartDom.innerHTML = "";
-        Object.values(cartItems).forEach((item) => {
+        async function itemCollect(i) {
+          let res = await fetch(`/api/user/product/${i}`);
+          let item = await res.json();
+          return item;
+        }
+        Object.values(cartItems).forEach(async (key) => {
           //dom
-          item.price = parseInt(item.price);
-          totalPrice += item.discount
-            ? (item.price * (100 - item.discount)) / 100
-            : item.price;
-          product.qty += item.inCartNumber;
-          product.size = product.size == "big" ? "big" : item.size || "small";
-          product.weight =
-            product.weight == "heavy" ? "heavy" : item.weight || "light";
-          product.fragile =
-            product.fragile == true ? true : item.fragile || false;
-          product.location =
-            product.location == "kla" ? "kla" : item.location || "lira";
+          let item = await itemCollect(key.cartItemAdded);
+          //dom
           cartDom.innerHTML += `
             <div class="_check-item">
                     <div class="img">
                       <div class="">
                       <img
-                        src="${item.display}"
+                        src="${JSON.parse(item.images)[0]}"
                         alt=""
                         width="100%"
                         height="100%"
@@ -742,51 +738,20 @@
                     </div>
                     <div class="-item">
                       <div class="name" style="overflow: hidden">
-                        ${item.name.replace(/_/g, " ")}
+                        ${item.product}
                       </div>
-                      <div class="price _usp">Price: UGX 
+                      <div class="price _usp">Price: UGX
                         <span class="item_price">${numberFormat.format(
                           item.discount
                             ? (item.price * (100 - item.discount)) / 100
                             : item.price
                         )}</span>
                       </div>
-                      <div class="qty _usq">Quantity: ${item.inCartNumber}</div>
+                      <div class="qty _usq">Quantity: ${key.inCartNumber}</div>
                     </div>
                   </div>
             `;
-          //dom
         });
-        //shipping
-        function _us(url, product) {
-          let xhr = new XMLHttpRequest();
-          xhr.open("POST", url, true);
-          xhr.setRequestHeader("Content-type", "application/json");
-          xhr.send(JSON.stringify(product));
-          xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-              let pricing = JSON.parse(xhr.responseText);
-              document.querySelector("._total").innerHTML =
-                "UGX " + pricing.totalPrice;
-              document.querySelector("#delivery").innerHTML = pricing.shipping;
-              document.querySelector("._shp").innerHTML =
-                "UGX " + pricing.shipping;
-              document.querySelector("#pay").innerHTML = pricing.totalPrice;
-              document.querySelector("._ony-tt").innerHTML =
-                "UGX " + (pricing.shipping + pricing.totalPrice);
-              document.querySelector("#total").innerHTML =
-                pricing.shipping + pricing.totalPrice;
-            }
-          };
-        }
-        //shipping
-        //totals
-
-        product.price = totalPrice;
-        product.urgent = "express";
-        _us(`/api/user/shipping/${yammie}`, product);
-
-        //totals
       }
     </script>
     <script>
@@ -861,6 +826,7 @@
         _add.zone = document.querySelector("#zone").value || "No Zone";
         _upa = _add.type == "guest" ? false : true;
         if (_upa == true) {
+          if (localStorage.getItem("_upa")) localStorage.clear("_upa");
           xhr = new XMLHttpRequest();
           xhr.onreadystatechange = () => {
             if (xhr.readyState == 4 && xhr.status == 200) {
@@ -876,6 +842,7 @@
           document.querySelector("._cr").innerHTML = _add.add;
           document.querySelector("._cz").innerHTML = _add.zone;
           document.querySelector("._ea").style.display = "none";
+          localStorage.setItem("_upa", _add.zone);
         }
       });
       //address
@@ -902,12 +869,12 @@
         };
       }
       //address
-
+      //checkout
       document.querySelector("._dm").addEventListener("submit", (e) => {
         e.preventDefault();
         let dm = new FormData(document.querySelector("._dm"));
         _dm.dm = dm.get("d-method");
-        _dm.u = dm.get("d-u");
+        _dm.u = dm.get("d-u") || false;
         document.querySelector("._dm").style.display = "none";
         document.querySelector("._dm-r").style.display =
           document.querySelector("._dm").style.display == "none"
@@ -916,6 +883,7 @@
         document.querySelector(
           "._dm-r"
         ).innerHTML = `<b>Delivery Method: </b>${_dm.dm}`;
+        document.querySelector(".-s-i-2").style.color = "green";
         document.querySelector(".payment").style.display = "block";
       });
     </script>
@@ -929,49 +897,6 @@
       //shipping
     </script>
     <script>
-      let xhr = new XMLHttpRequest();
-      xhr.open("POST", `/api/user/shipping/${yammie}`, true);
-      xhr.setRequestHeader("Content-type", "application/json");
-      xhr.send(JSON.stringify(product));
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          let pricing = JSON.parse(xhr.responseText);
-          document.querySelector("._pf").addEventListener("submit", (e) => {
-            e.preventDefault();
-            let pf = new FormData(document.querySelector("._pf"));
-            pf.append("yammie", yammie);
-            pf.append("_shp", pricing.shipping);
-            pf.append("_ttp", pricing.totalPrice);
-            pf.append(
-              "order",
-              localStorage.getItem("cartItems")
-                ? localStorage.getItem("cartItems")
-                : "Error"
-            );
-            pf.append("dm", _dm.dm);
-            pf.append("u", _dm.u);
-            pf.append("add", _add.add);
-            pf.forEach((value, key) => {
-              _ony[key] = value;
-            });
-            let _or = new XMLHttpRequest();
-            _or.onreadystatechange = () => {
-              if (_or.readyState == 4 && _or.status == 200) {
-                localStorage.removeItem("cartItems");
-                localStorage.removeItem("cartNumber");
-                if (_or.responseText == "mm") {
-                  window.location.assign("../orders/finishup");
-                } else {
-                  window.location.assign("../orders/cashondelivery");
-                }
-              }
-            };
-            _or.open("POST", `/api/user/customer/order/`, true);
-            _or.setRequestHeader("Content-Type", "application/json");
-            _or.send(JSON.stringify(_ony));
-          });
-        }
-      };
       function _od(i, c) {
         i.addEventListener("click", () => {
           c.classList.toggle("active");
@@ -985,6 +910,66 @@
         document.querySelector(".show_order"),
         document.querySelector(".-od-ctr")
       );
+    </script>
+    <script>
+      let _shp_r = {
+        _add: localStorage.getItem("_upa")
+          ? localStorage.getItem("_upa")
+          : true,
+        urgent: true,
+      };
+      let xhr_f = new XMLHttpRequest();
+      xhr_f.open("POST", `/api/user/checkout/cart/${yammie}`, true);
+      xhr_f.setRequestHeader("Content-type", "application/json");
+      xhr_f.send(JSON.stringify(_shp_r));
+      xhr_f.onreadystatechange = () => {
+        if (xhr_f.readyState == 4 && xhr_f.status == 200) {
+          let _order = JSON.parse(xhr_f.responseText);
+          document.querySelector("._shp").innerHTML =
+            "UGX " + numberFormat.format(_order.shipping);
+          document.querySelector("._total").innerHTML =
+            "UGX " + numberFormat.format(_order.total_price);
+          document.querySelector("#delivery").innerHTML = numberFormat.format(
+            _order.shipping
+          );
+          document.querySelector("#pay").innerHTML = numberFormat.format(
+            _order.total_price
+          );
+          document.querySelector("._ony-tt").innerHTML =
+            "UGX " + numberFormat.format(_order.shipping + _order.total_price);
+          document.querySelector("#total").innerHTML = numberFormat.format(
+            _order.shipping + _order.total_price
+          );
+          document.querySelector("._pf").addEventListener("submit", (e) => {
+            e.preventDefault();
+            let pf = new FormData(document.querySelector("._pf"));
+            pf.append("yammie", yammie);
+            pf.append("_shp", _order.shipping);
+            pf.append("_ttp", _order.total_price);
+            pf.append("dm", _dm.dm);
+            pf.append("u", _dm.u);
+            pf.append("add", _add.add);
+            pf.forEach((value, key) => {
+              _ony[key] = value;
+            });
+            let _or = new XMLHttpRequest();
+            _or.onreadystatechange = () => {
+              if (_or.readyState == 4 && _or.status == 200) {
+                localStorage.removeItem("cartItems");
+                localStorage.removeItem("cartNumber");
+                if (_or.responseText == "mm") {
+                  // window.location.assign("../orders/finishup");
+                } else {
+                  // window.location.assign("../orders/cashondelivery");
+                }
+              }
+            };
+            _or.open("POST", `/api/user/customer/order/`, true);
+            _or.setRequestHeader("Content-Type", "application/json");
+            _or.send(JSON.stringify(_ony));
+          });
+        }
+      };
     </script>
     <!--scripts-->
   </body>

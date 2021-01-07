@@ -1725,7 +1725,7 @@
       const timerFunc = () => {
         let _gift = document.getElementById("_timer");
         let date = new Date();
-        let timerHours = 24 - date.getHours();
+        let timerHours = 23 - date.getHours();
         let timerMinutes = 60 - date.getMinutes();
         let timerSeconds = 60 - date.getSeconds();
         let timer = setInterval(calcTimer, 1000);
@@ -1858,10 +1858,15 @@
             let _c = JSON.parse(xhr.responseText),
               group = "";
             _c.forEach((item) => {
-              // src = "${JSON.parse(item.images)[0]}"
-              //src="./resources/cart-link.png"
               group += `
                      <a class="item -ct-item" href="./item?item=${item.id}">
+                      <div class="-d">
+                        ${
+                          item.discount !== null
+                            ? "-" + item.discount + "%"
+                            : ""
+                        }
+                      </div>
                       <div class="_image">
                         <img
                           src="${JSON.parse(item.images)[0]}"
@@ -1885,7 +1890,6 @@
                          }</div>
                       </div>
                     </a>
-                    
                     `;
             });
             c.innerHTML = group;

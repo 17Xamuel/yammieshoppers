@@ -987,6 +987,23 @@
           }
         };
       }
+      function _cdbNoReload(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+          }
+        };
+      }
     </script>
     <script>
       let cartNumber = parseInt(localStorage.getItem("cartNumber"));
@@ -998,28 +1015,36 @@
           ).innerHTML = `My Cart (${cartNumber} Items)`;
           let cartDom = document.querySelector("#ct-items");
           cartDom.innerHTML = "";
-          Object.values(cartItems).forEach((item) => {
+          async function itemCollect(i) {
+            let res = await fetch(`/api/user/product/${i}`);
+            let item = await res.json();
+            return item;
+          }
+          Object.values(cartItems).forEach(async (key) => {
+            let item = await itemCollect(key.cartItemAdded);
             cartDom.innerHTML += `
         <div class="cart-itm">
           <div class="cart-itm-sm">
             <div class="ct-sm-top">
               <div class="ct-sm-img">
                 <img
-                  src="${item.display.replace(/_/g, " ")}"
+                  src="${JSON.parse(item.images)[0]}"
                   alt="cart-item"
                   width="100px"
                   height="100px"
                 />
               </div>
               <div class="ct-sm-name-price">
-                 <div style="font-weight:bold;font-size:17px;">
-                  ${item.name.replace(/_/g, " ")}
+                 <div>
+                    <span style="font-weight:bold;font-size:17px";>
+                      ${item.product}
+                    </span>
                    -
-                  ${item.description.replace(/_/g, " ")}
+                  ${item.description}
                 </div>
                 UGX
                 <span class="cart-t-price l-t-price">${
-                  item.inCartNumber *
+                  key.inCartNumber *
                   (item.discount
                     ? (item.price * (100 - item.discount)) / 100
                     : item.price)
@@ -1029,7 +1054,7 @@
             </div>
             <div class="ct-sm-bottom">
               <div class="ct-sm-b-left">
-                <span class="itm-r-sm" data-id=${item.cartItemAdded}>
+                <span class="itm-r-sm" data-id=${key.cartItemAdded}>
                   <i class="fas fa-trash"></i>
                   Remove From Cart
                 </span>
@@ -1038,12 +1063,12 @@
                 <div class="ct-qty-center">
                   <button
                     class="btn-i minus"
-                    data-id=${item.cartItemAdded}
+                    data-id=${key.cartItemAdded}
                   >&minus;</button>
-                  <span class="ct-number">${item.inCartNumber}</span>
+                  <span class="ct-number">${key.inCartNumber}</span>
                   <button
                     class="plus"
-                    data-id=${item.cartItemAdded}
+                    data-id=${key.cartItemAdded}
                   >&plus;</button>
                 </div>
               </div>
@@ -1052,23 +1077,25 @@
           <div class="ct-itm-name">
             <div class="ct-left">
               <img
-                src="${item.display.replace(/_/g, " ")}"
-                alt="Iphone"
+                src="${JSON.parse(item.images)[0]}"
+                alt="${item.product}"
                 width="120px"
                 height="100px"
               />
             </div>
             <div class="ct-right">
               <div class="ct-itm">
-                <span style="font-weight:bold;font-size:20px;">
-                  ${item.name.replace(/_/g, " ")}
+                <span>
+                    <span style="font-weight:bold;font-size:20px;">
+                      ${item.product}
+                    </span>
                    -
-                  ${item.description.replace(/_/g, " ")}
+                  ${item.description}
                 </span>
               </div>
               <div class="delivery">YammieDelivery</div>
               <div class="like-remove">
-                <span class="itm-r-lg" data-id=${item.cartItemAdded}>
+                <span class="itm-r-lg" data-id=${key.cartItemAdded}>
                   <i class="fas fa-trash"></i>
                   Remove From Cart
                 </span>
@@ -1079,12 +1106,12 @@
             <div class="ct-qty-center">
               <button
                 class="btn-i minus"
-                data-id=${item.cartItemAdded}
+                data-id=${key.cartItemAdded}
               >&minus;</button>
-              <span class="ct-number">${item.inCartNumber}</span>
+              <span class="ct-number">${key.inCartNumber}</span>
               <button
                 class="plus"
-                data-id=${item.cartItemAdded}
+                data-id=${key.cartItemAdded}
               >&plus;</button>
             </div>
           </div>
@@ -1113,7 +1140,7 @@
           <div class="ct-itm-sub-total">
             <span style="font-size:20px; padding-right:5px;">UGX</span>
             <span class="cart-t-price l-t-price">${
-              item.inCartNumber *
+              key.inCartNumber *
               (item.discount
                 ? (item.price * (100 - item.discount)) / 100
                 : item.price)
@@ -1121,21 +1148,70 @@
           </div>
         </div>
             `;
+            const _ms = document.getElementsByClassName("minus");
+            for (let i = 0; i < _ms.length; i++) {
+              _ms[i].addEventListener("click", (e) => {
+                minus(_ms[i].dataset.id);
+              });
+            }
+            const _ps = document.getElementsByClassName("plus");
+            for (let i = 0; i < _ps.length; i++) {
+              _ps[i].addEventListener("click", (e) => {
+                plus(_ps[i].dataset.id);
+              });
+            }
+            const _rl = document.getElementsByClassName("itm-r-lg");
+            for (let i = 0; i < _rl.length; i++) {
+              _rl[i].addEventListener("click", (e) => {
+                _ri(_rl[i].dataset.id);
+              });
+            }
+            const _rs = document.getElementsByClassName("itm-r-sm");
+            for (let i = 0; i < _rs.length; i++) {
+              _rs[i].addEventListener("click", (e) => {
+                _ri(_rs[i].dataset.id);
+              });
+            }
+            //total
+            totalAmount();
+            //total
+            //st-ony
+            let st = document.querySelector("#-o-st");
+            st.addEventListener("click", () => {
+              // alert(
+              //   `Message: Our Beloved customer, this system is in beta testing, Incase of any orders now \n PLEASE CALL SALES ON +256771860476, OR +256700835756`
+              // );
+              if (yammie) {
+                let xhr2 = new XMLHttpRequest();
+                xhr2.open(
+                  "POST",
+                  `/api/user/customer/cart/amount/${yammie}`,
+                  true
+                );
+                xhr2.setRequestHeader("Content-type", "application/json");
+                xhr2.send(
+                  JSON.stringify([
+                    totalAmount(),
+                    yammie,
+                    {
+                      cartItems: localStorage.getItem("cartItems"),
+                      cartNumber,
+                    },
+                  ])
+                );
+                window.location.assign("orders/checkout");
+              } else {
+                function checkLogin() {
+                  document
+                    .querySelector("#pop-up-overlay")
+                    .classList.add("active");
+                  document.querySelector(".popup").classList.add("pp-active");
+                }
+                checkLogin();
+              }
+            });
+            //st-ony
           });
-          const removeItemBtns = document.getElementsByClassName("minus");
-          for (let i = 0; i < removeItemBtns.length; i++) {
-            let btnClicked = removeItemBtns[i];
-            btnClicked.addEventListener("click", (e) => {
-              minus(btnClicked.dataset.id);
-            });
-          }
-          const addItemBtns = document.getElementsByClassName("plus");
-          for (let i = 0; i < removeItemBtns.length; i++) {
-            let btnClicked = addItemBtns[i];
-            btnClicked.addEventListener("click", (e) => {
-              plus(btnClicked.dataset.id);
-            });
-          }
           function minus(id) {
             for (const item in cartItems) {
               if (item == id) {
@@ -1188,22 +1264,7 @@
               }, 1500);
             }
           }
-          const removeItemLg = document.querySelectorAll(".itm-r-lg");
-          for (let i = 0; i < removeItemLg.length; i++) {
-            let btnClicked = removeItemLg[i];
-            btnClicked.addEventListener("click", (e) => {
-              removeItem(btnClicked.dataset.id);
-            });
-          }
-          const removeItemsm = document.querySelectorAll(".itm-r-sm");
-          for (let i = 0; i < removeItemsm.length; i++) {
-            let btnClicked = removeItemsm[i];
-            btnClicked.addEventListener("click", (e) => {
-              removeItem(btnClicked.dataset.id);
-            });
-          }
-
-          function removeItem(id) {
+          function _ri(id) {
             if (!yammie) {
               for (const item in cartItems) {
                 if (item == id) {
@@ -1238,7 +1299,6 @@
             ).textContent = numFormats.format(total);
             return total;
           }
-          totalAmount();
           //total end
           //cart display
           cartNumbersDisplay();
@@ -1248,31 +1308,6 @@
               ? cartNumber
               : 0;
           }
-          let st = document.querySelector("#-o-st");
-          st.addEventListener("click", () => {
-            alert(
-              `Message: Our Beloved customer, this system is in beta testing, Incase of any orders now \n PLEASE CALL SALES ON +256771860476, OR +256700835756`
-            );
-            // if (yammie) {
-            //   let xhr2 = new XMLHttpRequest();
-            //   xhr2.open(
-            //     "POST",
-            //     `/api/user/customer/cart/amount/${yammie}`,
-            //     true
-            //   );
-            //   xhr2.setRequestHeader("Content-type", "application/json");
-            //   xhr2.send(JSON.stringify([totalAmount(), yammie]));
-            //   window.location.assign("orders/checkout");
-            // } else {
-            //   function checkLogin() {
-            //     document
-            //       .querySelector("#pop-up-overlay")
-            //       .classList.add("active");
-            //     document.querySelector(".popup").classList.add("pp-active");
-            //   }
-            //   checkLogin();
-            // }
-          });
         } else {
           let et = document.querySelector(".cart");
           et.innerHTML = `
@@ -1285,7 +1320,7 @@
               />
                 <span>Oops!! Cart Looks Empty.
                 <br/>
-               Start Shopping to fill your Cart
+                  Start Shopping to fill your Cart
                 </span>
                 <br/>
                 <a href="/">
@@ -1455,6 +1490,13 @@
       function imageDialogClose() {
         document.querySelector(".popup").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay").classList.remove("active");
+      }
+      if (yammie) {
+        _cdbNoReload(`/api/user/customer/cart/${yammie}`, {
+          cart: JSON.parse(localStorage.getItem("cartItems")),
+          cartNumber: parseInt(localStorage.getItem("cartNumber")),
+          delete: false,
+        });
       }
     </script>
     <script src="./ym.min.js"></script>

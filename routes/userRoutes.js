@@ -142,8 +142,7 @@ router.get("/search/:l-:h", async (req, res) => {
       query == "trending"
         ? "SELECT * FROM products"
         : `SELECT * FROM products 
-          WHERE product LIKE '%${query}%' 
-            OR brand LIKE '%${query}%'
+          WHERE product LIKE '%${query}%'
             OR description LIKE '%${query}%'`;
     conn.query(_query, (err, result) => {
       if (err) {
@@ -167,11 +166,10 @@ router.get("/search/:l-:h", async (req, res) => {
               .filter(
                 (item) => item.discount <= parseFloat(req.params.h) * 100
               );
-            console.log(req.params.l, req.params.h);
+
             if (newResult.length == 0) {
               res.send([]);
             } else {
-              console.log(newResult);
               res.send(newResult);
             }
           }
@@ -213,8 +211,15 @@ router.get("/customer/:id", (req, res) => {
 });
 router.post("/customer/cart/amount/:id", (req, res) => {
   conn.query(
-    "UPDATE customers SET c_cart_amount = ? where c_id = ?",
-    req.body,
+    "UPDATE customers SET ? where c_id = ?",
+    [
+      {
+        c_cart_amount: req.body[0],
+        c_cart: req.body[2].cartItems,
+        c_cart_number: req.body[2].cartNumber,
+      },
+      req.body[1],
+    ],
     (err, result) => {
       if (err) throw err;
       res.status(200).send("cart amount upated");
@@ -234,7 +239,7 @@ router.get("/customer/cart/amount/:id", (req, res) => {
 
 // new order
 function rs(l) {
-  var rc = "abcdefgh14";
+  var rc = "ABCDEF1234";
   var r = "";
   for (var i = 0; i < l; i++) {
     r += rc.charAt(Math.floor(Math.random() * rc.length));
@@ -244,15 +249,17 @@ function rs(l) {
     (date.getDate() < 10
       ? "0" + date.getDate().toString()
       : date.getDate().toString()) +
-    (date.getMonth() + 1).toString() +
+    (date.getMonth() < 10
+      ? "0" + (date.getMonth() + 1).toString()
+      : (date.getMonth() + 1).toString()) +
     r
   );
 }
 router.post("/customer/order", async (req, res) => {
-  let orderNumber = rs(5);
+  let orderNumber = rs(3);
   conn.query(
-    `SELECT * FROM customer_address 
-        JOIN customers ON customers.c_id=customer_address.c_id
+    `SELECT * FROM customer_address
+        JOIN customers ON customers.c_id = customer_address.c_id
           WHERE customer_address.c_id = ? `,
     req.body.yammie,
     (err, result) => {
@@ -263,7 +270,7 @@ router.post("/customer/order", async (req, res) => {
           "INSERT INTO pending_orders SET ? ",
           {
             order_id: uuid.v4(),
-            order_items: req.body.order,
+            order_items: result[0].c_cart,
             order_amount: req.body._ttp,
             order_payment_method: req.body.payment_method,
             c_id: req.body.yammie,
@@ -281,22 +288,30 @@ router.post("/customer/order", async (req, res) => {
           },
           (err, result_1) => {
             if (err) throw err;
-            let items = JSON.parse(req.body.order);
+            conn.query(
+              `UPDATE customers
+                  SET c_cart = null,c_cart_number = null,c_cart_amount = null where c_id = ?`,
+              req.body.yammie,
+              (update_err) => {
+                if (update_err) throw update_err;
+              }
+            );
+            let items = JSON.parse(result[0].c_cart);
             let itemdetails = Object.values(items);
             itemdetails.forEach((item) => {
               conn.query(
-                `SELECT * FROM products WHERE id= '${item.cartItemAdded}'`,
+                `SELECT * FROM products WHERE id = '${item.cartItemAdded}'`,
                 (qerr, qresult) => {
                   if (qerr) throw qerr;
                   if (qresult.length > 0) {
                     conn.query(
-                      `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
+                      `SELECT quantity FROM products WHERE id ='${item.cartItemAdded}'`,
                       (errq, resultq) => {
                         if (errq) throw errq;
                         let quantityChange =
                           resultq[0].quantity - item.inCartNumber;
                         conn.query(
-                          `UPDATE products SET quantity =${quantityChange} WHERE id='${item.cartItemAdded}'`,
+                          `UPDATE products SET quantity = ${quantityChange} WHERE id='${item.cartItemAdded}'`,
                           (q_err, q_result) => {
                             if (q_err) throw q_err;
                             conn.query(
@@ -309,13 +324,14 @@ router.post("/customer/order", async (req, res) => {
                                     {
                                       id: uuid.v4(),
                                       product_id: item.cartItemAdded,
-                                      order_price: item.price,
-                                      order_product: item.name,
-                                      order_discount: item.discount,
+                                      order_price: qresult[0].price,
+                                      order_product: qresult[0].product,
+                                      order_discount: qresult[0].discount,
                                       order_qty: item.inCartNumber,
                                       order_amount:
-                                        (item.price -
-                                          (item.discount / 100) * item.price) *
+                                        (qresult[0].price -
+                                          (qresult[0].discount / 100) *
+                                            qresult[0].price) *
                                         item.inCartNumber,
                                     },
                                     (error, result_3) => {
@@ -330,7 +346,7 @@ router.post("/customer/order", async (req, res) => {
                                       let finalQuantity =
                                         res_0[0].order_qty + item.inCartNumber;
                                       conn.query(
-                                        `UPDATE seller_orders SET order_qty =${finalQuantity} WHERE product_id='${item.cartItemAdded}'`,
+                                        `UPDATE seller_orders SET order_qty = ${finalQuantity} WHERE product_id='${item.cartItemAdded}'`,
                                         (err_1, res_1) => {
                                           if (err_1) throw err_1;
                                         }
@@ -349,20 +365,19 @@ router.post("/customer/order", async (req, res) => {
               );
             });
 
-            let info = {
+            let mail_order = {
               from: '"Yammie Shoppers"<info@yammieshoppers.com>',
               to: result[0].c_email,
-              subject: "Order Placement",
-              text: `Hello ${result[0].c_first_name},
-                      your order has been placed successfully and your
-                      order number is ${orderNumber}`,
+              cc: "theyammieinc@gmail.com",
+              subject: `Your Order ${orderNumber}`,
+              text: `Hello ${result[0].c_first_name},your order has been placed successfully and your order number is ${orderNumber}`,
             };
             transporter
-              .sendMail(info)
-              .then(function (response) {
+              .sendMail(mail_order)
+              .then((response) => {
                 res.status(200).send(req.body.payment_method);
               })
-              .catch(function (err) {
+              .catch((err) => {
                 console.log("Error Ocurred!!!");
               });
           }
@@ -534,6 +549,88 @@ router.post("/customer/cart/:id", (req, res) => {
                   newCart: req.body.cart,
                   cart_number: req.body.cartNumber,
                 });
+              }
+            }
+          );
+        }
+      }
+    }
+  );
+});
+//selects a product for cart
+router.get("/product/:id", (req, res) => {
+  conn.query(
+    `SELECT * FROM products WHERE id = ?`,
+    req.params.id,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result[0]);
+      }
+    }
+  );
+});
+//for checkout page
+router.get("/checkout/cart/:id", (req, res) => {
+  conn.query(
+    `SELECT c_cart_amount,c_cart,c_cart_number FROM customers WHERE c_id = ?`,
+    req.params.id,
+    (err, results) => {
+      if (err) {
+        throw err;
+      } else {
+      }
+    }
+  );
+});
+router.post("/checkout/cart/:id", (req, res) => {
+  conn.query(
+    `SELECT c_cart_amount,c_cart,c_cart_number,zone FROM customers JOIN customer_address ON customer_address.c_id = customers.c_id WHERE customers.c_id = ?`,
+    req.params.id,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        let cart = JSON.parse(result[0].c_cart);
+        let total_charge = 0;
+        let total_price = 0;
+        let cart_arr = Object.values(cart);
+        for (let i = 0; i < cart_arr.length; i++) {
+          let key = cart_arr[i];
+          conn.query(
+            `SELECT * FROM products WHERE id = ?`,
+            key.cartItemAdded,
+            (error, result_0) => {
+              if (error) {
+                throw error;
+              } else {
+                let _charge = 0;
+                let product =
+                  JSON.parse(result_0[0].specifications) == null
+                    ? { Size: "small", Fragile: "No", weight: "light" }
+                    : JSON.parse(result_0[0].specifications);
+
+                let charge_obj = {
+                  price: result_0[0].discount
+                    ? (result_0[0].price * (100 - result_0[0].discount)) / 100
+                    : result_0[0].price,
+                  qty: key.inCartNumber < 4 ? "few" : "many",
+                  urgent: req.body.urgent || true,
+                  size: product.Size || "small",
+                  fragile: (product.Fragile == "Yes" ? true : false) || false,
+                  location: "Lira",
+                  weight: product.Weight || "Light",
+                  user: req.body._add == true ? result[0].zone : req.body._add,
+                };
+
+                let fee = new charge(charge_obj).total;
+                let price = new charge(charge_obj).price;
+                total_charge += fee;
+                total_price += price * key.inCartNumber;
+                if (cart_arr.length == i + 1) {
+                  res.send({ shipping: total_charge, total_price });
+                }
               }
             }
           );

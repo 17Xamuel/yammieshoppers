@@ -251,7 +251,7 @@ router.post("/rejPost/:id", async (req, res) => {
           quantity: quantity,
           images: image,
           seller_id: seller_id,
-          reason: reason
+          reason: reason,
         },
         (error, results) => {
           if (error) throw error;
@@ -304,7 +304,7 @@ router.post("/addCategory", async (req, res) => {
   conn.query(
     `INSERT INTO category SET ? `,
     {
-      category_name: catName
+      category_name: catName,
     },
     (err, result) => {
       if (err) throw err;
