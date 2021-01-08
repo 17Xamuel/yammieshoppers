@@ -511,8 +511,8 @@ router.post("/customer/cart/:id", (req, res) => {
               newCart[item] = req.body[0][item];
             }
           }
-          if (req.body.delete == true) {
-            delete newCart[req.body.deleteId];
+          if (req.body[3] == true) {
+            delete newCart[req.body[2]];
           }
           for (let key in newCart) {
             cart_number += newCart[key].inCartNumber;
