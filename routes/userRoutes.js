@@ -486,15 +486,14 @@ router.post("/shipping/:id", (req, res) => {
   );
 });
 router.post("/customer/cart/:id", (req, res) => {
-  let cart_string =
+  let cart_str =
     typeof req.body.cart == "string"
-      ? req.body.cart
-      : JSON.stringify(req.body.cart);
-  let cart_number_int =
+      ? JSON.parse(req.body.cart)
+      : req.body.cart;
+  let cart_number_str =
     typeof req.body.cartNumber == "string"
       ? parseInt(req.body.cartNumber)
       : req.body.cartNumber;
-
   conn.query(
     `SELECT c_cart,c_cart_number FROM customers WHERE c_id = ?`,
     req.params.id,
@@ -510,11 +509,11 @@ router.post("/customer/cart/:id", (req, res) => {
           for (let key in cart) {
             newCart[key] = cart[key];
           }
-          for (let item in req.body.cart) {
-            if (newCart[item] == req.body.cart[item]) {
+          for (let item in cart_str) {
+            if (newCart[item] == cart_str[item]) {
               newCart[item].inCartNumber += 1;
             } else {
-              newCart[item] = req.body.cart[item];
+              newCart[item] = cart_str[item];
             }
           }
           if (req.body.delete == true) {
@@ -527,7 +526,10 @@ router.post("/customer/cart/:id", (req, res) => {
           conn.query(
             `UPDATE customers SET ? WHERE c_id = ?`,
             [
-              { c_cart: JSON.stringify(newCart), c_cart_number: cart_number },
+              {
+                c_cart: JSON.stringify(newCart),
+                c_cart_number: parseInt(cart_number),
+              },
               req.params.id,
             ],
             (error, result_2) => {
@@ -545,8 +547,8 @@ router.post("/customer/cart/:id", (req, res) => {
             `UPDATE customers SET ? WHERE c_id = ?`,
             [
               {
-                c_cart: cart_string,
-                c_cart_number: cart_number_int,
+                c_cart: JSON.stringify(cart_str),
+                c_cart_number: cart_number_str,
               },
               req.params.id,
             ],
@@ -555,8 +557,8 @@ router.post("/customer/cart/:id", (req, res) => {
                 throw error;
               } else {
                 res.status(200).send({
-                  newCart: req.body.cart,
-                  cart_number: req.body.cartNumber,
+                  newCart: cart_str,
+                  cart_number: cart_number_str,
                 });
               }
             }
