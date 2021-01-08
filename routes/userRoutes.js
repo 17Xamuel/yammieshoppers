@@ -221,8 +221,11 @@ router.post("/customer/cart/amount/:id", (req, res) => {
       req.body[1],
     ],
     (err, result) => {
-      if (err) throw err;
-      res.status(200).send("cart amount upated");
+      if (err) {
+        throw err;
+      } else {
+        res.status(200).send("cart amount upated");
+      }
     }
   );
 });
@@ -501,11 +504,11 @@ router.post("/customer/cart/:id", (req, res) => {
           for (let key in cart) {
             newCart[key] = cart[key];
           }
-          for (let item in req.body.cart) {
-            if (newCart[item] == req.body.cart[item]) {
+          for (let item in req.body[0]) {
+            if (newCart[item] == req.body[0][item]) {
               newCart[item].inCartNumber += 1;
             } else {
-              newCart[item] = req.body.cart[item];
+              newCart[item] = req.body[0][item];
             }
           }
           if (req.body.delete == true) {
@@ -519,7 +522,7 @@ router.post("/customer/cart/:id", (req, res) => {
             `UPDATE customers SET ? WHERE c_id = ?`,
             [
               { c_cart: JSON.stringify(newCart), c_cart_number: cart_number },
-              req.params.id
+              req.params.id,
             ],
             (error, result_2) => {
               if (error) {
@@ -537,9 +540,9 @@ router.post("/customer/cart/:id", (req, res) => {
             [
               {
                 c_cart: JSON.stringify(req.body.cart),
-                c_cart_number: req.body.cartNumber
+                c_cart_number: req.body.cartNumber,
               },
-              req.params.id
+              req.params.id,
             ],
             (error, result_2) => {
               if (error) {
@@ -547,7 +550,7 @@ router.post("/customer/cart/:id", (req, res) => {
               } else {
                 res.status(200).send({
                   newCart: req.body.cart,
-                  cart_number: req.body.cartNumber
+                  cart_number: req.body.cartNumber,
                 });
               }
             }
