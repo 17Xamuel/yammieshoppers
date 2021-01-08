@@ -215,8 +215,8 @@ router.post("/customer/cart/amount/:id", (req, res) => {
     [
       {
         c_cart_amount: req.body[0],
-        c_cart: req.body[2].cartItems,
-        c_cart_number: req.body[2].cartNumber,
+        c_cart: req.body[2],
+        c_cart_number: req.body[3],
       },
       req.body[1],
     ],
