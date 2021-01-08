@@ -10,8 +10,8 @@ router.post("/updateCart/:id", (req, res) => {
        "UPDATE customers SET ? where c_id = ?",
        [
         {
-          c_cart: req.body[0],
-          c_cart_number: parseInt(req.body[1]),
+          c_cart: req.body.cart,
+          c_cart_number: parseInt(req.body.cartNumber),
         },
         req.params.id,
       ],
