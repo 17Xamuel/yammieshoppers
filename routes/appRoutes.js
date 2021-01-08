@@ -17,7 +17,7 @@ router.post("/updateCart/:id", (req, res) => {
     ],
     (err, result) => {
       if (err) throw err;
-      res.status(200).send("cart amount upated");
+      if (result.affectedRows > 0) res.status(200).send("cart amount upated");
     }
   );
 });
