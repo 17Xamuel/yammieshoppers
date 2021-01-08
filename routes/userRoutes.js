@@ -534,6 +534,7 @@ router.post("/customer/cart/:id", (req, res) => {
         } else {
           console.log(req.body);
           console.log(req.body.cart);
+          console.log(typeof req.body.cart);
           //   conn.query(
           //     `UPDATE customers SET ? WHERE c_id = ?`,
           //     [
