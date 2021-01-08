@@ -196,7 +196,6 @@
                   action="/addProduct"
                   method="POST"
                   enctype="multipart/form-data"
-                  class="text-dark"
                 >
                   <div class="form-row">
                     <div class="form-group col-md-6">
@@ -222,6 +221,7 @@
                       />
                     </div>
                   </div>
+                  <br />
                   <div class="form-group">
                     <label for="description">Brief Description</label>
                     <input
@@ -233,6 +233,7 @@
                       autocomplete="off"
                     />
                   </div>
+                  <br />
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="Product Brand">Price</label>
@@ -250,13 +251,13 @@
                       <input
                         type="number"
                         class="form-control"
-                        required=""
                         placeholder="Discount(%) in terms of Price"
                         name="discount"
                         autocomplete="off"
                       />
                     </div>
                   </div>
+                  <br />
 
                   <div class="form-row">
                     <div class="form-group col-md-6">
@@ -266,63 +267,45 @@
                         required=""
                         name="category"
                         id="category"
-                      >
-                        <!-- <option value="Easy Market">Easy Market</option>
-                        <option value="Food & Drinks">
-                          Fast Food & Drinks
-                        </option>
-                        <option value="Computing & Accessories">
-                          Computing & Accessories
-                        </option>
-                        <option value="Phone & Accessories">
-                          Phone & Accessories
-                        </option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Kids section">Kids Section</option>
-                        <option value="Kitchen Staff & Utensils">
-                          Kitchen Staff & Utensils
-                        </option>
-                        <option value="Stationery">Stationery</option>
-                        <option value="Cleaning, Healthy & Beauty">
-                          Cleaning, Healthy & Beauty
-                        </option>
-                        <option value="Clothing">Clothing</option> -->
-                      </select>
+                      ></select>
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="subcategory">Sub Category</label>
+                      <label for="subcategory"
+                        >Sub Category <span id="sub" class="text-dark"></span
+                      ></label>
                       <select
                         class="form-control"
                         required=""
+                        id="subCat"
                         name="subcategory"
-                      >
-                        <option selected hidden value="">
-                          Please Select SubCategory
-                        </option>
-                        <!-- <option value="Easy Market">Easy Market</option>
-                        <option value="Food & Drinks">
-                          Fast Food & Drinks
-                        </option>
-                        <option value="Computing & Accessories">
-                          Computing & Accessories
-                        </option>
-                        <option value="Phone & Accessories">
-                          Phone & Accessories
-                        </option>
-                        <option value="Electronics">Electronics</option>
-                        <option value="Kids section">Kids Section</option>
-                        <option value="Kitchen Staff & Utensils">
-                          Kitchen Staff & Utensils
-                        </option>
-                        <option value="Stationery">Stationery</option>
-                        <option value="Cleaning, Healthy & Beauty">
-                          Cleaning, Healthy & Beauty
-                        </option> -->
-                      </select>
+                      ></select>
                     </div>
                   </div>
 
-                  <label for="Specifications">Products Specifications</label>
+                  <br />
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label>What should the customer Expect(Select)</label>
+                      <select
+                        name="typeOfProduct"
+                        class="form-control"
+                        required
+                      >
+                        <option value="Carriage">Carriage</option>
+                        <option value="Parcel">Parcel</option>
+                        <option value="Freight">Freight</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="Size">Product Size(Select)</label>
+                      <select name="size" class="form-control" required>
+                        <option value="Big">Big</option>
+                        <option value="Small">Small</option>
+                      </select>
+                    </div>
+                  </div>
+                  <br />
                   <div class="form-row">
                     <div class="form-group col-md-4">
                       <label for="Brand">Brand</label>
@@ -330,40 +313,53 @@
                         type="text"
                         class="form-control"
                         placeholder="Brand"
-                        name="specifications"
+                        name="brand"
+                        autocomplete="off"
                       />
                     </div>
                     <div class="form-group col-md-4">
                       <label for="Colors">Colors</label>
                       <input
                         type="text"
-                        placeholder="Available Colors"
+                        placeholder="Main Color"
                         class="form-control"
-                        name="specifications"
+                        autocomplete="off"
+                        name="color"
                       />
                     </div>
                     <div class="form-group col-md-4">
                       <label for="Weight">Weight</label>
+                      <select class="form-control" name="weight" required>
+                        <option value="Heavy">Heavy</option>
+                        <option value="Light">Light</option>
+                      </select>
+                    </div>
+                  </div>
+                  <br />
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="Dimensions"
+                        >Dimensions(L X W X H) in cm</label
+                      >
                       <input
                         type="text"
                         class="form-control"
-                        placeholder="Enter NetWeight or Heavy or Light"
-                        name="specifications"
+                        placeholder="Eg 12cm X 5cm X 9cm"
+                        name="dimensions"
+                        autocomplete="off"
                       />
                     </div>
-                  </div>
-                  <div class="form-row">
-                    <div id="specifications" class="form-group col-md-4">
-                      <button
-                        type="button"
-                        class="btn btn-warning text-light my-2"
-                        id="specification"
+                    <div class="form-group col-md-6">
+                      <label for="Fragility"
+                        >Is the Product Easily Broken?(Select)</label
                       >
-                        Click to Add More Specifications
-                      </button>
+                      <select name="fragility" class="form-control" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                      </select>
                     </div>
                   </div>
-
+                  <br />
                   <label for="Detailed Description"
                     >Product Detailed Description</label
                   >
@@ -378,59 +374,135 @@
                     ></textarea>
                   </div>
 
-                  <label for="Poduct Images">Product Images</label>
                   <br />
 
-                  <div style="width: 400px; margin: 20px auto 20px auto">
-                    <div
-                      class="custom-file-container"
-                      data-upload-id="myUpload"
-                    >
-                      <label for="Fileupload"
-                        >Image Upload
-                        <a
-                          href="javascript:void(0)"
-                          class="custom-file-container__image-clear"
-                          >&times;</a
-                        ></label
-                      >
-                      <label class="custom-file-container__custom-file"
-                        ><input
-                          type="file"
-                          class="custom-file-container__custom-file__custom-file-input"
-                          accept="image/*"
-                          name="images"
-                          multiple
-                          aria
-                          label="Multiple Select Files"
-                        /><input
-                          type="hidden"
-                          name="MAX_FILE_SIZE"
-                          value="10485760"
-                        />
-                        <span
-                          class="custom-file-container__custom-file__custom-file-control"
-                        ></span>
-                      </label>
-                      <div
-                        class="custom-file-container__image-preview"
-                        style="overflow: hidden"
-                      ></div>
+                  <div class="row">
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUpload"
+                        >
+                          <label for="Fileupload"
+                            >Main Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input fileSize filing"
+                              accept="image/*"
+                              name="images"
+                            />
+                            <!-- <input
+                              type="hidden"
+                              name="MAX_FILE_SIZE"
+                              value="10485760"
+                            /> -->
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUploads"
+                        >
+                          <label for="Fileupload"
+                            >Other Images
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input file fileSize"
+                              accept="image/*"
+                              name="images"
+                              multiple
+                              aria
+                              select="Multiple Select Files"
+                            />
+                            <!-- <input
+                              type="hidden"
+                              name="MAX_FILE_SIZE"
+                              value="10485760"
+                            />  -->
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <input
-                      type="hidden"
-                      name="seller_id"
-                      id="auth"
-                      class="form-control"
-                    />
-                  </div>
 
-                  <button
-                    type="submit"
-                    class="btn btn-warning text-light btn-block my-3"
-                  >
+                  <!-- <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <p class="card-text">
+                            <input type="file" name="images" />
+                          </p>
+                        </div>
+                        <div class="card-footer">
+                          <small class="text-muted"
+                            >Last updated 3 mins ago</small
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <p class="card-text">
+                            <input type="file" name="images" />
+                          </p>
+                        </div>
+                        <div class="card-footer">
+                          <small class="text-muted"
+                            >Last updated 3 mins ago</small
+                          >
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <p class="card-text">
+                            <input type="file" name="images" />
+                          </p>
+                        </div>
+                        <div class="card-footer">
+                          <small class="text-muted"
+                            >Last updated 3 mins ago</small
+                          >
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+                  <input type="hidden" name="seller_id" id="auth" />
+
+                  <button class="btn btn-warning text-light btn-block my-3">
                     Add Product
                   </button>
                 </form>
@@ -498,8 +570,8 @@
     <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
     <script>
       const upload = new FileUploadWithPreview("myUpload");
-    </script>
-    <script>
+      const uploads = new FileUploadWithPreview("myUploads");
+
       let [seller] = JSON.parse(
         localStorage.getItem("yammie/useLocalstorage/storage")
       );
@@ -512,15 +584,59 @@
       });
       document.getElementById("category").innerHTML = cat;
 
-      let specifications = document.getElementById("specifications");
-      let newSpecification = document.getElementById("specification");
-      newSpecification.addEventListener("click", (e) => {
-        let specification = document.createElement("input");
-        specification.classList.add("form-control", "my-2");
-        specification.setAttribute("type", "text");
-        specification.setAttribute("placeholder", "Specification");
-        specification.setAttribute("name", "specification");
-        specifications.appendChild(specification);
+      let subCat = document.getElementById("category");
+      subCat.addEventListener("change", (e) => {
+        let selectedCat = document.getElementById("category").value;
+        const subCatLoad = new XMLHttpRequest();
+        subCatLoad.onreadystatechange = () => {
+          if (subCatLoad.readyState < 4) {
+            document.getElementById("sub").innerHTML =
+              "Loading Subcategories...";
+          }
+          if (subCatLoad.readyState == 4 && subCatLoad.status == 200) {
+            let subCategories = JSON.parse(subCatLoad.responseText);
+            let subcate = "";
+            subCategories.forEach((subCategory) => {
+              subcate += `<option value="${subCategory.subCategoryName}">${subCategory.subCategoryName}</option>`;
+            });
+            document.getElementById("subCat").innerHTML = subcate;
+            document.getElementById("sub").innerHTML = "";
+          }
+        };
+        subCatLoad.open(
+          "GET",
+          `/api/sellers/subCategory/${selectedCat.replace(/ /g, "_")}`,
+          true
+        );
+        subCatLoad.send();
+      });
+
+      let fileSize = document.querySelectorAll(".fileSize");
+      fileSize.forEach((fil) => {
+        fil.addEventListener("change", (e) => {
+          //Any file selected
+          if (fil.files.length > 0) {
+            for (let i = 0; i < fil.files.length - 1; i++) {
+              let fSize = fil.files.item(i).size;
+              let file = Math.round(fSize / 1024);
+              if (file > 4096 || file < 2048) {
+                e.preventDefault();
+                alert("All images should be between 2MB and 4MB");
+              }
+            }
+          }
+        });
+      });
+
+      let testFileNumber = document.querySelector(".btn-block");
+      testFileNumber.addEventListener("click", (e) => {
+        let fileNumber = document.querySelector(".filing");
+        let filing = document.querySelector(".file");
+        console.log(filing.files.length);
+        if (fileNumber.files.length == 0 || filing.files.length > 3) {
+          e.preventDefault();
+          alert("Total images should not exceed four!!!");
+        }
       });
 
       function lg() {

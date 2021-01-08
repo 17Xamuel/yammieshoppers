@@ -91,7 +91,9 @@ router.post("/registerSeller", async (req, res) => {
   transporter.sendMail(mailOptions, (error, response) => {
     if (error) {
       console.log(error);
-      res.send("We are sorry something went wrong.Please  check your email");
+      return res.send(
+        "We are sorry something went wrong.Please  check your email"
+      );
     } else {
       res.status(200).send("Email Sent");
     }
@@ -149,7 +151,7 @@ try {
                       (await bycrpt.compare(password, result[0].password))
                     ) {
                       conn.query(
-                        "SELECT id,username,email,phonenumber,location,category FROM sellers WHERE email=?",
+                        "SELECT id,username,email,phonenumber,location,category,businessname FROM sellers WHERE email=?",
                         [email],
                         async (err, results) => {
                           if (err) throw err;
@@ -385,6 +387,23 @@ router.get("/getRejProducts/:id", async (req, res) => {
     (err, result) => {
       if (err) throw err;
       res.send(result);
+    }
+  );
+});
+
+router.get("/subCategory/:id", async (req, res) => {
+  conn.query(
+    `SELECT category_id FROM category WHERE category_name = ?`,
+    [req.params.id.replace(/_/g, " ")],
+    (err, result) => {
+      if (err) throw err;
+      conn.query(
+        `SELECT * FROM subCategories WHERE category_id = '${result[0].category_id}'`,
+        (error, results) => {
+          if (error) throw error;
+          res.send(results);
+        }
+      );
     }
   );
 });

@@ -13,13 +13,6 @@ const MYSQL_CONFIG = {
   }
 };
 
-// const MYSQL_CONFIG={
-//   host:"localhost",
-//   user:"root",
-//   password:"",
-//   database:"yammie_db_secure",
-// }
-
 const conn = mysql.createConnection(MYSQL_CONFIG);
 
 conn.connect((err) => {

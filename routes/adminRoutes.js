@@ -270,7 +270,7 @@ router.post("/rejPost/:id", async (req, res) => {
 });
 
 router.get("/getOnlineProducts", async (req, res) => {
-  conn.query(`SELECT * FROM products`, (err, result) => {
+  conn.query(`SELECT * FROM products `, (err, result) => {
     if (err) throw err;
     res.send(result);
   });
@@ -289,12 +289,12 @@ router.get("/getOnlineProducts", async (req, res) => {
 
 router.get("/productSeller/:id", async (req, res) => {
   conn.query(
-    `SELECT username FROM sellers JOIN products ON products.seller_id=sellers.id WHERE sellers.id = ?`,
+    `SELECT username FROM sellers JOIN products
+       ON products.seller_id=sellers.id WHERE products.seller_id = ?`,
     [req.params.id],
     (err, result) => {
       if (err) throw err;
-      console.log(result[0]);
-      res.send(result[0]);
+      res.send(result);
     }
   );
 });
@@ -314,10 +314,58 @@ router.post("/addCategory", async (req, res) => {
 });
 
 router.get("/getCategory", async (req, res) => {
-  conn.query("SELECT * FROM category", (err, result) => {
+  conn.query("SELECT category_name FROM category", (err, result) => {
     if (err) throw err;
     res.send(result);
   });
+});
+
+router.post("/addSubCategory", async (req, res) => {
+  let { categoryName, subName } = req.body;
+  conn.query(
+    `SELECT category_id FROM category WHERE category_name=?`,
+    [categoryName],
+    (err, result) => {
+      if (err) throw err;
+      conn.query(
+        `INSERT INTO subCategories SET ?`,
+        {
+          category_id: result[0].category_id,
+          subCategoryName: subName
+        },
+        (error, results) => {
+          if (error) throw error;
+          res.send("SubCategory Added Successfully");
+        }
+      );
+    }
+  );
+});
+
+router.get("/orderProduct/:id", async (req, res) => {
+  conn.query(
+    `SELECT price,product,discount FROM products WHERE id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.get("/orderSearch/:id", async (req, res) => {
+  conn.query(
+    `SELECT order_id FROM pending_orders WHERE order_number = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      if (result.length == 0) {
+        return res.send("No Order Matches that Number Please try again");
+      } else {
+        res.send(result);
+      }
+    }
+  );
 });
 
 module.exports = router;

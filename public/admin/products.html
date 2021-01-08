@@ -37,6 +37,16 @@
       if (document.referrer == "") window.location.assign("./index");
     </script>
   </head>
+  <style>
+    @media (max-width: 768px) {
+      .pBtn {
+        width: 100%;
+        margin-top: 10px;
+        position: static;
+        height: auto;
+      }
+    }
+  </style>
 
   <body>
     <!-- Navbar -->
@@ -191,12 +201,12 @@
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-11 mx-auto my-3 text-center">
-                <button type="submit" class="btn btn-warning mr-2">
+                <button type="submit" class="btn btn-warning mr-2 pBtn">
                   Add New Product
                 </button>
                 <button
                   type="button"
-                  class="btn btn-info mr-2"
+                  class="btn btn-info mr-2 pBtn"
                   data-target="#newCategory"
                   data-toggle="modal"
                 >
@@ -204,7 +214,7 @@
                 </button>
                 <button
                   type="button"
-                  class="btn btn-success mr-2"
+                  class="btn btn-success mr-2 pBtn"
                   data-target="#newSubCategory"
                   data-toggle="modal"
                 >
@@ -242,11 +252,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn-danger btn btn-sm"
-              data-dismiss="modal"
-            >
+            <button type="button" class="btn-success btn btn-sm auto">
               Ok
             </button>
           </div>
@@ -288,11 +294,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn-danger btn btn-sm"
-              data-dismiss="modal"
-            >
+            <button type="button" class="btn-success btn btn-sm auto">
               Ok
             </button>
           </div>
@@ -536,9 +538,9 @@
                         </a>
                         </td>
                       <td>
-                      <button 
-                      type="submit" 
-                      class="btn btn-danger btn-sm -d-product" 
+                      <button
+                      type="submit"
+                      class="btn btn-danger btn-sm -d-product"
                       data-target="#dPending" data-toggle="modal"
                       data-name="${pendingProduct.product}"
                       data-id="${pendingProduct.id}"
@@ -612,8 +614,8 @@
                       <td>${onlineProduct.price}</td>
                       <td>
                       <button type="submit" class="btn btn-info btn-sm -detailing"
-                      data-target="#detailOnline" data-toggle="modal" 
-                      data-sid="${onlineProduct.seller_id}" data-pp="${onlineProduct.price}"
+                      data-target="#detailOnline" data-toggle="modal"
+                       data-pp="${onlineProduct.price}"data-seller_id="${onlineProduct.seller_id}"
                       data-pd="${onlineProduct.description}" data-pdi="${onlineProduct.discount}"
                       data-pb="${onlineProduct.brand}" data-pq="${onlineProduct.quantity}"
                       data-pc="${onlineProduct.category}" data-pn="${onlineProduct.product}">
@@ -621,9 +623,9 @@
                         </button>
                         </td>
                       <td>
-                      <button 
-                      type="submit" 
-                      class="btn btn-danger btn-sm" 
+                      <button
+                      type="submit"
+                      class="btn btn-danger btn-sm"
                       data-id="${onlineProduct.id}"
                       data-images="${onlineProduct.images}">
                         Delete
@@ -641,6 +643,7 @@
           let detailOnline = document.querySelectorAll(".-detailing");
           detailOnline.forEach((detailButton) => {
             detailButton.addEventListener("click", (e) => {
+              console.log(document.getElementById("psel"));
               document.getElementById("pq").innerHTML = e.target.dataset.pq;
               document.getElementById("pc").innerHTML = e.target.dataset.pc;
               document.getElementById("pdi").innerHTML = e.target.dataset.pdi;
@@ -648,7 +651,7 @@
               document.getElementById("pp").innerHTML = e.target.dataset.pp;
               document.getElementById("pb").innerHTML = e.target.dataset.pb;
               document.getElementById("pd").innerHTML = e.target.dataset.pd;
-
+              // console.log(e.target.dataset.seller_id);
               // const _dxhr = new XMLHttpRequest();
               // _dxhr.onreadystatechange = () => {
               //   if (_dxhr.readyState < 4) {
@@ -657,13 +660,19 @@
               //     ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
               //   }
               //   if (_dxhr.readyState == 4 && _dxhr.status == 200) {
-              //     let result = JSON.parse(_dxhr.responseText);
-              //     document.getElementById("psel").innerHTML = result.username;
+              //     console.log(_dxhr.responseText);
+              //     document.addEventListener("DOMContentLoaded", (e) => {
+              //       console.log(document.getElementById("psel"));
+              //     });
+              //     // console.log(document.getElementById("psel"));
+              //     // let [result] = JSON.parse(_dxhr.responseText);
+              //     // console.log(result);
+              //     // document.getElementById("psel").innerHTML = result.username;
               //   }
               // };
               // _dxhr.open(
               //   "GET",
-              //   `/api/admin/productSeller/${e.target.dataset.sid}`,
+              //   `/api/admin/productSeller/${e.target.dataset.seller_id}`,
               //   true
               // );
               // _dxhr.send();
@@ -701,7 +710,6 @@
       const catGet = new XMLHttpRequest();
       catGet.onreadystatechange = () => {
         if (catGet.readyState == 4 && catGet.status == 200) {
-          console.log(catGet.responseText);
           let categories = JSON.parse(catGet.responseText);
           let cat = "";
           categories.forEach((cats) => {
@@ -713,7 +721,7 @@
       catGet.open("GET", "/api/admin/getCategory", true);
       catGet.send();
 
-      let SubCatForm = document.getElementById("subCatForm");
+      let SubCatForm = document.getElementById("SubCatForm");
       SubCatForm.addEventListener("submit", (e) => {
         e.preventDefault();
         let SubCategory = {};
@@ -738,6 +746,16 @@
         subCatSubmit.setRequestHeader("Content-Type", "application/json");
         subCatSubmit.send(subString);
       });
+
+      function reloading() {
+        let reloads = document.querySelectorAll(".auto");
+        reloads.forEach((reloadPage) => {
+          reloadPage.addEventListener("click", (e) => {
+            window.location.reload("products.html");
+          });
+        });
+      }
+      reloading();
     </script>
     <!-- End Scripts -->
   </body>

@@ -136,95 +136,7 @@
                 />
               </div>
               <label for="Category">Category of Goods Sold</label>
-              <div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Clothes & Shoes"
-                    name="category"
-                  />
-                  <label class="form-check-label"> Clothes & Shoes </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Cleaning,Health & Beauty"
-                    name="category"
-                  />
-                  <label class="form-check-label">
-                    Cleaning,Health & Beauty
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Kid's Section"
-                    name="category"
-                  />
-                  <label class="form-check-label"> Kid's Section </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Computing & Accessories"
-                    name="category"
-                  />
-                  <label class="form-check-label">
-                    Computing & Accessories
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=" Electronics"
-                    name="category"
-                  />
-                  <label class="form-check-label"> Electronics </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Fast Food & Drinks"
-                    name="category"
-                  />
-                  <label class="form-check-label"> Fast Food & Drinks </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=" Stationery"
-                    name="category"
-                  />
-                  <label class="form-check-label"> Stationery </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Phone & Accessories"
-                    name="category"
-                  />
-                  <label class="form-check-label"> Phone & Accessories </label>
-                </div>
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value="Kitchenstaff & Utensils"
-                    name="category"
-                  />
-                  <label class="form-check-label">
-                    Kitchenstaff & Utensils
-                  </label>
-                </div>
-              </div>
+              <div class="text-left" id="availableCategories"></div>
 
               <div class="form-row">
                 <div class="form-group col-md-6">
@@ -361,6 +273,28 @@
       xhr.setRequestHeader("Content-Type", "application/json");
       xhr.send(sellerString);
     });
+
+    const getCategory = new XMLHttpRequest();
+    getCategory.onreadystatechange = () => {
+      if (getCategory.readyState == 4 && getCategory.status == 200) {
+        let outcomes = JSON.parse(getCategory.responseText);
+        let cat = "";
+        outcomes.forEach((outcome) => {
+          cat += `<div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    value="${outcome.category_name}"
+                    name="category"
+                  />
+                  <label class="form-check-label">${outcome.category_name}</label>
+                </div>`;
+        });
+        document.getElementById("availableCategories").innerHTML = cat;
+      }
+    };
+    getCategory.open("GET", "/api/admin/getCategory", true);
+    getCategory.send();
 
     function reload() {
       let logmodal = document.getElementById("logmodal");
