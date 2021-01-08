@@ -11,7 +11,7 @@ router.post("/updateCart/:id", (req, res) => {
        [
         {
           c_cart: req.body[0],
-          c_cart_number: req.body[1],
+          c_cart_number: parseInt(req.body[1]),
         },
         req.params.id,
       ],
