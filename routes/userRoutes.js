@@ -221,11 +221,8 @@ router.post("/customer/cart/amount/:id", (req, res) => {
       req.body[1],
     ],
     (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        res.status(200).send("cart amount upated");
-      }
+      if (err) throw err;
+      res.status(200).send("cart amount upated");
     }
   );
 });
@@ -504,15 +501,15 @@ router.post("/customer/cart/:id", (req, res) => {
           for (let key in cart) {
             newCart[key] = cart[key];
           }
-          for (let item in req.body[0]) {
-            if (newCart[item] == req.body[0][item]) {
+          for (let item in req.body.cart) {
+            if (newCart[item] == req.body.cart[item]) {
               newCart[item].inCartNumber += 1;
             } else {
-              newCart[item] = req.body[0][item];
+              newCart[item] = req.body.cart[item];
             }
           }
-          if (req.body[3] == true) {
-            delete newCart[req.body[2]];
+          if (req.body.delete == true) {
+            delete newCart[req.body.deleteId];
           }
           for (let key in newCart) {
             cart_number += newCart[key].inCartNumber;

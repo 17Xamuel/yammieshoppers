@@ -11,6 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/admin/", require("./routes/adminRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
+app.use("/api/api/", require("./routes/appRoutes"));
 app.use("/api/sellers/", require("./routes/sellerRoutes"));
 app.use("/api/products/", require("./routes/products"));
 app.use("/api/orders/", require("./routes/orders"));
@@ -25,7 +26,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
 });
 
 // Change bucket property to your Space name
@@ -37,8 +38,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -71,7 +72,7 @@ app.post("/addProduct", async (req, res) => {
       specification,
       dimensions,
       size,
-      typeOfProduct
+      typeOfProduct,
     } = req.body;
     conn.query(
       `SELECT subcategory_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
@@ -97,8 +98,8 @@ app.post("/addProduct", async (req, res) => {
               Fragile: fragility,
               Dimensions: dimensions || null,
               Size: size,
-              TypeOfProduct: typeOfProduct
-            })
+              TypeOfProduct: typeOfProduct,
+            }),
           },
           (err, results) => {
             if (err) {

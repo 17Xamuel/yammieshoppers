@@ -1178,35 +1178,34 @@
             //st-ony
             let st = document.querySelector("#-o-st");
             st.addEventListener("click", () => {
-              alert(
-                `Message: Our Beloved customer, this system is in beta testing, Incase of any orders now \n PLEASE CALL SALES ON +256771860476, OR +256700835756`
-              );
-              if (yammie) {
-                let req = JSON.stringify([
-                  totalAmount(),
-                  yammie,
-                  localStorage.getItem("cartItems"),
-                  cartNumber,
-                ]);
-
-                let xhr2 = new XMLHttpRequest();
-                xhr2.open(
-                  "POST",
-                  `/api/user/customer/cart/amount/${yammie}`,
-                  true
-                );
-                xhr2.setRequestHeader("Content-type", "application/json");
-                xhr2.send(req);
-                window.location.assign("orders/checkout");
-              } else {
-                function checkLogin() {
-                  document
-                    .querySelector("#pop-up-overlay")
-                    .classList.add("active");
-                  document.querySelector(".popup").classList.add("pp-active");
-                }
-                checkLogin();
-              }
+              // alert(
+              //   `Message: Our Beloved customer, this system is in beta testing, Incase of any orders now \n PLEASE CALL SALES ON +256771860476, OR +256700835756`
+              // );
+              // if (yammie) {
+              //   let req = JSON.stringify([
+              //     totalAmount(),
+              //     yammie,
+              //     localStorage.getItem("cartItems"),
+              //     cartNumber,
+              //   ]);
+              //   let xhr2 = new XMLHttpRequest();
+              //   xhr2.open(
+              //     "POST",
+              //     `/api/user/customer/cart/amount/${yammie}`,
+              //     true
+              //   );
+              //   xhr2.setRequestHeader("Content-type", "application/json");
+              //   xhr2.send(req);
+              //   window.location.assign("orders/checkout");
+              // } else {
+              //   function checkLogin() {
+              //     document
+              //       .querySelector("#pop-up-overlay")
+              //       .classList.add("active");
+              //     document.querySelector(".popup").classList.add("pp-active");
+              //   }
+              //   checkLogin();
+              // }
             });
             //st-ony
           });
@@ -1228,12 +1227,11 @@
             } else {
               document.querySelector("._wait-u").style.display = "flex";
               setTimeout(() => {
-                _cdb(`/api/user/customer/cart/${yammie}`, [
-                  cartItems,
-                  cartNumber,
-                  id,
-                  false,
-                ]);
+                _cdb(`/api/user/customer/cart/${yammie}`, {
+                  cart: cartItems,
+                  cartNumber: cartNumber,
+                  delete: false,
+                });
               }, 1500);
             }
           }
@@ -1255,12 +1253,11 @@
             } else {
               document.querySelector("._wait-u").style.display = "flex";
               setTimeout(() => {
-                _cdb(`/api/user/customer/cart/${yammie}`, [
-                  cartItems,
-                  cartNumber,
-                  id,
-                  false,
-                ]);
+                _cdb(`/api/user/customer/cart/${yammie}`, {
+                  cart: cartItems,
+                  cartNumber: cartNumber,
+                  delete: false,
+                });
               }, 1500);
             }
           }
@@ -1278,12 +1275,12 @@
             } else {
               document.querySelector("._wait-u").style.display = "flex";
               setTimeout(() => {
-                _cdb(`/api/user/customer/cart/${yammie}`, [
-                  cartItems,
-                  cartNumber,
-                  id,
-                  true,
-                ]);
+                _cdb(`/api/user/customer/cart/${yammie}`, {
+                  cart: cartItems,
+                  cartNumber: cartNumber,
+                  deleteId: id,
+                  delete: true,
+                });
               }, 1500);
             }
           }
