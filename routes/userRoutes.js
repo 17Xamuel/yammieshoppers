@@ -532,26 +532,28 @@ router.post("/customer/cart/:id", (req, res) => {
             }
           );
         } else {
-          conn.query(
-            `UPDATE customers SET ? WHERE c_id = ?`,
-            [
-              {
-                c_cart: JSON.stringify(req.body.cart),
-                c_cart_number: req.body.cartNumber,
-              },
-              req.params.id,
-            ],
-            (error, result_2) => {
-              if (error) {
-                throw error;
-              } else {
-                res.status(200).send({
-                  newCart: req.body.cart,
-                  cart_number: req.body.cartNumber,
-                });
-              }
-            }
-          );
+          console.log(req.body);
+          console.log(req.body.cart);
+          //   conn.query(
+          //     `UPDATE customers SET ? WHERE c_id = ?`,
+          //     [
+          //       {
+          //         c_cart: JSON.stringify(req.body.cart),
+          //         c_cart_number: req.body.cartNumber,
+          //       },
+          //       req.params.id,
+          //     ],
+          //     (error, result_2) => {
+          //       if (error) {
+          //         throw error;
+          //       } else {
+          //         res.status(200).send({
+          //           newCart: req.body.cart,
+          //           cart_number: req.body.cartNumber,
+          //         });
+          //       }
+          //     }
+          //   );
         }
       }
     }
