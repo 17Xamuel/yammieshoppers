@@ -215,8 +215,13 @@ router.post("/customer/cart/amount/:id", (req, res) => {
     [
       {
         c_cart_amount: req.body[0],
+<<<<<<< HEAD
         c_cart: req.body[2].cartItems,
         c_cart_number: req.body[2].cartNumber
+=======
+        c_cart: req.body[2],
+        c_cart_number: req.body[3],
+>>>>>>> 96ab1e6b27cdd774055121fd0e6cb31114e7f082
       },
       req.body[1]
     ],
@@ -375,7 +380,7 @@ router.post("/customer/order", async (req, res) => {
             transporter
               .sendMail(mail_order)
               .then((response) => {
-                res.status(200).send(req.body.payment_method);
+                res.status(200).send([req.body.payment_method, orderNumber]);
               })
               .catch((err) => {
                 console.log("Error Ocurred!!!");
@@ -486,6 +491,14 @@ router.post("/shipping/:id", (req, res) => {
   );
 });
 router.post("/customer/cart/:id", (req, res) => {
+  let cart_str =
+    typeof req.body.cart == "string"
+      ? JSON.parse(req.body.cart)
+      : req.body.cart;
+  let cart_number_str =
+    typeof req.body.cartNumber == "string"
+      ? parseInt(req.body.cartNumber)
+      : req.body.cartNumber;
   conn.query(
     `SELECT c_cart,c_cart_number FROM customers WHERE c_id = ?`,
     req.params.id,
@@ -501,11 +514,11 @@ router.post("/customer/cart/:id", (req, res) => {
           for (let key in cart) {
             newCart[key] = cart[key];
           }
-          for (let item in req.body.cart) {
-            if (newCart[item] == req.body.cart[item]) {
+          for (let item in cart_str) {
+            if (newCart[item] == cart_str[item]) {
               newCart[item].inCartNumber += 1;
             } else {
-              newCart[item] = req.body.cart[item];
+              newCart[item] = cart_str[item];
             }
           }
           if (req.body.delete == true) {
@@ -518,8 +531,11 @@ router.post("/customer/cart/:id", (req, res) => {
           conn.query(
             `UPDATE customers SET ? WHERE c_id = ?`,
             [
-              { c_cart: JSON.stringify(newCart), c_cart_number: cart_number },
-              req.params.id
+              {
+                c_cart: JSON.stringify(newCart),
+                c_cart_number: parseInt(cart_number),
+              },
+              req.params.id,
             ],
             (error, result_2) => {
               if (error) {
@@ -536,18 +552,18 @@ router.post("/customer/cart/:id", (req, res) => {
             `UPDATE customers SET ? WHERE c_id = ?`,
             [
               {
-                c_cart: JSON.stringify(req.body.cart),
-                c_cart_number: req.body.cartNumber
+                c_cart: JSON.stringify(cart_str),
+                c_cart_number: cart_number_str,
               },
-              req.params.id
+              req.params.id,
             ],
             (error, result_2) => {
               if (error) {
                 throw error;
               } else {
                 res.status(200).send({
-                  newCart: req.body.cart,
-                  cart_number: req.body.cartNumber
+                  newCart: cart_str,
+                  cart_number: cart_number_str,
                 });
               }
             }
