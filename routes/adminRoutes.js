@@ -110,6 +110,19 @@ router.get("/pendingProduct/:id", async (req, res) => {
   );
 });
 
+router.get("/approvedProduct/:id", async (req, res) => {
+  conn.query(
+    `SELECT * FROM products JOIN sellers ON products.seller_id=sellers.id 
+    JOIN subCategories ON products.subcategory=subCategories.subcategory_id
+    JOIN category ON subCategories.category_id=category.category_id WHERE products.id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
 router.get("/confirmProduct/:id", async (req, res) => {
   conn.query(
     "SELECT * FROM pending_products WHERE id = ? ",
@@ -366,7 +379,7 @@ router.post("/addSubCategory", async (req, res) => {
 });
 
 router.get("/subCategories", async (req, res) => {
-  conn.query(`SELECT * FROM subCategories`, [req.params.id], (err, result) => {
+  conn.query(`SELECT * FROM subCategories`, (err, result) => {
     if (err) throw err;
     res.send(result);
   });
