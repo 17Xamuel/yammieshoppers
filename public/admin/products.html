@@ -393,63 +393,6 @@
       </div>
     </div>
 
-    <!-- Online Detail-->
-    <div class="modal fade" id="detailOnline">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Product Details</h5>
-          </div>
-          <div class="modal-body" id="bodyMessage">
-            <table class="table text-left">
-              <tr>
-                <td>Name:</td>
-                <td id="pn"></td>
-              </tr>
-              <tr>
-                <td>Price:</td>
-                <td id="pp"></td>
-              </tr>
-              <tr>
-                <td>Quantity:</td>
-                <td id="pq"></td>
-              </tr>
-              <tr>
-                <td>Discount:</td>
-                <td id="pdi"></td>
-              </tr>
-              <tr>
-                <td>Brand:</td>
-                <td id="pb"></td>
-              </tr>
-              <tr>
-                <td>Category:</td>
-                <td id="pc"></td>
-              </tr>
-              <tr>
-                <td>Sellername:</td>
-                <td id="psel"></td>
-              </tr>
-              <tr>
-                <td>Description:</td>
-                <td id="pd"></td>
-              </tr>
-            </table>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              data-dismiss="modal"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End -->
-
     <!-- Footer -->
     <footer>
       <div class="container-fluid">
@@ -613,14 +556,10 @@
                       <td>${onlineProduct.product}</td>
                       <td>${onlineProduct.price}</td>
                       <td>
-                      <button type="submit" class="btn btn-info btn-sm -detailing"
-                      data-target="#detailOnline" data-toggle="modal"
-                       data-pp="${onlineProduct.price}"data-seller_id="${onlineProduct.seller_id}"
-                      data-pd="${onlineProduct.description}" data-pdi="${onlineProduct.discount}"
-                      data-pb="${onlineProduct.brand}" data-pq="${onlineProduct.quantity}"
-                      data-pc="${onlineProduct.category}" data-pn="${onlineProduct.product}">
+                   <a href="product.html?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
+                       data-pp="${onlineProduct.id}">
                           Details
-                        </button>
+                        </button></a>
                         </td>
                       <td>
                       <button
@@ -640,44 +579,6 @@
           } else {
             document.getElementById("onlineLoading").innerHTML = "";
           }
-          let detailOnline = document.querySelectorAll(".-detailing");
-          detailOnline.forEach((detailButton) => {
-            detailButton.addEventListener("click", (e) => {
-              console.log(document.getElementById("psel"));
-              document.getElementById("pq").innerHTML = e.target.dataset.pq;
-              document.getElementById("pc").innerHTML = e.target.dataset.pc;
-              document.getElementById("pdi").innerHTML = e.target.dataset.pdi;
-              document.getElementById("pn").innerHTML = e.target.dataset.pn;
-              document.getElementById("pp").innerHTML = e.target.dataset.pp;
-              document.getElementById("pb").innerHTML = e.target.dataset.pb;
-              document.getElementById("pd").innerHTML = e.target.dataset.pd;
-              // console.log(e.target.dataset.seller_id);
-              // const _dxhr = new XMLHttpRequest();
-              // _dxhr.onreadystatechange = () => {
-              //   if (_dxhr.readyState < 4) {
-              //     document.getElementById(
-              //       "bodyMessage"
-              //     ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-              //   }
-              //   if (_dxhr.readyState == 4 && _dxhr.status == 200) {
-              //     console.log(_dxhr.responseText);
-              //     document.addEventListener("DOMContentLoaded", (e) => {
-              //       console.log(document.getElementById("psel"));
-              //     });
-              //     // console.log(document.getElementById("psel"));
-              //     // let [result] = JSON.parse(_dxhr.responseText);
-              //     // console.log(result);
-              //     // document.getElementById("psel").innerHTML = result.username;
-              //   }
-              // };
-              // _dxhr.open(
-              //   "GET",
-              //   `/api/admin/productSeller/${e.target.dataset.seller_id}`,
-              //   true
-              // );
-              // _dxhr.send();
-            });
-          });
         }
       };
       load.open("GET", `/api/admin/getOnlineProducts`, true);

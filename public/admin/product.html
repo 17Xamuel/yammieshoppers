@@ -184,72 +184,60 @@
                 <div class="card rounded">
                   <div class="card-body">
                     <h4 class="text-center text-info">
-                      Order No: <span id="ordernumber"></span>
+                      Product No: <span id="number"></span>
                     </h4>
                     <div>
                       <table class="table text-left">
                         <tbody>
                           <tr>
-                            <td>Customer Name:<span id="name"></span></td>
-                            <td>Customer Email: <span id="email"></span></td>
+                            <td>Product Name:<span id="name"></span></td>
+                            <td>Product Price: <span id="price"></span></td>
                           </tr>
                           <tr>
-                            <td>Customer Contact:<span id="cphone"></span></td>
-                            <td>
-                              Customer Location: <span id="clocation"></span>
-                            </td>
+                            <td>NetPrice:<span id="nprice"></span></td>
+                            <td>Discount: <span id="discount"></span></td>
                           </tr>
                           <tr>
-                            <td>
-                              No of Items Ordered:<span id="items"></span>
-                            </td>
-                            <td>Order Date: <span id="date"></span></td>
+                            <td>Quantity in Stock:<span id="qty"></span></td>
+                            <td>Date Added: <span id="date"></span></td>
                           </tr>
 
                           <tr>
-                            <td>Payment Method:<span id="method"></span></td>
-                            <td>Order Status: <span id="ostatus"></span></td>
+                            <td>Brand:<span id="brand"></span></td>
+                            <td>Type Of Product: <span id="type"></span></td>
                           </tr>
                           <tr>
-                            <td>Order Amount: <span id="amount"></span></td>
-                            <td>Shipping Fee: <span id="sfee"></span></td>
+                            <td>Category: <span id="cat"></span></td>
+                            <td>SubCategory: <span id="sct"></span></td>
                           </tr>
                           <tr>
-                            <td>Delivery Method: <span id="dmthd"></span></td>
+                            <td>Seller Name: <span id="sname"></span></td>
+                            <td>Seller Contact: <span id="scontact"></span></td>
+                          </tr>
+                          <tr>
+                            <td>Brief Description: <span id="des"></span></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Detailed Description: <span id="ddes"></span>
+                            </td>
                           </tr>
                         </tbody>
                       </table>
                       <div id="detailLoading" class="text-center"></div>
+                      <div class="text-center">
+                        <ul class="list-inline" id="-img"></ul>
+                      </div>
                     </div>
 
-                    <h6 class="text-center text-primary">Item details</h6>
-                    <table class="table">
-                      <tr>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Discount(%)</th>
-                        <th>Total</th>
-                        <th>Seller</th>
-                      </tr>
-                      <tbody id="id"></tbody>
-                    </table>
                     <div class="text-center">
                       <button
                         type="button"
-                        class="btn btn-danger"
-                        data-target="#cOrder"
+                        class="btn btn-danger btn-block"
+                        data-target="#rProduct"
                         data-toggle="modal"
                       >
-                        Cancel Order
-                      </button>
-                      <button
-                        type="button"
-                        class="btn btn-success"
-                        data-target="#fOrder"
-                        data-toggle="modal"
-                      >
-                        Finish Order
+                        Remove Product
                       </button>
                     </div>
                   </div>
@@ -262,21 +250,21 @@
     </section>
     <!-- End details -->
 
-    <!-- Finish Modal -->
-    <div class="modal fade" id="fOrder">
+    <!-- Remove Modal -->
+    <div class="modal fade" id="rProduct">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Want to Finish Order?</h5>
+            <h5 class="modal-title">Want to Remove Product?</h5>
           </div>
-          <div class="modal-body text-center" id="finishMessage">
+          <div class="modal-body text-center" id="removeMessage">
             Press Ok to Continue
           </div>
           <div class="modal-footer">
             <button
               type="button"
               class="btn btn-success btn-sm"
-              id="finishOrder"
+              id="removeProduct"
             >
               Ok
             </button>
@@ -291,77 +279,7 @@
         </div>
       </div>
     </div>
-    <!-- End Finish -->
-
-    <!-- cancelOrder -->
-    <div class="modal fade" id="cOrder">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Want to Cancel Order?</h5>
-          </div>
-          <div class="modal-body text-center" id="cancelMessage">
-            Press Ok to Continue
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-success btn-sm"
-              id="cancelOrder"
-            >
-              Ok
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm"
-              data-dismiss="modal"
-            >
-              No
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Cancel -->
-
-    <!-- seller Modal -->
-    <div class="modal fade" id="sellerInfo">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Seller Information</h5>
-          </div>
-          <div class="modal-body">
-            <table class="table text-left">
-              <tbody>
-                <tr>
-                  <td>Name: <span id="sn"></span></td>
-                </tr>
-                <tr>
-                  <td>Mobile Number: <span id="spn"></span></td>
-                </tr>
-                <tr>
-                  <td>Email: <span id="se"></span></td>
-                </tr>
-                <tr>
-                  <td>Location: <span id="sl"></span></td>
-                </tr>
-              </tbody>
-            </table>
-            <div id="contentLoad" class="text-center"></div>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-sm btn-danger"
-              data-dismiss="modal"
-            >
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!-- End Remove -->
 
     <!-- Footer -->
     <footer>
@@ -415,127 +333,7 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script>
-      let orderId = new URLSearchParams(window.location.search).get("order");
-      const orders = new XMLHttpRequest();
-      orders.onreadystatechange = () => {
-        if (orders.readyState < 4) {
-          document.getElementById(
-            "detailLoading"
-          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-        }
-        if (orders.status == 200 && orders.readyState == 4) {
-          let [pendingOrders] = JSON.parse(orders.responseText);
-          let info = JSON.parse(pendingOrders.order_info);
-          document.getElementById("sfee").innerHTML = info.shipping;
-          document.getElementById("dmthd").innerHTML =
-            info.order_delivery_method;
-          let date = pendingOrders.order_date.slice(0, 10);
-          document.getElementById("ordernumber").innerHTML =
-            pendingOrders.order_number;
-          document.getElementById("date").innerHTML = date;
-          document.getElementById("name").innerHTML = pendingOrders.c_last_name;
-          document.getElementById("email").innerHTML = pendingOrders.c_email;
-          document.getElementById("cphone").innerHTML = pendingOrders.c_phone;
-          document.getElementById("clocation").innerHTML =
-            pendingOrders.pickup_address_1 || pendingOrders.pickup_address_2;
-          if (pendingOrders.order_payment_method == "cod") {
-            document.getElementById("method").innerHTML = "Cash On Delivery";
-          } else if (pendingOrders.order_payment_method == "mm") {
-            document.getElementById("method").innerHTML = "Mobile Money";
-          }
-          document.getElementById("amount").innerHTML =
-            "UGX" + pendingOrders.order_amount;
-          document.getElementById("ostatus").innerHTML =
-            pendingOrders.order_status;
-          let items = JSON.parse(pendingOrders.order_items);
-          document.getElementById("items").innerHTML = Object.keys(
-            items
-          ).length;
 
-          let itemdetails = Object.values(items);
-          let data = "";
-          itemdetails.forEach((item) => {
-            const orderProduct = new XMLHttpRequest();
-            orderProduct.onreadystatechange = () => {
-              if (orderProduct.readyState == 4 && orderProduct.status == 200) {
-                let [orderedProduct] = JSON.parse(orderProduct.responseText);
-                let total =
-                  (orderedProduct.price -
-                    (orderedProduct.discount / 100) * orderedProduct.price) *
-                  item.inCartNumber;
-                data += `<tr>
-                          <td>${orderedProduct.product}</td>
-                          <td>${item.inCartNumber}</td>
-                          <td>${orderedProduct.price}</td>
-                          <td>${orderedProduct.discount}</td>
-                          <td>${total}</td>
-                          <td>
-                            <button type="button" class="btn btn-sm btn-info"
-                            data-toggle="modal" data-target="#sellerInfo"
-                            data-it="${item.cartItemAdded}">Contact</button>
-                          </td>
-                       </tr>`;
-              }
-              document.getElementById("id").innerHTML = data;
-              let contactButtons = document.querySelectorAll(".btn-info");
-              contactButtons.forEach((contactButton) => {
-                contactButton.addEventListener("click", (e) => {
-                  let contact = e.target.dataset.it;
-                  const xhr = new XMLHttpRequest();
-                  xhr.onreadystatechange = () => {
-                    if (xhr.readyState < 4) {
-                      document.getElementById(
-                        "contentLoad"
-                      ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-                    }
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                      let [result] = JSON.parse(xhr.responseText);
-                      document.getElementById("sn").innerHTML = result.username;
-                      document.getElementById("spn").innerHTML =
-                        result.phonenumber;
-                      document.getElementById("se").innerHTML = result.email;
-                      document.getElementById("sl").innerHTML = result.location;
-                      document.getElementById("contentLoad").innerHTML = "";
-                    }
-                  };
-                  xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
-                  xhr.send();
-                });
-              });
-            };
-            orderProduct.open(
-              "GET",
-              `/api/admin/orderProduct/${item.cartItemAdded}`,
-              true
-            );
-            orderProduct.send();
-          });
-          document.getElementById("detailLoading").innerHTML = "";
-        }
-      };
-      orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);
-      orders.send();
-
-      let finishOrder = document.getElementById("finishOrder");
-      finishOrder.addEventListener("click", (e) => {
-        const orderFinish = new XMLHttpRequest();
-        orderFinish.onreadystatechange = () => {
-          if (orderFinish.readyState < 4) {
-            document.getElementById(
-              "finishMessage"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if (orderFinish.readyState == 4 && orderFinish.status == 200) {
-            if (orderFinish.responseText == "ok") {
-              window.location.assign("home.html");
-            }
-          }
-        };
-        orderFinish.open("GET", `/api/admin/finishOrder/${orderId}`, true);
-        orderFinish.send();
-      });
-    </script>
     <script src="scripts/account.js"></script>
     <!-- End Scripts -->
   </body>

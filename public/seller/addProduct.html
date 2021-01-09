@@ -635,7 +635,9 @@
         console.log(filing.files.length);
         if (fileNumber.files.length == 0 || filing.files.length > 3) {
           e.preventDefault();
-          alert("Total images should not exceed four!!!");
+          alert(
+            "Total images should be atleast one and should not exceed four!!!"
+          );
         }
       });
 

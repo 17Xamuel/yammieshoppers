@@ -32,7 +32,7 @@
     />
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Product Details</title>
+    <title>Yammie | Product Details</title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -192,10 +192,18 @@
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3">
-              <div class="col-xl-8 mx-auto">
+              <div class="col-xl-10 mx-auto">
                 <div class="card rounded my-5">
                   <div class="card-body">
-                    <h5 class="text-left text-info">Product Details</h5>
+                    <div class="text-center">
+                      <h5 class="text-info">
+                        Product Number: <span id="number"></span>
+                      </h5>
+                      <button type="button" class="btn btn-primary btn-sm">
+                        Edit Product
+                      </button>
+                    </div>
+
                     <table class="table text-left">
                       <tbody>
                         <tr>
@@ -212,11 +220,37 @@
                         </tr>
 
                         <tr>
+                          <td>Category:<span id="cat"></span></td>
+                          <td>SubCategory:<span id="scat"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Date Added:<span id="date"></span></td>
+                          <td>Fragile:<span id="frag"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Size:<span id="size"></span></td>
+                          <td>Color:<span id="col"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Dimensions:<span id="dim"></span></td>
+                          <td>Weigth:<span id="weight"></span></td>
+                        </tr>
+
+                        <tr>
                           <td>Seller Name: <span id="sname"></span></td>
                           <td>Seller Contact: <span id="contact"></span></td>
                         </tr>
                         <tr>
-                          <td>Description:<span id="desc"></span></td>
+                          <td>Type of Product:<span id="types"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Brief Description:<span id="desc"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Detailed Description:<span id="ddesc"></span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -224,22 +258,24 @@
                     <div class="text-center">
                       <ul class="list-inline" id="-img"></ul>
                     </div>
-                    <button
-                      type="submit"
-                      class="btn btn-success btn-block"
-                      id="acc"
-                      data-target="#accept"
-                      data-toggle="modal"
-                    >
-                      Accept
-                    </button>
-                    <button
-                      class="btn btn-danger btn-block"
-                      data-target="#reject"
-                      data-toggle="modal"
-                    >
-                      Reject
-                    </button>
+                    <div class="text-center">
+                      <button
+                        type="submit"
+                        class="btn btn-success"
+                        id="acc"
+                        data-target="#accept"
+                        data-toggle="modal"
+                      >
+                        Accept
+                      </button>
+                      <button
+                        class="btn btn-danger"
+                        data-target="#reject"
+                        data-toggle="modal"
+                      >
+                        Reject
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -391,17 +427,35 @@
         }
         if (details.status == 200 && details.readyState == 4) {
           let [outcome] = JSON.parse(details.responseText);
+
           document.getElementById("name").innerHTML = outcome.product;
           document.getElementById("qty").innerHTML = outcome.quantity;
           document.getElementById("price").innerHTML = outcome.price;
+          document.getElementById("cat").innerHTML = outcome.category_name;
+          document.getElementById("scat").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
-          let netPrice =
-            outcome.price - (outcome.discount / 100) * outcome.price;
-          document.getElementById("netp").innerHTML = parseInt(netPrice);
-          document.getElementById("brand").innerHTML = outcome.brand;
+          document.getElementById("date").innerHTML = outcome.dateAdded.slice(
+            0,
+            10
+          );
+
+          document.getElementById("netp").innerHTML = parseInt(
+            outcome.price - (outcome.discount / 100) * outcome.price
+          );
           document.getElementById("desc").innerHTML = outcome.description;
+          document.getElementById("ddesc").innerHTML =
+            outcome.detailedDescription;
           document.getElementById("sname").innerHTML = outcome.username;
           document.getElementById("contact").innerHTML = outcome.phonenumber;
+          let specify = JSON.parse(outcome.specifications);
+          document.getElementById("number").innerHTML = specify.Number;
+          document.getElementById("brand").innerHTML = specify.Brand || null;
+          document.getElementById("frag").innerHTML = specify.Fragile;
+          document.getElementById("size").innerHTML = specify.Size;
+          document.getElementById("col").innerHTML = specify.Color || null;
+          document.getElementById("dim").innerHTML = specify.Dimensions;
+          document.getElementById("weight").innerHTML = specify.Weight;
+          document.getElementById("types").innerHTML = specify.TypeOfProduct;
 
           let images = JSON.parse(outcome.images);
           let data = "";

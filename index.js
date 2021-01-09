@@ -73,6 +73,7 @@ app.post("/addProduct", async (req, res) => {
       size,
       typeOfProduct
     } = req.body;
+    let code = Math.floor(Math.random() * 1000000 + 1).toString();
     conn.query(
       `SELECT subcategory_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
       (error, result) => {
@@ -90,7 +91,9 @@ app.post("/addProduct", async (req, res) => {
             seller_id: seller_id,
             quantity: quantity,
             detailedDescription,
+            dateAdded: new Date(),
             specifications: JSON.stringify({
+              Number: code,
               Brand: brand || null,
               Color: color || null,
               Weight: weight,
