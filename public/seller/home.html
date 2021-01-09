@@ -223,10 +223,10 @@
                 <div class="card card-common">
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
-                      <i class="fas fa-money-bill-alt fa-3x text-danger"></i>
+                      <i class="fas fa-shopping-cart fa-3x text-danger"></i>
                       <div class="text-right text-secondary">
-                        <h4>Expenses</h4>
-                        <h3>UGX10,000</h3>
+                        <h4>Sales</h4>
+                        <h3 id="sal"></h3>
                       </div>
                     </div>
                   </div>
@@ -493,6 +493,25 @@
       };
       sales.open("GET", `/api/sellers/sales/${sellerId}`, true);
       sales.send();
+
+      const sale = new XMLHttpRequest();
+      sale.onreadystatechange = () => {
+        if (sale.readyState < 4) {
+          document.getElementById(
+            "sal"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
+        }
+        if (sale.readyState == 4 && sale.status == 200) {
+          let [qty] = JSON.parse(sale.responseText);
+          if (!qty.Qty) {
+            document.getElementById("sal").innerHTML = 0;
+          } else {
+            document.getElementById("sal").innerHTML = qty.Qty;
+          }
+        }
+      };
+      sale.open("GET", `/api/sellers/sale/${sellerId}`, true);
+      sale.send();
 
       function lg() {
         let lg = document.getElementById("slg");

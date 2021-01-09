@@ -99,11 +99,26 @@ router.get("/pendingProduct", async (req, res) => {
 
 router.get("/pendingProduct/:id", async (req, res) => {
   conn.query(
-    "SELECT * FROM pending_products JOIN sellers ON pending_products.seller_id=sellers.id WHERE pending_products.id=?",
+    `SELECT * FROM pending_products JOIN sellers ON pending_products.seller_id=sellers.id 
+    JOIN subCategories ON pending_products.subcategory=subCategories.subcategory_id
+    JOIN category ON subCategories.category_id=category.category_id WHERE pending_products.id=?`,
     [req.params.id],
     (err, result) => {
       if (err) throw err;
-      res.json(result);
+      res.send(result);
+    }
+  );
+});
+
+router.get("/approvedProduct/:id", async (req, res) => {
+  conn.query(
+    `SELECT * FROM products JOIN sellers ON products.seller_id=sellers.id 
+    JOIN subCategories ON products.subcategory=subCategories.subcategory_id
+    JOIN category ON subCategories.category_id=category.category_id WHERE products.id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
     }
   );
 });
@@ -194,34 +209,6 @@ router.get("/product/:id", async (req, res) => {
   );
 });
 
-router.get("/clearOrder/:id", async (req, res) => {
-  conn.query(
-    "SELECT * FROM seller_orders WHERE id=?",
-    [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      if (!result) {
-        return res.send("Order Already Cleared");
-      }
-      conn.query(
-        "INSERT INTO cleared_orders SET ?",
-        result,
-        (error, results) => {
-          if (error) throw error;
-          conn.query(
-            "DELETE FROM seller_orders WHERE id=?",
-            [req.params.id],
-            (errs, queryResult) => {
-              if (errs) throw errs;
-              res.send("Order Cleared");
-            }
-          );
-        }
-      );
-    }
-  );
-});
-
 router.get("/rejected/:id", async (req, res) => {
   conn.query(
     `SELECT product,price,quantity,seller_id FROM pending_products
@@ -251,7 +238,7 @@ router.post("/rejPost/:id", async (req, res) => {
           quantity: quantity,
           images: image,
           seller_id: seller_id,
-          reason: reason,
+          reason: reason
         },
         (error, results) => {
           if (error) throw error;
@@ -276,25 +263,74 @@ router.get("/getOnlineProducts", async (req, res) => {
   });
 });
 
-// router.get("/finishOrder/:id", async (req, res) => {
-//   conn.query(
-//     `UPDATE pending_orders SET order_status='Finished' WHERE order_id=?`,
-//     [req.params.id],
-//     (err, result) => {
-//       if (err) throw err;
-//       res.send("Order Successfully Finished");
-//     }
-//   );
-// });
-
-router.get("/productSeller/:id", async (req, res) => {
+router.get("/finishOrder/:id", async (req, res) => {
   conn.query(
-    `SELECT username FROM sellers JOIN products
-       ON products.seller_id=sellers.id WHERE products.seller_id = ?`,
+    `SELECT * FROM pending_orders WHERE order_id =?`,
     [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      res.send(result);
+    (err1, res1) => {
+      if (err1) throw err1;
+      let orderItems = Object.values(JSON.parse(res1[0].order_items));
+      orderItems.forEach((order) => {
+        conn.query(
+          `SELECT * FROM cleared_orders WHERE product_id='${order.cartItemAdded}'`,
+          (err2, res2) => {
+            if (err2) throw err2;
+            if (res2.length == 0) {
+              conn.query(
+                `SELECT * FROM seller_orders WHERE product_id ='${order.cartItemAdded}'`,
+                (err3, res3) => {
+                  if (err3) throw err3;
+                  conn.query(
+                    `INSERT INTO cleared_orders SET ?`,
+                    res3,
+                    (err4, res4) => {
+                      if (err4) throw err4;
+                      conn.query(
+                        `DELETE FROM seller_orders WHERE id='${res3[0].id}'`,
+                        (err5, res5) => {
+                          if (err5) throw err5;
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            } else if (res2.length > 0) {
+              conn.query(
+                `SELECT order_qty FROM cleared_orders WHERE product_id='${order.cartItemAdded}'`,
+                (err6, res6) => {
+                  if (err6) throw err6;
+                  let qtyChange =
+                    parseInt(res6[0].order_qty) + order.inCartNumber;
+                  conn.query(
+                    `UPDATE cleared_orders SET order_qty=${qtyChange} WHERE product_id='${order.cartItemAdded}'`,
+                    (err7, res7) => {
+                      if (err7) throw err7;
+                      conn.query(
+                        `DELETE  FROM seller_orders WHERE product_id='${order.cartItemAdded}'`,
+                        (err10, res10) => {
+                          if (err10) throw err10;
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            }
+          }
+        );
+      });
+      conn.query(`INSERT INTO finished_orders SET ?`, res1, (err8, res8) => {
+        if (err8) throw err8;
+        conn.query(
+          `DELETE FROM pending_orders WHERE order_id = ?`,
+          [req.params.id],
+          (errors, result) => {
+            if (errors) throw errors;
+            res.status(200).send("ok");
+          }
+        );
+      });
     }
   );
 });
@@ -304,7 +340,7 @@ router.post("/addCategory", async (req, res) => {
   conn.query(
     `INSERT INTO category SET ? `,
     {
-      category_name: catName,
+      category_name: catName
     },
     (err, result) => {
       if (err) throw err;
@@ -314,7 +350,7 @@ router.post("/addCategory", async (req, res) => {
 });
 
 router.get("/getCategory", async (req, res) => {
-  conn.query("SELECT category_name FROM category", (err, result) => {
+  conn.query("SELECT * FROM category", (err, result) => {
     if (err) throw err;
     res.send(result);
   });
@@ -340,6 +376,13 @@ router.post("/addSubCategory", async (req, res) => {
       );
     }
   );
+});
+
+router.get("/subCategories", async (req, res) => {
+  conn.query(`SELECT * FROM subCategories`, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
 });
 
 router.get("/orderProduct/:id", async (req, res) => {

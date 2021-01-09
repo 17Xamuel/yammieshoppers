@@ -378,6 +378,18 @@ router.get("/sales/:id", async (req, res) => {
   );
 });
 
+router.get("/sale/:id", async (req, res) => {
+  conn.query(
+    `SELECT SUM(order_qty) AS Qty FROM cleared_orders JOIN
+  products ON cleared_orders.product_id=products.id JOIN sellers ON sellers.id=
+  products.seller_id WHERE sellers.id=?`,
+    [req.params.id],
+    (err, result) => {
+      res.send(result);
+    }
+  );
+});
+
 router.get("/getRejProducts/:id", async (req, res) => {
   conn.query(
     `SELECT rejected_products.id,rejected_products.name,images,
