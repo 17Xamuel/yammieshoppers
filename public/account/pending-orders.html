@@ -830,25 +830,37 @@
             _c.forEach((item) => {
               group += `
             <a class="item -ct-item" href="../item?item=${item.id}">
-              <img
-                src="${JSON.parse(item.images)[0]}"
-                alt="${item.product}"
-                width="180px"
-                height="150px"
-              />
-              <div class="-i-dtl">
-                <div class="it-nm">${item.product} - ${item.description}</div>
-                <div class="it-pr pr price-current">${
-                  "UGX " +
-                  (item.discount
-                    ? (item.price * (100 - item.discount)) / 100
-                    : item.price)
-                }</div>
-                  <div class="pre-it-pr pr price-prev">${
-                    item.discount ? "UGX " + item.price : ""
-                  }</div>
-              </div>
-            </a>
+                      <div class="-d">
+                        ${
+                          item.discount !== null
+                            ? "-" + item.discount + "%"
+                            : ""
+                        }
+                      </div>
+                      <div class="_image">
+                        <img
+                          src="${JSON.parse(item.images)[0]}"
+                          alt="${item.name}"
+                          width="100%"
+                          height="100%"
+                        />
+                      </div>
+                      <div class="-i-dtl">
+                        <div class="it-nm">
+                          ${item.product} - ${item.description}
+                        </div>
+                        <div class="it-pr pr price-current">${
+                          "UGX " +
+                          (item.discount
+                            ? (item.price * (100 - item.discount)) / 100
+                            : item.price)
+                        }</div>
+                         <div class="pre-it-pr pr price-prev">${
+                           item.discount ? "UGX " + item.price : ""
+                         }</div>
+                      </div>
+                    </a>
+                    
             `;
             });
             c.innerHTML = group;

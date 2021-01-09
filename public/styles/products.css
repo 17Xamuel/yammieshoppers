@@ -59,33 +59,30 @@
   box-shadow: 0px 0px 5px #c2c2c2;
   transform: scale(1.001);
 }
-.-lazy {
+.-lazy,
+.-shm {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f6f7f8;
-  background-image: linear-gradient(
-    to right,
-    #f6f7f8 0%,
-    #edeef1 20%,
-    #eff1f3 40%,
-    #f6f7f8 100%
-  );
-  animation-duration: 4s;
-  background-size: contain;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeholderShimmer;
-  animation-timing-function: linear;
+  background-color: rgba(0, 0, 0, 0.1);
+  animation: shm 1.5s linear infinite forwards;
 }
-@keyframes placeholderShimmer {
+@keyframes shm {
   0% {
-    background-position: -250px 0;
+    background-color: rgba(180, 180, 180, 0.1);
   }
-
+  25% {
+    background-color: rgba(180, 180, 180, 0.2);
+  }
+  50% {
+    background-color: rgba(180, 180, 180, 0.3);
+  }
+  75% {
+    background-color: rgba(180, 180, 180, 0.2);
+  }
   100% {
-    background-position: 250px 0;
+    background-color: rgba(180, 180, 180, 0.1);
   }
 }
 .-i-dtl {

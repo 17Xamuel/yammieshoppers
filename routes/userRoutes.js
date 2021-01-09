@@ -375,7 +375,13 @@ router.post("/customer/order", async (req, res) => {
             transporter
               .sendMail(mail_order)
               .then((response) => {
-                res.status(200).send([req.body.payment_method, orderNumber]);
+                res
+                  .status(200)
+                  .send([
+                    req.body.payment_method,
+                    orderNumber,
+                    req.body._ttp + req.body._shp,
+                  ]);
               })
               .catch((err) => {
                 console.log("Error Ocurred!!!");

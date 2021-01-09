@@ -12,9 +12,9 @@
     <title>Yammie | Thanks for your order</title>
 
     <script>
-      if (document.referrer == "") {
-        self.location = "/";
-      }
+      // if (document.referrer == "") {
+      //   self.location = "/";
+      // }
     </script>
 
     <style>
@@ -81,6 +81,14 @@
         }
       }
     </style>
+    <script>
+      let url = new URLSearchParams(window.location.search);
+      this.addEventListener("DOMContentLoaded", () => {
+        document.querySelector(".order").innerHTML = `<b>${url.get(
+          "order"
+        )}</b>`;
+      });
+    </script>
   </head>
   <body>
     <div class="nav">
@@ -132,6 +140,8 @@
           </div>
           <div class="">
             Thanks for shopping with yammie.
+            <br />
+            Your order number is <span class="order"></span>
             <br />
             You will receive an EMAIL or SMS containing
             <br />

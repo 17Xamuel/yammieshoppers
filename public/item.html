@@ -21,6 +21,18 @@
         );
       });
     </script>
+    <style>
+      .-shm {
+        background-color: rgba(0, 0, 0, 0.1);
+        height: 40px;
+        margin: 5px 0px;
+      }
+      .-shm.-sm {
+        background-color: rgba(0, 0, 0, 0.1);
+        height: 15px;
+        width: 30%;
+      }
+    </style>
   </head>
   <body>
     <!--image dialog div-->
@@ -32,12 +44,14 @@
           <img
             src="./resources/cart-link.png"
             alt=""
-            width="500px"
-            height="450px"
+            width="90%"
+            height="90%"
             class="main-itm-img-pp"
           />
         </div>
-        <div class="other-itm-imgs-pp"></div>
+        <div class="-center">
+          <div class="other-itm-imgs-pp"></div>
+        </div>
       </div>
     </div>
     <!--image dialog div-->
@@ -345,7 +359,7 @@
       </form>
     </div>
     <div class="itm-m-ctr">
-      <div class="itm-nav-panel">Home > Easy Market > Jesa</div>
+      <!-- <div class="itm-nav-panel">Home > Easy Market > Jesa</div> -->
       <div class="itm-ctr">
         <div class="itm -b-x">
           <div class="itm-top-m">
@@ -363,12 +377,22 @@
               <div class="other-itm-imgs"></div>
             </div>
             <div class="itm-name-price">
-              <h2 class="itm-f-name">Product_name</h2>
-              <span class="itm-f-name"><b class="_brand">Brand: </b></span>
+              <h2 class="itm-f-name">
+                <div class="-shm"></div>
+              </h2>
+              <span class="itm-f-name">
+                <b class="_brand"><span class="-shm -sm"></span></b>
+              </span>
               <div class="price-tags">
-                <h1 class="current-price _price">Price</h1>
-                <div class="prev-price _discount-p">discount</div>
-                <span class="_discount discount">discount</span>
+                <h1 class="current-price _price">
+                  <div class="-shm"></div>
+                </h1>
+                <div class="prev-price _discount-p">
+                  <span class="-shm -sm"></span>
+                </div>
+                <span class="_discount discount">
+                  <span class="-shm -sm"></span>
+                </span>
               </div>
               <div class="add-cart">
                 <button class="btn-add-to-cart itm-f-name -cart">
@@ -388,22 +412,7 @@
               <a href=""></a>
             </div>
           </div>
-          <div class="delivery-info">
-            Brought To &amp; Delivered By: Yammie
-            <!-- <div class="itm-dtl">
-              <h4>Seller : Yammie Holdings.</h4>
-              <span>Location : Lira Campus</span>
-              <div>
-                Seller Score : <b> 64% </b>
-                &nbsp;
-                <a href="#" style="font-size: 14px">Learn More</a>
-              </div>
-              <form action="#" method="post">
-                <textarea name="" id="s-message" cols="25" rows="10">
-                </textarea>
-              </form> 
-            </div> -->
-          </div>
+          <div class="delivery-info">Brought To &amp; Delivered By: Yammie</div>
         </div>
         <div class="itm-side-info -b-x">
           <h4>Product Details</h4>
@@ -946,7 +955,6 @@
         req.onreadystatechange = function () {
           if (req.status == 200 && req.readyState == 4) {
             let item = JSON.parse(req.responseText)[0];
-            console.log(item);
             document.querySelector(".itm-f-name").innerHTML =
               item.product + " - " + item.description;
             document.querySelector("._brand").innerHTML =
@@ -970,6 +978,9 @@
             document.querySelector("._discount").innerHTML = `${
               item.discount ? item.discount + "% off" : ""
             }`;
+            if (item.discount) {
+              document.querySelector("._discount").classList.add("-d-active");
+            }
             document.querySelector(".main-image").src = `${
               JSON.parse(item.images)[0]
             }`;
