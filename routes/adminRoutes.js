@@ -365,15 +365,11 @@ router.post("/addSubCategory", async (req, res) => {
   );
 });
 
-router.get("/subCategories/:id", async (req, res) => {
-  conn.query(
-    `SELECT * FROM subCategories WHERE category_id =?`,
-    [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      res.send(result);
-    }
-  );
+router.get("/subCategories", async (req, res) => {
+  conn.query(`SELECT * FROM subCategories`, [req.params.id], (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
 });
 
 router.get("/orderProduct/:id", async (req, res) => {
