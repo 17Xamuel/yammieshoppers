@@ -337,7 +337,7 @@ router.post("/addCategory", async (req, res) => {
 });
 
 router.get("/getCategory", async (req, res) => {
-  conn.query("SELECT category_name FROM category", (err, result) => {
+  conn.query("SELECT * FROM category", (err, result) => {
     if (err) throw err;
     res.send(result);
   });

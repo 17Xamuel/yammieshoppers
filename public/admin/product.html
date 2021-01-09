@@ -194,8 +194,8 @@
                             <td>Product Price: <span id="price"></span></td>
                           </tr>
                           <tr>
-                            <td>NetPrice:<span id="nprice"></span></td>
-                            <td>Discount: <span id="discount"></span></td>
+                            <td>NetPrice:<span id="netp"></span></td>
+                            <td>Discount: <span id="disc"></span></td>
                           </tr>
                           <tr>
                             <td>Quantity in Stock:<span id="qty"></span></td>
@@ -211,15 +211,30 @@
                             <td>SubCategory: <span id="sct"></span></td>
                           </tr>
                           <tr>
+                            <td>Date Added:<span id="date"></span></td>
+                            <td>Fragile:<span id="frag"></span></td>
+                          </tr>
+                          <tr>
+                            <td>Size:<span id="size"></span></td>
+                            <td>Color:<span id="col"></span></td>
+                          </tr>
+                          <tr>
+                            <td>Dimensions:<span id="dim"></span></td>
+                            <td>Weight:<span id="weight"></span></td>
+                          </tr>
+                          <tr>
                             <td>Seller Name: <span id="sname"></span></td>
                             <td>Seller Contact: <span id="scontact"></span></td>
                           </tr>
                           <tr>
-                            <td>Brief Description: <span id="des"></span></td>
+                            <td>Type of Product:<span id="types"></span></td>
+                          </tr>
+                          <tr>
+                            <td>Brief Description: <span id="desc"></span></td>
                           </tr>
                           <tr>
                             <td>
-                              Detailed Description: <span id="ddes"></span>
+                              Detailed Description: <span id="ddesc"></span>
                             </td>
                           </tr>
                         </tbody>
@@ -335,6 +350,62 @@
     ></script>
 
     <script src="scripts/account.js"></script>
+    <script>
+      let product = new URLSearchParams(window.location.search).get("product");
+      const productDetails = new XMLHttpRequest();
+      productDetails.onreadystatechange = () => {
+        if (details.readyState < 4) {
+          document.getElementById(
+            "detailLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (productDetails.readyState == 4 && productDetails == 200) {
+          let [outcome] = JSON.parse(details.responseText);
+
+          document.getElementById("name").innerHTML = outcome.product;
+          document.getElementById("qty").innerHTML = outcome.quantity;
+          document.getElementById("price").innerHTML = outcome.price;
+          document.getElementById("cat").innerHTML = outcome.category_name;
+          document.getElementById("sct").innerHTML = outcome.subCategoryName;
+          document.getElementById("disc").innerHTML = outcome.discount + "%";
+          document.getElementById("date").innerHTML = outcome.dateAdded.slice(
+            0,
+            10
+          );
+
+          document.getElementById("netp").innerHTML = parseInt(
+            outcome.price - (outcome.discount / 100) * outcome.price
+          );
+          document.getElementById("desc").innerHTML = outcome.description;
+          document.getElementById("ddesc").innerHTML =
+            outcome.detailedDescription;
+          document.getElementById("sname").innerHTML = outcome.username;
+          document.getElementById("scontact").innerHTML = outcome.phonenumber;
+          let specify = JSON.parse(outcome.specifications);
+          document.getElementById("number").innerHTML = specify.Number;
+          document.getElementById("brand").innerHTML = specify.Brand || null;
+          document.getElementById("frag").innerHTML = specify.Fragile;
+          document.getElementById("size").innerHTML = specify.Size;
+          document.getElementById("col").innerHTML = specify.Color || null;
+          document.getElementById("dim").innerHTML = specify.Dimensions;
+          document.getElementById("weight").innerHTML = specify.Weight;
+          document.getElementById("types").innerHTML = specify.TypeOfProduct;
+
+          let images = JSON.parse(outcome.images);
+          let data = "";
+          for (i = 0; i < images.length; i++) {
+            data += `
+              <li class="list-inline-item">
+                <img src="${images[i]}" width="100" height="100"/>
+                </li>`;
+          }
+          document.getElementById("-img").innerHTML = data;
+          document.getElementById("detailLoading").innerHTML = "";
+        }
+      };
+      productDetails.open("GET", `/api/admin/approvedProduct/${product}`, true);
+      productDetails.send();
+    </script>
     <!-- End Scripts -->
   </body>
 </html>

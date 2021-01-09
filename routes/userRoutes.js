@@ -215,13 +215,8 @@ router.post("/customer/cart/amount/:id", (req, res) => {
     [
       {
         c_cart_amount: req.body[0],
-<<<<<<< HEAD
-        c_cart: req.body[2].cartItems,
-        c_cart_number: req.body[2].cartNumber
-=======
         c_cart: req.body[2],
-        c_cart_number: req.body[3],
->>>>>>> 96ab1e6b27cdd774055121fd0e6cb31114e7f082
+        c_cart_number: req.body[3]
       },
       req.body[1]
     ],
@@ -533,9 +528,9 @@ router.post("/customer/cart/:id", (req, res) => {
             [
               {
                 c_cart: JSON.stringify(newCart),
-                c_cart_number: parseInt(cart_number),
+                c_cart_number: parseInt(cart_number)
               },
-              req.params.id,
+              req.params.id
             ],
             (error, result_2) => {
               if (error) {
@@ -553,9 +548,9 @@ router.post("/customer/cart/:id", (req, res) => {
             [
               {
                 c_cart: JSON.stringify(cart_str),
-                c_cart_number: cart_number_str,
+                c_cart_number: cart_number_str
               },
-              req.params.id,
+              req.params.id
             ],
             (error, result_2) => {
               if (error) {
@@ -563,7 +558,7 @@ router.post("/customer/cart/:id", (req, res) => {
               } else {
                 res.status(200).send({
                   newCart: cart_str,
-                  cart_number: cart_number_str,
+                  cart_number: cart_number_str
                 });
               }
             }
