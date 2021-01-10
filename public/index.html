@@ -1534,11 +1534,6 @@
       </div>
     </div>
     <footer class="footer">
-      <div class="ftr-sm-s">
-        <span><a href="./404"> Terms &amp; Conditions </a></span>
-        <span><a href="./404"> Help Center</a></span>
-        <span><a href="./404"> Contact Us</a></span>
-      </div>
       <div class="ftr-up">
         <div class="ftr-u-first">
           <div class="ftr-logo">
@@ -1556,7 +1551,7 @@
             </p>
           </div>
           <div class="ftr-app">
-            <h3 class="footer-h4">Download the Yammie App For FREE</h3>
+            <h3>Get Our App On . . . .</h3>
             <div class="ftr-app-stores" style="margin-top: 15px">
               <a href="">
                 <img
@@ -1579,67 +1574,77 @@
           </div>
         </div>
         <div class="ftr-u-second">
-          <div class="footer-h4">Explore Yammie</div>
+          <h4 class="footer-h4">Explore Yammie</h4>
           <ul class="footer-list">
-            <li><a href="./404">About Yammie</a></li>
-            <li><a href="./404">How to Order</a></li>
-            <li><a href="./404">Help &amp; FAQs</a></li>
-            <li><a href="./404">Our Partners</a></li>
-            <li><a href="./404">Terms &amp; Conditions For Use</a></li>
-            <li><a href="./404">Privacy Policy</a></li>
+            <li><a href="#">About Yammie</a></li>
+            <li><a href="#">How to Order</a></li>
+            <li><a href="#">Help &amp; FAQs</a></li>
+            <li><a href="#">Our Partners</a></li>
+            <li><a href="#">Terms &amp; Conditions For Use</a></li>
+            <li><a href="#">Privacy Policy</a></li>
           </ul>
         </div>
         <div class="ftr-u-third">
           <h4 class="footer-h4">Contact Us</h4>
           <ul class="footer-list">
             <li class="second-list">
-              <a href="">
-                <i class="fas fa-shopping-cart"></i>
+              <a href="/">
+                <i class="fas fa-cart-plus"></i>
                 Yammie Shoppers
               </a>
             </li>
             <li class="second-list">
-              <a href="mailto:#">
+              <a href="mailto:info@yammieshoppers.com">
                 <i class="fas fa-envelope"></i>
-                customer@yammieshoppers.com
+                info@yammieshoppers.com
               </a>
             </li>
             <li class="second-list">
-              <a href="./404">
+              <a href="https://g.page/yammie-shoppers?share" target="_blank">
                 <i class="fas fa-map-marker-alt"></i>
                 Lira Campus
               </a>
             </li>
           </ul>
-          <form action="#">
+          <form id="user_comment" autocomplete="off">
             <input
+              required
               type="text"
-              name=""
-              autocomplete="off"
+              name="_comment"
               id="comment"
               placeholder="How do you feel?"
             />
             <br />
             <input
               type="text"
-              name=""
-              autocomplete="off"
+              name="_contact"
               id="customer-email"
               placeholder="Email or Phone Number(Optional)"
             />
             <br />
             <button class="footer-form-button">submit</button>
+            <br />
+            <span
+              class="_r-comment"
+              style="
+                color: red;
+                opacity: 0;
+                margin-left: 5px;
+                transition: all 0.4s ease-in-out;
+              "
+            >
+            </span>
           </form>
         </div>
         <div class="ftr-u-fourth">
           <h4 class="footer-h4">Products &amp; Groceries</h4>
           <ul class="footer-list">
-            <li><a href="./404">Special Order</a></li>
-            <li><a href="./404">Delivery Time</a></li>
-            <li><a href="./404">Payment Methods</a></li>
-            <li><a href="./404">Request An Item</a></li>
-            <li><a href="./404">Report an Item</a></li>
-            <li><a href="./404">Return Policy</a></li>
+            <li><a href="#">Special Order</a></li>
+            <li><a href="#">Delivery Time</a></li>
+            <li><a href="#">Payment Methods</a></li>
+            <li><a href="#">Request An Item</a></li>
+            <li><a href="#">Report an Item</a></li>
+            <li><a href="#">Return Policy</a></li>
           </ul>
         </div>
       </div>
@@ -1936,6 +1941,35 @@
       );
       ctg(document.querySelector(".-ct-rv"), "/api/user/ct/index/rv");
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/index/rec");
+      //footer
+
+      document
+        .querySelector("#user_comment")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          document.querySelector("._r-comment").innerHTML =
+            "Sending Comment...";
+          document.querySelector("._r-comment").style.opacity = "0.5";
+          let form = new FormData(document.querySelector("#user_comment"));
+          let comment = {};
+          form.forEach((value, key) => {
+            comment[key] = value;
+          });
+          let xhr = new XMLHttpRequest();
+          xhr.open("POST", "/api/user/f-comment", true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.send(JSON.stringify(comment));
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              document.querySelector("._r-comment").innerHTML =
+                "Comment Received...";
+              document.querySelector("._r-comment").style.opacity = "0.5";
+              setTimeout(() => {
+                document.querySelector("._r-comment").style.opacity = "0";
+              }, 2000);
+            }
+          };
+        });
     </script>
     <script defer async src="../ym.min.js"></script>
     <!--scripts-->
