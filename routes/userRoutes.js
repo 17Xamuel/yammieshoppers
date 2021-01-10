@@ -523,7 +523,7 @@ router.post("/customer/cart/:id", (req, res) => {
               newCart[item] = cart_str[item];
             }
           }
-          if (deleteItem == "true") {
+          if (req.body.delete == "true") {
             delete newCart[req.body.deleteId];
           }
           for (let key in newCart) {
