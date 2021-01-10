@@ -342,7 +342,7 @@
           <div class="modal-header">
             <h5 class="modal-title">Want to reject Product?</h5>
           </div>
-          <div class="modal-body" id="rejBody">
+          <div class="modal-body text-center" id="rejBody">
             <form id="rejForm">
               <label for="name">Product name</label>
               <input
@@ -379,16 +379,10 @@
               <button type="submit" class="btn btn-danger btn-block my-2">
                 Reject
               </button>
-              <h5
-                class="text-center text-danger font-weight-bold"
-                id="rejectedMessage"
-              ></h5>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">
-              OK
-            </button>
+            <button type="button" class="btn btn-success" id="reBtn">OK</button>
           </div>
         </div>
       </div>
@@ -519,14 +513,21 @@
             ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning text-center"></i>`;
           }
           if (rejPost.readyState == 4 && rejPost.status == 200) {
-            document.getElementById("rejectedMessage").innerHTML =
-              rejPost.responseText;
+            document.getElementById("rejBody").innerHTML = rejPost.responseText;
           }
         };
         rejPost.open("POST", `/api/admin/rejPost/${pId}`, true);
         rejPost.setRequestHeader("Content-Type", "application/json");
         rejPost.send(rejString);
       });
+
+      function reject() {
+        let rej = document.getElementById("reBtn");
+        rej.addEventListener("click", (e) => {
+          window.location.assign("products.html");
+        });
+      }
+      reject();
 
       function acp() {
         let acceptProduct = document.getElementById("acceptProduct");

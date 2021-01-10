@@ -199,7 +199,11 @@
               <div class="col-xl-8 mx-auto">
                 <div class="card rounded my-5">
                   <div class="card-body">
-                    <form action="#">
+                    <form
+                      action="/addImages"
+                      method="POST"
+                      enctype="multipart/form-data"
+                    >
                       <div class="form-group">
                         <label for="destination"
                           >Select Upload Destination</label
@@ -208,18 +212,32 @@
                           <option value="" selected hidden>
                             Select Destination
                           </option>
-                          <option>Banners</option>
-                          <option>Slider Images</option>
-                          <option>Fast Food & Drinks</option>
-                          <option>Phone & Acessories</option>
-                          <option>Computing & Acessories</option>
-                          <option>Clothing & Shoes</option>
-                          <option>Electronics</option>
-                          <option>Kitchen staff & Utensils</option>
-                          <option>Easy Market</option>
-                          <option>Cleaning,Health & Beauty</option>
-                          <option>Kids Section</option>
-                          <option>Stationery</option>
+                          <option value="Banners">Banners</option>
+                          <option value="SliderImages">Slider Images</option>
+                          <option value="Fast Food & Drinks">
+                            Fast Food & Drinks
+                          </option>
+                          <option value="Phone & Accessories">
+                            Phone & Acessories
+                          </option>
+                          <option value="Computing & Accessories">
+                            Computing & Acessories
+                          </option>
+                          <option value="Clothing & Shoes">
+                            Clothing & Shoes
+                          </option>
+                          <option value="Electronics">Electronics</option>
+                          <option value="Kitchen Staff & Utensils">
+                            Kitchen Staff & Utensils
+                          </option>
+                          <option value="Easy Market With Yammie">
+                            Easy Market With Yammie
+                          </option>
+                          <option value="Cleaning,Health & Beauty">
+                            Cleaning,Health & Beauty
+                          </option>
+                          <option value="Kid's Section">Kid's Section</option>
+                          <option value="Stationery">Stationery</option>
                         </select>
                       </div>
                       <div>
@@ -241,7 +259,7 @@
                                 type="file"
                                 class="custom-file-container__custom-file__custom-file-input"
                                 name="images"
-                                accept="*"
+                                accept="images/*"
                                 multiple
                                 aria
                                 label="Multiple Select Files"
@@ -331,10 +349,10 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
+    <script src="scripts/account.js"></script>
     <script>
       const upload = new FileUploadWithPreview("Upload");
     </script>
-    <script src="scripts/account.js"></script>
     <!-- End Scripts -->
   </body>
 </html>

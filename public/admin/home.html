@@ -113,8 +113,38 @@
               class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
             >
               <div class="row align-items">
-                <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
-                  <h4>Dashboard</h4>
+                <div class="col-md-4 mb-0 text-light py-3">
+                  <!-- Example single danger button -->
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-danger dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Manage Addresses
+                    </button>
+                    <div class="dropdown-menu">
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#addZone"
+                        data-toggle="modal"
+                        >Add Zone</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#addAddress"
+                        >Add Zone Addresses</a
+                      >
+                      <a class="dropdown-item" href="#">Edit Zone</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Edit Zone Address</a>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
@@ -131,7 +161,7 @@
                     </li>
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">5</span
+                        ><span class="text-white icon-bullet">0</span
                         ><i class="fas fa-bell text-muted fa-2x"></i
                       ></a>
                     </li>
@@ -155,7 +185,81 @@
     </nav>
     <!-- End Navbar -->
 
-    <!-- Modal -->
+    <!-- Zone Modal -->
+    <div class="modal fade" id="addZone">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Zone</h5>
+          </div>
+          <div class="modal-body text-center" id="zoneMessage">
+            <form id="zone-form">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Zone Name"
+                  id="zoneName"
+                  autocomplete="off"
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn btn-primary btn-block text-light"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm autoReload">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Zone Modal -->
+
+    <!-- Zone Address -->
+    <div class="modal fade" id="addAddress">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Zone Addresses</h5>
+          </div>
+          <div class="modal-body text-center" id="addressMessage">
+            <form id="zoneAddress">
+              <div class="form-group">
+                <label for="Zone">Select Zone</label>
+                <select id="zonal" required class="form-control"></select>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  autocomplete="off"
+                  class="form-control"
+                  id="addressName"
+                  placeholder="Enter Address Name"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-block btn-primary">
+                Submit
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm autoReload">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Address -->
+
+    <!-- Logout Modal -->
     <div class="modal fade" id="sign-out">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -177,7 +281,7 @@
         </div>
       </div>
     </div>
-    <!-- End Modal -->
+    <!-- End Logout Modal -->
 
     <!-- Order Search -->
     <div class="modal fade" id="order-search">
@@ -362,7 +466,7 @@
     <!-- End Tables -->
 
     <!-- Comments -->
-    <section>
+    <!-- <section>
       <div class="container-fluid">
         <div class="row mb-5">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
@@ -532,7 +636,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
     <!-- End comments -->
 
     <!-- sellerModal -->
@@ -932,6 +1036,77 @@
         };
         search.open("GET", `/api/admin/orderSearch/${number}`, true);
         search.send();
+      });
+
+      let addZone = document.getElementById("zone-form");
+      addZone.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let zone = {};
+        zone.zoneName = document.getElementById("zoneName").value;
+        let zoneString = JSON.stringify(zone);
+        const zonning = new XMLHttpRequest();
+        zonning.onreadystatechange = () => {
+          if (zonning.readyState < 4) {
+            document.getElementById(
+              "zoneMessage"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (zonning.readyState == 4 && zonning.status == 200) {
+            document.getElementById("zoneMessage").innerHTML =
+              zonning.responseText;
+          }
+        };
+        zonning.open("POST", `/api/admin/addZone`, true);
+        zonning.setRequestHeader("Content-Type", "application/json");
+        zonning.send(zoneString);
+      });
+
+      const getZone = new XMLHttpRequest();
+      getZone.onreadystatechange = () => {
+        if (getZone.readyState == 4 && getZone.status == 200) {
+          let zones = JSON.parse(getZone.responseText);
+
+          let data = "";
+          zones.forEach((zone) => {
+            data += `<option value=${zone.zone_name.replace(/ /g, "_")}>${
+              zone.zone_name
+            }</option>`;
+          });
+          document.getElementById("zonal").innerHTML = data;
+        }
+      };
+      getZone.open("GET", `/api/admin/getZone`, true);
+      getZone.send();
+
+      let address = document.getElementById("zoneAddress");
+      address.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let zoneAddress = {};
+        zoneAddress.zone_name = document.getElementById("zonal").value;
+        zoneAddress.addressName = document.getElementById("addressName").value;
+        let string = JSON.stringify(zoneAddress);
+        const addressing = new XMLHttpRequest();
+        addressing.onreadystatechange = () => {
+          if (addressing.readyState < 4) {
+            document.getElementById(
+              "addressMessage"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (addressing.readyState == 4 && addressing.status == 200) {
+            document.getElementById("addressMessage").innerHTML =
+              addressing.responseText;
+          }
+        };
+        addressing.open("POST", `/api/admin/addAdresses`, true);
+        addressing.setRequestHeader("Content-Type", "application/json");
+        addressing.send(string);
+      });
+
+      let reload = document.querySelectorAll(".autoReload");
+      reload.forEach((reloading) => {
+        reloading.addEventListener("click", (e) => {
+          window.location.reload("home.html");
+        });
       });
     </script>
     <!-- End Scripts -->
