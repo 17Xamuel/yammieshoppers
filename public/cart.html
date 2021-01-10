@@ -993,27 +993,10 @@
           }
         };
       }
-      function _cdbNoReload(url, i) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(JSON.stringify(i));
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            let cart = JSON.parse(xhr.responseText);
-
-            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
-            localStorage.setItem(
-              "cartNumber",
-              JSON.stringify(cart.cart_number)
-            );
-          }
-        };
-      }
     </script>
     <script>
-      let cartNumber = parseInt(localStorage.getItem("cartNumber"));
       function displayCart() {
+        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
         let cartItems = JSON.parse(localStorage.getItem("cartItems"));
         if (cartItems && Object.values(cartItems).length > 0 ? true : false) {
           document.querySelector(
@@ -1287,7 +1270,7 @@
                   deleteId: id,
                   delete: "true",
                 });
-              }, 1500);
+              }, 1000);
             }
           }
           function totalAmount() {
@@ -1301,16 +1284,17 @@
               ".cart-tt-p"
             ).textContent = numFormats.format(total);
             return total;
+
+            cartNumbersDisplay();
+            function cartNumbersDisplay() {
+              let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+              document.querySelector(
+                "#cartNumberItems"
+              ).textContent = cartNumber ? cartNumber : 0;
+            }
           }
           //total end
           //cart display
-          cartNumbersDisplay();
-          function cartNumbersDisplay() {
-            let cartNumber = parseInt(localStorage.getItem("cartNumber"));
-            document.querySelector("#cartNumberItems").textContent = cartNumber
-              ? cartNumber
-              : 0;
-          }
         } else {
           let et = document.querySelector(".cart");
           et.innerHTML = `
@@ -1346,7 +1330,40 @@
         xhr.open("GET", `/api/user/customer/${yammie}`, true);
         xhr.send();
       }
-      displayCart();
+      //cart
+      function _cdbNoReload(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+            let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+            document.querySelector("#cartNumberItems").textContent = cartNumber
+              ? cartNumber
+              : 0;
+            displayCart();
+            // window.location.reload();
+          }
+        };
+      }
+      if (yammie) {
+        _cdbNoReload(`/api/user/customer/cart/${yammie}`, {
+          cart: JSON.parse(localStorage.getItem("cartItems")),
+          cartNumber: parseInt(localStorage.getItem("cartNumber")),
+          delete: "false",
+        });
+      } else {
+        displayCart();
+      }
+      //cart
 
       //total
       scl(document.querySelectorAll(".-sc-n"));
@@ -1505,13 +1522,6 @@
       function imageDialogClose() {
         document.querySelector(".popup").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay").classList.remove("active");
-      }
-      if (yammie) {
-        _cdbNoReload(`/api/user/customer/cart/${yammie}`, {
-          cart: JSON.parse(localStorage.getItem("cartItems")),
-          cartNumber: parseInt(localStorage.getItem("cartNumber")),
-          delete: false,
-        });
       }
 
       document
