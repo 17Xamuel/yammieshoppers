@@ -34,7 +34,7 @@
     />
     <link rel="stylesheet" href="../admin/styles/home.css" />
 
-    <title>Product Details</title>
+    <title>Yammie | Product Details</title>
     <script>
       if (document.referrer == "") {
         self.location = "index";
@@ -182,23 +182,60 @@
               <div class="col-xl-10 mx-auto my-5">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h3 class="text-info text-center">Product Details</h3>
-                    <table class="table text-left text-muted">
+                    <h5 class="text-info text-center">
+                      Product Number: <span id="number"></span>
+                    </h5>
+                    <table class="table text-left">
                       <tbody>
                         <tr>
                           <td>ProductName:<span id="name"></span></td>
                           <td>Quantity:<span id="qty"></span></td>
                         </tr>
                         <tr>
-                          <td>GrossPrice:<span id="price"></span></td>
+                          <td>Price:<span id="price"></span></td>
                           <td>Discount:<span id="disc"></span></td>
                         </tr>
                         <tr>
                           <td>NetPrice:<span id="netp"></span></td>
-                          <td>Description:<span id="desc"></span></td>
+                          <td>Brand:<span id="brand"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Category:<span id="cat"></span></td>
+                          <td>SubCategory:<span id="scat"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Date Added:<span id="date"></span></td>
+                          <td>Fragile:<span id="frag"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Size:<span id="size"></span></td>
+                          <td>Color:<span id="col"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Dimensions:<span id="dim"></span></td>
+                          <td>Weight:<span id="weight"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Seller Name: <span id="sname"></span></td>
+                          <td>Seller Contact: <span id="contact"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Type of Product:<span id="types"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Brief Description:<span id="desc"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Detailed Description:<span id="ddesc"></span></td>
                         </tr>
                       </tbody>
                     </table>
+                    <div id="productDetailLoading" class="text-center"></div>
                     <div class="text-center">
                       <ul class="list-inline" id="img"></ul>
                     </div>
@@ -266,63 +303,127 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      let apId = new URLSearchParams(window.location.search).get(
-        "approvedProduct"
+      let [seller] = JSON.parse(
+        localStorage.getItem("yammie/useLocalstorage/storage")
       );
-      const pdetails = new XMLHttpRequest();
-      pdetails.onreadystatechange = () => {
-        if (pdetails.readyState == 4 && pdetails.status == 200) {
-          let [result] = JSON.parse(pdetails.responseText);
-          document.getElementById("name").innerHTML = result.product;
-          document.getElementById("qty").innerHTML = result.quantity;
-          document.getElementById("price").innerHTML = result.price;
-          document.getElementById("disc").innerHTML = result.discount + "%";
-          let discount = (result.discount / 100) * result.price;
-          let netPrice = result.price - discount;
-          document.getElementById("netp").innerHTML = parseInt(netPrice);
-          document.getElementById("desc").innerHTML = result.description;
-          let images = JSON.parse(result.images);
-          let img = "";
-          for (let i = 0; i < images.length; i++) {
-            img += `
-                <li class="list-inline-item">
-                <img src="${images[i]}" width="150" height="150"/>
-                </li>`;
-          }
-          document.getElementById("img").innerHTML = img;
-        }
-      };
-      pdetails.open("GET", `/api/sellers/pdetails/${apId}`, true);
-      pdetails.send();
-
-      let ppId = new URLSearchParams(window.location.search).get(
+      document.getElementById("User").innerHTML = seller.username;
+      let product = new URLSearchParams(window.location.search).get(
         "pendingProduct"
       );
-      const pendingdetails = new XMLHttpRequest();
-      pendingdetails.onreadystatechange = () => {
-        if (pendingdetails.status == 200 && pendingdetails.readyState == 4) {
-          let [outcome] = JSON.parse(pendingdetails.responseText);
+      const productDetails = new XMLHttpRequest();
+      productDetails.onreadystatechange = () => {
+        if (productDetails.readyState < 4) {
+          document.getElementById(
+            "productDetailLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (productDetails.readyState == 4 && productDetails == 200) {
+          let [outcome] = JSON.parse(details.responseText);
+
           document.getElementById("name").innerHTML = outcome.product;
           document.getElementById("qty").innerHTML = outcome.quantity;
           document.getElementById("price").innerHTML = outcome.price;
+          document.getElementById("cat").innerHTML = outcome.category_name;
+          document.getElementById("sct").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
-          let discount = (outcome.discount / 100) * outcome.price;
-          let netPrice = outcome.price - discount;
-          document.getElementById("netp").innerHTML = parseInt(netPrice);
+          document.getElementById("date").innerHTML = outcome.dateAdded.slice(
+            0,
+            10
+          );
+
+          document.getElementById("netp").innerHTML = parseInt(
+            outcome.price - (outcome.discount / 100) * outcome.price
+          );
           document.getElementById("desc").innerHTML = outcome.description;
+          document.getElementById("ddesc").innerHTML =
+            outcome.detailedDescription;
+          document.getElementById("sname").innerHTML = outcome.username;
+          document.getElementById("scontact").innerHTML = outcome.phonenumber;
+          let specify = JSON.parse(outcome.specifications);
+          document.getElementById("number").innerHTML = specify.Number;
+          document.getElementById("brand").innerHTML = specify.Brand || null;
+          document.getElementById("frag").innerHTML = specify.Fragile;
+          document.getElementById("size").innerHTML = specify.Size;
+          document.getElementById("col").innerHTML = specify.Color || null;
+          document.getElementById("dim").innerHTML = specify.Dimensions;
+          document.getElementById("weight").innerHTML = specify.Weight;
+          document.getElementById("types").innerHTML = specify.TypeOfProduct;
+
           let images = JSON.parse(outcome.images);
-          let img = "";
-          for (let i = 0; i < images.length; i++) {
-            img += `
-                <li class="list-inline-item">
-                <img src="${images[i]}" width="150" height="150"/>
+          let data = "";
+          for (i = 0; i < images.length; i++) {
+            data += `
+              <li class="list-inline-item">
+                <img src="${images[i]}" width="100" height="100"/>
                 </li>`;
           }
-          document.getElementById("img").innerHTML = img;
+          document.getElementById("-img").innerHTML = data;
+          document.getElementById("productDetailLoading").innerHTML = "";
         }
       };
-      pendingdetails.open("GET", `/api/sellers/pendingDetails/${ppId}`, true);
-      pendingdetails.send();
+      productDetails.open("GET", `/api/admin/pendingProduct/${product}`, true);
+      productDetails.send();
+
+      let Aproduct = new URLSearchParams(window.location.search).get(
+        "approvedProduct"
+      );
+
+      const details = new XMLHttpRequest();
+      details.onreadystatechange = () => {
+        if (details.readyState < 4) {
+          document.getElementById(
+            "productDetailLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (details.status == 200 && details.readyState == 4) {
+          let [outcomes] = JSON.parse(details.responseText);
+
+          document.getElementById("name").innerHTML = outcomes.product;
+          document.getElementById("qty").innerHTML = outcomes.quantity;
+          document.getElementById("price").innerHTML = outcomes.price;
+          document.getElementById("cat").innerHTML = outcomes.category_name;
+          document.getElementById("scat").innerHTML = outcomes.subCategoryName;
+          document.getElementById("disc").innerHTML = outcomes.discount + "%";
+          document.getElementById("date").innerHTML = outcomes.dateAdded.slice(
+            0,
+            10
+          );
+
+          document.getElementById("netp").innerHTML = parseInt(
+            outcome.prices - (outcomes.discount / 100) * outcomes.price
+          );
+          document.getElementById("desc").innerHTML = outcomes.description;
+          document.getElementById("ddesc").innerHTML =
+            outcomes.detailedDescription;
+          document.getElementById("sname").innerHTML = outcomes.username;
+          document.getElementById("contact").innerHTML = outcomes.phonenumber;
+          let specification = JSON.parse(outcome.specifications);
+          document.getElementById("number").innerHTML = specification.Number;
+          document.getElementById("brand").innerHTML =
+            specification.Brand || null;
+          document.getElementById("frag").innerHTML = specification.Fragile;
+          document.getElementById("size").innerHTML = specification.Size;
+          document.getElementById("col").innerHTML =
+            specification.Color || null;
+          document.getElementById("dim").innerHTML = specification.Dimensions;
+          document.getElementById("weight").innerHTML = specification.Weight;
+          document.getElementById("types").innerHTML =
+            specification.TypeOfProduct;
+
+          let images = JSON.parse(outcomes.images);
+          let data = "";
+          for (i = 0; i < images.length; i++) {
+            data += `
+              <li class="list-inline-item">
+                <img src="${images[i]}" width="100" height="100"/>
+                </li>`;
+          }
+          document.getElementById("-img").innerHTML = data;
+          document.getElementById("productDetailLoading").innerHTML = "";
+        }
+      };
+      details.open("GET", `/api/admin/approvedProduct/${Aproduct}`, true);
+      details.send();
 
       function lg() {
         let lg = document.getElementById("slg");

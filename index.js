@@ -26,7 +26,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
 });
 
 // Change bucket property to your Space name
@@ -38,8 +38,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      },
-    }),
+      }
+    })
   }).array("images");
   return upload;
 }
@@ -72,7 +72,7 @@ app.post("/addProduct", async (req, res) => {
       specification,
       dimensions,
       size,
-      typeOfProduct,
+      typeOfProduct
     } = req.body;
     let code = Math.floor(Math.random() * 1000000 + 1).toString();
     conn.query(
@@ -101,8 +101,8 @@ app.post("/addProduct", async (req, res) => {
               Fragile: fragility,
               Dimensions: dimensions || null,
               Size: size,
-              TypeOfProduct: typeOfProduct,
-            }),
+              TypeOfProduct: typeOfProduct
+            })
           },
           (err, results) => {
             if (err) {
@@ -132,6 +132,32 @@ app.delete("/deleteProduct/:id", async (req, res) => {
       );
     }
   );
+});
+
+app.post("/addImages", async (req, res) => {
+  let imageId = uuid.v4();
+  let uploading = getUpload(imageId);
+  uploading(req, res, (err) => {
+    if (err) throw err;
+    let images = [];
+    req.files.forEach((file) => {
+      images.push("https://yammie.nyc3.ondigitaloceanspaces.com/" + file.key);
+    });
+    let pathing = JSON.stringify(images);
+    let { Uploads } = req.body;
+    conn.query(
+      `INSERT INTO appImages SET ?`,
+      {
+        image_id: imageId,
+        image_path: pathing,
+        destination: Uploads
+      },
+      (error, results) => {
+        if (error) throw error;
+        res.redirect("./admin/upload.html");
+      }
+    );
+  });
 });
 
 app.listen(PORT, () => {

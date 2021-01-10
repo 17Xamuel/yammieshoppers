@@ -156,10 +156,13 @@ router.get("/orderNumber", async (req, res) => {
 });
 
 router.get("/pendingOrders", async (req, res) => {
-  conn.query(`SELECT * FROM pending_orders`, (err, results) => {
-    if (err) throw err;
-    res.json(results);
-  });
+  conn.query(
+    `SELECT * FROM pending_orders WHERE order_status='pending'`,
+    (err, results) => {
+      if (err) throw err;
+      res.json(results);
+    }
+  );
 });
 
 router.get("/pendingOrders/:id", async (req, res) => {
@@ -247,7 +250,7 @@ router.post("/rejPost/:id", async (req, res) => {
             [req.params.id],
             (errs, queryResult) => {
               if (errs) throw errs;
-              res.send("Product Rejected");
+              res.send("Product Rejected Successfully");
             }
           );
         }
@@ -320,17 +323,14 @@ router.get("/finishOrder/:id", async (req, res) => {
           }
         );
       });
-      conn.query(`INSERT INTO finished_orders SET ?`, res1, (err8, res8) => {
-        if (err8) throw err8;
-        conn.query(
-          `DELETE FROM pending_orders WHERE order_id = ?`,
-          [req.params.id],
-          (errors, result) => {
-            if (errors) throw errors;
-            res.status(200).send("ok");
-          }
-        );
-      });
+      conn.query(
+        `UPDATE pending_orders SET order_status='finished' WHERE order_id=?`,
+        [req.params.id],
+        (err8, res8) => {
+          if (err8) throw err8;
+          res.status(200).send("ok");
+        }
+      );
     }
   );
 });
@@ -407,6 +407,49 @@ router.get("/orderSearch/:id", async (req, res) => {
       } else {
         res.send(result);
       }
+    }
+  );
+});
+
+router.post("/addZone", async (req, res) => {
+  let { zoneName } = req.body;
+  conn.query(
+    "INSERT INTO zones SET ?",
+    {
+      zone_name: zoneName
+    },
+    (err, result) => {
+      if (err) throw err;
+      res.send("Zone Added Successfully");
+    }
+  );
+});
+
+router.get("/getZone", async (req, res) => {
+  conn.query("SELECT * FROM zones", (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+router.post("/addAdresses", async (req, res) => {
+  let { zone_name, addressName } = req.body;
+  conn.query(
+    `SELECT zone_id FROM zones WHERE zone_name = ?`,
+    [zone_name.replace(/_/g, " ")],
+    (err, result) => {
+      if (err) throw err;
+      conn.query(
+        `INSERT INTO addresses SET ?`,
+        {
+          zone_id: result[0].zone_id,
+          address_name: addressName
+        },
+        (error, results) => {
+          if (error) throw error;
+          res.send("Address Added Successfully");
+        }
+      );
     }
   );
 });
