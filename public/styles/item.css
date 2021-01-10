@@ -28,7 +28,7 @@
   border-top: 1px solid #c2c2c2;
   padding-top: 5px;
 }
-.discount {
+.discount.-d-active {
   opacity: 0.8;
   margin-left: 10px;
   font-size: 13px;
@@ -110,7 +110,16 @@
   font-weight: 500;
   background-color: #fff;
 }
-
+.itm-imgs-pp,
+.main-img-pp {
+  width: 90%;
+  height: 90%;
+}
+.-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .other-img-pp {
   border-radius: 5px;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -144,6 +153,7 @@
 /*image dialog*/
 .main-img {
   cursor: zoom-in;
+  margin: auto;
 }
 .other-img {
   border-radius: 5px;
@@ -191,5 +201,11 @@
   .itm-imgs {
     width: 95%;
     height: fit-content;
+  }
+  .popup-i {
+    background-color: white;
+    width: 95vw;
+    margin: auto;
+    height: 75vh;
   }
 }

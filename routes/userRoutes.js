@@ -24,8 +24,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1"
-  }
+    pass: "yammieShoppers@1",
+  },
 });
 //mailer
 router.post("/customer/insert", async (req, res) => {
@@ -43,7 +43,7 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name
+          c_last_name,
         } = req.body;
         let c_id = uuid.v4();
         newUser = {
@@ -53,13 +53,13 @@ router.post("/customer/insert", async (req, res) => {
           c_phone,
           c_password,
           c_first_name,
-          c_last_name
+          c_last_name,
         };
         let info = {
           from: '"Yammie Shoppers"<info@yammieshoppers.com>',
           to: c_email,
           subject: "Confirming Your Account",
-          text: `Hello ${c_first_name}, confirm your email with this ${code}`
+          text: `Hello ${c_first_name}, confirm your email with this ${code}`,
         };
         transporter
           .sendMail(info)
@@ -216,9 +216,9 @@ router.post("/customer/cart/amount/:id", (req, res) => {
       {
         c_cart_amount: req.body[0],
         c_cart: req.body[2],
-        c_cart_number: req.body[3]
+        c_cart_number: req.body[3],
       },
-      req.body[1]
+      req.body[1],
     ],
     (err, result) => {
       if (err) throw err;
@@ -274,17 +274,18 @@ router.post("/customer/order", async (req, res) => {
             order_amount: req.body._ttp,
             order_payment_method: req.body.payment_method,
             c_id: req.body.yammie,
-            order_status: req.body.u == "-u" ? "urgent" : "normal",
+            order_status: "finished",
             order_number: orderNumber,
             order_date: new Date(),
             order_info: JSON.stringify({
               shipping: req.body._shp,
+              order_urgent: req.body.u == "-u" ? "urgent" : "normal",
               address:
                 req.body.add == "undefined"
                   ? result[0].pickup_address_1
                   : req.body.add,
-              order_delivery_method: req.body.dm
-            })
+              order_delivery_method: req.body.dm,
+            }),
           },
           (err, result_1) => {
             if (err) throw err;
@@ -332,7 +333,7 @@ router.post("/customer/order", async (req, res) => {
                                         (qresult[0].price -
                                           (qresult[0].discount / 100) *
                                             qresult[0].price) *
-                                        item.inCartNumber
+                                        item.inCartNumber,
                                     },
                                     (error, result_3) => {
                                       if (error) throw error;
@@ -370,12 +371,18 @@ router.post("/customer/order", async (req, res) => {
               to: result[0].c_email,
               cc: "theyammieinc@gmail.com",
               subject: `Your Order ${orderNumber}`,
-              text: `Hello ${result[0].c_first_name},your order has been placed successfully and your order number is ${orderNumber}`
+              text: `Hello ${result[0].c_first_name},your order has been placed successfully and your order number is ${orderNumber}`,
             };
             transporter
               .sendMail(mail_order)
               .then((response) => {
-                res.status(200).send([req.body.payment_method, orderNumber]);
+                res
+                  .status(200)
+                  .send([
+                    req.body.payment_method,
+                    orderNumber,
+                    req.body._ttp + req.body._shp,
+                  ]);
               })
               .catch((err) => {
                 console.log("Error Ocurred!!!");
@@ -476,7 +483,7 @@ router.post("/shipping/:id", (req, res) => {
         weight,
         fragile,
         location,
-        urgent
+        urgent,
       };
 
       let cost = new charge(product).total;
@@ -494,6 +501,7 @@ router.post("/customer/cart/:id", (req, res) => {
     typeof req.body.cartNumber == "string"
       ? parseInt(req.body.cartNumber)
       : req.body.cartNumber;
+
   conn.query(
     `SELECT c_cart,c_cart_number FROM customers WHERE c_id = ?`,
     req.params.id,
@@ -516,7 +524,7 @@ router.post("/customer/cart/:id", (req, res) => {
               newCart[item] = cart_str[item];
             }
           }
-          if (req.body.delete == true) {
+          if (req.body.delete == "true") {
             delete newCart[req.body.deleteId];
           }
           for (let key in newCart) {
@@ -528,9 +536,9 @@ router.post("/customer/cart/:id", (req, res) => {
             [
               {
                 c_cart: JSON.stringify(newCart),
-                c_cart_number: parseInt(cart_number)
+                c_cart_number: parseInt(cart_number),
               },
-              req.params.id
+              req.params.id,
             ],
             (error, result_2) => {
               if (error) {
@@ -548,9 +556,9 @@ router.post("/customer/cart/:id", (req, res) => {
             [
               {
                 c_cart: JSON.stringify(cart_str),
-                c_cart_number: cart_number_str
+                c_cart_number: cart_number_str,
               },
-              req.params.id
+              req.params.id,
             ],
             (error, result_2) => {
               if (error) {
@@ -558,7 +566,7 @@ router.post("/customer/cart/:id", (req, res) => {
               } else {
                 res.status(200).send({
                   newCart: cart_str,
-                  cart_number: cart_number_str
+                  cart_number: cart_number_str,
                 });
               }
             }
@@ -632,7 +640,7 @@ router.post("/checkout/cart/:id", (req, res) => {
                   fragile: (product.Fragile == "Yes" ? true : false) || false,
                   location: "Lira",
                   weight: product.Weight || "Light",
-                  user: req.body._add == true ? result[0].zone : req.body._add
+                  user: req.body._add == true ? result[0].zone : req.body._add,
                 };
 
                 let fee = new charge(charge_obj).total;
@@ -646,6 +654,48 @@ router.post("/checkout/cart/:id", (req, res) => {
             }
           );
         }
+      }
+    }
+  );
+});
+router.post("/f-comment", (req, res) => {
+  let mail_comment = {
+    from: '"Yammie Shoppers"<info@yammieshoppers.com>',
+    to: "theyammieinc@gmail.com",
+    subject: `COMMENT MADE: ${req.body._comment.split(" ")[0]} ${
+      req.body._comment.split(" ")[1] ? req.body._comment.split(" ")[1] : ""
+    }.....`,
+    text: `From: ${
+      req.body._contact ? req.body._contact : "Did not include Contact"
+    }\nComment: ${req.body._comment}`,
+  };
+  transporter
+    .sendMail(mail_comment)
+    .then((response) => {
+      res.status(200).send("Comment Recieved...");
+    })
+    .catch((err) => {
+      console.log("Error Ocurred!!!");
+    });
+});
+router.get("/customer/orders/:id", (req, res) => {
+  conn.query(
+    `SELECT * FROM pending_orders where c_id = ?`,
+    req.params.id,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        let pending = [];
+        let finished = [];
+        result.forEach((order) => {
+          if (order.order_status == "pending") {
+            pending.push(order);
+          } else {
+            finished.push(order);
+          }
+        });
+        res.send({ pending, finished });
       }
     }
   );

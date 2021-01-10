@@ -513,7 +513,7 @@
       </ul>
       <div class="ftr-down">
         <div class="ftr-official" style="color: black !important">
-          &copy; 2020 Yammie. All rights reserved
+          &copy; <span class="_yr"></span> Yammie. All rights reserved
           <div class="social-icons">
             <a
               href="https://www.facebook.com/yammieshoppers"
@@ -840,11 +840,6 @@
       </div>
     </div>
     <footer class="footer">
-      <div class="ftr-sm-s">
-        <span> Terms &amp; Conditions </span>
-        <span> Help Center </span>
-        <span> Contact Us </span>
-      </div>
       <div class="ftr-up">
         <div class="ftr-u-first">
           <div class="ftr-logo">
@@ -862,7 +857,7 @@
             </p>
           </div>
           <div class="ftr-app">
-            <h3>Get the Yammie App On . . . .</h3>
+            <h3>Get Our App On . . . .</h3>
             <div class="ftr-app-stores" style="margin-top: 15px">
               <a href="">
                 <img
@@ -899,40 +894,52 @@
           <h4 class="footer-h4">Contact Us</h4>
           <ul class="footer-list">
             <li class="second-list">
-              <a href="">
-                <i class="fas fa-shopping-cart"></i>
+              <a href="/">
+                <i class="fas fa-cart-plus"></i>
                 Yammie Shoppers
               </a>
             </li>
             <li class="second-list">
-              <a href="mailto:#">
+              <a href="mailto:info@yammieshoppers.com">
                 <i class="fas fa-envelope"></i>
-                customer@yammie.com
+                info@yammieshoppers.com
               </a>
             </li>
             <li class="second-list">
-              <a href="https://g.page/yammie-shoppers?share">
+              <a href="https://g.page/yammie-shoppers?share" target="_blank">
                 <i class="fas fa-map-marker-alt"></i>
                 Lira Campus
               </a>
             </li>
           </ul>
-          <form action="#">
+          <form id="user_comment" autocomplete="off">
             <input
+              required
               type="text"
-              name=""
+              name="_comment"
               id="comment"
               placeholder="How do you feel?"
             />
             <br />
             <input
               type="text"
-              name=""
+              name="_contact"
               id="customer-email"
               placeholder="Email or Phone Number(Optional)"
             />
             <br />
             <button class="footer-form-button">submit</button>
+            <br />
+            <span
+              class="_r-comment"
+              style="
+                color: red;
+                opacity: 0;
+                margin-left: 5px;
+                transition: all 0.4s ease-in-out;
+              "
+            >
+            </span>
           </form>
         </div>
         <div class="ftr-u-fourth">
@@ -949,7 +956,7 @@
       </div>
       <div class="ftr-down">
         <div class="ftr-official">
-          &copy; 2020 Yammie. All rights reserved
+          &copy; <span class="_yr"></span> Yammie. All rights reserved
           <div class="social-icons">
             <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
             <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
@@ -960,7 +967,6 @@
         </div>
       </div>
     </footer>
-
     <!--scripts-->
     <script>
       window.parentPage = true;
@@ -987,27 +993,10 @@
           }
         };
       }
-      function _cdbNoReload(url, i) {
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(JSON.stringify(i));
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            let cart = JSON.parse(xhr.responseText);
-
-            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
-            localStorage.setItem(
-              "cartNumber",
-              JSON.stringify(cart.cart_number)
-            );
-          }
-        };
-      }
     </script>
     <script>
-      let cartNumber = parseInt(localStorage.getItem("cartNumber"));
       function displayCart() {
+        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
         let cartItems = JSON.parse(localStorage.getItem("cartItems"));
         if (cartItems && Object.values(cartItems).length > 0 ? true : false) {
           document.querySelector(
@@ -1279,9 +1268,9 @@
                   cart: cartItems,
                   cartNumber: cartNumber,
                   deleteId: id,
-                  delete: true,
+                  delete: "true",
                 });
-              }, 1500);
+              }, 1000);
             }
           }
           function totalAmount() {
@@ -1295,16 +1284,17 @@
               ".cart-tt-p"
             ).textContent = numFormats.format(total);
             return total;
+
+            cartNumbersDisplay();
+            function cartNumbersDisplay() {
+              let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+              document.querySelector(
+                "#cartNumberItems"
+              ).textContent = cartNumber ? cartNumber : 0;
+            }
           }
           //total end
           //cart display
-          cartNumbersDisplay();
-          function cartNumbersDisplay() {
-            let cartNumber = parseInt(localStorage.getItem("cartNumber"));
-            document.querySelector("#cartNumberItems").textContent = cartNumber
-              ? cartNumber
-              : 0;
-          }
         } else {
           let et = document.querySelector(".cart");
           et.innerHTML = `
@@ -1340,7 +1330,40 @@
         xhr.open("GET", `/api/user/customer/${yammie}`, true);
         xhr.send();
       }
-      displayCart();
+      //cart
+      function _cdbNoReload(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+            let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+            document.querySelector("#cartNumberItems").textContent = cartNumber
+              ? cartNumber
+              : 0;
+            displayCart();
+            // window.location.reload();
+          }
+        };
+      }
+      if (yammie) {
+        _cdbNoReload(`/api/user/customer/cart/${yammie}`, {
+          cart: JSON.parse(localStorage.getItem("cartItems")),
+          cartNumber: parseInt(localStorage.getItem("cartNumber")),
+          delete: "false",
+        });
+      } else {
+        displayCart();
+      }
+      //cart
 
       //total
       scl(document.querySelectorAll(".-sc-n"));
@@ -1382,25 +1405,37 @@
             _c.forEach((item) => {
               group += `
             <a class="item -ct-item" href="./item?item=${item.id}">
-              <img
-                src="${JSON.parse(item.images)[0]}"
-                alt="${item.product}"
-                width="180px"
-                height="150px"
-              />
-              <div class="-i-dtl">
-                <div class="it-nm">${item.product} - ${item.description}</div>
-                <div class="it-pr pr price-current">${
-                  "UGX " +
-                  (item.discount
-                    ? (item.price * (100 - item.discount)) / 100
-                    : item.price)
-                }</div>
-                  <div class="pre-it-pr pr price-prev">${
-                    item.discount ? "UGX " + item.price : ""
-                  }</div>
-              </div>
-            </a>
+                      <div class="-d">
+                        ${
+                          item.discount !== null
+                            ? "-" + item.discount + "%"
+                            : ""
+                        }
+                      </div>
+                      <div class="_image">
+                        <img
+                          src="${JSON.parse(item.images)[0]}"
+                          alt="${item.name}"
+                          width="100%"
+                          height="100%"
+                        />
+                      </div>
+                      <div class="-i-dtl">
+                        <div class="it-nm">
+                          ${item.product} - ${item.description}
+                        </div>
+                        <div class="it-pr pr price-current">${
+                          "UGX " +
+                          (item.discount
+                            ? (item.price * (100 - item.discount)) / 100
+                            : item.price)
+                        }</div>
+                         <div class="pre-it-pr pr price-prev">${
+                           item.discount ? "UGX " + item.price : ""
+                         }</div>
+                      </div>
+                    </a>
+                    
             `;
             });
             c.innerHTML = group;
@@ -1488,12 +1523,61 @@
         document.querySelector(".popup").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay").classList.remove("active");
       }
-      if (yammie) {
-        _cdbNoReload(`/api/user/customer/cart/${yammie}`, {
-          cart: JSON.parse(localStorage.getItem("cartItems")),
-          cartNumber: parseInt(localStorage.getItem("cartNumber")),
-          delete: false,
+
+      document
+        .querySelector("#user_comment")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          document.querySelector("._r-comment").innerHTML =
+            "Sending Comment...";
+          document.querySelector("._r-comment").style.opacity = "0.5";
+          let form = new FormData(document.querySelector("#user_comment"));
+          let comment = {};
+          form.forEach((value, key) => {
+            comment[key] = value;
+          });
+          let xhr = new XMLHttpRequest();
+          xhr.open("POST", "/api/user/f-comment", true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.send(JSON.stringify(comment));
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              document.querySelector("._r-comment").innerHTML =
+                "Comment Received...";
+              document.querySelector("._r-comment").style.opacity = "0.5";
+              setTimeout(() => {
+                document.querySelector("._r-comment").style.opacity = "0";
+              }, 2000);
+            }
+          };
         });
+    </script>
+    <script>
+      //ym.min.js
+      document.querySelector(".-lg").addEventListener("click", () => {
+        localStorage.removeItem(
+          "https://yammieshoppers.com/useLocalStorage/Storage"
+        );
+        window.location.assign("/");
+      });
+      document.querySelector(".-lg-o").addEventListener("click", () => {
+        if (yammie) {
+          localStorage.removeItem(
+            "https://yammieshoppers.com/useLocalStorage/Storage"
+          );
+          window.location.assign("/");
+        } else {
+          window.location.assign("/account/login");
+        }
+      });
+
+      function _load(i, d) {
+        if (i.complete != true) {
+          i.height = "35%";
+          i.width = "35%";
+        }
+        i.src = i.complete != true ? d : i.src;
+        i.src = i.complete != true ? d : i.src;
       }
     </script>
     <script src="./ym.min.js"></script>

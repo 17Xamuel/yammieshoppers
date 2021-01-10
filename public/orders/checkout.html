@@ -342,6 +342,15 @@
       .show_order {
         display: none;
       }
+      .-ony-ldr {
+        text-align: center;
+        font-size: 24px;
+        padding: 10px 0px;
+        color: green;
+      }
+      .-ony-ldr > i {
+        display: none;
+      }
       @media screen and (max-width: 768px) {
         .nav {
           height: 8vh;
@@ -377,9 +386,9 @@
       }
     </style>
     <script>
-      // if (document.referrer == "") {
-      //   self.location = "/";
-      // }
+      if (document.referrer == "") {
+        self.location = "/";
+      }
     </script>
   </head>
   <body>
@@ -650,6 +659,9 @@
                         ><b>UGX <span id="total">...</span></b></span
                       >
                     </div>
+                  </div>
+                  <div class="-ony-ldr">
+                    <i class="fas fa-spinner fa-spin"></i>
                   </div>
                   <button type="submit" class="-btn-s-pyf">
                     FINISH YOUR ORDER
@@ -942,6 +954,7 @@
           );
           document.querySelector("._pf").addEventListener("submit", (e) => {
             e.preventDefault();
+            document.querySelector(".-ony-ldr > i ").style.display = "inline";
             let pf = new FormData(document.querySelector("._pf"));
             pf.append("yammie", yammie);
             pf.append("_shp", _order.shipping);
@@ -957,10 +970,14 @@
               if (_or.readyState == 4 && _or.status == 200) {
                 localStorage.removeItem("cartItems");
                 localStorage.removeItem("cartNumber");
-                if (_or.responseText == "mm") {
-                  // window.location.assign("../orders/finishup");
+                let res = JSON.parse(_or.responseText);
+                if (res[0] == "mm") {
+                  localStorage.setItem("_ym", `${res[2]}`);
+                  window.location.assign(`../orders/finishup?order=${res[1]}`);
                 } else {
-                  // window.location.assign("../orders/cashondelivery");
+                  window.location.assign(
+                    `../orders/cashondelivery?order=${res[1]}`
+                  );
                 }
               }
             };

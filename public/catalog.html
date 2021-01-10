@@ -437,7 +437,7 @@
         }
         .itms-ctr {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(160px, 2fr));
+          grid-template-columns: repeat(auto-fit, minmax(140px, 2fr));
           column-gap: 10px;
           row-gap: 10px;
           width: 100%;
@@ -636,7 +636,7 @@
       </ul>
       <div class="ftr-down">
         <div class="ftr-official" style="color: black !important">
-          &copy; 2020 Yammie. All rights reserved
+          &copy; <span class="_yr"></span> Yammie. All rights reserved
           <div class="social-icons">
             <a
               href="https://www.facebook.com/yammieshoppers"
@@ -1109,11 +1109,6 @@
       </div>
     </div>
     <footer class="footer">
-      <div class="ftr-sm-s">
-        <span> Terms &amp; Conditions </span>
-        <span> Help Center </span>
-        <span> Contact Us </span>
-      </div>
       <div class="ftr-up">
         <div class="ftr-u-first">
           <div class="ftr-logo">
@@ -1131,7 +1126,7 @@
             </p>
           </div>
           <div class="ftr-app">
-            <h3>Get the Yammie App On . . . .</h3>
+            <h3>Get Our App On . . . .</h3>
             <div class="ftr-app-stores" style="margin-top: 15px">
               <a href="">
                 <img
@@ -1168,40 +1163,52 @@
           <h4 class="footer-h4">Contact Us</h4>
           <ul class="footer-list">
             <li class="second-list">
-              <a href="">
-                <i class="fas fa-shopping-cart"></i>
+              <a href="/">
+                <i class="fas fa-cart-plus"></i>
                 Yammie Shoppers
               </a>
             </li>
             <li class="second-list">
-              <a href="mailto:#">
+              <a href="mailto:info@yammieshoppers.com">
                 <i class="fas fa-envelope"></i>
-                customer@yammie.com
+                info@yammieshoppers.com
               </a>
             </li>
             <li class="second-list">
-              <a href="https://g.page/yammie-shoppers?share">
+              <a href="https://g.page/yammie-shoppers?share" target="_blank">
                 <i class="fas fa-map-marker-alt"></i>
                 Lira Campus
               </a>
             </li>
           </ul>
-          <form action="#">
+          <form id="user_comment" autocomplete="off">
             <input
+              required
               type="text"
-              name=""
+              name="_comment"
               id="comment"
               placeholder="How do you feel?"
             />
             <br />
             <input
               type="text"
-              name=""
+              name="_contact"
               id="customer-email"
               placeholder="Email or Phone Number(Optional)"
             />
             <br />
             <button class="footer-form-button">submit</button>
+            <br />
+            <span
+              class="_r-comment"
+              style="
+                color: red;
+                opacity: 0;
+                margin-left: 5px;
+                transition: all 0.4s ease-in-out;
+              "
+            >
+            </span>
           </form>
         </div>
         <div class="ftr-u-fourth">
@@ -1218,7 +1225,7 @@
       </div>
       <div class="ftr-down">
         <div class="ftr-official">
-          &copy; 2020 Yammie. All rights reserved
+          &copy; <span class="_yr"></span> Yammie. All rights reserved
           <div class="social-icons">
             <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
             <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
@@ -1751,6 +1758,35 @@
         xhr.open("GET", url, true);
         xhr.send();
       }
+      //comment
+
+      document
+        .querySelector("#user_comment")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          document.querySelector("._r-comment").innerHTML =
+            "Sending Comment...";
+          document.querySelector("._r-comment").style.opacity = "0.5";
+          let form = new FormData(document.querySelector("#user_comment"));
+          let comment = {};
+          form.forEach((value, key) => {
+            comment[key] = value;
+          });
+          let xhr = new XMLHttpRequest();
+          xhr.open("POST", "/api/user/f-comment", true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.send(JSON.stringify(comment));
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              document.querySelector("._r-comment").innerHTML =
+                "Comment Received...";
+              document.querySelector("._r-comment").style.opacity = "0.5";
+              setTimeout(() => {
+                document.querySelector("._r-comment").style.opacity = "0";
+              }, 2000);
+            }
+          };
+        });
     </script>
     <script src="./ym.min.js"></script>
     <!--scripts-->
