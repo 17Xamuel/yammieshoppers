@@ -409,7 +409,9 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-muted mb-3 text-center">Pending Orders</h4>
+                    <h4 class="text-muted mb-3 text-center">
+                      Pending Orders <span id="on"></span>
+                    </h4>
                     <table class="table table-striped bg-light text-center">
                       <thead>
                         <tr class="text-muted">
@@ -966,7 +968,7 @@
           let pendingOrders = JSON.parse(orders.responseText);
           if (`${pendingOrders.length}` == 0) {
             document.getElementById("orderLoading").innerHTML =
-              "No Order found";
+              "No Pending Order found";
           } else {
             let row = "";
             pendingOrders.forEach((pendingOrder) => {
@@ -983,6 +985,9 @@
      </tr>`;
             });
             document.getElementById("pendingOrders").innerHTML = row;
+            document.getElementById(
+              "on"
+            ).innerHTML = `(${pendingOrders.length})`;
             document.getElementById("orderLoading").innerHTML = "";
           }
         }

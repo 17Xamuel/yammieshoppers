@@ -38,7 +38,7 @@
     />
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Uploads</title>
+    <title>Yammie | Uploads</title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -191,6 +191,16 @@
     </div>
     <!-- End Modal -->
 
+    <!-- Uploading -->
+    <div class="modal fade" id="uploading">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body text-center">Uploading Please Wait...</div>
+        </div>
+      </div>
+    </div>
+    <!-- Ending Uploading -->
+
     <section>
       <div class="container-fluid">
         <div class="row">
@@ -282,6 +292,8 @@
                         <button
                           type="submit"
                           class="btn btn-warning btn-block text-light"
+                          data-target="#uploading"
+                          data-toggle="modal"
                         >
                           Upload
                         </button>
