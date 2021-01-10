@@ -274,11 +274,12 @@ router.post("/customer/order", async (req, res) => {
             order_amount: req.body._ttp,
             order_payment_method: req.body.payment_method,
             c_id: req.body.yammie,
-            order_status: req.body.u == "-u" ? "urgent" : "normal",
+            order_status: "finished",
             order_number: orderNumber,
             order_date: new Date(),
             order_info: JSON.stringify({
               shipping: req.body._shp,
+              order_urgent: req.body.u == "-u" ? "urgent" : "normal",
               address:
                 req.body.add == "undefined"
                   ? result[0].pickup_address_1
@@ -676,5 +677,27 @@ router.post("/f-comment", (req, res) => {
     .catch((err) => {
       console.log("Error Ocurred!!!");
     });
+});
+router.get("/customer/orders/:id", (req, res) => {
+  conn.query(
+    `SELECT * FROM pending_orders where c_id = ?`,
+    req.params.id,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        let pending = [];
+        let finished = [];
+        result.forEach((order) => {
+          if (order.order_status == "pending") {
+            pending.push(order);
+          } else {
+            finished.push(order);
+          }
+        });
+        res.send({ pending, finished });
+      }
+    }
+  );
 });
 module.exports = router;
