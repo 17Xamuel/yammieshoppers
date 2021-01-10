@@ -274,7 +274,7 @@ router.post("/customer/order", async (req, res) => {
             order_amount: req.body._ttp,
             order_payment_method: req.body.payment_method,
             c_id: req.body.yammie,
-            order_status: "finished",
+            order_status: "pending",
             order_number: orderNumber,
             order_date: new Date(),
             order_info: JSON.stringify({
