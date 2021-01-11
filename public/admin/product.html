@@ -228,6 +228,7 @@
                           </tr>
                           <tr>
                             <td>Type of Product:<span id="types"></span></td>
+                            <td>Number of Sales: <span id="nsales"></span></td>
                           </tr>
                           <tr>
                             <td>Brief Description: <span id="desc"></span></td>
@@ -320,7 +321,7 @@
               </div>
               <div class="col-lg-6 text-center">
                 <p>
-                  &copy;2020 Copy Right Made With
+                  &copy; <span id="year"></span> Copy Right Made With
                   <i class="fas fa-heart text-danger"></i>by
                   <span class="text-success">YammieShoppers</span>
                 </p>
@@ -405,6 +406,16 @@
       };
       productDetails.open("GET", `/api/admin/approvedProduct/${product}`, true);
       productDetails.send();
+
+      const saleNumber = new XMLHttpRequest();
+      saleNumber.onreadystatechange = () => {
+        if (saleNumber.readyState == 4 && saleNumber.status == 200) {
+          let [numbers] = JSON.parse(saleNumber.responseText);
+          document.getElementById("nsales").innerHTML = numbers.sales;
+        }
+      };
+      saleNumber.open("GET", `/api/admin/saleNumber/${product}`, true);
+      saleNumber.send();
     </script>
     <!-- End Scripts -->
   </body>

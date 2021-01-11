@@ -32,14 +32,14 @@ router.post("/registerSeller", async (req, res) => {
   } = req.body;
 
   if (
-    username.length <= 0 ||
-    email.length <= 0 ||
-    phonenumber.length <= 0 ||
-    password.length <= 0 ||
-    passwordConfirm.length <= 0 ||
-    businessname.length <= 0 ||
-    category.length <= 0 ||
-    location.length <= 0
+    username.length == 0 ||
+    email.length == 0 ||
+    phonenumber.length == 0 ||
+    password.length == 0 ||
+    passwordConfirm.length == 0 ||
+    businessname.length == 0 ||
+    category.length == 0 ||
+    location.length == 0
   ) {
     return res.send("All Fields are Required");
   }
@@ -68,7 +68,7 @@ router.post("/registerSeller", async (req, res) => {
   }
 
   let id = uuid.v4();
-  password = await bycrpt.hash(password, 1);
+  password = await bycrpt.hash(password, 2);
   category = JSON.stringify(category);
   newSeller = {
     id,
@@ -84,7 +84,7 @@ router.post("/registerSeller", async (req, res) => {
   let mailOptions = {
     from: '"Yammie Shoppers"<info@yammieshoppers.com>',
     to: email,
-    subject: "Email Confirmation",
+    subject: `Email Confirmation ${code}`,
     text: `Hello, ${username} confirm your email with this code ${code}.`
   };
 
@@ -173,7 +173,7 @@ try {
 }
 router.get("/getPendingProducts/:id", async (req, res) => {
   conn.query(
-    "SELECT id,product,price,images,quantity FROM pending_products WHERE seller_id=?",
+    "SELECT * FROM pending_products WHERE seller_id=?",
     [req.params.id],
     (err, results) => {
       if (err) throw err;
@@ -183,7 +183,7 @@ router.get("/getPendingProducts/:id", async (req, res) => {
 });
 router.get("/getApprovedProducts/:id", async (req, res) => {
   conn.query(
-    "SELECT id,product,price,images,quantity FROM products WHERE seller_id=?",
+    "SELECT * FROM products WHERE seller_id=?",
     [req.params.id],
     (err, results) => {
       if (err) throw err;
@@ -346,26 +346,6 @@ router.get("/doneOrdernumber/:id", async (req, res) => {
   );
 });
 
-router.get("/totalOrders/:id", async (req, res) => {
-  conn.query(
-    `SELECT * FROM cleared_orders JOIN products ON cleared_orders.product_id
-  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
-    [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      conn.query(
-        `SELECT * FROM seller_orders JOIN products ON seller_orders.product_id
-  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
-        [req.params.id],
-        (error, results) => {
-          if (error) throw error;
-          res.json(result.length + results.length);
-        }
-      );
-    }
-  );
-});
-
 router.get("/sales/:id", async (req, res) => {
   conn.query(
     `SELECT SUM(order_amount) AS Sales FROM cleared_orders JOIN
@@ -414,6 +394,38 @@ router.get("/subCategory/:id", async (req, res) => {
         (error, results) => {
           if (error) throw error;
           res.send(results);
+        }
+      );
+    }
+  );
+});
+
+router.post("/forgotPassword", async (req, res) => {
+  let { email, password, newPass } = req.body;
+  if (email.length == 0 || password.length == 0 || newPass.length == 0) {
+    return res.send("All fields Required");
+  }
+  conn.query(
+    `SELECT * FROM sellers WHERE email = ?`,
+    [email],
+    async (err1, res1) => {
+      if (err1) throw err1;
+      if (res1.length == 0) {
+        return res.send("This user is not Found!! Check your Email");
+      }
+      if (password != newPass) {
+        return res.send("Password Mismatch");
+      }
+      if (password.length < 5) {
+        return res.send("Password Must be more than 5 characters");
+      }
+      let hashPass = await bycrpt.hash(password, 2);
+      conn.query(
+        `UPDATE sellers SET password = '${hashPass}' WHERE email = ?`,
+        [email],
+        (err2, res2) => {
+          if (err2) throw err2;
+          res.send("Password Successfully Changed");
         }
       );
     }

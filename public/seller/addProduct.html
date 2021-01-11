@@ -41,9 +41,9 @@
 
     <title>Yammie | Add Your Product</title>
     <script>
-      if (document.referrer == "") {
-        self.location = "index";
-      }
+      // if (document.referrer == "") {
+      //   self.location = "index";
+      // }
     </script>
     <style>
       @media (max-width: 768px) {
@@ -82,7 +82,9 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a href="home" class="nav-link text-white p-3 mb-2 current"
+                  <a
+                    href="index.html"
+                    class="nav-link text-white p-3 mb-2 current"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
                   >
@@ -537,7 +539,7 @@
               </div>
               <div class="col-lg-6 text-center">
                 <p>
-                  &copy;2020 Copy Right Made With
+                  &copy; <span id="year"></span> Copy Right Made With
                   <i class="fas fa-heart text-danger"></i>by
                   <span class="text-success">YammieShoppers</span>
                 </p>
@@ -649,6 +651,7 @@
         });
       }
       lg();
+      document.getElementById("year").innerHTML = new Date().getFullYear();
     </script>
 
     <!-- End Scripts -->

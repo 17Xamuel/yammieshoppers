@@ -7,10 +7,16 @@ const router = express.Router();
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   let user = [];
-  if (email == "yammieshoppers@gmail.com" && password == "yammieshoppers") {
+  if (
+    email == "yammieshoppers@gmail.com" &&
+    password == "yammieshoppersadmin"
+  ) {
     user = ["Yammie", "0756234512", "Technician", "yammieshoppers@gmail.com"];
     res.send(user);
-  } else if (email == "admin@yammieshoppers.com" && password == "admin") {
+  } else if (
+    email == "admin@yammieshoppers.com" &&
+    password == "administrator"
+  ) {
     user = ["Denis", "0709857117", "Developer", "admin@yammieshoppers.com"];
     res.send(user);
   } else {
@@ -454,4 +460,21 @@ router.post("/addAdresses", async (req, res) => {
   );
 });
 
+router.get("/saleNumber/:id", async (err, results) => {
+  conn.query(
+    `SELECT SUM(order_qty) AS sales FROM cleared_orders WHERE product_id=?`,
+    [req.params.id],
+    (error, result) => {
+      if (error) throw error;
+      res.send(result);
+    }
+  );
+});
+
+router.get("/getAddresses", async (req, res) => {
+  conn.query("SELECT * FROM addresses", (err, results) => {
+    if (err) throw err;
+    res.send(results);
+  });
+});
 module.exports = router;
