@@ -686,16 +686,46 @@ router.get("/customer/orders/:id", (req, res) => {
       if (err) {
         throw err;
       } else {
-        let pending = [];
-        let finished = [];
-        result.forEach((order) => {
-          if (order.order_status == "pending") {
-            pending.push(order);
-          } else {
-            finished.push(order);
-          }
-        });
-        res.send({ pending, finished });
+        if (result.length > 0) {
+          let pending = [];
+          let finished = [];
+          result.forEach((order) => {
+            if (order.order_status == "pending") {
+              pending.push(order);
+            } else {
+              finished.push(order);
+            }
+          });
+          res.send({ pending, finished });
+        } else {
+          res.send({ pending: [], finished: [] });
+        }
+      }
+    }
+  );
+});
+router.get("/customer/order/:id", (req, res) => {
+  conn.query(
+    `SELECT * FROM pending_orders where order_id = ?`,
+    req.params.id,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result[0]);
+      }
+    }
+  );
+});
+router.get("/images/:category", (req, res) => {
+  conn.query(
+    `SELECT * FROM appImages WHERE destination = ?`,
+    req.params.category,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result);
       }
     }
   );

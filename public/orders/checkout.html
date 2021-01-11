@@ -104,6 +104,15 @@
       ._ca-btn:hover {
         opacity: 0.6;
       }
+      ._ca-btn.-sm {
+        width: 75%;
+        margin: 5px;
+        border-radius: 5px;
+      }
+      .-modify {
+        display: flex;
+        justify-content: center;
+      }
       /*delivery method*/
       .deliver {
         padding: 10px 20px;
@@ -344,11 +353,10 @@
       }
       .-ony-ldr {
         text-align: center;
-        font-size: 24px;
         padding: 10px 0px;
         color: green;
       }
-      .-ony-ldr > i {
+      .-ony-ldr > span {
         display: none;
       }
       @media screen and (max-width: 768px) {
@@ -386,9 +394,9 @@
       }
     </style>
     <script>
-      if (document.referrer == "") {
-        self.location = "/";
-      }
+      // if (document.referrer == "") {
+      //   self.location = "/";
+      // }
     </script>
   </head>
   <body>
@@ -661,7 +669,9 @@
                     </div>
                   </div>
                   <div class="-ony-ldr">
-                    <i class="fas fa-spinner fa-spin"></i>
+                    <span>
+                      <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    </span>
                   </div>
                   <button type="submit" class="-btn-s-pyf">
                     FINISH YOUR ORDER
@@ -700,6 +710,9 @@
                       <span class=""><span class="_ony-tt">UGX ...</span></span>
                     </div>
                   </div>
+                  <a class="-modify" href="../cart">
+                    <button class="_ca-btn -sm">Back To Cart</button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -954,7 +967,8 @@
           );
           document.querySelector("._pf").addEventListener("submit", (e) => {
             e.preventDefault();
-            document.querySelector(".-ony-ldr > i ").style.display = "inline";
+            document.querySelector(".-ony-ldr > span ").style.display =
+              "inline";
             let pf = new FormData(document.querySelector("._pf"));
             pf.append("yammie", yammie);
             pf.append("_shp", _order.shipping);

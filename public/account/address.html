@@ -568,7 +568,7 @@
                 <select
                   name=""
                   id="location"
-                  class="-is ca"
+                  class="-is ca _ad"
                   style="width: 250px"
                 >
                   <option value="" hidden>
@@ -925,6 +925,16 @@
     </script>
     <script>
       // edit
+      function _cz(url, _r) {
+        _r.open("GET", url, true);
+        _r.send();
+        _r.onreadystatechange = () => {
+          if (_r.readyState == 4 && _r.status == 200) {
+            console.log(_r.responseText);
+          }
+        };
+      }
+      _cz("/api/admin/getAddresses", new XMLHttpRequest());
       function _ca(i, z) {
         i.addEventListener("change", (e) => {
           z.value =
@@ -1039,7 +1049,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: -250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -1050,7 +1060,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: 250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -1123,7 +1133,7 @@
           window.scroll({
             top: 0,
             left: 0,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         });
       };
