@@ -72,33 +72,49 @@
     </style>
   </head>
 
-  <body>
-    <section>
-      <div class="card card-common">
-        <div class="card-body">
-          <div class="col-xl-12 col-lg-11 col-md-8">
-            <div class="row align-items">
-              <div class="col-md-4">
-                <img
-                  class="ml-5"
-                  src="../resources/yammie.png"
-                  alt="logo"
-                  width="200"
-                  height="40"
-                />
-              </div>
-              <div class="col-md-3 ml-auto">
-                <ul class="list-inline">
-                  <li class="list-inline-item mr-2">
-                    <a href="#" class="text-dark">Admin</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+  <body style="background-color: white">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"
+          ><img
+            src="../resources/yammie.png"
+            alt="LOGO"
+            width="150"
+            height="30"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-5">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
+      <form class="container-fluid justify-content">
+        <a href="index.html">
+          <button class="btn btn-outline-warning me-2" type="button">
+            Login
+          </button></a
+        >
+      </form>
+    </nav>
     <div class="login-form">
       <form id="adminForm">
         <h2 class="text-center">Log in</h2>
@@ -162,7 +178,7 @@
               </div>
               <div class="col-lg-6 text-center">
                 <p>
-                  &copy;2020 Copy Right Made With
+                  &copy; <span id="year"></span> Copy Right Made With
                   <i class="fas fa-heart text-danger"></i>by
                   <span class="text-success">YammieShoppers</span>
                 </p>
@@ -187,6 +203,7 @@
         </div>
       </div>
     </div>
+
     <script>
       let adminForm = document.getElementById("adminForm");
       adminForm.addEventListener("submit", (e) => {
@@ -224,6 +241,7 @@
         });
       }
       reload();
+      document.getElementById("year").innerHTML = new Date().getFullYear();
     </script>
   </body>
 </html>

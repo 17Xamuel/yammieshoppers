@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      rel="shortcut icon"
+      href="../resources/cartlink.png"
+      type="image/x-icon"
+    />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Yammie | Seller-Login</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
+      integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../admin/styles/home.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+      body {
+        background-color: white;
+      }
+      .login-form {
+        width: 500px;
+        margin: 95px auto;
+        font-size: 15px;
+      }
+
+      .login-form form {
+        margin-bottom: 15px;
+        background: #eee;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 30px;
+      }
+
+      .form-control,
+      .btn {
+        min-height: 38px;
+        border-radius: 2px;
+      }
+
+      .btn {
+        font-size: 15px;
+        font-weight: bold;
+      }
+      link {
+        border-radius: 5px;
+      }
+      @media (max-width: 768px) {
+        .login-form {
+          position: static;
+          height: auto;
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"
+          ><img
+            src="../resources/yammie.png"
+            alt="LOGO"
+            width="150"
+            height="30"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-5">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <form class="container-fluid justify-content">
+        <a href="register.html">
+          <button class="btn btn-outline-warning me-2" type="button">
+            Register
+          </button></a
+        >
+      </form>
+    </nav>
+    <section>
+      <div class="login-form text-center">
+        <form id="loginForm">
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control validate"
+              placeholder="Email"
+              id="email"
+              name="email"
+              autocomplete="off"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              id="password"
+              name="password"
+              autocomplete="off"
+            />
+          </div>
+          <div class="form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              onclick="showPass()"
+            />
+            <label for="show">Show Password</label>
+          </div>
+          <div class="form-group">
+            <button
+              type="submit"
+              class="btn btn-block text-light btn-warning"
+              style="background-color: orange"
+              data-target="#loginResponse"
+              data-toggle="modal"
+              id="loginButton"
+            >
+              Log in
+            </button>
+          </div>
+          <div class="clearfix">
+            <label class="float-left form-check-label"
+              ><input type="checkbox" /> Remember me</label
+            >
+            <a
+              href="#"
+              class="float-right"
+              data-target="#forget"
+              data-toggle="modal"
+              >Forgot Password?</a
+            >
+          </div>
+          <hr />
+          <a href="register.html">Need an account? Register</a>
+        </form>
+      </div>
+    </section>
+    <footer>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-3">
+            <div class="row border-top pt-3">
+              <div class="col-lg-6 text-center">
+                <ul class="list-inline">
+                  <li class="list-inline-item mr-2">
+                    <a href="#" class="text-dark">YammieShoppers</a>
+                  </li>
+                  <li class="list-inline-item mr-2">
+                    <a href="#" class="text-dark">About</a>
+                  </li>
+                  <li class="list-inline-item mr-2">
+                    <a href="#" class="text-dark">Support</a>
+                  </li>
+                  <li class="list-inline-item mr-2">
+                    <a href="#" class="text-dark">Blog</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6 text-center">
+                <p>
+                  &copy;<span id="year"></span> Copy Right Made With
+                  <i class="fas fa-heart text-danger"></i>by
+                  <span class="text-success">YammieShoppers</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <div class="modal fade" id="forget">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Forgot Password?</h5>
+          </div>
+          <div class="modal-body text-center" id="passwordForget">
+            <form id="forgetting">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cEmail"
+                  placeholder="Enter Email"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="cPass"
+                  placeholder="Enter New Password"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="new-cPass"
+                  placeholder="Repeat New Password"
+                  autocomplete="off"
+                />
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">
+                Submit
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-sm" id="logmodal">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="loginResponse">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">YammieShoppers</h5>
+          </div>
+          <div class="modal-body">
+            <div class="text-center" id="messages"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const login = document.getElementById("loginForm");
+      login.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let seller = {};
+        seller.email = document.getElementById("email").value;
+        seller.password = document.getElementById("password").value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState < 4) {
+            document.getElementById(
+              "messages"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            if (
+              xhr.responseText == "All fields are required" ||
+              xhr.responseText == `Incorrect Email or Password`
+            ) {
+              document.getElementById("messages").innerHTML = xhr.responseText;
+            } else {
+              localStorage.setItem(
+                "yammie/useLocalstorage/storage",
+                xhr.responseText
+              );
+
+              window.location.assign("index.html");
+            }
+          }
+        };
+        let sellerString = JSON.stringify(seller);
+        xhr.open("POST", "/api/sellers/loginSeller", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(sellerString);
+      });
+
+      let forgotPassword = document.getElementById("forgetting");
+      forgotPassword.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let newCrendential = {};
+        newCrendential.email = document.getElementById("cEmail").value;
+        newCrendential.password = document.getElementById("cPass").value;
+        newCrendential.newPass = document.getElementById("new-cPass").value;
+        let string = JSON.stringify(newCrendential);
+
+        const changing = new XMLHttpRequest();
+        changing.onreadystatechange = () => {
+          if (changing.readyState < 4) {
+            document.getElementById(
+              "passwordForget"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (changing.readyState == 4 && changing.status == 200) {
+            document.getElementById("passwordForget").innerHTML =
+              changing.responseText;
+          }
+        };
+        changing.open("POST", `/api/sellers/forgotPassword`, true);
+        changing.setRequestHeader("Content-Type", "application/json");
+        changing.send(string);
+      });
+
+      function showPass() {
+        let x = document.getElementById("password");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+      }
+
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+    </script>
+  </body>
+</html>

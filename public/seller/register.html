@@ -47,39 +47,49 @@
     </style>
     <title>Yammie | Register-Seller</title>
   </head>
-  <body style="background-color: #eee">
-    <section>
-      <div class="card card-common">
-        <div class="card-body">
-          <div class="col-xl-12 col-lg-11 col-md-8">
-            <div class="row align-items">
-              <div class="col-md-4">
-                <img
-                  class="ml-5"
-                  src="../resources/yammie.png"
-                  alt="logo"
-                  width="200"
-                  height="40"
-                />
-              </div>
-              <div class="col-md-5 text-center text-warning font-weight-bold">
-                Register to Sell on Yammie
-              </div>
-              <div class="col-md-3 ml-auto">
-                <ul class="list-inline">
-                  <li class="list-inline-item mr-2">
-                    <a href="#" class="text-dark">Contact Us</a>
-                  </li>
-                  <li class="list-inline-item mr-2">
-                    <a href="#" class="text-dark">Help</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+  <body style="background-color: white">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"
+          ><img
+            src="../resources/yammie.png"
+            alt="LOGO"
+            width="150"
+            height="30"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-5">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </section>
+      <form class="container-fluid justify-content">
+        <a href="login.html">
+          <button class="btn btn-outline-warning me-2" type="button">
+            Login
+          </button></a
+        >
+      </form>
+    </nav>
     <section>
       <div class="container mt-3 register">
         <div class="card card-common mb-4">
@@ -90,6 +100,7 @@
                   <label for="username">Username</label>
                   <input
                     type="text"
+                    placeholder="Username"
                     class="form-control"
                     id="name"
                     autocomplete="off"
@@ -102,6 +113,7 @@
                     class="form-control"
                     id="phone"
                     autocomplete="off"
+                    placeholder="Phonenumber"
                   />
                 </div>
               </div>
@@ -138,12 +150,13 @@
               <label for="Category">Category of Goods Sold</label>
               <div class="text-left" id="availableCategories"></div>
 
-              <div class="form-row">
+              <div class="form-row mt-2">
                 <div class="form-group col-md-6">
                   <label for="password">Password</label>
                   <input
                     type="password"
                     class="form-control"
+                    placeholder="Password"
                     id="password"
                     autocomplete="off"
                   />
@@ -153,6 +166,7 @@
                   <input
                     type="password"
                     class="form-control"
+                    placeholder="Repeat Password"
                     id="pass-repeat"
                     autocomplete="off"
                   />
@@ -170,7 +184,7 @@
               </button>
               <hr />
               <p class="text-center">
-                <a href="index.html">Already have an account? Login</a>
+                <a href="login.html">Already have an account? Login</a>
               </p>
             </form>
           </div>
@@ -200,7 +214,7 @@
               </div>
               <div class="col-lg-6 text-center">
                 <p>
-                  &copy;2020 Copy Right Made With
+                  &copy; <span id="year"></span> Copy Right Made With
                   <i class="fas fa-heart text-danger"></i>by
                   <span class="text-success">YammieShoppers</span>
                 </p>
@@ -303,5 +317,6 @@
       });
     }
     reload();
+    document.getElementById("year").innerHTML = new Date().getFullYear();
   </script>
 </html>

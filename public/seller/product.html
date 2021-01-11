@@ -36,9 +36,9 @@
       rel="stylesheet"
     />
     <script>
-      if (document.referrer == "") {
-        self.location = "index";
-      }
+      // if (document.referrer == "") {
+      //   self.location = "index";
+      // }
     </script>
     <style>
       @media (max-width: 768px) {
@@ -76,7 +76,7 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a href="home" class="nav-link text-white p-3 mb-2"
+                  <a href="index.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
                   >
@@ -204,7 +204,7 @@
                     <h4 class="text-center text-danger my-3">
                       Pending Products <span id="ppn"></span>
                     </h4>
-                    <table class="table table-dark table-hover text-center">
+                    <table class="table table-dark table-hover text-left">
                       <thead>
                         <tr>
                           <th>Images</th>
@@ -234,21 +234,20 @@
                 <div class="card rounded my-3">
                   <div class="card-body">
                     <h4 class="text-center text-danger my-3">
-                      Approved Products <span id="apn"></span>
+                      Rejected Products <span id="rpn"></span>
                     </h4>
-                    <table class="table table-striped bg-light text-center">
+                    <table class="table table-dark table-hover text-left">
                       <thead>
                         <tr>
                           <th>Images</th>
                           <th>Name</th>
                           <th>Price</th>
-
                           <th>Details</th>
                         </tr>
                       </thead>
-                      <tbody id="products"></tbody>
+                      <tbody id="rejected"></tbody>
                     </table>
-                    <div class="text-center" id="icon2"></div>
+                    <div class="text-center" id="icon3"></div>
                   </div>
                 </div>
               </div>
@@ -267,9 +266,9 @@
                 <div class="card rounded my-3">
                   <div class="card-body">
                     <h4 class="text-center text-danger my-3">
-                      Rejected Products <span id="rpn"></span>
+                      Approved Products <span id="apn"></span>
                     </h4>
-                    <table class="table table-dark table-hover text-center">
+                    <table class="table table-striped bg-light text-left">
                       <thead>
                         <tr>
                           <th>Images</th>
@@ -278,9 +277,9 @@
                           <th>Details</th>
                         </tr>
                       </thead>
-                      <tbody id="rejected"></tbody>
+                      <tbody id="products"></tbody>
                     </table>
-                    <div class="text-center" id="icon3"></div>
+                    <div class="text-center" id="icon2"></div>
                   </div>
                 </div>
               </div>
@@ -331,7 +330,7 @@
               </div>
               <div class="col-lg-6 text-center">
                 <p>
-                  &copy;2020 Copy Right Made With
+                  &copy; <span id="year"></span> Copy Right Made With
                   <i class="fas fa-heart text-danger"></i>by
                   <span class="text-success">YammieShoppers</span>
                 </p>
@@ -513,6 +512,7 @@
         });
       }
       lg();
+      document.getElementById("year").innerHTML = new Date().getFullYear();
     </script>
   </body>
 </html>
