@@ -240,6 +240,7 @@
                         </tr>
                         <tr>
                           <td>Type of Product:<span id="types"></span></td>
+                          <td>No of Sales:<span id="nsales"></span></td>
                         </tr>
                         <tr>
                           <td>Brief Description:<span id="desc"></span></td>
@@ -441,11 +442,14 @@
           document.getElementById("contact").innerHTML = outcome.phonenumber;
           let specify = JSON.parse(outcome.specifications);
           document.getElementById("number").innerHTML = specify.Number;
-          document.getElementById("brand").innerHTML = specify.Brand || null;
+          document.getElementById("brand").innerHTML =
+            specify.Brand || "Not specified";
           document.getElementById("frag").innerHTML = specify.Fragile;
           document.getElementById("size").innerHTML = specify.Size;
-          document.getElementById("col").innerHTML = specify.Color || null;
-          document.getElementById("dim").innerHTML = specify.Dimensions;
+          document.getElementById("col").innerHTML =
+            specify.Color || "Not specified";
+          document.getElementById("dim").innerHTML =
+            specify.Dimensions || "Not specified";
           document.getElementById("weight").innerHTML = specify.Weight;
           document.getElementById("types").innerHTML = specify.TypeOfProduct;
 
@@ -528,6 +532,16 @@
         });
       }
       reject();
+
+      const saleNumber = new XMLHttpRequest();
+      saleNumber.onreadystatechange = () => {
+        if (saleNumber.readyState == 4 && saleNumber.status == 200) {
+          let [numbers] = JSON.parse(saleNumber.responseText);
+          document.getElementById("nsales").innerHTML = numbers.sales || "0";
+        }
+      };
+      saleNumber.open("GET", `/api/admin/saleNumber/${pId}`, true);
+      saleNumber.send();
 
       function acp() {
         let acceptProduct = document.getElementById("acceptProduct");

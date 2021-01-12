@@ -460,7 +460,7 @@ router.post("/addAdresses", async (req, res) => {
   );
 });
 
-router.get("/saleNumber/:id", async (err, results) => {
+router.get("/saleNumber/:id", async (req, res) => {
   conn.query(
     `SELECT SUM(order_qty) AS sales FROM cleared_orders WHERE product_id=?`,
     [req.params.id],
