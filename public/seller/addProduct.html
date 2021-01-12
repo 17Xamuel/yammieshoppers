@@ -44,6 +44,9 @@
       // if (document.referrer == "") {
       //   self.location = "index";
       // }
+      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
+        self.location = "login.html";
+      }
     </script>
     <style>
       @media (max-width: 768px) {

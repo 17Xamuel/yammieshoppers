@@ -33,7 +33,10 @@
 
     <title>Yammie | Seller Dashboard</title>
     <script>
-      if (document.referrer == "") {
+      // if (document.referrer == "") {
+      //   self.location = "login.html";
+      // }
+      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
         self.location = "login.html";
       }
     </script>
