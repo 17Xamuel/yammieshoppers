@@ -106,7 +106,10 @@ router.post("/confirmEmail", async (req, res) => {
       "INSERT INTO pending_sellers SET ? ",
       newSeller,
       (err, result) => {
-        if (err) throw err;
+        if (err) {
+          console.log(err);
+          return res.send("An error ocurred!!!");
+        }
         res.send(
           "You have registered successfully.Please wait for confirmation from the Admin"
         );

@@ -39,6 +39,9 @@
       // if (document.referrer == "") {
       //   self.location = "index";
       // }
+      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
+        self.location = "login.html";
+      }
     </script>
     <style>
       @media (max-width: 768px) {
@@ -431,7 +434,7 @@
                 <td>${approvedProduct.product}</td>
                 <td>${approvedProduct.price}</td>
                   <td>
-                    <a href="productdetails?approvedProduct=${approvedProduct.id}">
+                    <a href="approved.html?approvedProduct=${approvedProduct.id}">
                     <button type="button" class="btn btn-info btn-sm">Details</button></a>
                   </td>
                 </tr>`;
@@ -508,7 +511,7 @@
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("index");
+          window.location.assign("login.html");
         });
       }
       lg();

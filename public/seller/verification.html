@@ -134,7 +134,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Yammie Shoppers</h5>
+            <h5 class="modal-title">Press Ok to Continue</h5>
           </div>
           <div class="modal-body">
             <div id="messages" class="text-center"></div>
@@ -194,7 +194,8 @@
             ).innerHTML = `<i class="fas fa-spinner text-warning fa-spin"></i>`;
           }
           if (xhr.readyState == 4 && xhr.status == 200) {
-            document.getElementById("messages").innerHTML = xhr.responseText;
+            document.getElementById("messages").innerHTML =
+              xhr.responseText + "Please Press Ok ";
           }
         };
         let confirmCode = JSON.stringify(confirm);

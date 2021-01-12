@@ -15,6 +15,9 @@
       // if (document.referrer == "") {
       //   self.location = "index";
       // }
+      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
+        self.location = "login.html";
+      }
     </script>
     <!-- Bootstrap -->
     <link
@@ -294,7 +297,7 @@
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("index");
+          window.location.assign("login.html");
         });
       }
       lg();

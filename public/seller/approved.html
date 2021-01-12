@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <link
       rel="shortcut icon"
       href="../resources/cartlink.png"
       type="image/x-icon"
     />
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>Yammie | My Orders</title>
-
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
+    />
+    <!-- Bootstrap -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
       crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
     />
     <script
       defer
@@ -23,31 +28,21 @@
       integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
       crossorigin="anonymous"
     ></script>
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../admin/styles/home.css" />
-
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../admin/styles/home.css" />
+
+    <title>Yammie | Product Details</title>
     <script>
+      // if (document.referrer == "") {
+      //   self.location = "index";
+      // }
       if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
         self.location = "login.html";
       }
     </script>
-    <style>
-      @media (max-width: 768px) {
-        .table .card {
-          width: 100%;
-          position: static;
-          height: auto;
-        }
-      }
-    </style>
   </head>
 
   <body>
@@ -72,31 +67,41 @@
                 >YammieShoppers</a
               >
               <div class="border-bottom pb-3">
-                <a href="#" class="text-white">Hello <span id="User"></span></a>
+                <a href="#" class="text-white text-center"
+                  >Hello <span id="User"></span
+                ></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a href="index.html" class="nav-link text-white p-3 mb-2"
+                  <a
+                    href="index.html"
+                    class="nav-link text-white p-3 mb-2 current"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
                   >
                 </li>
-                <li class="nav-item">
-                  <a href="product" class="nav-link text-white p-3 mb-2"
+                <li class="nav-item current">
+                  <a
+                    href="product"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-table text-light fa-lg mr-3"></i>My
                     Products</a
                   >
                 </li>
 
-                <li class="nav-item current">
-                  <a href="orders" class="nav-link text-white p-3 mb-2"
+                <li class="nav-item">
+                  <a
+                    href="orders"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-bag text-light fa-lg mr-3"></i>My
                     Orders</a
                   >
                 </li>
 
                 <li class="nav-item">
-                  <a href="profile" class="nav-link text-white p-3 mb-2"
+                  <a
+                    href="profile"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-user text-light fa-lg mr-3"></i>My
                     Profile</a
                   >
@@ -111,21 +116,21 @@
               class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
             >
               <div class="row align-items">
-                <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
-                  <h4>Dashboard</h4>
+                <div class="col-md-4 mb-0 text-light py-3">
+                  <h4>DASHBOARD</h4>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">4</span
+                        ><span class="text-white icon-bullet">5</span
                         ><i class="fas fa-comments text-muted fa-2x"></i
                       ></a>
                     </li>
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">5</span
+                        ><span class="text-white icon-bullet">4</span
                         ><i class="fas fa-bell text-muted fa-2x"></i
                       ></a>
                     </li>
@@ -148,6 +153,7 @@
       </div>
     </nav>
     <!-- End Navbar -->
+
     <!-- Modal -->
     <div class="modal fade" id="sign-out">
       <div class="modal-dialog">
@@ -171,31 +177,74 @@
       </div>
     </div>
     <!-- End Modal -->
+
+    <!-- Details -->
     <section>
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3 align-items-center">
-              <div class="col-xl-11 mx-auto">
-                <div class="card rounded my-3">
+            <div class="row mt-md-3 pt-md-5">
+              <div class="col-xl-10 mx-auto my-5">
+                <div class="card rounded">
                   <div class="card-body">
-                    <h3 class="text-danger text-center my-3">
-                      Pending Orders<span id="pon"></span>
-                    </h3>
-
-                    <table class="table table-dark table-hover text-left">
-                      <thead>
+                    <h5 class="text-info text-center">
+                      Product Number: <span id="number"></span>
+                    </h5>
+                    <table class="table text-left">
+                      <tbody>
                         <tr>
-                          <th>Image</th>
-                          <th>Name</th>
-                          <th>Price(Discounted)</th>
-                          <th>Quantity</th>
-                          <th>Amount</th>
+                          <td>ProductName:<span id="name"></span></td>
+                          <td>Quantity:<span id="qty"></span></td>
                         </tr>
-                      </thead>
-                      <tbody id="body"></tbody>
+                        <tr>
+                          <td>Price:<span id="price"></span></td>
+                          <td>Discount:<span id="disc"></span></td>
+                        </tr>
+                        <tr>
+                          <td>NetPrice:<span id="netp"></span></td>
+                          <td>Brand:<span id="brand"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Category:<span id="cat"></span></td>
+                          <td>SubCategory:<span id="scat"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Date Added:<span id="date"></span></td>
+                          <td>Fragile:<span id="frag"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Size:<span id="size"></span></td>
+                          <td>Color:<span id="col"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Dimensions:<span id="dim"></span></td>
+                          <td>Weight:<span id="weight"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Seller Name: <span id="sname"></span></td>
+                          <td>Seller Contact: <span id="contact"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Type of Product:<span id="types"></span></td>
+                          <td>Number of Sales: <span id="nsales"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Brief Description:<span id="desc"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Detailed Description:<span id="ddesc"></span></td>
+                        </tr>
+                      </tbody>
                     </table>
-                    <div class="text-center my-2" id="icon1"></div>
+                    <div id="productDetailLoading" class="text-center"></div>
+                    <div class="text-center">
+                      <ul class="list-inline" id="img"></ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -204,39 +253,7 @@
         </div>
       </div>
     </section>
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row align-items-center">
-              <div class="col-xl-11 mx-auto">
-                <div class="card rounded my-3">
-                  <div class="card-body">
-                    <h3 class="text-center text-danger my-3">
-                      Completed Orders <span id="con"></span>
-                    </h3>
-                    <table class="table table-striped bg-light text-left">
-                      <thead>
-                        <tr>
-                          <th>Image</th>
-                          <th>Name</th>
-                          <th>Price(Discounted)</th>
-                          <th>Quantity</th>
-                          <th>Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody id="tbody"></tbody>
-                    </table>
-                  </div>
-
-                  <div class="text-center my-2" id="icon2"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- Details -->
 
     <!-- Footer -->
     <footer>
@@ -273,6 +290,9 @@
       </div>
     </footer>
     <!-- End Footer -->
+
+    <!-- Scripts -->
+
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
@@ -293,91 +313,77 @@
         localStorage.getItem("yammie/useLocalstorage/storage")
       );
       document.getElementById("User").innerHTML = seller.username;
-      let sellerId = seller.id;
 
-      const xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState < 4) {
+      let Aproduct = new URLSearchParams(window.location.search).get(
+        "approvedProduct"
+      );
+
+      const details = new XMLHttpRequest();
+      details.onreadystatechange = () => {
+        if (details.readyState < 4) {
           document.getElementById(
-            "icon1"
+            "productDetailLoading"
           ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
         }
-        if (xhr.readyState == 4 && xhr.status == 200) {
-          let results = JSON.parse(xhr.responseText);
-          let rows = "";
-          results.forEach((result) => {
-            let image = JSON.parse(result.images);
-            rows += `
-            <tr>
-               <td>
-                  <img
-                    src="${image[0]}"
-                    width="50"
-                    height="50"
-                    class="rounded-circle"
-                  />
-                </td>
-              <td>${result.order_product}</td>
-              <td>${result.order_amount}</td>
-              <td>${result.order_qty}</td>
-              <td>${result.order_amount * result.order_qty}</td>
-            </tr>
-            `;
-          });
-          document.getElementById("body").innerHTML = rows;
-          document.getElementById("pon").innerHTML = `(${results.length})`;
-          if (`${results.length}` == 0) {
-            document.getElementById("icon1").textContent =
-              "No Pending Order at the Moment";
-          } else {
-            document.getElementById("icon1").innerHTML = "";
-          }
-        }
-      };
-      xhr.open("GET", `/api/sellers/orders/${sellerId}`, true);
-      xhr.send();
+        if (details.status == 200 && details.readyState == 4) {
+          let [outcomes] = JSON.parse(details.responseText);
 
-      const order = new XMLHttpRequest();
-      order.onreadystatechange = () => {
-        if (order.readyState < 4) {
-          document.getElementById(
-            "icon2"
-          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-        }
-        if (order.readyState == 4 && order.status == 200) {
-          let outcomes = JSON.parse(order.responseText);
-          let row = "";
-          outcomes.forEach((outcome) => {
-            let image = JSON.parse(outcome.images);
-            row += `
-            <tr>
-              <td>
-                  <img
-                    src="${image[0]}"
-                    width="50"
-                    height="50"
-                    class="rounded-circle"
-                  />
-                </td>
-              <td>${outcome.order_product}</td>
-              <td>${outcome.order_amount}</td>
-              <td>${outcome.order_qty}</td>
-              <td>${outcome.order_amount * outcome.order_qty}</td>
-           </tr>
-            `;
-          });
-          document.getElementById("tbody").innerHTML = row;
-          document.getElementById("con").textContent = `(${outcomes.length})`;
-          if (`${outcomes.length}` == 0) {
-            document.getElementById("icon2").innerHTML =
-              "No Completed Orders Found";
-          } else {
-            document.getElementById("icon2").innerHTML = "";
+          document.getElementById("name").innerHTML = outcomes.product;
+          document.getElementById("qty").innerHTML = outcomes.quantity;
+          document.getElementById("price").innerHTML = outcomes.price;
+          document.getElementById("cat").innerHTML = outcomes.category_name;
+          document.getElementById("scat").innerHTML = outcomes.subCategoryName;
+          document.getElementById("disc").innerHTML = outcomes.discount + "%";
+          document.getElementById("date").innerHTML = outcomes.dateAdded.slice(
+            0,
+            10
+          );
+
+          document.getElementById("netp").innerHTML = parseInt(
+            outcomes.prices - (outcomes.discount / 100) * outcomes.price
+          );
+          document.getElementById("desc").innerHTML = outcomes.description;
+          document.getElementById("ddesc").innerHTML =
+            outcomes.detailedDescription;
+          document.getElementById("sname").innerHTML = outcomes.username;
+          document.getElementById("contact").innerHTML = outcomes.phonenumber;
+          let specification = JSON.parse(outcome.specifications);
+          document.getElementById("number").innerHTML = specification.Number;
+          document.getElementById("brand").innerHTML =
+            specification.Brand || null;
+          document.getElementById("frag").innerHTML = specification.Fragile;
+          document.getElementById("size").innerHTML = specification.Size;
+          document.getElementById("col").innerHTML =
+            specification.Color || null;
+          document.getElementById("dim").innerHTML = specification.Dimensions;
+          document.getElementById("weight").innerHTML = specification.Weight;
+          document.getElementById("types").innerHTML =
+            specification.TypeOfProduct;
+
+          let images = JSON.parse(outcomes.images);
+          let data = "";
+          for (i = 0; i < images.length; i++) {
+            data += `
+              <li class="list-inline-item">
+                <img src="${images[i]}" width="100" height="100"/>
+                </li>`;
           }
+          document.getElementById("-img").innerHTML = data;
+          document.getElementById("productDetailLoading").innerHTML = "";
         }
       };
-      order.open("GET", `/api/sellers/doneOrder/${sellerId}`, true);
-      order.send();
+      details.open("GET", `/api/admin/approvedProduct/${Aproduct}`, true);
+      details.send();
+
+      const saleNumber = new XMLHttpRequest();
+      saleNumber.onreadystatechange = () => {
+        if (saleNumber.readyState == 4 && saleNumber.status == 200) {
+          let [numbers] = JSON.parse(saleNumber.responseText);
+          document.getElementById("nsales").innerHTML = numbers.sales;
+        }
+      };
+      saleNumber.open("GET", `/api/admin/saleNumber/${Aproduct}`, true);
+      saleNumber.send();
 
       function lg() {
         let lg = document.getElementById("slg");
@@ -389,5 +395,7 @@
       lg();
       document.getElementById("year").innerHTML = new Date().getFullYear();
     </script>
+
+    <!-- End Scripts -->
   </body>
 </html>

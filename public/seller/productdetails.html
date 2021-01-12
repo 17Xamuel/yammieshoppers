@@ -39,6 +39,9 @@
       // if (document.referrer == "") {
       //   self.location = "index";
       // }
+      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
+        self.location = "login.html";
+      }
     </script>
   </head>
 
@@ -322,7 +325,6 @@
         }
         if (productDetails.readyState == 4 && productDetails == 200) {
           let [outcome] = JSON.parse(details.responseText);
-
           document.getElementById("name").innerHTML = outcome.product;
           document.getElementById("qty").innerHTML = outcome.quantity;
           document.getElementById("price").innerHTML = outcome.price;
@@ -442,7 +444,7 @@
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("index");
+          window.location.assign("login.html");
         });
       }
       lg();

@@ -44,6 +44,9 @@
       // if (document.referrer == "") {
       //   self.location = "index";
       // }
+      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
+        self.location = "login.html";
+      }
     </script>
     <style>
       @media (max-width: 768px) {
@@ -396,7 +399,7 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input fileSize filing"
+                              class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
                             />
@@ -423,7 +426,7 @@
                           data-upload-id="myUploads"
                         >
                           <label for="Fileupload"
-                            >Other Images
+                            >Other Image
                             <a
                               href="javascript:void(0)"
                               class="custom-file-container__image-clear"
@@ -433,12 +436,9 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input file fileSize"
+                              class="custom-file-container__custom-file__custom-file-input"
                               accept="image/*"
                               name="images"
-                              multiple
-                              aria
-                              select="Multiple Select Files"
                             />
                             <!-- <input
                               type="hidden"
@@ -458,53 +458,90 @@
                     </div>
                   </div>
 
-                  <!-- <div class="row row-cols-1 row-cols-md-3 g-4">
-                    <div class="col">
-                      <div class="card h-100">
-                        <div class="card-body">
-                          <p class="card-text">
-                            <input type="file" name="images" />
-                          </p>
-                        </div>
-                        <div class="card-footer">
-                          <small class="text-muted"
-                            >Last updated 3 mins ago</small
+                  <div class="row">
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUploading"
+                        >
+                          <label for="Fileupload"
+                            >Other Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
                           >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input"
+                              accept="image/*"
+                              name="images"
+                            />
+                            <!-- <input
+                              type="hidden"
+                              name="MAX_FILE_SIZE"
+                              value="10485760"
+                            /> -->
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
                         </div>
                       </div>
                     </div>
-                    <div class="col">
-                      <div class="card h-100">
-                        <div class="card-body">
-                          <p class="card-text">
-                            <input type="file" name="images" />
-                          </p>
-                        </div>
-                        <div class="card-footer">
-                          <small class="text-muted"
-                            >Last updated 3 mins ago</small
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="Upload"
+                        >
+                          <label for="Fileupload"
+                            >Other Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
                           >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input file"
+                              accept="image/*"
+                              name="images"
+                            />
+                            <!-- <input
+                              type="hidden"
+                              name="MAX_FILE_SIZE"
+                              value="10485760"
+                            />  -->
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
                         </div>
                       </div>
                     </div>
-                    <div class="col">
-                      <div class="card h-100">
-                        <div class="card-body">
-                          <p class="card-text">
-                            <input type="file" name="images" />
-                          </p>
-                        </div>
-                        <div class="card-footer">
-                          <small class="text-muted"
-                            >Last updated 3 mins ago</small
-                          >
-                        </div>
-                      </div>
-                    </div>
-                  </div> -->
+                  </div>
+
                   <input type="hidden" name="seller_id" id="auth" />
 
-                  <button class="btn btn-warning text-light btn-block my-3">
+                  <button
+                    class="btn btn-warning text-light btn-block my-3"
+                    data-target="#addingProduct"
+                    data-toggle="modal"
+                  >
                     Add Product
                   </button>
                 </form>
@@ -514,6 +551,16 @@
         </div>
       </div>
     </section>
+
+    <div class="modal fade" id="addingProduct">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            Adding Product Please Wait....
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -573,6 +620,8 @@
     <script>
       const upload = new FileUploadWithPreview("myUpload");
       const uploads = new FileUploadWithPreview("myUploads");
+      const uploading = new FileUploadWithPreview("myUploading");
+      const Upload = new FileUploadWithPreview("Upload");
 
       let [seller] = JSON.parse(
         localStorage.getItem("yammie/useLocalstorage/storage")
@@ -613,29 +662,27 @@
         subCatLoad.send();
       });
 
-      let fileSize = document.querySelectorAll(".fileSize");
-      fileSize.forEach((fil) => {
-        fil.addEventListener("change", (e) => {
-          //Any file selected
-          if (fil.files.length > 0) {
-            for (let i = 0; i < fil.files.length - 1; i++) {
-              let fSize = fil.files.item(i).size;
-              let file = Math.round(fSize / 1024);
-              if (file > 4096 || file < 2048) {
-                e.preventDefault();
-                alert("All images should be between 2MB and 4MB");
-              }
-            }
-          }
-        });
-      });
+      // let fileSize = document.querySelectorAll(".fileSize");
+      // fileSize.forEach((fil) => {
+      //   fil.addEventListener("change", (e) => {
+      //     //Any file selected
+      //     if (fil.files.length > 0) {
+      //       for (let i = 0; i < fil.files.length - 1; i++) {
+      //         let fSize = fil.files.item(i).size;
+      //         let file = Math.round(fSize / 1024);
+      //         if (file > 4096 || file < 2048) {
+      //           e.preventDefault();
+      //           alert("All images should be between 2MB and 4MB");
+      //         }
+      //       }
+      //     }
+      //   });
+      // });
 
       let testFileNumber = document.querySelector(".btn-block");
       testFileNumber.addEventListener("click", (e) => {
         let fileNumber = document.querySelector(".filing");
-        let filing = document.querySelector(".file");
-        console.log(filing.files.length);
-        if (fileNumber.files.length == 0 || filing.files.length > 3) {
+        if (fileNumber.files.length == 0) {
           e.preventDefault();
           alert(
             "Total images should be atleast one and should not exceed four!!!"
@@ -643,11 +690,15 @@
         }
       });
 
+      //  multiple
+      //                   aria
+      //                    select="Multiple Select Files"
+
       function lg() {
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("index");
+          window.location.assign("login.html");
         });
       }
       lg();

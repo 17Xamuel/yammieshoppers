@@ -34,8 +34,11 @@
     <title>Yammie | Seller Dashboard</title>
     <script>
       // if (document.referrer == "") {
-      //   self.location = "index";
+      //   self.location = "login.html";
       // }
+      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
+        self.location = "login.html";
+      }
     </script>
   </head>
 
@@ -494,7 +497,7 @@
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("index");
+          window.location.assign("login.html");
         });
       }
       lg();
