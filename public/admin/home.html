@@ -868,7 +868,6 @@
               let confirmSeller = e.target.dataset.id;
               let confirm = document.getElementById("yesBtn");
               confirm.addEventListener("click", (e) => {
-                console.log(confirmSeller);
                 let _xhr = new XMLHttpRequest();
                 _xhr.onreadystatechange = () => {
                   if (_xhr.readyState < 4) {
