@@ -95,14 +95,6 @@
         transform: translateY(-7px);
         box-shadow: 5px 5px 7px #c3c3c3;
       }
-      .no-orders {
-        display: none;
-      }
-      .no-orders-ctr {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
       .orders-ctr {
         padding: 10px;
         display: grid;
@@ -516,13 +508,13 @@
             </li>
           </a>
           <a href="./pending-orders">
-            <li id="pf-pending" class="active">
+            <li id="pf-pending">
               <i class="fas fa-dolly-flatbed"></i>
               <span>Pending Orders</span>
             </li>
           </a>
           <a href="./orders">
-            <li id="pf-orders">
+            <li id="pf-orders" class="active">
               <i class="fas fa-box"></i>
               <span>My Orders</span>
             </li>
@@ -553,23 +545,14 @@
           </a>
           <button id="logout">LOG OUT</button>
         </ul>
-        <div class="right myorders -b-x no-orders">
-          <h2 class="-pdf-h">Pending Orders</h2>
-          <div class="pf-details-ctr no-orders-ctr">
-            <div class="_blank-orders">
-              <img
-                src="../resources/undraw_blank_canvas_3rbb.svg"
-                alt=""
-                height="200px"
-                width="200px"
-              />
-              <h4>You haven't Made Any Order</h4>
-              <a href="/"><button class="btn">Start Shopping</button></a>
-            </div>
-          </div>
-        </div>
-        <div class="right myorders -b-x orders-m-ctr">
-          <h2 class="-pdf-h">Pending Orders</h2>
+
+        <div class="right myorders -b-x">
+          <h2 class="-pdf-h">
+            <a href="./orders">
+              <i class="fas fa-arrow-left"></i>
+            </a>
+            Order Details
+          </h2>
           <div class="orders-ctr">
             <div class="order-ctr"></div>
           </div>
@@ -850,7 +833,12 @@
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
-      _uo(`/api/user/customer/orders/${yammie}`, new XMLHttpRequest());
+      _uo(
+        `/api/user/customer/order/${new URLSearchParams(
+          window.location.search
+        ).get("order")}`,
+        new XMLHttpRequest()
+      );
       cartNumbersDisplay();
       function cartNumbersDisplay() {
         let cartNumber = parseInt(localStorage.getItem("cartNumber"));
@@ -863,44 +851,58 @@
         _r.send();
         _r.onreadystatechange = () => {
           if (_r.readyState == 4 && _r.status == 200) {
-            let { pending } = JSON.parse(_r.responseText);
-            if (pending.length > 0) {
-              let ctr = document.querySelector(".orders-ctr");
-              ctr.innerHTML = "";
-              pending.forEach((order) => {
-                let order_info = JSON.parse(order.order_info);
-                let order_items = JSON.parse(order.order_items);
-                let date = new Date(order.order_date);
-                let order_date = `${date.getDate()}/${
-                  date.getMonth() + 1
-                }/${date.getFullYear()}`;
-                ctr.innerHTML += `
-                     <div class="order-ctr">
-              <div class="-pdf-h">Order Number: ${order.order_number}</div>
-              <div class="order">
-                <div class="order-content">
-                  <div class="order-date">Date: ${order_date}</div>
-                  <div class="items-number">items: ${
-                    Object.keys(order_items).length
-                  }</div>
-                  <div class="order-amount">Amount: UGX ${numberFormat.format(
-                    parseInt(order.order_amount) + parseInt(order_info.shipping)
-                  )}</div>
-                  <div class="order-status">Status: Closed</div>
-                  <a class="order-details" href="./order-details?order=${
-                    order.order_id
-                  }">
-                    <button class="btn _order-details">Details</button>
-                   </a>
-                </div>
-              </div>
-            </div>
-            `;
-              });
-            } else {
-              document.querySelector(".orders-m-ctr").style.display = "none";
-              document.querySelector(".no-orders").style.display = "block";
+            let order = JSON.parse(_r.responseText);
+            let order_info = JSON.parse(order.order_info);
+            let order_items = JSON.parse(order.order_items);
+            let cartDom = document.querySelector(".orders-ctr");
+            cartDom.innerHTML = "";
+            async function itemCollect(i) {
+              let res = await fetch(`/api/user/product/${i}`);
+              let item = await res.json();
+              return item;
             }
+            Object.values(order_items).forEach(async (key) => {
+              //dom
+              let item = await itemCollect(key.cartItemAdded);
+              //dom
+              cartDom.innerHTML += `
+                  <div class="_check-item">
+                    <div class="img">
+                      <div class="">
+                      <img
+                        src="${JSON.parse(item.images)[0]}"
+                        alt=""
+                        width="100%"
+                        height="100%"
+                      />
+                      </div>
+                    </div>
+                    <div class="-item">
+                      <div class="name" style="overflow: hidden">
+                        ${item.product}
+                      </div>
+                      <div class="price _usp">Price: UGX
+                        <span class="item_price">${numberFormat.format(
+                          item.discount
+                            ? (item.price * (100 - item.discount)) / 100
+                            : item.price
+                        )}</span>
+                      </div>
+                      <div class="qty _usq">Quantity: ${key.inCartNumber}</div>
+                    </div>
+                  </div>
+            `;
+            });
+          } else {
+            console.log("none");
+          }
+          let _btns = document.querySelectorAll(".order-details");
+          if (_btns.length > 0) {
+            _btns.forEach((btn) => {
+              btn.addEventListener("click", () => {
+                btn.querySelector(".-order").classList.toggle("-o-active");
+              });
+            });
           }
         };
       }
