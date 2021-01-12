@@ -247,7 +247,7 @@ router.post("/rejPost/:id", async (req, res) => {
           quantity: quantity,
           images: image,
           seller_id: seller_id,
-          reason: reason
+          reason: reason,
         },
         (error, results) => {
           if (error) throw error;
@@ -346,7 +346,7 @@ router.post("/addCategory", async (req, res) => {
   conn.query(
     `INSERT INTO category SET ? `,
     {
-      category_name: catName
+      category_name: catName,
     },
     (err, result) => {
       if (err) throw err;
@@ -373,7 +373,7 @@ router.post("/addSubCategory", async (req, res) => {
         `INSERT INTO subCategories SET ?`,
         {
           category_id: result[0].category_id,
-          subCategoryName: subName
+          subCategoryName: subName,
         },
         (error, results) => {
           if (error) throw error;
@@ -422,7 +422,7 @@ router.post("/addZone", async (req, res) => {
   conn.query(
     "INSERT INTO zones SET ?",
     {
-      zone_name: zoneName
+      zone_name: zoneName,
     },
     (err, result) => {
       if (err) throw err;
@@ -449,7 +449,7 @@ router.post("/addAdresses", async (req, res) => {
         `INSERT INTO addresses SET ?`,
         {
           zone_id: result[0].zone_id,
-          address_name: addressName
+          address_name: addressName,
         },
         (error, results) => {
           if (error) throw error;
@@ -460,7 +460,7 @@ router.post("/addAdresses", async (req, res) => {
   );
 });
 
-router.get("/saleNumber/:id", async (err, results) => {
+router.get("/saleNumber/:id", async (req, res) => {
   conn.query(
     `SELECT SUM(order_qty) AS sales FROM cleared_orders WHERE product_id=?`,
     [req.params.id],

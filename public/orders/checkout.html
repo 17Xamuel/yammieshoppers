@@ -348,7 +348,8 @@
         border-top: 1px solid rgb(0, 0, 0, 0.1);
         border-bottom: 1px solid rgb(0, 0, 0, 0.1);
       }
-      .show_order {
+      .show_order,
+      .other_dn {
         display: none;
       }
       .-ony-ldr {
@@ -486,34 +487,10 @@
                   <select
                     name=""
                     id="location"
-                    class="-is ca"
+                    class="-is ca select"
                     style="width: 250px"
                   >
                     <option value="" hidden>Select Your Residence</option>
-                    <option value="Management">Management Sciences</option>
-                    <option value="Hospital">Hospital</option>
-                    <option value="Education">Education</option>
-                    <option value="keturah">keturah</option>
-                    <option value="Wilson">Wilson</option>
-                    <option value="Royal">Royal</option>
-                    <option value="Cosima">Cosima</option>
-                    <option value="Abraham">Abraham</option>
-                    <option value="Bako">Bako</option>
-                    <option value="Naphtali">Naphtali</option>
-                    <option value="God's Mercy">God's Mercy</option>
-                    <option value="Masengere">
-                      Masengere(These Funny Rentals)
-                    </option>
-                    <option value="Black Roof">Black Roof</option>
-                    <option value="Pioneer">Pioneer</option>
-                    <option value="Pilipo">Pilipo</option>
-                    <option value="Gloryianta">Gloryianta</option>
-                    <option value="Mandela">Mandela</option>
-                    <option value="Washington">Washington</option>
-                    <option value="St. Peters(Flat)">St. Peters(Flat)</option>
-                    <option value="St. Peters">St. Peters</option>
-                    <option value="Northern Elite">Northern Elite</option>
-                    <option value="Jeremiah">Jeremiah</option>
                   </select>
                 </div>
                 <div class="_cad">
@@ -529,7 +506,7 @@
                     readonly
                   />
                 </div>
-                <div class="_cad">
+                <div class="_cad other_dn">
                   <label for="other-a">Other:</label>
                   <input
                     type="text"
@@ -780,49 +757,46 @@
       }
     </script>
     <script>
-      function _ca(i, z) {
-        i.addEventListener("change", (e) => {
-          z.value =
-            i.value == "keturah" || i.value == "Wilson"
-              ? "Keturah Zone"
-              : i.value == "Royal" ||
-                i.value == "Cosima" ||
-                i.value == "Maroon" ||
-                i.value == "Abraham"
-              ? "Royal Zone"
-              : i.value == "Maisha" ||
-                i.value == "Bako" ||
-                i.value == "Naphtali" ||
-                i.value == "Masengere" ||
-                i.value == "God's Mercy"
-              ? "Maisha Zone"
-              : i.value == "Gloryianta" ||
-                i.value == "Mandela" ||
-                i.value == "Pilipo" ||
-                i.value == "Pioneer" ||
-                i.value == "Black Roof"
-              ? "Pioneer Zone"
-              : i.value == "Washington"
-              ? "Washington Zone"
-              : i.value == "St. Peters(Flat)"
-              ? "St. Peters Zone"
-              : i.value == "Pacuwa" ||
-                i.value == "St. Peters" ||
-                i.value == "Genesis"
-              ? "Pacuwa Zone"
-              : i.value == "Northern Elite"
-              ? "Northern Elite Zone"
-              : i.value == "Jeremiah"
-              ? "Jeremiah Zone"
-              : i.value == "Hospital"
-              ? "Hospital Side"
-              : i.value == "Management"
-              ? "Management Sciences"
-              : i.value == "Education"
-              ? "Education Block"
-              : "Other";
-        });
+      //edit
+      function _cz(url, _r) {
+        _r.open("GET", url, true);
+        _r.send();
+        _r.onreadystatechange = () => {
+          if (_r.readyState == 4 && _r.status == 200) {
+            let _add = JSON.parse(_r.responseText);
+            _add.forEach((add) => {
+              document.querySelector(
+                ".select"
+              ).innerHTML += `<option value="${add.address_name}">${add.address_name}</option>`;
+            });
+            function _ca(i, z) {
+              i.addEventListener("change", (e) => {
+                if (i.value == "Not Included") {
+                  document.querySelector(".other_dn").style.display = "block";
+                }
+                z.placeholder = "Loading...";
+                let _q = new XMLHttpRequest();
+                _q.open("GET", "/api/admin/getZone", true);
+                _q.send();
+                _q.onreadystatechange = () => {
+                  if (_q.readyState == 4 && _q.status == 200) {
+                    let _zone = JSON.parse(_q.responseText);
+                    z.value = _zone.find(
+                      (zone) =>
+                        _add.find((item) => item.address_name == i.value)
+                          .zone_id == zone.zone_id
+                    ).zone_name;
+                  }
+                };
+              });
+            }
+            _ca(document.querySelector(".ca"), document.querySelector(".cz"));
+          }
+        };
       }
+      _cz("/api/admin/getAddresses", new XMLHttpRequest());
+      //edit
+
       document.querySelector(".type").addEventListener("change", () => {
         document.querySelector("._guest").style.display =
           document.querySelector(".type").value == "guest" ? "block" : "none";
@@ -839,14 +813,15 @@
             ? "block"
             : "none";
       });
-      _ca(document.querySelector(".ca"), document.querySelector(".cz"));
     </script>
     <script>
       document.querySelector("._ea").addEventListener("submit", (e) => {
         e.preventDefault();
         _add.type = document.querySelector("#type").value || "Primary";
         _add.add =
-          document.querySelector("#location").value ||
+          (document.querySelector("#location").value != "Not Included"
+            ? document.querySelector("#location").value
+            : document.querySelector("#other").value) ||
           document.querySelector("#other").value;
         _add.zone = document.querySelector("#zone").value || "No Zone";
         _upa = _add.type == "guest" ? false : true;
