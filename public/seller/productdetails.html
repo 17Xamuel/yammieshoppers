@@ -325,7 +325,6 @@
         }
         if (productDetails.readyState == 4 && productDetails == 200) {
           let [outcome] = JSON.parse(details.responseText);
-
           document.getElementById("name").innerHTML = outcome.product;
           document.getElementById("qty").innerHTML = outcome.quantity;
           document.getElementById("price").innerHTML = outcome.price;

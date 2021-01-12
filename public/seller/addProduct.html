@@ -537,7 +537,11 @@
 
                   <input type="hidden" name="seller_id" id="auth" />
 
-                  <button class="btn btn-warning text-light btn-block my-3">
+                  <button
+                    class="btn btn-warning text-light btn-block my-3"
+                    data-target="#addingProduct"
+                    data-toggle="modal"
+                  >
                     Add Product
                   </button>
                 </form>
@@ -547,6 +551,16 @@
         </div>
       </div>
     </section>
+
+    <div class="modal fade" id="addingProduct">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body text-center">
+            Adding Product Please Wait....
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer>
