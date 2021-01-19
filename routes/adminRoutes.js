@@ -163,7 +163,7 @@ router.get("/confirmProduct/:id", async (req, res) => {
             [req.params.id],
             (errs, queryResult) => {
               if (errs) throw errs;
-              res.send(" Product Accepted");
+              res.send("Product Accepted");
             }
           );
         });
