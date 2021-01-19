@@ -568,36 +568,12 @@
                 <select
                   name=""
                   id="location"
-                  class="-is ca _ad"
+                  class="-is ca _ad select"
                   style="width: 250px"
                 >
                   <option value="" hidden>
                     Select Your Residence/Location
                   </option>
-                  <option value="Management">Management Sciences</option>
-                  <option value="Hospital">Hospital</option>
-                  <option value="Education">Education</option>
-                  <option value="keturah">keturah</option>
-                  <option value="Wilson">Wilson</option>
-                  <option value="Royal">Royal</option>
-                  <option value="Cosima">Cosima</option>
-                  <option value="Abraham">Abraham</option>
-                  <option value="Bako">Bako</option>
-                  <option value="Naphtali">Naphtali</option>
-                  <option value="God's Mercy">God's Mercy</option>
-                  <option value="Masengere">
-                    Masengere(These Funny Rentals)
-                  </option>
-                  <option value="Black Roof">Black Roof</option>
-                  <option value="Pioneer">Pioneer</option>
-                  <option value="Pilipo">Pilipo</option>
-                  <option value="Gloryianta">Gloryianta</option>
-                  <option value="Mandela">Mandela</option>
-                  <option value="Washington">Washington</option>
-                  <option value="St. Peters(Flat)">St. Peters(Flat)</option>
-                  <option value="St. Peters">St. Peters</option>
-                  <option value="Northern Elite">Northern Elite</option>
-                  <option value="Jeremiah">Jeremiah</option>
                 </select>
               </div>
               <div class="_cad">
@@ -930,54 +906,35 @@
         _r.send();
         _r.onreadystatechange = () => {
           if (_r.readyState == 4 && _r.status == 200) {
-            console.log(_r.responseText);
+            let _add = JSON.parse(_r.responseText);
+            _add.forEach((add) => {
+              document.querySelector(
+                ".select"
+              ).innerHTML += `<option value="${add.address_name}">${add.address_name}</option>`;
+            });
+            function _ca(i, z) {
+              i.addEventListener("change", (e) => {
+                let _q = new XMLHttpRequest();
+                _q.open("GET", "/api/admin/getZone", true);
+                _q.send();
+                _q.onreadystatechange = () => {
+                  if (_q.readyState == 4 && _q.status == 200) {
+                    let _zone = JSON.parse(_q.responseText);
+                    z.value = _zone.find(
+                      (zone) =>
+                        _add.find((item) => item.address_name == i.value)
+                          .zone_id == zone.zone_id
+                    ).zone_name;
+                  }
+                };
+              });
+            }
+            _ca(document.querySelector(".ca"), document.querySelector(".cz"));
           }
         };
       }
       _cz("/api/admin/getAddresses", new XMLHttpRequest());
-      function _ca(i, z) {
-        i.addEventListener("change", (e) => {
-          z.value =
-            i.value == "keturah" || i.value == "Wilson"
-              ? "Keturah Zone"
-              : i.value == "Royal" ||
-                i.value == "Cosima" ||
-                i.value == "Maroon" ||
-                i.value == "Abraham"
-              ? "Royal Zone"
-              : i.value == "Maisha" ||
-                i.value == "Bako" ||
-                i.value == "Naphtali" ||
-                i.value == "Masengere" ||
-                i.value == "God's Mercy"
-              ? "Maisha Zone"
-              : i.value == "Gloryianta" ||
-                i.value == "Mandela" ||
-                i.value == "Pilipo" ||
-                i.value == "Pioneer" ||
-                i.value == "Black Roof"
-              ? "Pioneer Zone"
-              : i.value == "Washington"
-              ? "Washington Zone"
-              : i.value == "St. Peters(Flat)"
-              ? "St. Peters Zone"
-              : i.value == "Pacuwa" ||
-                i.value == "St. Peters" ||
-                i.value == "Genesis"
-              ? "Pacuwa Zone"
-              : i.value == "Northern Elite"
-              ? "Northern Elite Zone"
-              : i.value == "Jeremiah"
-              ? "Jeremiah Zone"
-              : i.value == "Hospital"
-              ? "Hospital Side"
-              : i.value == "Management"
-              ? "Management Sciences"
-              : i.value == "Education"
-              ? "Education Block"
-              : "Other";
-        });
-      }
+
       // edit
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
@@ -1012,14 +969,15 @@
       document.querySelector("._ea-b").addEventListener("click", () => {
         document.querySelector("#-edit-a").classList.toggle("dn");
       });
-      _ca(document.querySelector(".ca"), document.querySelector(".cz"));
       document.querySelector("#-edit-a").addEventListener("submit", (e) => {
         e.preventDefault();
         let _add = {};
         _add.zone = document.querySelector("#zone").value || "No Zone";
         _add.add =
-          document.querySelector("#location").value ||
-          document.querySelector("#other-a").value;
+          (document.querySelector("#location").value != "Not Included"
+            ? document.querySelector("#location").value
+            : document.querySelector("#other").value) ||
+          document.querySelector("#other").value;
         xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
           if (xhr.readyState < 4) {

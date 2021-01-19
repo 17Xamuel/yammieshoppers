@@ -8,13 +8,35 @@
     <link rel="stylesheet" href="../styles/header.css" />
     <link rel="stylesheet" href="../styles/main.css" />
     <link rel="stylesheet" href="../font-awesome/css/all.css" />
-    <title>Yammie | Confirm My Account</title>
+    <title>Yammie | Create My Account</title>
     <style>
-      /*add*/
+      body {
+        background-color: #fff;
+      }
+      .cr-m-ctr {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .cr-ctr {
+        width: 70vw;
+        margin: 10px auto;
+        margin-top: 20px;
+        background-color: #fff;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        align-items: center;
+        height: 75vh;
+      }
       #-edit-a {
-        padding: 10px;
+        /* margin: 5px 0px; */
+        padding: 2%;
+        border: 1px solid rgb(0, 0, 0, 0.2);
         border-radius: 5px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      #-edit-a.dn {
+        display: block;
       }
       #other-a {
         border: 0;
@@ -52,108 +74,6 @@
         padding-left: 20px;
         display: none;
       }
-      /*add*/
-      #pop-up-overlay.pp-active {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 30;
-        transition: all 0.3s ease-in-out;
-      }
-      .close-pp {
-        position: absolute;
-        top: 5px;
-        right: 15px;
-        font-size: 2rem;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        /* font-weight: 500; */
-        background-color: #fff;
-      }
-      .popup {
-        background-color: white;
-        width: 35vw;
-        height: 50vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 5px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        transition: 200ms ease-in-out;
-        max-width: 90%;
-        z-index: 35;
-      }
-      .popup.pp-active {
-        transform: translate(-50%, -50%) scale(1);
-      }
-      /*add*/
-      body {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-
-      .cr-m-ctr {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .cr-ctr {
-        border: 1px solid rgb(0, 0, 0, 0.1);
-        border-radius: 5px;
-        width: 400px;
-        min-height: 50vh;
-        height: fit-content;
-        margin: 25px auto;
-      }
-
-      .-confirm-ctr {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .-confirm-ctr > h3,
-      .-confirm-ctr > p {
-        text-align: center;
-      }
-
-      .btn-sm {
-        color: white;
-        width: 120px;
-        height: 35px;
-        cursor: pointer;
-        outline: none;
-        border: 0px;
-        font-size: 15px;
-        border-radius: 5px;
-        margin: 5px;
-        background-color: #ffbb00;
-      }
-
-      .btn-w {
-        width: fit-content;
-        font-size: 18px;
-        height: 40px;
-      }
-
-      .btn:hover {
-        opacity: 0.8;
-      }
-      .-bx {
-        box-shadow: 0px 0px 5px #e4e2e2;
-      }
-
-      .ldr {
-        margin: 20px 0px;
-      }
     </style>
     <script>
       document.addEventListener("DOMContentLoaded", (e) => {
@@ -165,49 +85,7 @@
       });
     </script>
   </head>
-
   <body>
-    <!--pop up-->
-    <div id="pop-up-overlay"></div>
-    <div class="popup">
-      <button class="close-pp" onclick="imageDialogClose()">&times;</button>
-      <div class="pp-content">
-        <form id="-edit-a" autocomplete="off">
-          <b>Please Help Us with your First Address</b>
-          <br />
-          <div class="_cad">
-            <select
-              name=""
-              id="location"
-              class="-is ca _ad select"
-              style="width: 250px"
-            >
-              <option value="" hidden>Select Your Residence/Location</option>
-            </select>
-          </div>
-          <div class="_cad">
-            <label for="">Your Zone</label>
-            <br />
-            <input
-              placeholder="Zone"
-              type="text"
-              name=""
-              id="zone"
-              class="-is cz"
-              style="width: 250px"
-              readonly
-            />
-          </div>
-          <label for="other-a">Other:</label>
-          <input type="text" name="" id="other-a" placeholder="(Specify)" />
-          <div class="loader">
-            <i class="fas fa-spinner fa-spin"></i>
-          </div>
-          <button type="submit" class="-btn-a-d">SUBMIT</button>
-        </form>
-      </div>
-    </div>
-    <!--pop up-->
     <div id="sidenav">
       <span class="-c-side" style="font-size: 35px">&times;</span>
       <ul class="s-n-1">
@@ -490,17 +368,39 @@
     </div>
     <div class="cr-m-ctr">
       <div class="cr-ctr">
-        <form class="-confirm-ctr" id="-code-ctr">
+        <form id="-edit-a" autocomplete="off">
+          <b>Please Help Us with your First Address</b>
           <br />
-          <h3>Now, lets confirm Your Email</h3>
-          <br />
-          <p>Enter the digit code sent to your Email</p>
-          <br />
-          <input type="text" class="-is" id="-code" autocomplete="off" />
-          <br />
-          <button class="btn btn-sm">Submit</button>
+          <div class="_cad">
+            <select
+              name=""
+              id="location"
+              class="-is ca _ad select"
+              style="width: 250px"
+            >
+              <option value="" hidden>Select Your Residence/Location</option>
+            </select>
+          </div>
+          <div class="_cad">
+            <label for="">Your Zone</label>
+            <br />
+            <input
+              placeholder="Zone"
+              type="text"
+              name=""
+              id="zone"
+              class="-is cz"
+              style="width: 250px"
+              readonly
+            />
+          </div>
+          <label for="other-a">Other:</label>
+          <input type="text" name="" id="other-a" placeholder="(Specify)" />
+          <div class="loader">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+          <button type="submit" class="-btn-a-d">SUBMIT</button>
         </form>
-        <div class="-ldr -confirm-ctr"></div>
       </div>
     </div>
     <footer class="footer">
@@ -637,64 +537,214 @@
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
+    </script>
+    <script>
+      let yammieUsr = "";
+      if (yammie) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            [yammieUsr] = JSON.parse(xhr.responseText);
+            let account = document.querySelector(".-acc-name");
+            account.innerHTML = "Hi, " + yammieUsr.c_first_name;
+          }
+        };
+        xhr.open("GET", `/api/user/customer/${yammie}`, true);
+        xhr.send();
+      }
+      const sch = (i, sch) => {
+        i.addEventListener("click", () => {
+          sch.classList.toggle("sch-s");
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
+        });
+      };
+      function cnd(i, c) {
+        i = parseInt(i);
+        c.textContent = i ? i : 0;
+        c.style.display = c.textContent == "0" ? "none" : "block";
+      }
 
-      let fm = document.querySelector("#-code-ctr");
-      fm.addEventListener("submit", (e) => {
+      const closeSide = document.querySelector(".-c-side");
+      const menu = document.querySelector(".menu");
+      const sidenav = document.querySelector("#sidenav");
+      menu.addEventListener("click", () => {
+        sidenav.classList.add("active");
+      });
+      closeSide.addEventListener("click", () => {
+        sidenav.classList.remove("active");
+      });
+      if (screen.availWidth <= 768) {
+        document.querySelector("#logo").src = "./resources/cartlink.png";
+        document.querySelector("#logo").style.width = "60px";
+        document.querySelector("#logo").style.height = "30px";
+      }
+      let acc = document.querySelector(".-acc");
+      let hp = document.querySelector(".-hp");
+      //check toggle a class
+      acc.addEventListener("focus", (e) => {
+        if (!yammie) {
+          window.location.assign("./login");
+        } else {
+          e.target.style.color = "#ffbb00";
+          document
+            .querySelector(".chev-acc")
+            .classList.replace("fa-chevron-down", "fa-chevron-up");
+          document.querySelector(".-acc-l").style.display = "flex";
+        }
+      });
+
+      acc.addEventListener("blur", (e) => {
+        setTimeout(() => {
+          e.target.style.color = "#000";
+          document
+            .querySelector(".chev-acc")
+            .classList.replace("fa-chevron-up", "fa-chevron-down");
+          document.querySelector(".-acc-l").style.display = "none";
+        }, 200);
+      });
+      hp.addEventListener("focus", (e) => {
+        e.target.style.color = "#ffbb00";
+        document
+          .querySelector(".chev")
+          .classList.replace("fa-chevron-down", "fa-chevron-up");
+        document.querySelector(".-hlp").style.display = "flex";
+      });
+      hp.addEventListener("blur", (e) => {
+        setTimeout(() => {
+          e.target.style.color = "#000";
+          document
+            .querySelector(".chev")
+            .classList.replace("fa-chevron-up", "fa-chevron-down");
+          document.querySelector(".-hlp").style.display = "none";
+        }, 200);
+      });
+      //comment
+
+      document
+        .querySelector("#user_comment")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          document.querySelector("._r-comment").innerHTML =
+            "Sending Comment...";
+          document.querySelector("._r-comment").style.opacity = "0.5";
+          let form = new FormData(document.querySelector("#user_comment"));
+          let comment = {};
+          form.forEach((value, key) => {
+            comment[key] = value;
+          });
+          let xhr = new XMLHttpRequest();
+          xhr.open("POST", "/api/user/f-comment", true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.send(JSON.stringify(comment));
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              document.querySelector("._r-comment").innerHTML =
+                "Comment Received...";
+              document.querySelector("._r-comment").style.opacity = "0.5";
+              setTimeout(() => {
+                document.querySelector("._r-comment").style.opacity = "0";
+              }, 2000);
+            }
+          };
+        });
+
+      // edit
+      function _cz(url, _r) {
+        _r.open("GET", url, true);
+        _r.send();
+        _r.onreadystatechange = () => {
+          if (_r.readyState == 4 && _r.status == 200) {
+            let _add = JSON.parse(_r.responseText);
+            _add.forEach((add) => {
+              document.querySelector(
+                ".select"
+              ).innerHTML += `<option value="${add.address_name}">${add.address_name}</option>`;
+            });
+            function _ca(i, z) {
+              i.addEventListener("change", (e) => {
+                let _q = new XMLHttpRequest();
+                _q.open("GET", "/api/admin/getZone", true);
+                _q.send();
+                _q.onreadystatechange = () => {
+                  if (_q.readyState == 4 && _q.status == 200) {
+                    let _zone = JSON.parse(_q.responseText);
+                    z.value = _zone.find(
+                      (zone) =>
+                        _add.find((item) => item.address_name == i.value)
+                          .zone_id == zone.zone_id
+                    ).zone_name;
+                  }
+                };
+              });
+            }
+            _ca(document.querySelector(".ca"), document.querySelector(".cz"));
+          }
+        };
+      }
+      _cz("/api/admin/getAddresses", new XMLHttpRequest());
+
+      // edit
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
+      _ua(`/api/user/account/address/${yammie}`);
+      cartNumbersDisplay();
+      function cartNumbersDisplay() {
+        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+        document.querySelector("#cartNumberItems").textContent = cartNumber
+          ? cartNumber
+          : 0;
+      }
+      function _ua(url) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.send();
+        xhr.onreadystatechange = () => {
+          if (xhr.status == 200 && xhr.readyState == 4) {
+            let [res] = JSON.parse(xhr.responseText);
+            document.querySelector("#_cm").innerHTML = res.pickup_address_1;
+            document.querySelector("#zn").innerHTML = res.zone;
+            document.querySelector("#_cn").innerHTML =
+              res.c_first_name + " " + res.c_last_name;
+            document.querySelector("#_1a").innerHTML =
+              res.c_phone || res.c_email;
+            document.getElementsByTagName("title")[0].innerHTML = `${
+              res.c_first_name + " " + res.c_last_name
+            } &commat; Yammie | online Store`;
+          }
+        };
+      }
+      document.querySelector("._ea-b").addEventListener("click", () => {
+        document.querySelector("#-edit-a").classList.toggle("dn");
+      });
+      document.querySelector("#-edit-a").addEventListener("submit", (e) => {
         e.preventDefault();
-        let _cu = { fn: document.querySelector("#-code").value };
-
+        let _add = {};
+        _add.zone = document.querySelector("#zone").value || "No Zone";
+        _add.add =
+          (document.querySelector("#location").value != "Not Included"
+            ? document.querySelector("#location").value
+            : document.querySelector("#other").value) ||
+          document.querySelector("#other").value;
         xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
           if (xhr.readyState < 4) {
-            document.querySelector(
-              ".-ldr"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x"></i>`;
+            document.querySelector(".loader").style.display = "block";
           }
           if (xhr.readyState == 4 && xhr.status == 200) {
-            if (xhr.responseText != "nm") {
-              document.querySelector("#-code-ctr").style.opacity = "0.3";
-              document.querySelector("#-code-ctr").style.pointerEvents = "none";
-              imageDialog();
-              localStorage.setItem(
-                "https://yammieshoppers.com/useLocalStorage/Storage",
-                xhr.responseText
-              );
-              document.querySelector(".-ldr").innerHTML = `
-                        <br>
-                            <i class="far fa-check-circle fa-2x" style="color:green"></i>
-                        <br>
-                            <h4 style="text-align: center;">
-                                CONGRATULATIONS!
-                            </h4>
-                            <br> 
-                            <h5>
-                                Your Account has been Created Successfully!!
-                            <h5>
-                        <br>
-                        <a href="/">
-                            <button class="btn btn-sm btn-w">
-                                Let's Start Here <i class="fas fa-arrow-right"></i>    
-                            </button>
-                        </a>
-                        `;
-            } else {
-              document.querySelector(".-ldr").innerHTML = `
-                        <h5>
-                            The code did not Match Try Again!!
-                        <h5>
-                        `;
+            if (xhr.responseText == "Changed") {
+              window.location.reload();
             }
           }
-
-          if (xhr.status != 200 && xhr.readyState == 4 && xhr.status != 400) {
-            window.alert("An Error Occurred...");
-          }
         };
-        xhr.open("POST", "/api/user/customer/confirm", true);
+        xhr.open("POST", `/api/user/account/address/edit/${yammie}`, true);
         xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(JSON.stringify(_cu));
+        xhr.send(JSON.stringify(_add));
       });
-      //form end
     </script>
     <script>
       let yammieUsr = "";
@@ -780,104 +830,9 @@
           document.querySelector(".-hlp").style.display = "none";
         }, 200);
       });
-      document
-        .querySelector("#user_comment")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          document.querySelector("._r-comment").innerHTML =
-            "Sending Comment...";
-          document.querySelector("._r-comment").style.opacity = "0.5";
-          let form = new FormData(document.querySelector("#user_comment"));
-          let comment = {};
-          form.forEach((value, key) => {
-            comment[key] = value;
-          });
-          let xhr = new XMLHttpRequest();
-          xhr.open("POST", "/api/user/f-comment", true);
-          xhr.setRequestHeader("Content-type", "application/json");
-          xhr.send(JSON.stringify(comment));
-          xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-              document.querySelector("._r-comment").innerHTML =
-                "Comment Received...";
-              document.querySelector("._r-comment").style.opacity = "0.5";
-              setTimeout(() => {
-                document.querySelector("._r-comment").style.opacity = "0";
-              }, 2000);
-            }
-          };
-        });
     </script>
-    <script>
-      // pop-up below
-      function imageDialog() {
-        document.querySelector(".popup").classList.add("pp-active");
-        document.querySelector("#pop-up-overlay").classList.add("active");
-      }
-      function imageDialogClose() {
-        document.querySelector(".popup").classList.remove("pp-active");
-        document.querySelector("#pop-up-overlay").classList.remove("active");
-      }
-      // pop-up end
-      // edit
-      function _cz(url, _r) {
-        _r.open("GET", url, true);
-        _r.send();
-        _r.onreadystatechange = () => {
-          if (_r.readyState == 4 && _r.status == 200) {
-            let _add = JSON.parse(_r.responseText);
-            _add.forEach((add) => {
-              document.querySelector(
-                ".select"
-              ).innerHTML += `<option value="${add.address_name}">${add.address_name}</option>`;
-            });
-            function _ca(i, z) {
-              i.addEventListener("change", (e) => {
-                let _q = new XMLHttpRequest();
-                _q.open("GET", "/api/admin/getZone", true);
-                _q.send();
-                _q.onreadystatechange = () => {
-                  if (_q.readyState == 4 && _q.status == 200) {
-                    let _zone = JSON.parse(_q.responseText);
-                    z.value = _zone.find(
-                      (zone) =>
-                        _add.find((item) => item.address_name == i.value)
-                          .zone_id == zone.zone_id
-                    ).zone_name;
-                  }
-                };
-              });
-            }
-            _ca(document.querySelector(".ca"), document.querySelector(".cz"));
-          }
-        };
-      }
-      _cz("/api/admin/getAddresses", new XMLHttpRequest());
-      document.querySelector("#-edit-a").addEventListener("submit", (e) => {
-        e.preventDefault();
-        let _add = {};
-        _add.zone = document.querySelector("#zone").value || "No Zone";
-        _add.add =
-          (document.querySelector("#location").value != "Not Included"
-            ? document.querySelector("#location").value
-            : document.querySelector("#other").value) ||
-          document.querySelector("#other").value;
-        xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState < 4) {
-            document.querySelector(".loader").style.display = "block";
-          }
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            if (xhr.responseText == "Changed") {
-              imageDialogClose();
-            }
-          }
-        };
-        xhr.open("POST", `/api/user/account/address/edit/${yammie}`, true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(JSON.stringify(_add));
-      });
-    </script>
+    <script defer async src="../ym.min.js"></script>
+
     <!--scripts-->
   </body>
 </html>

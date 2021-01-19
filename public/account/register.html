@@ -7,9 +7,53 @@
     <link rel="stylesheet" href="../styles/footer2.css" />
     <link rel="stylesheet" href="../styles/header.css" />
     <link rel="stylesheet" href="../styles/main.css" />
+    <!-- <link rel="stylesheet" href="../styles/catalog.css" /> -->
     <link rel="stylesheet" href="../font-awesome/css/all.css" />
     <title>Yammie | Create My Account</title>
     <style>
+      /*add*/
+      #pop-up-overlay.active {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 30;
+        transition: all 0.3s ease-in-out;
+      }
+      .close-pp {
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        font-size: 3.5rem;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        font-weight: 500;
+        background-color: #fff;
+      }
+      .popup {
+        background-color: white;
+        width: 50vw;
+        height: 75vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        color: white;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: 200ms ease-in-out;
+        max-width: 90%;
+        z-index: 35;
+      }
+      .popup.pp-active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      /*add*/
       body {
         background-color: #fff;
       }
@@ -243,6 +287,47 @@
     </script>
   </head>
   <body>
+    <!--pop up-->
+    <div id="pop-up-overlay"></div>
+    <div class="popup">
+      <button class="close-pp" onclick="imageDialogClose()">&times;</button>
+      <div class="pp-content">
+        <form id="-edit-a" autocomplete="off">
+          <b>Please Help Us with your First Address</b>
+          <br />
+          <div class="_cad">
+            <select
+              name=""
+              id="location"
+              class="-is ca _ad select"
+              style="width: 250px"
+            >
+              <option value="" hidden>Select Your Residence/Location</option>
+            </select>
+          </div>
+          <div class="_cad">
+            <label for="">Your Zone</label>
+            <br />
+            <input
+              placeholder="Zone"
+              type="text"
+              name=""
+              id="zone"
+              class="-is cz"
+              style="width: 250px"
+              readonly
+            />
+          </div>
+          <label for="other-a">Other:</label>
+          <input type="text" name="" id="other-a" placeholder="(Specify)" />
+          <div class="loader">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+          <button type="submit" class="-btn-a-d">SUBMIT</button>
+        </form>
+      </div>
+    </div>
+    <!--pop up-->
     <div id="sidenav">
       <span class="-c-side" style="font-size: 35px">&times;</span>
       <ul class="s-n-1">
@@ -960,6 +1045,18 @@
             }
           };
         });
+    </script>
+    <script>
+      // pop-up below
+      function imageDialog() {
+        document.querySelector(".popup").classList.add("pp-active");
+        document.querySelector("#pop-up-overlay").classList.add("active");
+      }
+      function imageDialogClose() {
+        document.querySelector(".popup").classList.remove("pp-active");
+        document.querySelector("#pop-up-overlay").classList.remove("active");
+      }
+      // pop-up end
     </script>
     <!--scripts-->
   </body>
