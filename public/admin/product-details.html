@@ -270,7 +270,12 @@
                       >
                         Accept
                       </button>
-                      <button type="button" class="btn btn-primary">
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-target="#editProduct"
+                        data-toggle="modal"
+                      >
                         EditProduct
                       </button>
                       <button
@@ -289,6 +294,31 @@
         </div>
       </div>
     </section>
+
+    <div class="modal fade" id="editProduct">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Product</h5>
+          </div>
+          <div class="modal-body">
+            Want to Edit this Product? Press OK to Continue
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" id="edit">
+              OK
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer>
