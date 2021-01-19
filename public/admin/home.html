@@ -123,7 +123,7 @@
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Manage Addresses
+                      Addresses
                     </button>
                     <div class="dropdown-menu">
                       <a
@@ -140,7 +140,13 @@
                         data-target="#addAddress"
                         >Add Zone Addresses</a
                       >
-                      <a class="dropdown-item" href="#">Edit Zone</a>
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#editZone"
+                        data-toggle="modal"
+                        >Edit Zone</a
+                      >
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">Edit Zone Address</a>
                     </div>
@@ -203,6 +209,15 @@
                   autocomplete="off"
                 />
               </div>
+              <div class="form-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Enter Zone Weight"
+                  id="zoneWeight"
+                  autocomplete="off"
+                />
+              </div>
               <button
                 type="submit"
                 class="btn btn-primary btn-block text-light"
@@ -231,8 +246,9 @@
           <div class="modal-body text-center" id="addressMessage">
             <form id="zoneAddress">
               <div class="form-group">
-                <label for="Zone">Select Zone</label>
-                <select id="zonal" required class="form-control"></select>
+                <select required class="form-control zonal">
+                  <option value="">Select a Zone</option>
+                </select>
               </div>
               <div class="form-group">
                 <input
@@ -258,6 +274,56 @@
       </div>
     </div>
     <!-- End Address -->
+
+    <!-- Zone Edit -->
+    <div class="modal fade" id="editZone">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Eidt Zone</h5>
+          </div>
+          <div class="modal-body text-center" id="eMessage">
+            <form id="editZone">
+              <div class="form-group">
+                <select id="zonning" required class="form-control zonal">
+                  <option value="">Select a Zone to Edit</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  autocomplete="off"
+                  class="form-control"
+                  id="newName"
+                  placeholder="Enter New Zone Name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  autocomplete="off"
+                  class="form-control"
+                  id="newWeight"
+                  placeholder="Enter New Zone Weight"
+                  required
+                />
+              </div>
+              <input type="hidden" id="auth" />
+              <button type="submit" class="btn btn-block btn-primary">
+                Update
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm autoReload">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Edit Zone -->
 
     <!-- Logout Modal -->
     <div class="modal fade" id="sign-out">
@@ -417,7 +483,6 @@
                         <tr class="text-muted">
                           <th>OrderNumber</th>
                           <th>OrderAmount</th>
-                          <th>OrderStatus</th>
                           <th>Details</th>
                         </tr>
                       </thead>
@@ -448,7 +513,6 @@
                       <thead>
                         <tr class="text-muted">
                           <th>Name</th>
-                          <th>Contact</th>
                           <th>Confirm</th>
                           <th>Details</th>
                           <th>Delete</th>
@@ -658,9 +722,6 @@
                   <td>Businessname: <span id="sbsn"></span></td>
                 </tr>
                 <tr>
-                  <td>Category: <span id="spn"></span></td>
-                </tr>
-                <tr>
                   <td>Email: <span id="se"></span></td>
                 </tr>
                 <tr>
@@ -671,6 +732,8 @@
                 </tr>
               </tbody>
             </table>
+            <h6>Categories</h6>
+            <ul class="list-group" id="spn"></ul>
           </div>
           <div class="modal-footer">
             <button
@@ -811,7 +874,6 @@
           pendingSellers.forEach((pendingSeller) => {
             row += ` <tr>
                       <td>${pendingSeller.username}</td>
-                      <td>${pendingSeller.phonenumber}</td>
                        <td>
                         <button type="button" 
                           class="btn btn-primary btn-sm -c-seller" 
@@ -844,7 +906,12 @@
             document.getElementById("sbsn").innerHTML =
               pendingSeller.businessname;
             let scategories = JSON.parse(pendingSeller.category);
-            document.getElementById("spn").innerHTML = scategories;
+            let myCat = "";
+            scategories.forEach((cat) => {
+              myCat += `<li class="list-group-item">${cat}</li>`;
+            });
+            document.getElementById("spn").innerHTML = myCat;
+
             document.getElementById("se").innerHTML = pendingSeller.email;
             document.getElementById("num").innerHTML =
               pendingSeller.phonenumber;
@@ -974,7 +1041,6 @@
               row += `<tr>
        <td>${pendingOrder.order_number}</td>
        <td>${pendingOrder.order_amount}</td>
-       <td>${pendingOrder.order_status}</td>
        <td>
        <a href="order?order=${pendingOrder.order_id}">
          <button type="button" class="btn btn-info btn-sm">
@@ -1044,6 +1110,7 @@
         e.preventDefault();
         let zone = {};
         zone.zoneName = document.getElementById("zoneName").value;
+        zone.zoneWeight = document.getElementById("zoneWeight").value;
         let zoneString = JSON.stringify(zone);
         const zonning = new XMLHttpRequest();
         zonning.onreadystatechange = () => {
@@ -1073,7 +1140,10 @@
               zone.zone_name
             }</option>`;
           });
-          document.getElementById("zonal").innerHTML = data;
+          let selectedZones = document.querySelectorAll(".zonal");
+          selectedZones.forEach((selectedZone) => {
+            selectedZone.innerHTML += data;
+          });
         }
       };
       getZone.open("GET", `/api/admin/getZone`, true);
@@ -1108,6 +1178,47 @@
         reloading.addEventListener("click", (e) => {
           window.location.reload("home.html");
         });
+      });
+
+      let zoneChange = document.getElementById("zonning");
+      zoneChange.addEventListener("change", (e) => {
+        let selectedZone = document.getElementById("zonning").value;
+        const gettingZone = new XMLHttpRequest();
+        gettingZone.onreadystatechange = () => {
+          if (gettingZone.readyState == 4 && gettingZone.status == 200) {
+            let [result] = JSON.parse(gettingZone.responseText);
+            document.getElementById("newName").value = result.zone_name;
+            document.getElementById("newWeight").value = result.zone_weight;
+            document.getElementById("auth").value = result.zone_id;
+          }
+        };
+        gettingZone.open("GET", `/api/admin/zoneGet/${selectedZone}`, true);
+        gettingZone.send();
+      });
+
+      let editZone = document.getElementById("editZone");
+      editZone.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let edit = {};
+        let zonename = document.getElementById("zonning").value;
+        edit.newName = document.getElementById("newName").value;
+        edit.newWeight = document.getElementById("newWeight").value || 0;
+        let editString = JSON.stringify(edit);
+
+        let data = new XMLHttpRequest();
+        data.onreadystatechange = () => {
+          if (data.readyState < 4) {
+            document.getElementById(
+              "eMessage"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning fa-2x"></i>`;
+          }
+          if (data.readyState == 4 && data.status == 200) {
+            document.getElementById("eMessage").innerHTML = data.responseText;
+          }
+        };
+        data.open("POST", `/api/admin/zoneEdit/${zonename}`, true);
+        data.setRequestHeader("Content-Type", "application/json");
+        data.send(editString);
       });
     </script>
     <!-- End Scripts -->

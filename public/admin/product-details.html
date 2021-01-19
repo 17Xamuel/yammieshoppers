@@ -243,6 +243,13 @@
                           <td>No of Sales:<span id="nsales"></span></td>
                         </tr>
                         <tr>
+                          <td>Net Weight: <span id="netW"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table class="table text-left">
+                      <tbody>
+                        <tr>
                           <td>Brief Description:<span id="desc"></span></td>
                         </tr>
                         <tr>
@@ -258,7 +265,6 @@
                       <button
                         type="submit"
                         class="btn btn-success"
-                        id="acc"
                         data-target="#accept"
                         data-toggle="modal"
                       >
@@ -323,12 +329,21 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">YammieShoppers Response</h5>
+            <h5 class="modal-title">Confirm Product</h5>
           </div>
-          <div class="modal-body text-center" id="messages"></div>
+          <div class="modal-body text-center" id="messages">
+            Want to Confirm this product? Press OK to Continue
+          </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" id="acceptProduct">
+            <button type="button" class="btn btn-success btn-sm" id="acc">
               OK
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              NO
             </button>
           </div>
         </div>
@@ -452,6 +467,8 @@
             specify.Dimensions || "Not specified";
           document.getElementById("weight").innerHTML = specify.Weight;
           document.getElementById("types").innerHTML = specify.TypeOfProduct;
+          document.getElementById("netW").innerHTML =
+            specify.NetWeight || "Not Specified";
 
           let images = JSON.parse(outcome.images);
           let data = "";
@@ -465,7 +482,7 @@
           document.getElementById("productDetailLoading").innerHTML = "";
         }
       };
-      details.open("GET", `/api/admin/pendingProduct/${pId}`, true);
+      details.open("GET", `/api/admin/productDetails/${pId}`, true);
       details.send();
 
       let accp = document.getElementById("acc");
@@ -478,7 +495,9 @@
             ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
           }
           if (accept.readyState == 4 && accept.status == 200) {
-            document.getElementById("messages").innerHTML = accept.responseText;
+            if (accept.responseText == "Product Accepted") {
+              window.location.assign("products.html");
+            }
           }
         };
         accept.open("GET", `/api/admin/confirmProduct/${pId}`, true);
@@ -542,14 +561,6 @@
       };
       saleNumber.open("GET", `/api/admin/saleNumber/${pId}`, true);
       saleNumber.send();
-
-      function acp() {
-        let acceptProduct = document.getElementById("acceptProduct");
-        acceptProduct.addEventListener("click", (e) => {
-          window.location.assign("products.html");
-        });
-      }
-      acp();
     </script>
     <script src="scripts/account.js"></script>
     <!-- End Scripts -->

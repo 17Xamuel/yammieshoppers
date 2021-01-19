@@ -272,11 +272,13 @@
                         required=""
                         name="category"
                         id="category"
-                      ></select>
+                      >
+                        <option value="">Please Select a Category</option>
+                      </select>
                     </div>
                     <div class="form-group col-md-6">
                       <label for="subcategory"
-                        >Sub Category <span id="sub" class="text-dark"></span
+                        >Sub Category <span id="sub"></span
                       ></label>
                       <select
                         class="form-control"
@@ -364,6 +366,18 @@
                       </select>
                     </div>
                   </div>
+
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="Net Weight">Net Weight(In any Unit)</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter Net Weight"
+                        name="netWeight"
+                      />
+                    </div>
+                  </div>
                   <br />
                   <label for="Detailed Description"
                     >Product Detailed Description</label
@@ -403,11 +417,7 @@
                               accept="image/*"
                               name="images"
                             />
-                            <!-- <input
-                              type="hidden"
-                              name="MAX_FILE_SIZE"
-                              value="10485760"
-                            /> -->
+
                             <span
                               class="custom-file-container__custom-file__custom-file-control"
                             ></span>
@@ -440,11 +450,7 @@
                               accept="image/*"
                               name="images"
                             />
-                            <!-- <input
-                              type="hidden"
-                              name="MAX_FILE_SIZE"
-                              value="10485760"
-                            />  -->
+
                             <span
                               class="custom-file-container__custom-file__custom-file-control"
                             ></span>
@@ -480,11 +486,7 @@
                               accept="image/*"
                               name="images"
                             />
-                            <!-- <input
-                              type="hidden"
-                              name="MAX_FILE_SIZE"
-                              value="10485760"
-                            /> -->
+
                             <span
                               class="custom-file-container__custom-file__custom-file-control"
                             ></span>
@@ -517,11 +519,7 @@
                               accept="image/*"
                               name="images"
                             />
-                            <!-- <input
-                              type="hidden"
-                              name="MAX_FILE_SIZE"
-                              value="10485760"
-                            />  -->
+
                             <span
                               class="custom-file-container__custom-file__custom-file-control"
                             ></span>
@@ -537,11 +535,7 @@
 
                   <input type="hidden" name="seller_id" id="auth" />
 
-                  <button
-                    class="btn btn-warning text-light btn-block my-3"
-                    data-target="#addingProduct"
-                    data-toggle="modal"
-                  >
+                  <button class="btn btn-warning text-light btn-block my-3">
                     Add Product
                   </button>
                 </form>
@@ -551,16 +545,6 @@
         </div>
       </div>
     </section>
-
-    <div class="modal fade" id="addingProduct">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body text-center">
-            Adding Product Please Wait....
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!-- Footer -->
     <footer>
@@ -631,9 +615,12 @@
       let categories = JSON.parse(seller.category);
       let cat = "";
       categories.forEach((category) => {
-        cat += `<option value="${category}">${category}</option>`;
+        cat += `<option value="${category.replace(
+          / /g,
+          "_"
+        )}">${category}</option>`;
       });
-      document.getElementById("category").innerHTML = cat;
+      document.getElementById("category").innerHTML += cat;
 
       let subCat = document.getElementById("category");
       subCat.addEventListener("change", (e) => {
@@ -654,11 +641,7 @@
             document.getElementById("sub").innerHTML = "";
           }
         };
-        subCatLoad.open(
-          "GET",
-          `/api/sellers/subCategory/${selectedCat.replace(/ /g, "_")}`,
-          true
-        );
+        subCatLoad.open("GET", `/api/sellers/subCategory/${selectedCat}`, true);
         subCatLoad.send();
       });
 
@@ -689,10 +672,6 @@
           );
         }
       });
-
-      //  multiple
-      //                   aria
-      //                    select="Multiple Select Files"
 
       function lg() {
         let lg = document.getElementById("slg");

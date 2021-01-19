@@ -133,8 +133,50 @@
               class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
             >
               <div class="row align-items">
-                <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
-                  <h4>Dashboard</h4>
+                <div class="col-md-4 mb-0 text-light py-3">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-danger dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Categories
+                    </button>
+                    <div class="dropdown-menu">
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#newCategory"
+                        data-toggle="modal"
+                        >Add Category</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#newSubCategory"
+                        >Add SubCategory</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#viewSubCategory"
+                        >View SubCategories</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#editCategory"
+                        data-toggle="modal"
+                        >Edit Category</a
+                      >
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Edit SubCategory</a>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
@@ -195,38 +237,6 @@
     </div>
     <!-- End Modal -->
 
-    <section>
-      <div class="container-fluid">
-        <div class="row mb-4">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3 align-items-center">
-              <div class="col-xl-11 mx-auto my-3 text-center">
-                <button type="submit" class="btn btn-warning mr-2 pBtn">
-                  Add New Product
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-info mr-2 pBtn"
-                  data-target="#newCategory"
-                  data-toggle="modal"
-                >
-                  Add New Category
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-success mr-2 pBtn"
-                  data-target="#newSubCategory"
-                  data-toggle="modal"
-                >
-                  Add New Subcategory
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Category Modal  -->
     <div class="modal fade" id="newCategory">
       <div class="modal-dialog">
@@ -273,9 +283,9 @@
               <div class="form-group">
                 <label for="Category">Select Category</label>
                 <select
-                  id="catSelection"
                   required
-                  class="form-control"
+                  class="form-control catSelection"
+                  id="selCat"
                 ></select>
               </div>
               <div class="form-group">
@@ -303,13 +313,80 @@
     </div>
     <!-- End Sub Category -->
 
+    <!-- Edit Category -->
+    <div class="modal fade" id="editCategory">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Category</h5>
+          </div>
+          <div class="modal-body text-center" id="eCategory">
+            <form id="editCat">
+              <div class="form-group">
+                <select
+                  class="form-control catSelection"
+                  required
+                  id="selc"
+                ></select>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter New Category Name"
+                  id="newCatName"
+                />
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                Update
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-success btn btn-sm auto">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End  -->
+
+    <!-- View SubCategories -->
+    <div class="modal fade" id="viewSubCategory">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">View SubCategories</h5>
+          </div>
+          <div class="modal-body text-left">
+            <form id="viewSub">
+              <div class="form-group">
+                <select class="form-control catSelection" id="viewS">
+                  <option value="">Please Select a Category</option>
+                </select>
+              </div>
+            </form>
+            <span id="myView"></span>
+            <ul class="list-group" id="li"></ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-success btn btn-sm auto">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End View -->
+
     <section>
       <div class="container-fluid">
         <div class="row mb-3">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row align-items-center">
+            <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-11 mx-auto text-center">
-                <div class="card rounded mb-3">
+                <div class="card rounded my-3">
                   <div class="card-body">
                     <h4 class="text-center my-3">
                       Pending Products <span id="ppn"></span>
@@ -614,9 +691,14 @@
           let categories = JSON.parse(catGet.responseText);
           let cat = "";
           categories.forEach((cats) => {
-            cat += `<option value="${cats.category_name}">${cats.category_name}</option>`;
+            cat += `<option value="${cats.category_name.replace(/ /g, "_")}">${
+              cats.category_name
+            }</option>`;
           });
-          document.getElementById("catSelection").innerHTML = cat;
+          let getting = document.querySelectorAll(".catSelection");
+          getting.forEach((get) => {
+            get.innerHTML += cat;
+          });
         }
       };
       catGet.open("GET", "/api/admin/getCategory", true);
@@ -626,9 +708,7 @@
       SubCatForm.addEventListener("submit", (e) => {
         e.preventDefault();
         let SubCategory = {};
-        SubCategory.categoryName = document.getElementById(
-          "catSelection"
-        ).value;
+        SubCategory.categoryName = document.getElementById("selCat").value;
         SubCategory.subName = document.getElementById("subCatname").value;
         let subCatSubmit = new XMLHttpRequest();
         subCatSubmit.onreadystatechange = () => {
@@ -646,6 +726,53 @@
         subCatSubmit.open("POST", "/api/admin/addSubCategory", true);
         subCatSubmit.setRequestHeader("Content-Type", "application/json");
         subCatSubmit.send(subString);
+      });
+
+      let editCat = document.getElementById("editCat");
+      editCat.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let editting = {};
+        let originalName = document.getElementById("selc").value;
+        editting.newName = document.getElementById("newCatName").value;
+        let string = JSON.stringify(editting);
+        let data = new XMLHttpRequest();
+        data.onreadystatechange = () => {
+          if (data.readyState < 4) {
+            document.getElementById(
+              "eCategory"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (data.readyState == 4 && data.status == 200) {
+            document.getElementById("eCategory").innerHTML = data.responseText;
+          }
+        };
+        data.open("POST", `/api/admin/editCategory/${originalName}`, true);
+        data.setRequestHeader("Content-Type", "application/json");
+        data.send(string);
+      });
+
+      let viewSub = document.getElementById("viewSub");
+      viewSub.addEventListener("change", (e) => {
+        e.preventDefault();
+        let category = document.getElementById("viewS").value;
+        let myData = new XMLHttpRequest();
+        myData.onreadystatechange = () => {
+          if (myData.readyState < 4) {
+            document.getElementById("myView").innerHTML =
+              "Loading SubCategories...";
+          }
+          if (myData.readyState == 4 && myData.status == 200) {
+            let result = JSON.parse(myData.responseText);
+            let outcome = "";
+            for (let i = 0; i < result.length; i++) {
+              outcome += `<li class="list-group-item">${result[i].subCategoryName}</li>`;
+            }
+            document.getElementById("li").innerHTML = outcome;
+            document.getElementById("myView").innerHTML = "";
+          }
+        };
+        myData.open("GET", `/api/sellers/subCategory/${category}`, true);
+        myData.send();
       });
 
       function reloading() {
