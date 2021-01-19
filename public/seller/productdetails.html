@@ -332,7 +332,7 @@
           let [outcome] = JSON.parse(productDetails.responseText);
           document.getElementById("name").innerHTML = outcome.product;
           document.getElementById("qty").innerHTML = outcome.quantity;
-          document.getElementById("price").innerHTML = outcome.price;
+          document.getElementById("price").innerHTML = outcome.price + " UGX";
           document.getElementById("cat").innerHTML = outcome.category_name;
           document.getElementById("sct").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
@@ -341,9 +341,9 @@
             10
           );
 
-          document.getElementById("netp").innerHTML = parseInt(
-            outcome.price - (outcome.discount / 100) * outcome.price
-          );
+          document.getElementById("netp").innerHTML =
+            parseInt(outcome.price - (outcome.discount / 100) * outcome.price) +
+            " UGX";
           document.getElementById("desc").innerHTML = outcome.description;
           document.getElementById("ddesc").innerHTML =
             outcome.detailedDescription;

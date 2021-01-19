@@ -276,7 +276,7 @@
                         data-target="#editProduct"
                         data-toggle="modal"
                       >
-                        EditProduct
+                        Edit
                       </button>
                       <button
                         class="btn btn-danger"
@@ -301,7 +301,7 @@
           <div class="modal-header">
             <h5 class="modal-title">Edit Product</h5>
           </div>
-          <div class="modal-body">
+          <div class="modal-body text-center">
             Want to Edit this Product? Press OK to Continue
           </div>
           <div class="modal-footer">
@@ -388,7 +388,7 @@
           <div class="modal-header">
             <h5 class="modal-title">Want to reject Product?</h5>
           </div>
-          <div class="modal-body text-center" id="rejBody">
+          <div class="modal-body text-left" id="rejBody">
             <form id="rejForm">
               <label for="name">Product name</label>
               <input
@@ -454,7 +454,7 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      const pId = new URLSearchParams(window.location.search).get("item");
+      let pId = new URLSearchParams(window.location.search).get("item");
 
       const details = new XMLHttpRequest();
       details.onreadystatechange = () => {
@@ -468,7 +468,7 @@
 
           document.getElementById("name").innerHTML = outcome.product;
           document.getElementById("qty").innerHTML = outcome.quantity;
-          document.getElementById("price").innerHTML = outcome.price;
+          document.getElementById("price").innerHTML = outcome.price + " UGX";
           document.getElementById("cat").innerHTML = outcome.category_name;
           document.getElementById("scat").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
@@ -477,9 +477,9 @@
             10
           );
 
-          document.getElementById("netp").innerHTML = parseInt(
-            outcome.price - (outcome.discount / 100) * outcome.price
-          );
+          document.getElementById("netp").innerHTML =
+            parseInt(outcome.price - (outcome.discount / 100) * outcome.price) +
+            " UGX";
           document.getElementById("desc").innerHTML = outcome.description;
           document.getElementById("ddesc").innerHTML =
             outcome.detailedDescription;
@@ -581,6 +581,14 @@
         });
       }
       reject();
+
+      function editting() {
+        let edit = document.getElementById("edit");
+        edit.addEventListener("click", (e) => {
+          window.location.assign(`editProduct.html?product=${pId}`);
+        });
+      }
+      editting();
 
       const saleNumber = new XMLHttpRequest();
       saleNumber.onreadystatechange = () => {

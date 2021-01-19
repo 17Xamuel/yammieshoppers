@@ -209,12 +209,10 @@
                           <td>Business Name</td>
                           <td id="bname"></td>
                         </tr>
-                        <tr>
-                          <td>Category Of Products</td>
-                          <td id="cat"></td>
-                        </tr>
                       </tbody>
                     </table>
+                    <h6>Category Of Products</h6>
+                    <ul class="list-group" id="cat"></ul>
                   </div>
                 </div>
               </div>
@@ -289,7 +287,11 @@
       document.getElementById("location").innerHTML = seller.location;
       document.getElementById("bname").innerHTML = seller.businessname;
       let categories = JSON.parse(seller.category);
-      document.getElementById("cat").innerHTML = categories;
+      let mydata = "";
+      categories.forEach((category) => {
+        mydata += `<li class="list-group-item">${category}</li>`;
+      });
+      document.getElementById("cat").innerHTML = mydata;
       document.getElementsByTagName("title")[0].text =
         seller.username + " " + "@YammieShoppers";
 

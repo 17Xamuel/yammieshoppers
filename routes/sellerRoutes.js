@@ -118,7 +118,7 @@ try {
       return res.send("All fields are required");
     }
     conn.query(
-      "SELECT email FROM sellers WHERE email=?",
+      "SELECT email FROM sellers WHERE  email=?",
       [email],
       async (err, results) => {
         if (results.length == 0) {

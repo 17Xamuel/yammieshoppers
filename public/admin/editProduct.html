@@ -44,7 +44,7 @@
     </script>
   </head>
 
-  <body>
+  <body class="bg-light">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light">
       <button
@@ -96,7 +96,7 @@
                   >
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item current">
                   <a
                     href="products.html"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
@@ -104,7 +104,7 @@
                     >Products</a
                   >
                 </li>
-                <li class="nav-item current">
+                <li class="nav-item">
                   <a
                     href="upload"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
@@ -197,11 +197,12 @@
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-10 m-auto">
-                <h4 class="text-center m-3">Add Product</h4>
+                <h4 class="text-center m-3">Edit Product</h4>
                 <form
-                  action="/addProduct"
+                  action="#"
                   method="POST"
                   enctype="multipart/form-data"
+                  id="editting"
                 >
                   <div class="form-row">
                     <div class="form-group col-md-6">
@@ -213,6 +214,7 @@
                         placeholder="Product Name"
                         name="product"
                         autocomplete="off"
+                        id="product"
                       />
                     </div>
                     <div class="form-group col-md-6">
@@ -224,6 +226,7 @@
                         placeholder="Quantity"
                         name="quantity"
                         autocomplete="off"
+                        id="quantity"
                       />
                     </div>
                   </div>
@@ -237,6 +240,7 @@
                       placeholder="Such as 5kg Lugazi Sweet Sugar"
                       name="description"
                       autocomplete="off"
+                      id="description"
                     />
                   </div>
                   <br />
@@ -250,6 +254,7 @@
                         placeholder="Price(UGX)"
                         name="price"
                         autocomplete="off"
+                        id="price"
                       />
                     </div>
                     <div class="form-group col-md-6">
@@ -260,6 +265,7 @@
                         placeholder="Discount(%) in terms of Price"
                         name="discount"
                         autocomplete="off"
+                        id="discount"
                       />
                     </div>
                   </div>
@@ -269,7 +275,7 @@
                     <div class="form-group col-md-6">
                       <label for="category">Select Category</label>
                       <select
-                        class="form-control"
+                        class="form-control catSelection"
                         required=""
                         name="category"
                         id="category"
@@ -299,6 +305,7 @@
                         name="typeOfProduct"
                         class="form-control"
                         required
+                        id="customerExpect"
                       >
                         <option value="Carriage">Carriage</option>
                         <option value="Parcel">Parcel</option>
@@ -307,7 +314,12 @@
                     </div>
                     <div class="form-group col-md-6">
                       <label for="Size">Product Size(Select)</label>
-                      <select name="size" class="form-control" required>
+                      <select
+                        name="size"
+                        class="form-control"
+                        required
+                        id="size"
+                      >
                         <option value="Big">Big</option>
                         <option value="Small">Small</option>
                       </select>
@@ -323,6 +335,7 @@
                         placeholder="Brand"
                         name="brand"
                         autocomplete="off"
+                        id="brand"
                       />
                     </div>
                     <div class="form-group col-md-4">
@@ -333,11 +346,17 @@
                         class="form-control"
                         autocomplete="off"
                         name="color"
+                        id="color"
                       />
                     </div>
                     <div class="form-group col-md-4">
                       <label for="Weight">Weight</label>
-                      <select class="form-control" name="weight" required>
+                      <select
+                        class="form-control"
+                        name="weight"
+                        required
+                        id="weight"
+                      >
                         <option value="Heavy">Heavy</option>
                         <option value="Light">Light</option>
                       </select>
@@ -355,13 +374,19 @@
                         placeholder="Eg 12cm X 5cm X 9cm"
                         name="dimensions"
                         autocomplete="off"
+                        id="dimensions"
                       />
                     </div>
                     <div class="form-group col-md-6">
                       <label for="Fragility"
                         >Is the Product Easily Broken?(Select)</label
                       >
-                      <select name="fragility" class="form-control" required>
+                      <select
+                        name="fragility"
+                        class="form-control"
+                        required
+                        id="fragility"
+                      >
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -376,6 +401,7 @@
                         class="form-control"
                         placeholder="Enter Net Weight"
                         name="netWeight"
+                        id="netWeight"
                       />
                     </div>
                   </div>
@@ -391,6 +417,7 @@
                       name="detailedDescription"
                       cols="30"
                       rows="4"
+                      id="detail"
                     ></textarea>
                   </div>
 
@@ -417,6 +444,7 @@
                               class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              id="img1"
                             />
 
                             <span
@@ -447,9 +475,10 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input"
+                              class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              id="img2"
                             />
 
                             <span
@@ -483,9 +512,10 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input"
+                              class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              id="img3"
                             />
 
                             <span
@@ -516,9 +546,10 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input file"
+                              class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              id="img4"
                             />
 
                             <span
@@ -599,7 +630,77 @@
     ></script>
     <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
     <script src="scripts/account.js"></script>
-    <script></script>
+    <script>
+      const upload = new FileUploadWithPreview("myUpload");
+      const uploads = new FileUploadWithPreview("myUploads");
+      const uploading = new FileUploadWithPreview("myUploading");
+      const Upload = new FileUploadWithPreview("Upload");
+
+      const catGet = new XMLHttpRequest();
+      catGet.onreadystatechange = () => {
+        if (catGet.readyState == 4 && catGet.status == 200) {
+          let categories = JSON.parse(catGet.responseText);
+          let cat = "";
+          categories.forEach((cats) => {
+            cat += `<option value="${cats.category_name.replace(/ /g, "_")}">${
+              cats.category_name
+            }</option>`;
+          });
+          let getting = document.querySelectorAll(".catSelection");
+          getting.forEach((get) => {
+            get.innerHTML += cat;
+          });
+        }
+      };
+      catGet.open("GET", "/api/admin/getCategory", true);
+      catGet.send();
+
+      subCat.addEventListener("change", (e) => {
+        let selectedCat = document.getElementById("category").value;
+        const subCatLoad = new XMLHttpRequest();
+        subCatLoad.onreadystatechange = () => {
+          if (subCatLoad.readyState < 4) {
+            document.getElementById("sub").innerHTML =
+              "Loading Subcategories...";
+          }
+          if (subCatLoad.readyState == 4 && subCatLoad.status == 200) {
+            let subCategories = JSON.parse(subCatLoad.responseText);
+            let subcate = "";
+            subCategories.forEach((subCategory) => {
+              subcate += `<option value="${subCategory.subCategoryName}">${subCategory.subCategoryName}</option>`;
+            });
+            document.getElementById("subCat").innerHTML = subcate;
+            document.getElementById("sub").innerHTML = "";
+          }
+        };
+        subCatLoad.open("GET", `/api/sellers/subCategory/${selectedCat}`, true);
+        subCatLoad.send();
+      });
+
+      let product = new URLSearchParams(window.location.search).get("product");
+      const data = new XMLHttpRequest();
+      data.onreadystatechange = () => {
+        if (data.readyState == 4 && data.status == 200) {
+          let [result] = JSON.parse(data.responseText);
+          console.log(result);
+          document.getElementById("product").value = result.product;
+          document.getElementById("quantity").value = result.quantity;
+          document.getElementById("description").value = result.description;
+          document.getElementById("price").value = result.price;
+          document.getElementById("discount").value = result.discount;
+          document.getElementById("detail").value = result.detailedDescription;
+          document.getElementById("category").value = result.category_name;
+          document.getElementById("subCat").value = result.subCategoryName;
+          let image = JSON.parse(result.images);
+          let filing = document.querySelectorAll(".filing");
+          filing.forEach((fil) => {
+            fil.file = image;
+          });
+        }
+      };
+      data.open("GET", `/api/admin/productDetails/${product}`, true);
+      data.send();
+    </script>
     <!-- End Scripts -->
   </body>
 </html>
