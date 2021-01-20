@@ -916,7 +916,7 @@
         _add: localStorage.getItem("_upa")
           ? localStorage.getItem("_upa")
           : true,
-        urgent: true,
+        urgent: "true",
       };
       let xhr_f = new XMLHttpRequest();
       xhr_f.open("POST", `/api/user/checkout/cart/${yammie}`, true);

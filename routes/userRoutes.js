@@ -690,12 +690,12 @@ router.post("/checkout/cart/:id", (req, res) => {
                     ? (result_0[0].price * (100 - result_0[0].discount)) / 100
                     : result_0[0].price,
                   qty: key.inCartNumber < 4 ? "few" : "many",
-                  urgent: req.body.urgent || true,
+                  urgent: (req.body.urgent == "false" ? false : true) || true,
                   size: product.Size || "small",
                   fragile: (product.Fragile == "Yes" ? true : false) || false,
                   location: "Lira",
                   weight: product.Weight || "Light",
-                  user: req.body._add == true ? result[0].zone : req.body._add,
+                  user: result[0].zone,
                 };
 
                 let fee = new charge(charge_obj).total;
