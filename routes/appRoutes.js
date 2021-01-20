@@ -84,8 +84,6 @@ router.get("/checkout/cart/:id", (req, res) => {
 });
 
 router.post("/customer/cart/amount/:id", (req, res) => {
-  console.log(req.body);
-  res.send("ok");
   conn.query(
     "UPDATE customers SET ? where c_id = ?",
     [
