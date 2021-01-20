@@ -83,4 +83,25 @@ router.get("/checkout/cart/:id", (req, res) => {
   );
 });
 
+router.post("/customer/cart/amount/:id", (req, res) => {
+  console.log(req.body);
+  console.log(typeof req.body[0]);
+  // conn.query(
+  //   "UPDATE customers SET ? where c_id = ?",
+  //   [
+  //     {
+  //       c_cart_amount:
+  //         typeof req.body[0] == "string" ? parseInt(req.body[0]) : req.body[0],
+  //       c_cart: req.body[2],
+  //       c_cart_number: req.body[3],
+  //     },
+  //     req.body[1],
+  //   ],
+  //   (err, result) => {
+  //     if (err) throw err;
+  //     res.status(200).send("cart amount upated");
+  //   }
+  // );
+});
+
 module.exports = router;
