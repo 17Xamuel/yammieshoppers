@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/admin/", require("./routes/adminRoutes"));
 app.use("/api/user/", require("./routes/userRoutes"));
-app.use("/api/api/", require("./routes/appRoutes"));
+app.use("/api/app/", require("./routes/appRoutes"));
 app.use("/api/sellers/", require("./routes/sellerRoutes"));
 app.use("/api/products/", require("./routes/products"));
 app.use("/api/orders/", require("./routes/orders"));
@@ -26,7 +26,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
 });
 
 // Change bucket property to your Space name
@@ -38,8 +38,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -72,11 +72,11 @@ app.post("/addProduct", async (req, res) => {
       specification,
       dimensions,
       size,
-      typeOfProduct
+      typeOfProduct,
     } = req.body;
     let code = Math.floor(Math.random() * 1000000 + 1).toString();
     conn.query(
-      `SELECT subcategory_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
+      `SELECT subcategory_id,category_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
       (error, result) => {
         if (error) throw err;
         conn.query(
@@ -86,14 +86,15 @@ app.post("/addProduct", async (req, res) => {
             product: product,
             price: price,
             description: description,
+            category: result[0].category_id,
             subcategory: result[0].subcategory_id,
             discount: discount,
             images: path,
             seller_id: seller_id,
-            quantity: quantity,
             detailedDescription,
-            dateAdded: new Date(),
+            quantity: quantity,
             specifications: JSON.stringify({
+              dateAdded: new Date(),
               Number: code,
               Brand: brand || null,
               Color: color || null,
@@ -101,8 +102,8 @@ app.post("/addProduct", async (req, res) => {
               Fragile: fragility,
               Dimensions: dimensions || null,
               Size: size,
-              TypeOfProduct: typeOfProduct
-            })
+              TypeOfProduct: typeOfProduct,
+            }),
           },
           (err, results) => {
             if (err) {
@@ -150,7 +151,7 @@ app.post("/addImages", async (req, res) => {
       {
         image_id: imageId,
         image_path: pathing,
-        destination: Uploads
+        destination: Uploads,
       },
       (error, results) => {
         if (error) throw error;

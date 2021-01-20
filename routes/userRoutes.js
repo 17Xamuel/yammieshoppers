@@ -143,8 +143,56 @@ router.get("/search/:l-:h", async (req, res) => {
         ? "SELECT * FROM products"
         : `SELECT * FROM products 
           WHERE product LIKE '%${query}%'
-            OR description LIKE '%${query}%'`;
+            OR description LIKE '%${query}%'
+            OR subcategory LIKE '%${query}%'`;
+
     conn.query(_query, (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        if (req.params.l == "min") {
+          res.send(result);
+        } else {
+          if (parseInt(req.params.h) > 1) {
+            let newResult = result
+              .filter((item) => item.price >= parseInt(req.params.l))
+              .filter((item) => item.price <= parseInt(req.params.h));
+            if (newResult.length == 0) {
+              res.send([]);
+            } else {
+              res.send(newResult);
+            }
+          } else {
+            let newResult = result
+              .filter((item) => item.discount >= parseFloat(req.params.l) * 100)
+              .filter(
+                (item) => item.discount <= parseFloat(req.params.h) * 100
+              );
+
+            if (newResult.length == 0) {
+              res.send([]);
+            } else {
+              res.send(newResult);
+            }
+          }
+        }
+      }
+    });
+  }
+});
+router.get("/ct/search/:l-:h", async (req, res) => {
+  let query = req.query.q;
+  let patt = /\W/g;
+  let checkQuery = patt.test(query);
+  if (checkQuery == true) {
+    res.send([]);
+    return;
+  } else {
+    let _query = `SELECT * FROM products 
+          WHERE category = ?
+           `;
+
+    conn.query(_query, query, (err, result) => {
       if (err) {
         throw err;
       } else {
@@ -397,14 +445,17 @@ router.post("/customer/order", async (req, res) => {
 });
 //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
-function category(ct, nature, res) {
-  conn.query(`SELECT * FROM products`, (err, result) => {
-    if (err) {
-      throw err;
-    } else {
-      res.send(result);
+function category(ct, sbct, res) {
+  conn.query(
+    `SELECT * FROM products WHERE subcategory = ${sbct}`,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result);
+      }
     }
-  });
+  );
 }
 router.get("/ct/:ct/:nature", (req, res) => {
   category(req.params.ct, req.params.nature, res);

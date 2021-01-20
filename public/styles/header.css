@@ -299,7 +299,7 @@
   padding: 10px;
   z-index: 40;
   display: block;
-  width: 100vw;
+  width: 95vw;
   height: 100vh;
   overflow-y: scroll;
 }

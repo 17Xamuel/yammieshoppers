@@ -1,0 +1,80 @@
+.hp-ctr {
+  width: 75vw;
+  margin: 25px auto;
+}
+.m-hdr {
+  color: #ffbb00;
+  font-size: 40px;
+}
+.release-date {
+  font-size: 15px;
+  padding: 15px;
+}
+.nav-h {
+  background-color: #ffbb00;
+  color: white;
+  letter-spacing: 1px;
+  font-size: 25px;
+  padding: 5px 10px;
+}
+.hp-nav {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+.hp-nav-li {
+  margin: 15px 40px;
+}
+.hp-nav-li > li {
+  margin: 10px;
+}
+.hp-nav-li > li > a:hover {
+  color: #ffbb00;
+}
+.hp-content-h {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+}
+.hp-content {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin: 35px 0px;
+}
+.hp-content-p {
+  padding: 10px;
+}
+.em-list {
+  padding: 10px 15px;
+}
+.hp-h4 {
+  padding: 5px 10px;
+}
+.int-list {
+  padding: 10px 20px;
+}
+/*request*/
+.hp-image,
+.form-req {
+  width: 75%;
+  height: 50vh;
+  margin: auto;
+}
+.heading {
+  padding: 20px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hdr-req-1 {
+  font-size: 35px;
+  font-weight: 400;
+}
+.form-req {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/*request*/
