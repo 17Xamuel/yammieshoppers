@@ -30,6 +30,7 @@ router.post("/registerSeller", async (req, res) => {
     passwordConfirm,
     location
   } = req.body;
+  let seller_status = "Pending";
 
   if (
     username.length == 0 ||
@@ -44,21 +45,13 @@ router.post("/registerSeller", async (req, res) => {
     return res.send("All Fields are Required");
   }
   conn.query(
-    `SELECT email FROM pending_sellers WHERE email=?`,
+    `SELECT email FROM sellers WHERE email=?`,
     [email],
     (err, result) => {
       if (err) throw err;
-      conn.query(
-        `SELECT email FROM sellers WHERE email=?`,
-        [email],
-        (errs, queryRes) => {
-          if (errs) throw errs;
-          let answer = result.length + queryRes.length;
-          if (answer > 0) {
-            return res.send("Email Already in Use.");
-          }
-        }
-      );
+      if (result.length > 0) {
+        return res.send("Email Already in Use");
+      }
     }
   );
   if (password.length < 5) {
@@ -78,7 +71,8 @@ router.post("/registerSeller", async (req, res) => {
     businessname,
     location,
     category,
-    password
+    password,
+    seller_status
   };
 
   let mailOptions = {
@@ -102,20 +96,16 @@ router.post("/registerSeller", async (req, res) => {
 
 router.post("/confirmEmail", async (req, res) => {
   if (req.body.fn == code) {
-    conn.query(
-      "INSERT INTO pending_sellers SET ? ",
-      newSeller,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-          return res.send("An error ocurred!!!");
-        }
-        res.send(
-          "You have registered successfully.Please wait for confirmation from the Admin"
-        );
-        newSeller, (code = "");
+    conn.query("INSERT INTO sellers SET ? ", newSeller, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.send("An error ocurred!!!");
       }
-    );
+      res.send(
+        "You have registered successfully.Please wait for confirmation from the Admin"
+      );
+      newSeller, (code = "");
+    });
   } else {
     res.send("Code Mismatch.Please enter code again");
   }
@@ -128,7 +118,7 @@ try {
       return res.send("All fields are required");
     }
     conn.query(
-      "SELECT email FROM sellers WHERE email=?",
+      "SELECT email FROM sellers WHERE  email=?",
       [email],
       async (err, results) => {
         if (results.length == 0) {

@@ -73,6 +73,7 @@ app.post("/addProduct", async (req, res) => {
       dimensions,
       size,
       typeOfProduct,
+      netWeight,
     } = req.body;
     let code = Math.floor(Math.random() * 1000000 + 1).toString();
     conn.query(
@@ -103,6 +104,7 @@ app.post("/addProduct", async (req, res) => {
               Dimensions: dimensions || null,
               Size: size,
               TypeOfProduct: typeOfProduct,
+              NetWeight: netWeight || null,
             }),
           },
           (err, results) => {
@@ -117,6 +119,7 @@ app.post("/addProduct", async (req, res) => {
     );
   });
 });
+
 app.delete("/deleteProduct/:id", async (req, res) => {
   conn.query(
     "SELECT images from pending_products WHERE id = ? ",

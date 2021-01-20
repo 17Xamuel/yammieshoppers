@@ -1,8 +1,19 @@
 const express = require("express");
 const conn = require("../database/db");
 const uuid = require("uuid");
+const nodemailer = require("nodemailer");
 
 const router = express.Router();
+
+let transporter = nodemailer.createTransport({
+  host: "smtp.domain.com",
+  secureConnection: false,
+  port: 465,
+  auth: {
+    user: "info@yammieshoppers.com",
+    pass: "yammieShoppers@1"
+  }
+});
 
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
@@ -40,7 +51,7 @@ router.get("/allProducts", async (req, res) => {
 
 router.get("/sellerRequests", async (req, res) => {
   conn.query(
-    "SELECT id,username,email,phonenumber,location,businessname,category FROM pending_sellers",
+    "SELECT id,username,email,phonenumber,location,businessname,category FROM sellers WHERE seller_status='Pending'",
     (err, result) => {
       if (err) throw err;
       res.json(result);
@@ -51,26 +62,33 @@ router.get("/sellerRequests", async (req, res) => {
 try {
   router.get("/confirmSeller/:id", async (req, res) => {
     conn.query(
-      "SELECT * FROM pending_sellers WHERE id = ? ",
+      `UPDATE sellers SET seller_status = 'Approved' WHERE id=?`,
       [req.params.id],
       (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          conn.query("INSERT INTO sellers SET ? ", result, (error, results) => {
-            if (error) {
-              console.log(error);
-            }
-            conn.query(
-              "DELETE FROM pending_sellers WHERE id = ? ",
-              [req.params.id],
-              (errs, queryResult) => {
-                if (errs) throw errs;
-                res.send("Seller Successfully Confirmed");
+        if (err) throw err;
+        conn.query(
+          `SELECT username,email FROM sellers WHERE id=?`,
+          [req.params.id],
+          async (error, results) => {
+            if (error) throw error;
+            let mailOptions = {
+              from: '"Yammie Shoppers"<info@yammieshoppers.com>',
+              to: results[0].email,
+              subject: `Hello ${results[0].username}`,
+              text: `Hello, ${results[0].username}  your email ${results[0].email} has been successfully 
+              confirmed you can start adding products to the website.`
+            };
+
+            transporter.sendMail(mailOptions, (error, response) => {
+              if (error) {
+                console.log(error);
+                return res.send("We are sorry something went wrong.");
+              } else {
+                res.status(200).send("Seller Successfully Confirmed");
               }
-            );
-          });
-        }
+            });
+          }
+        );
       }
     );
   });
@@ -81,7 +99,7 @@ try {
 try {
   router.get("/deleteSeller/:id", async (req, res) => {
     conn.query(
-      "DELETE FROM pending_sellers WHERE id=?",
+      "DELETE FROM sellers WHERE id=?",
       [req.params.id],
       (err, results) => {
         if (err) throw err;
@@ -103,20 +121,7 @@ router.get("/pendingProduct", async (req, res) => {
   );
 });
 
-router.get("/pendingProduct/:id", async (req, res) => {
-  conn.query(
-    `SELECT * FROM pending_products JOIN sellers ON pending_products.seller_id=sellers.id 
-    JOIN subCategories ON pending_products.subcategory=subCategories.subcategory_id
-    JOIN category ON subCategories.category_id=category.category_id WHERE pending_products.id=?`,
-    [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      res.send(result);
-    }
-  );
-});
-
-router.get("/approvedProduct/:id", async (req, res) => {
+router.get("/productDetails/:id", async (req, res) => {
   conn.query(
     `SELECT * FROM products JOIN sellers ON products.seller_id=sellers.id 
     JOIN subCategories ON products.subcategory=subCategories.subcategory_id
@@ -124,7 +129,20 @@ router.get("/approvedProduct/:id", async (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) throw err;
-      res.send(result);
+      if (result.length == 0) {
+        conn.query(
+          `SELECT * FROM pending_products JOIN sellers ON pending_products.seller_id=sellers.id 
+    JOIN subCategories ON pending_products.subcategory=subCategories.subcategory_id
+    JOIN category ON subCategories.category_id=category.category_id WHERE pending_products.id=?`,
+          [req.params.id],
+          (error, results) => {
+            if (err) throw err;
+            res.send(results);
+          }
+        );
+      } else {
+        res.send(result);
+      }
     }
   );
 });
@@ -145,7 +163,7 @@ router.get("/confirmProduct/:id", async (req, res) => {
             [req.params.id],
             (errs, queryResult) => {
               if (errs) throw errs;
-              res.send(" Product Accepted");
+              res.send("Product Accepted");
             }
           );
         });
@@ -163,7 +181,7 @@ router.get("/orderNumber", async (req, res) => {
 
 router.get("/pendingOrders", async (req, res) => {
   conn.query(
-    `SELECT * FROM pending_orders WHERE order_status='pending'`,
+    `SELECT * FROM pending_orders WHERE order_status='pending' ORDER BY order_date`,
     (err, results) => {
       if (err) throw err;
       res.json(results);
@@ -247,7 +265,7 @@ router.post("/rejPost/:id", async (req, res) => {
           quantity: quantity,
           images: image,
           seller_id: seller_id,
-          reason: reason,
+          reason: reason
         },
         (error, results) => {
           if (error) throw error;
@@ -346,7 +364,7 @@ router.post("/addCategory", async (req, res) => {
   conn.query(
     `INSERT INTO category SET ? `,
     {
-      category_name: catName,
+      category_name: catName
     },
     (err, result) => {
       if (err) throw err;
@@ -366,14 +384,14 @@ router.post("/addSubCategory", async (req, res) => {
   let { categoryName, subName } = req.body;
   conn.query(
     `SELECT category_id FROM category WHERE category_name=?`,
-    [categoryName],
+    [categoryName.replace(/_/g, " ")],
     (err, result) => {
       if (err) throw err;
       conn.query(
         `INSERT INTO subCategories SET ?`,
         {
           category_id: result[0].category_id,
-          subCategoryName: subName,
+          subCategoryName: subName
         },
         (error, results) => {
           if (error) throw error;
@@ -418,11 +436,12 @@ router.get("/orderSearch/:id", async (req, res) => {
 });
 
 router.post("/addZone", async (req, res) => {
-  let { zoneName } = req.body;
+  let { zoneName, zoneWeight } = req.body;
   conn.query(
     "INSERT INTO zones SET ?",
     {
       zone_name: zoneName,
+      zone_weight: zoneWeight
     },
     (err, result) => {
       if (err) throw err;
@@ -449,7 +468,7 @@ router.post("/addAdresses", async (req, res) => {
         `INSERT INTO addresses SET ?`,
         {
           zone_id: result[0].zone_id,
-          address_name: addressName,
+          address_name: addressName
         },
         (error, results) => {
           if (error) throw error;
@@ -477,4 +496,44 @@ router.get("/getAddresses", async (req, res) => {
     res.send(results);
   });
 });
+
+router.get("/zoneGet/:id", async (req, res) => {
+  conn.query(
+    `SELECT * FROM zones WHERE zone_name=?`,
+    [req.params.id.replace(/_/g, " ")],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.post("/zoneEdit/:id", async (req, res) => {
+  let { newName, newWeight } = req.body;
+  if (newWeight.length == 0 || newName.length == 0) {
+    return res.send("All feilds Required");
+  }
+  conn.query(
+    `UPDATE zones SET zone_name='${newName}',zone_weight='${newWeight}'
+  WHERE zone_name = ?`,
+    [req.params.id.replace(/_/g, " ")],
+    (err, result) => {
+      if (err) throw err;
+      res.send("Zone Successfully Updated");
+    }
+  );
+});
+
+router.post("/editCategory/:id", async (req, res) => {
+  let { newName } = req.body;
+  conn.query(
+    `UPDATE category SET category_name='${newName}' WHERE category_name=?`,
+    [req.params.id.replace(/_/g, " ")],
+    (err, result) => {
+      if (err) throw err;
+      res.send("Category Edited Successfully");
+    }
+  );
+});
+
 module.exports = router;

@@ -7,54 +7,41 @@
       href="../resources/cartlink.png"
       type="image/x-icon"
     />
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
     />
-    <!-- Bootstrap -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
-    />
+    <!-- Scripts -->
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
       integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
       crossorigin="anonymous"
     ></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
-      rel="stylesheet"
-    />
+
+    <!-- End Scripts -->
     <link
       rel="stylesheet"
       type="text/css"
       href="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.css"
     />
-    <link rel="stylesheet" href="../admin/styles/home.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Yammie | Add Your Product</title>
+    <title>Yammie | Edit Product</title>
     <script>
-      // if (document.referrer == "") {
-      //   self.location = "index";
-      // }
-      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
-        self.location = "login.html";
-      }
+      if (document.referrer == "") window.location.assign("./index");
     </script>
-    <style>
-      @media (max-width: 768px) {
-        #category {
-          width: 100%;
-        }
-      }
-    </style>
   </head>
 
   <body class="bg-light">
@@ -79,43 +66,57 @@
                 >YammieShoppers</a
               >
               <div class="border-bottom pb-3">
-                <a href="#" class="text-white text-center"
-                  >Hello <span id="User"></span
-                ></a>
+                <img
+                  src="./images/user-1.jpg"
+                  width="50"
+                  height="50"
+                  class="rounded-circle mr-3"
+                />
+                <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a
-                    href="index.html"
-                    class="nav-link text-white p-3 mb-2 current"
-                    ><i class="fas fa-home text-light fa-lg mr-3"></i
-                    >Dashboard</a
-                  >
-                </li>
-                <li class="nav-item current">
-                  <a
-                    href="product"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-table text-light fa-lg mr-3"></i>My
-                    Products</a
+                  <a href="home" class="nav-link text-white p-3 mb-2 current"
+                    ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
                 </li>
 
                 <li class="nav-item">
+                  <a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
+                    >Sales</a
+                  >
+                </li>
+                <li class="nav-item">
                   <a
-                    href="orders"
+                    href="analytics"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-shopping-bag text-light fa-lg mr-3"></i>My
-                    Orders</a
+                    ><i class="fas fa-chart-line text-light fa-lg mr-3"></i
+                    >Analytics</a
                   >
                 </li>
 
+                <li class="nav-item current">
+                  <a
+                    href="products.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-wrench text-light fa-lg mr-3"></i
+                    >Products</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="upload"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
+                    >Uploads</a
+                  >
+                </li>
                 <li class="nav-item">
                   <a
                     href="profile"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-user text-light fa-lg mr-3"></i>My
-                    Profile</a
+                    ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
                   >
                 </li>
               </ul>
@@ -128,21 +129,21 @@
               class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
             >
               <div class="row align-items">
-                <div class="col-md-4 mb-0 text-light py-3">
-                  <h4>DASHBOARD</h4>
+                <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
+                  <h4>Dashboard</h4>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">5</span
+                        ><span class="text-white icon-bullet">4</span
                         ><i class="fas fa-comments text-muted fa-2x"></i
                       ></a>
                     </li>
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">4</span
+                        ><span class="text-white icon-bullet">5</span
                         ><i class="fas fa-bell text-muted fa-2x"></i
                       ></a>
                     </li>
@@ -181,7 +182,7 @@
             <button type="button" data-dismiss="modal" class="btn btn-success">
               Stay Here
             </button>
-            <button type="button" class="btn btn-danger" id="slg">
+            <button type="button" id="alg" class="btn btn-danger">
               Log Out
             </button>
           </div>
@@ -196,11 +197,12 @@
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-10 m-auto">
-                <h4 class="text-center m-3">Add Product</h4>
+                <h4 class="text-center m-3">Edit Product</h4>
                 <form
-                  action="/addProduct"
+                  action="#"
                   method="POST"
                   enctype="multipart/form-data"
+                  id="editting"
                 >
                   <div class="form-row">
                     <div class="form-group col-md-6">
@@ -212,6 +214,7 @@
                         placeholder="Product Name"
                         name="product"
                         autocomplete="off"
+                        id="product"
                       />
                     </div>
                     <div class="form-group col-md-6">
@@ -223,6 +226,7 @@
                         placeholder="Quantity"
                         name="quantity"
                         autocomplete="off"
+                        id="quantity"
                       />
                     </div>
                   </div>
@@ -236,6 +240,7 @@
                       placeholder="Such as 5kg Lugazi Sweet Sugar"
                       name="description"
                       autocomplete="off"
+                      id="description"
                     />
                   </div>
                   <br />
@@ -249,6 +254,7 @@
                         placeholder="Price(UGX)"
                         name="price"
                         autocomplete="off"
+                        id="price"
                       />
                     </div>
                     <div class="form-group col-md-6">
@@ -259,6 +265,7 @@
                         placeholder="Discount(%) in terms of Price"
                         name="discount"
                         autocomplete="off"
+                        id="discount"
                       />
                     </div>
                   </div>
@@ -268,7 +275,7 @@
                     <div class="form-group col-md-6">
                       <label for="category">Select Category</label>
                       <select
-                        class="form-control"
+                        class="form-control catSelection"
                         required=""
                         name="category"
                         id="category"
@@ -298,6 +305,7 @@
                         name="typeOfProduct"
                         class="form-control"
                         required
+                        id="customerExpect"
                       >
                         <option value="Carriage">Carriage</option>
                         <option value="Parcel">Parcel</option>
@@ -306,7 +314,12 @@
                     </div>
                     <div class="form-group col-md-6">
                       <label for="Size">Product Size(Select)</label>
-                      <select name="size" class="form-control" required>
+                      <select
+                        name="size"
+                        class="form-control"
+                        required
+                        id="size"
+                      >
                         <option value="Big">Big</option>
                         <option value="Small">Small</option>
                       </select>
@@ -322,6 +335,7 @@
                         placeholder="Brand"
                         name="brand"
                         autocomplete="off"
+                        id="brand"
                       />
                     </div>
                     <div class="form-group col-md-4">
@@ -332,11 +346,17 @@
                         class="form-control"
                         autocomplete="off"
                         name="color"
+                        id="color"
                       />
                     </div>
                     <div class="form-group col-md-4">
                       <label for="Weight">Weight</label>
-                      <select class="form-control" name="weight" required>
+                      <select
+                        class="form-control"
+                        name="weight"
+                        required
+                        id="weight"
+                      >
                         <option value="Heavy">Heavy</option>
                         <option value="Light">Light</option>
                       </select>
@@ -354,13 +374,19 @@
                         placeholder="Eg 12cm X 5cm X 9cm"
                         name="dimensions"
                         autocomplete="off"
+                        id="dimensions"
                       />
                     </div>
                     <div class="form-group col-md-6">
                       <label for="Fragility"
                         >Is the Product Easily Broken?(Select)</label
                       >
-                      <select name="fragility" class="form-control" required>
+                      <select
+                        name="fragility"
+                        class="form-control"
+                        required
+                        id="fragility"
+                      >
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
                       </select>
@@ -375,6 +401,7 @@
                         class="form-control"
                         placeholder="Enter Net Weight"
                         name="netWeight"
+                        id="netWeight"
                       />
                     </div>
                   </div>
@@ -390,6 +417,7 @@
                       name="detailedDescription"
                       cols="30"
                       rows="4"
+                      id="detail"
                     ></textarea>
                   </div>
 
@@ -416,6 +444,7 @@
                               class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              id="img1"
                             />
 
                             <span
@@ -446,9 +475,10 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input"
+                              class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              id="img2"
                             />
 
                             <span
@@ -482,9 +512,10 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input"
+                              class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              id="img3"
                             />
 
                             <span
@@ -515,9 +546,10 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input file"
+                              class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              id="img4"
                             />
 
                             <span
@@ -533,10 +565,8 @@
                     </div>
                   </div>
 
-                  <input type="hidden" name="seller_id" id="auth" />
-
                   <button class="btn btn-warning text-light btn-block my-3">
-                    Add Product
+                    Update and Confirm Product
                   </button>
                 </form>
               </div>
@@ -580,11 +610,9 @@
         </div>
       </div>
     </footer>
-
     <!-- End Footer -->
 
     <!-- Scripts -->
-
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
@@ -601,28 +629,32 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
+    <script src="scripts/account.js"></script>
     <script>
       const upload = new FileUploadWithPreview("myUpload");
       const uploads = new FileUploadWithPreview("myUploads");
       const uploading = new FileUploadWithPreview("myUploading");
       const Upload = new FileUploadWithPreview("Upload");
 
-      let [seller] = JSON.parse(
-        localStorage.getItem("yammie/useLocalstorage/storage")
-      );
-      document.getElementById("User").innerHTML = seller.username;
-      document.getElementById("auth").value = seller.id;
-      let categories = JSON.parse(seller.category);
-      let cat = "";
-      categories.forEach((category) => {
-        cat += `<option value="${category.replace(
-          / /g,
-          "_"
-        )}">${category}</option>`;
-      });
-      document.getElementById("category").innerHTML += cat;
+      const catGet = new XMLHttpRequest();
+      catGet.onreadystatechange = () => {
+        if (catGet.readyState == 4 && catGet.status == 200) {
+          let categories = JSON.parse(catGet.responseText);
+          let cat = "";
+          categories.forEach((cats) => {
+            cat += `<option value="${cats.category_name.replace(/ /g, "_")}">${
+              cats.category_name
+            }</option>`;
+          });
+          let getting = document.querySelectorAll(".catSelection");
+          getting.forEach((get) => {
+            get.innerHTML += cat;
+          });
+        }
+      };
+      catGet.open("GET", "/api/admin/getCategory", true);
+      catGet.send();
 
-      let subCat = document.getElementById("category");
       subCat.addEventListener("change", (e) => {
         let selectedCat = document.getElementById("category").value;
         const subCatLoad = new XMLHttpRequest();
@@ -645,45 +677,30 @@
         subCatLoad.send();
       });
 
-      // let fileSize = document.querySelectorAll(".fileSize");
-      // fileSize.forEach((fil) => {
-      //   fil.addEventListener("change", (e) => {
-      //     //Any file selected
-      //     if (fil.files.length > 0) {
-      //       for (let i = 0; i < fil.files.length - 1; i++) {
-      //         let fSize = fil.files.item(i).size;
-      //         let file = Math.round(fSize / 1024);
-      //         if (file > 4096 || file < 2048) {
-      //           e.preventDefault();
-      //           alert("All images should be between 2MB and 4MB");
-      //         }
-      //       }
-      //     }
-      //   });
-      // });
-
-      let testFileNumber = document.querySelector(".btn-block");
-      testFileNumber.addEventListener("click", (e) => {
-        let fileNumber = document.querySelector(".filing");
-        if (fileNumber.files.length == 0) {
-          e.preventDefault();
-          alert(
-            "Total images should be atleast one and should not exceed four!!!"
-          );
+      let product = new URLSearchParams(window.location.search).get("product");
+      const data = new XMLHttpRequest();
+      data.onreadystatechange = () => {
+        if (data.readyState == 4 && data.status == 200) {
+          let [result] = JSON.parse(data.responseText);
+          console.log(result);
+          document.getElementById("product").value = result.product;
+          document.getElementById("quantity").value = result.quantity;
+          document.getElementById("description").value = result.description;
+          document.getElementById("price").value = result.price;
+          document.getElementById("discount").value = result.discount;
+          document.getElementById("detail").value = result.detailedDescription;
+          document.getElementById("category").value = result.category_name;
+          document.getElementById("subCat").value = result.subCategoryName;
+          let image = JSON.parse(result.images);
+          let filing = document.querySelectorAll(".filing");
+          filing.forEach((fil) => {
+            fil.file = image;
+          });
         }
-      });
-
-      function lg() {
-        let lg = document.getElementById("slg");
-        lg.addEventListener("click", (e) => {
-          localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("login.html");
-        });
-      }
-      lg();
-      document.getElementById("year").innerHTML = new Date().getFullYear();
+      };
+      data.open("GET", `/api/admin/productDetails/${product}`, true);
+      data.send();
     </script>
-
     <!-- End Scripts -->
   </body>
 </html>

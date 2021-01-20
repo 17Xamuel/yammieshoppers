@@ -31,7 +31,7 @@
 
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Yammie | Order Details</title>
+    <title>Yammie | Product Details</title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -67,7 +67,7 @@
                 <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
-                <li class="nav-item current">
+                <li class="nav-item">
                   <a href="home" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
@@ -85,7 +85,7 @@
                     >Analytics</a
                   >
                 </li>
-                <li class="nav-item">
+                <li class="nav-item current">
                   <a href="products.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
@@ -186,64 +186,70 @@
                     <h4 class="text-center text-info">
                       Product No: <span id="number"></span>
                     </h4>
-                    <div>
-                      <table class="table text-left">
-                        <tbody>
-                          <tr>
-                            <td>Product Name:<span id="name"></span></td>
-                            <td>Product Price: <span id="price"></span></td>
-                          </tr>
-                          <tr>
-                            <td>NetPrice:<span id="netp"></span></td>
-                            <td>Discount: <span id="disc"></span></td>
-                          </tr>
-                          <tr>
-                            <td>Quantity in Stock:<span id="qty"></span></td>
-                            <td>Date Added: <span id="date"></span></td>
-                          </tr>
 
-                          <tr>
-                            <td>Brand:<span id="brand"></span></td>
-                            <td>Type Of Product: <span id="type"></span></td>
-                          </tr>
-                          <tr>
-                            <td>Category: <span id="cat"></span></td>
-                            <td>SubCategory: <span id="sct"></span></td>
-                          </tr>
-                          <tr>
-                            <td>Date Added:<span id="date"></span></td>
-                            <td>Fragile:<span id="frag"></span></td>
-                          </tr>
-                          <tr>
-                            <td>Size:<span id="size"></span></td>
-                            <td>Color:<span id="col"></span></td>
-                          </tr>
-                          <tr>
-                            <td>Dimensions:<span id="dim"></span></td>
-                            <td>Weight:<span id="weight"></span></td>
-                          </tr>
-                          <tr>
-                            <td>Seller Name: <span id="sname"></span></td>
-                            <td>Seller Contact: <span id="scontact"></span></td>
-                          </tr>
-                          <tr>
-                            <td>Type of Product:<span id="types"></span></td>
-                            <td>Number of Sales: <span id="nsales"></span></td>
-                          </tr>
-                          <tr>
-                            <td>Brief Description: <span id="desc"></span></td>
-                          </tr>
-                          <tr>
-                            <td>
-                              Detailed Description: <span id="ddesc"></span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div id="detailLoading" class="text-center"></div>
-                      <div class="text-center">
-                        <ul class="list-inline" id="-img"></ul>
-                      </div>
+                    <table class="table text-left">
+                      <tbody>
+                        <tr>
+                          <td>ProductName:<span id="name"></span></td>
+                          <td>Quantity:<span id="qty"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Price:<span id="price"></span></td>
+                          <td>Discount:<span id="disc"></span></td>
+                        </tr>
+                        <tr>
+                          <td>NetPrice:<span id="netp"></span></td>
+                          <td>Brand:<span id="brand"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Category:<span id="cat"></span></td>
+                          <td>SubCategory:<span id="sct"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Date Added:<span id="date"></span></td>
+                          <td>Fragile:<span id="frag"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Size:<span id="size"></span></td>
+                          <td>Color:<span id="col"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Dimensions:<span id="dim"></span></td>
+                          <td>Weight:<span id="weight"></span></td>
+                        </tr>
+
+                        <tr>
+                          <td>Seller Name: <span id="sname"></span></td>
+                          <td>Seller Contact: <span id="scontact"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Type of Product:<span id="types"></span></td>
+                          <td>Number of Sales: <span id="nsales"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Net Weight: <span id="netW"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <table class="table text-left">
+                      <tbody>
+                        <tr>
+                          <td>Brief Description:<span id="desc"></span></td>
+                        </tr>
+                        <tr>
+                          <td>Detailed Description:<span id="ddesc"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div id="detailLoading" class="text-center"></div>
+                    <div class="text-center">
+                      <ul class="list-inline" id="-img"></ul>
                     </div>
 
                     <div class="text-center">
@@ -355,17 +361,16 @@
       let product = new URLSearchParams(window.location.search).get("product");
       const productDetails = new XMLHttpRequest();
       productDetails.onreadystatechange = () => {
-        if (details.readyState < 4) {
+        if (productDetails.readyState < 4) {
           document.getElementById(
             "detailLoading"
           ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
         }
-        if (productDetails.readyState == 4 && productDetails == 200) {
-          let [outcome] = JSON.parse(details.responseText);
-
+        if (productDetails.readyState == 4 && productDetails.status == 200) {
+          let [outcome] = JSON.parse(productDetails.responseText);
           document.getElementById("name").innerHTML = outcome.product;
           document.getElementById("qty").innerHTML = outcome.quantity;
-          document.getElementById("price").innerHTML = outcome.price;
+          document.getElementById("price").innerHTML = outcome.price + " UGX";
           document.getElementById("cat").innerHTML = outcome.category_name;
           document.getElementById("sct").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
@@ -374,9 +379,9 @@
             10
           );
 
-          document.getElementById("netp").innerHTML = parseInt(
-            outcome.price - (outcome.discount / 100) * outcome.price
-          );
+          document.getElementById("netp").innerHTML =
+            parseInt(outcome.price - (outcome.discount / 100) * outcome.price) +
+            " UGX";
           document.getElementById("desc").innerHTML = outcome.description;
           document.getElementById("ddesc").innerHTML =
             outcome.detailedDescription;
@@ -384,13 +389,18 @@
           document.getElementById("scontact").innerHTML = outcome.phonenumber;
           let specify = JSON.parse(outcome.specifications);
           document.getElementById("number").innerHTML = specify.Number;
-          document.getElementById("brand").innerHTML = specify.Brand || null;
+          document.getElementById("brand").innerHTML =
+            specify.Brand || "Not specified";
           document.getElementById("frag").innerHTML = specify.Fragile;
           document.getElementById("size").innerHTML = specify.Size;
-          document.getElementById("col").innerHTML = specify.Color || null;
-          document.getElementById("dim").innerHTML = specify.Dimensions;
+          document.getElementById("col").innerHTML =
+            specify.Color || "Not specified";
+          document.getElementById("dim").innerHTML =
+            specify.Dimensions || "Not Specified";
           document.getElementById("weight").innerHTML = specify.Weight;
           document.getElementById("types").innerHTML = specify.TypeOfProduct;
+          document.getElementById("netW").innerHTML =
+            specify.NetWeight || "Not Specified";
 
           let images = JSON.parse(outcome.images);
           let data = "";
@@ -411,7 +421,7 @@
       saleNumber.onreadystatechange = () => {
         if (saleNumber.readyState == 4 && saleNumber.status == 200) {
           let [numbers] = JSON.parse(saleNumber.responseText);
-          document.getElementById("nsales").innerHTML = numbers.sales;
+          document.getElementById("nsales").innerHTML = numbers.sales || 0;
         }
       };
       saleNumber.open("GET", `/api/admin/saleNumber/${product}`, true);

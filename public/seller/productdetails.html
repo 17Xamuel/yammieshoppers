@@ -207,7 +207,7 @@
 
                         <tr>
                           <td>Category:<span id="cat"></span></td>
-                          <td>SubCategory:<span id="scat"></span></td>
+                          <td>SubCategory:<span id="sct"></span></td>
                         </tr>
 
                         <tr>
@@ -227,12 +227,19 @@
 
                         <tr>
                           <td>Seller Name: <span id="sname"></span></td>
-                          <td>Seller Contact: <span id="contact"></span></td>
+                          <td>Seller Contact: <span id="scontact"></span></td>
                         </tr>
                         <tr>
                           <td>Type of Product:<span id="types"></span></td>
                           <td>Number of Sales: <span id="nsales"></span></td>
                         </tr>
+                        <tr>
+                          <td>Net Weight: <span id="netW"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table class="table text-left">
+                      <tbody>
                         <tr>
                           <td>Brief Description:<span id="desc"></span></td>
                         </tr>
@@ -243,7 +250,7 @@
                     </table>
                     <div id="productDetailLoading" class="text-center"></div>
                     <div class="text-center">
-                      <ul class="list-inline" id="img"></ul>
+                      <ul class="list-inline" id="-img"></ul>
                     </div>
                   </div>
                 </div>
@@ -313,9 +320,7 @@
         localStorage.getItem("yammie/useLocalstorage/storage")
       );
       document.getElementById("User").innerHTML = seller.username;
-      let product = new URLSearchParams(window.location.search).get(
-        "pendingProduct"
-      );
+      let product = new URLSearchParams(window.location.search).get("product");
       const productDetails = new XMLHttpRequest();
       productDetails.onreadystatechange = () => {
         if (productDetails.readyState < 4) {
@@ -323,11 +328,11 @@
             "productDetailLoading"
           ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
         }
-        if (productDetails.readyState == 4 && productDetails == 200) {
-          let [outcome] = JSON.parse(details.responseText);
+        if (productDetails.readyState == 4 && productDetails.status == 200) {
+          let [outcome] = JSON.parse(productDetails.responseText);
           document.getElementById("name").innerHTML = outcome.product;
           document.getElementById("qty").innerHTML = outcome.quantity;
-          document.getElementById("price").innerHTML = outcome.price;
+          document.getElementById("price").innerHTML = outcome.price + " UGX";
           document.getElementById("cat").innerHTML = outcome.category_name;
           document.getElementById("sct").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
@@ -336,9 +341,9 @@
             10
           );
 
-          document.getElementById("netp").innerHTML = parseInt(
-            outcome.price - (outcome.discount / 100) * outcome.price
-          );
+          document.getElementById("netp").innerHTML =
+            parseInt(outcome.price - (outcome.discount / 100) * outcome.price) +
+            " UGX";
           document.getElementById("desc").innerHTML = outcome.description;
           document.getElementById("ddesc").innerHTML =
             outcome.detailedDescription;
@@ -353,6 +358,8 @@
           document.getElementById("dim").innerHTML = specify.Dimensions;
           document.getElementById("weight").innerHTML = specify.Weight;
           document.getElementById("types").innerHTML = specify.TypeOfProduct;
+          document.getElementById("netW").innerHTML =
+            specify.NetWeight || "Not Specified";
 
           let images = JSON.parse(outcome.images);
           let data = "";
@@ -366,78 +373,17 @@
           document.getElementById("productDetailLoading").innerHTML = "";
         }
       };
-      productDetails.open("GET", `/api/admin/pendingProduct/${product}`, true);
+      productDetails.open("GET", `/api/admin/productDetails/${product}`, true);
       productDetails.send();
-
-      let Aproduct = new URLSearchParams(window.location.search).get(
-        "approvedProduct"
-      );
-
-      const details = new XMLHttpRequest();
-      details.onreadystatechange = () => {
-        if (details.readyState < 4) {
-          document.getElementById(
-            "productDetailLoading"
-          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-        }
-        if (details.status == 200 && details.readyState == 4) {
-          let [outcomes] = JSON.parse(details.responseText);
-
-          document.getElementById("name").innerHTML = outcomes.product;
-          document.getElementById("qty").innerHTML = outcomes.quantity;
-          document.getElementById("price").innerHTML = outcomes.price;
-          document.getElementById("cat").innerHTML = outcomes.category_name;
-          document.getElementById("scat").innerHTML = outcomes.subCategoryName;
-          document.getElementById("disc").innerHTML = outcomes.discount + "%";
-          document.getElementById("date").innerHTML = outcomes.dateAdded.slice(
-            0,
-            10
-          );
-
-          document.getElementById("netp").innerHTML = parseInt(
-            outcome.prices - (outcomes.discount / 100) * outcomes.price
-          );
-          document.getElementById("desc").innerHTML = outcomes.description;
-          document.getElementById("ddesc").innerHTML =
-            outcomes.detailedDescription;
-          document.getElementById("sname").innerHTML = outcomes.username;
-          document.getElementById("contact").innerHTML = outcomes.phonenumber;
-          let specification = JSON.parse(outcome.specifications);
-          document.getElementById("number").innerHTML = specification.Number;
-          document.getElementById("brand").innerHTML =
-            specification.Brand || null;
-          document.getElementById("frag").innerHTML = specification.Fragile;
-          document.getElementById("size").innerHTML = specification.Size;
-          document.getElementById("col").innerHTML =
-            specification.Color || null;
-          document.getElementById("dim").innerHTML = specification.Dimensions;
-          document.getElementById("weight").innerHTML = specification.Weight;
-          document.getElementById("types").innerHTML =
-            specification.TypeOfProduct;
-
-          let images = JSON.parse(outcomes.images);
-          let data = "";
-          for (i = 0; i < images.length; i++) {
-            data += `
-              <li class="list-inline-item">
-                <img src="${images[i]}" width="100" height="100"/>
-                </li>`;
-          }
-          document.getElementById("-img").innerHTML = data;
-          document.getElementById("productDetailLoading").innerHTML = "";
-        }
-      };
-      details.open("GET", `/api/admin/approvedProduct/${Aproduct}`, true);
-      details.send();
 
       const saleNumber = new XMLHttpRequest();
       saleNumber.onreadystatechange = () => {
         if (saleNumber.readyState == 4 && saleNumber.status == 200) {
           let [numbers] = JSON.parse(saleNumber.responseText);
-          document.getElementById("nsales").innerHTML = numbers.sales;
+          document.getElementById("nsales").innerHTML = numbers.sales || 0;
         }
       };
-      saleNumber.open("GET", `/api/admin/saleNumber/${Aproduct}`, true);
+      saleNumber.open("GET", `/api/admin/saleNumber/${product}`, true);
       saleNumber.send();
 
       function lg() {

@@ -238,7 +238,7 @@
         <div class="modal-body text-center" id="outcome"></div>
         <div class="modal-footer">
           <a href="#">
-            <button type="button" class="btn btn-danger" id="logmodal">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">
               OK
             </button>
           </a>
@@ -310,13 +310,6 @@
     getCategory.open("GET", "/api/admin/getCategory", true);
     getCategory.send();
 
-    function reload() {
-      let logmodal = document.getElementById("logmodal");
-      logmodal.addEventListener("click", (e) => {
-        window.location.reload("register");
-      });
-    }
-    reload();
     document.getElementById("year").innerHTML = new Date().getFullYear();
   </script>
 </html>
