@@ -258,14 +258,12 @@ router.get("/customer/:id", (req, res) => {
   );
 });
 router.post("/customer/cart/amount/:id", (req, res) => {
-  console.log(req.body);
-  console.log(req.body[2]);
-  console.log(typeof req.body[2]);
   conn.query(
     "UPDATE customers SET ? where c_id = ?",
     [
       {
-        c_cart_amount: req.body[0],
+        c_cart_amount:
+          typeof req.body[0] == "string" ? parseInt(req.body[0]) : req.body[0],
         c_cart: req.body[2],
         c_cart_number: req.body[3],
       },
