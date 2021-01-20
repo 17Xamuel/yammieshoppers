@@ -23,6 +23,7 @@ router.post("/updateCart/:id", (req, res) => {
 });
 
 router.get("/checkout/cart/:id", (req, res) => {
+  console.log(req.params.id);
   conn.query(
     `SELECT c_cart_amount,c_cart,c_cart_number,zone
       FROM customers JOIN customer_address
@@ -32,6 +33,7 @@ router.get("/checkout/cart/:id", (req, res) => {
       if (err) {
         throw err;
       } else {
+        console.log(result);
         let cart = JSON.parse(result[0].c_cart);
         let total_charge = 0;
         let total_price = 0;
