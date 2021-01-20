@@ -446,8 +446,26 @@ router.post("/customer/order", async (req, res) => {
 //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
 function category(ct, sbct, res) {
+  let req;
+  if (sbct == "trending") {
+    req = "14";
+  } else if (sbct == "recommendedforyou") {
+    req = "20";
+  } else if (sbct == "gascookers") {
+    req = "20";
+  } else if (sbct == "recentlyviewed") {
+    req = "20";
+  } else if (sbct == "phoneaccessories") {
+    req = "14";
+  } else if (sbct == "rv") {
+    req = "14";
+  } else if (sbct == "rec") {
+    req = "14";
+  } else {
+    req = sbct;
+  }
   conn.query(
-    `SELECT * FROM products WHERE subcategory = ${sbct}`,
+    `SELECT * FROM products WHERE subcategory = ${req}`,
     (err, result) => {
       if (err) {
         throw err;
