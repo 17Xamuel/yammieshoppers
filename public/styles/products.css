@@ -166,6 +166,9 @@
   height: 95%;
   width: 49%;
   margin: auto;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.1);
+  animation: shm 1.5s linear infinite forwards;
 }
 .-img-l {
   height: 40vh;

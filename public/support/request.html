@@ -5,154 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../resources/cartlink.png" />
     <link rel="stylesheet" href="../styles/footer2.css" />
+
     <link rel="stylesheet" href="../styles/header.css" />
     <link rel="stylesheet" href="../styles/main.css" />
+
+    <link rel="stylesheet" href="../styles/ys.min.css" />
     <link rel="stylesheet" href="../font-awesome/css/all.css" />
-    <title>Yammie | Confirm My Account</title>
+    <title>Yammie | Your online Store</title>
+
     <style>
-      /*add*/
-      #-edit-a {
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-      }
-      #other-a {
-        border: 0;
-        outline: none;
-        width: 70%;
-        border-bottom: 1px solid rgb(0, 0, 0, 0.3);
-        margin-top: 5%;
-        font-size: 17px;
-        padding: 5px;
-      }
-      ._add {
-        width: 85%;
-        border: 1px solid rgb(0, 0, 0, 0.2);
-        border-radius: 5px;
-        height: 30px;
-        outline: none;
-        font-size: 17px;
-        margin-top: 5%;
-      }
-      .-btn-a-d {
-        width: 60%;
-        margin: 15px auto;
-        padding: 8px 0px;
-        font-size: 16px;
-        box-shadow: 3px 3px 5px #e2e2e2;
-        border-radius: 30px;
-        border: none;
-        outline: none;
-        color: white;
-        background-color: #ffbb00;
-        cursor: pointer;
-      }
-      .loader {
-        padding: 20px;
-        padding-left: 20px;
-        display: none;
-      }
-      /*add*/
-      #pop-up-overlay.active {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 30;
-        transition: all 0.3s ease-in-out;
-      }
-      .close-pp {
-        position: absolute;
-        top: 5px;
-        right: 15px;
-        font-size: 2rem;
-        border: none;
-        outline: none;
-        cursor: pointer;
-        /* font-weight: 500; */
+      body {
         background-color: #fff;
       }
-      .popup {
-        background-color: white;
-        width: 35vw;
-        height: 50vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 5px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        transition: 200ms ease-in-out;
-        max-width: 90%;
-        z-index: 35;
+      .-is,
+      .btn {
+        width: 40vw;
       }
-      .popup.pp-active {
-        transform: translate(-50%, -50%) scale(1);
-      }
-      /*add*/
-      body {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-
-      .cr-m-ctr {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .cr-ctr {
-        border: 1px solid rgb(0, 0, 0, 0.1);
-        border-radius: 5px;
-        width: 400px;
-        min-height: 50vh;
-        height: fit-content;
-        margin: 25px auto;
-      }
-
-      .-confirm-ctr {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .-confirm-ctr > h3,
-      .-confirm-ctr > p {
-        text-align: center;
-      }
-
-      .btn-sm {
-        color: white;
-        width: 120px;
-        height: 35px;
-        cursor: pointer;
-        outline: none;
-        border: 0px;
-        font-size: 15px;
-        border-radius: 5px;
-        margin: 5px;
-        background-color: #ffbb00;
-      }
-
-      .btn-w {
-        width: fit-content;
-        font-size: 18px;
-        height: 40px;
-      }
-
-      .btn:hover {
-        opacity: 0.8;
-      }
-      .-bx {
-        box-shadow: 0px 0px 5px #e4e2e2;
-      }
-
-      .ldr {
+      .btn {
         margin: 20px 0px;
+      }
+      @media screen and (max-width: 768px) {
+        .-is,
+        .btn {
+          width: 80vw;
+        }
       }
     </style>
     <script>
@@ -165,49 +41,7 @@
       });
     </script>
   </head>
-
   <body>
-    <!--pop up-->
-    <div id="pop-up-overlay"></div>
-    <div class="popup">
-      <button class="close-pp" onclick="imageDialogClose()">x</button>
-      <div class="pp-content">
-        <form id="-edit-a" autocomplete="off">
-          <b>Please Help Us with your First Address</b>
-          <br />
-          <div class="_cad">
-            <select
-              name=""
-              id="location"
-              class="-is ca _ad select"
-              style="width: 250px"
-            >
-              <option value="" hidden>Select Your Residence/Location</option>
-            </select>
-          </div>
-          <div class="_cad">
-            <label for="">Your Zone</label>
-            <br />
-            <input
-              placeholder="Zone"
-              type="text"
-              name=""
-              id="zone"
-              class="-is cz"
-              style="width: 250px"
-              readonly
-            />
-          </div>
-          <label for="other-a">Other:</label>
-          <input type="text" name="" id="other-a" placeholder="(Specify)" />
-          <div class="loader">
-            <i class="fas fa-spinner fa-spin"></i>
-          </div>
-          <button type="submit" class="-btn-a-d">SUBMIT</button>
-        </form>
-      </div>
-    </div>
-    <!--pop up-->
     <div id="sidenav">
       <span class="-c-side" style="font-size: 35px">&times;</span>
       <ul class="s-n-1">
@@ -273,7 +107,7 @@
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="/">
+          <a href="">
             <i class="fas fa-layer-group ctg-icon"></i>
             All Items
           </a>
@@ -419,25 +253,25 @@
             <i class="fas fa-chevron-down chev-acc"></i>
           </button>
           <ul class="-help-list -acc-l">
-            <a href="./account/profile">
+            <a href="../account/profile">
               <li class="-help">
                 <i class="far fa-user"></i>
                 My Profile
               </li>
             </a>
-            <a href="./cart">
+            <a href="../cart">
               <li class="-help">
                 <i class="fas fa-shopping-cart"></i>
                 My Cart
               </li>
             </a>
-            <a href="./account/orders">
+            <a href="../account/orders">
               <li class="-help">
                 <i class="fas fa-gift"></i>
                 My Orders
               </li>
             </a>
-            <a href="./account/edit">
+            <a href="../account/edit">
               <li class="-help">
                 <i class="fas fa-user-edit"></i>
                 Edit Profile
@@ -488,19 +322,46 @@
         </button>
       </form>
     </div>
-    <div class="cr-m-ctr">
-      <div class="cr-ctr">
-        <form class="-confirm-ctr" id="-code-ctr">
-          <br />
-          <h3>Now, lets confirm Your Email</h3>
-          <br />
-          <p>Enter the digit code sent to your Email</p>
-          <br />
-          <input type="text" class="-is" id="-code" autocomplete="off" />
-          <br />
-          <button class="btn btn-sm">Submit</button>
-        </form>
-        <div class="-ldr -confirm-ctr"></div>
+    <div class="ctr-main">
+      <div class="hp-ctr">
+        <div class="hp-image">
+          <img
+            src="../resources/image-slider/slider-image-1.jpg"
+            alt=""
+            width="100%"
+            height="100%"
+          />
+        </div>
+        <div class="heading">
+          <div class="hdr-req-1">DESCRIBE YOUR REQUEST</div>
+        </div>
+        <div class="form-req">
+          <form id="_req">
+            <div class="_input">
+              <label for="_req">Name of Item</label><br />
+              <input type="text" class="-is" />
+            </div>
+            <div class="_input">
+              <label for="_description">Description</label>
+              <br />
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="10"
+                class="-is"
+              ></textarea>
+            </div>
+            <div class="_input">
+              <label for="_price">Estimated Price</label>
+              <br />
+              <input type="number" class="-is" />
+            </div>
+            <div class="_input">
+              <button type="submit" class="btn">Send Request</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <footer class="footer">
@@ -631,101 +492,12 @@
         </div>
       </div>
     </footer>
-    <!--scripts-->
 
+    <!--scripts-->
     <script>
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
-
-      let fm = document.querySelector("#-code-ctr");
-      fm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let _cu = { fn: document.querySelector("#-code").value };
-
-        xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState < 4) {
-            document.querySelector(
-              ".-ldr"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x"></i>`;
-          }
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            if (xhr.responseText != "nm") {
-              document.querySelector("#-code-ctr").style.opacity = "0.3";
-              document.querySelector("#-code-ctr").style.pointerEvents = "none";
-              imageDialog();
-              localStorage.setItem(
-                "https://yammieshoppers.com/useLocalStorage/Storage",
-                xhr.responseText
-              );
-              document.querySelector(".-ldr").innerHTML = `
-                        <br>
-                            <i class="far fa-check-circle fa-2x" style="color:green"></i>
-                        <br>
-                            <h4 style="text-align: center;">
-                                CONGRATULATIONS!
-                            </h4>
-                            <br> 
-                            <h5>
-                                Your Account has been Created Successfully!!
-                            <h5>
-                        <br>
-                        <a href="/">
-                            <button class="btn btn-sm btn-w">
-                                Let's Start Here <i class="fas fa-arrow-right"></i>    
-                            </button>
-                        </a>
-                        `;
-              document
-                .querySelector("#-edit-a")
-                .addEventListener("submit", (e) => {
-                  e.preventDefault();
-                  let _add = {};
-                  _add.zone =
-                    document.querySelector("#zone").value || "No Zone";
-                  _add.add =
-                    (document.querySelector("#location").value != "Not Included"
-                      ? document.querySelector("#location").value
-                      : document.querySelector("#other").value) ||
-                    document.querySelector("#other").value;
-                  _hr = new XMLHttpRequest();
-                  _hr.onreadystatechange = () => {
-                    if (_hr.readyState < 4) {
-                      document.querySelector(".loader").style.display = "block";
-                    }
-                    if (_hr.readyState == 4 && _hr.status == 200) {
-                      if (_hr.responseText == "Changed") {
-                        imageDialogClose();
-                      }
-                    }
-                  };
-                  _hr.open(
-                    "POST",
-                    `/api/user/account/address/edit/${xhr.responseText}`,
-                    true
-                  );
-                  _hr.setRequestHeader("Content-type", "application/json");
-                  _hr.send(JSON.stringify(_add));
-                });
-            } else {
-              document.querySelector(".-ldr").innerHTML = `
-                        <h5>
-                            The code did not Match Try Again!!
-                        <h5>
-                        `;
-            }
-          }
-
-          if (xhr.status != 200 && xhr.readyState == 4 && xhr.status != 400) {
-            window.alert("An Error Occurred...");
-          }
-        };
-        xhr.open("POST", "/api/user/customer/confirm", true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.send(JSON.stringify(_cu));
-      });
-      //form end
     </script>
     <script>
       let yammieUsr = "";
@@ -811,6 +583,16 @@
           document.querySelector(".-hlp").style.display = "none";
         }, 200);
       });
+    </script>
+    <script>
+      document.querySelector("#logout").addEventListener("click", () => {
+        localStorage.removeItem(
+          "https://yammieshoppers.com/useLocalStorage/Storage"
+        );
+        window.location.assign("/");
+      });
+      //comment
+
       document
         .querySelector("#user_comment")
         .addEventListener("submit", (e) => {
@@ -839,52 +621,7 @@
           };
         });
     </script>
-    <script>
-      // pop-up below
-      function imageDialog() {
-        document.querySelector(".popup").classList.add("pp-active");
-        document.querySelector("#pop-up-overlay").classList.add("active");
-      }
-      function imageDialogClose() {
-        document.querySelector(".popup").classList.remove("pp-active");
-        document.querySelector("#pop-up-overlay").classList.remove("active");
-      }
-      // pop-up end
-      // edit
-      function _cz(url, _r) {
-        _r.open("GET", url, true);
-        _r.send();
-        _r.onreadystatechange = () => {
-          if (_r.readyState == 4 && _r.status == 200) {
-            let _add = JSON.parse(_r.responseText);
-            _add.forEach((add) => {
-              document.querySelector(
-                ".select"
-              ).innerHTML += `<option value="${add.address_name}">${add.address_name}</option>`;
-            });
-            function _ca(i, z) {
-              i.addEventListener("change", (e) => {
-                let _q = new XMLHttpRequest();
-                _q.open("GET", "/api/admin/getZone", true);
-                _q.send();
-                _q.onreadystatechange = () => {
-                  if (_q.readyState == 4 && _q.status == 200) {
-                    let _zone = JSON.parse(_q.responseText);
-                    z.value = _zone.find(
-                      (zone) =>
-                        _add.find((item) => item.address_name == i.value)
-                          .zone_id == zone.zone_id
-                    ).zone_name;
-                  }
-                };
-              });
-            }
-            _ca(document.querySelector(".ca"), document.querySelector(".cz"));
-          }
-        };
-      }
-      _cz("/api/admin/getAddresses", new XMLHttpRequest());
-    </script>
+    <script src="../ym.min.js"></script>
     <!--scripts-->
   </body>
 </html>

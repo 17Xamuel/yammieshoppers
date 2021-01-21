@@ -96,7 +96,7 @@
 }
 .footer-list > li {
   margin-top: 10px;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .footer-list > .second-list {
   margin-top: 10px;

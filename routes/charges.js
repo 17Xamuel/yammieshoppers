@@ -41,34 +41,34 @@ class Deduct {
   userLocation() {
     let delivery = 0;
     switch (this.product.user) {
-      case "Keturah Zone":
+      case "Keturah":
         delivery = this.product.price * 0.002;
         break;
-      case "Royal Zone":
+      case "Royal":
         delivery = this.product.price * 0.002;
         break;
-      case "Maisha Zone":
+      case "Maisha":
         delivery = this.product.price * 0.0001;
         break;
-      case "Pioneer Zone":
+      case "Pioneer":
         delivery = this.product.price * 0.001;
         break;
-      case "Washington Zone":
+      case "Washington":
         delivery = this.product.price * 0.0015;
         break;
-      case "St. Peters Zone":
+      case "St. Peters":
         delivery = this.product.price * 0.002;
         break;
-      case "Pacuwa Zone":
+      case "Pacuwa":
         delivery = this.product.price * 0.0025;
         break;
-      case "Northern Elite Zone":
+      case "Northern Elite":
         delivery = this.product.price * 0.001;
         break;
-      case "Jeremiah Zone":
+      case "Jeremiah":
         delivery = this.product.price * 0.0015;
         break;
-      case "Hospital Side":
+      case "Hospital":
         delivery = this.product.price * 0.002;
         break;
       case "Management Sciences":
@@ -114,15 +114,16 @@ class Deduct {
     }
     return index;
   }
-  round(i) {
-    if (i % 10 != 0 || (i / 10) % 10 != 0) {
-      return parseInt(i / 100) * 100 + 100;
-    } else {
-      return i;
-    }
-  }
+  // round(i) {
+  //   if (i % 10 != 0 || (i / 10) % 10 != 0) {
+  //     return parseInt(i / 100) * 100 + 100;
+  //   } else {
+  //     return i;
+  //   }
+  // }
   get price() {
-    return this.round(this.product.price);
+    // return this.round(this.product.price);
+    return this.product.price;
   }
   get total() {
     if (
@@ -130,9 +131,11 @@ class Deduct {
       this.product.price < 25000 &&
       this.product.location == "lira"
     ) {
-      return this.round(parseInt(0.05 * this.product.price + this.index()));
+      return parseInt(0.05 * this.product.price + this.index());
+      // return this.round(parseInt(0.05 * this.product.price + this.index()));
     } else {
-      return this.round(parseInt(this.index()));
+      return parseInt(this.index());
+      // return this.round(parseInt(this.index()));
     }
   }
 }

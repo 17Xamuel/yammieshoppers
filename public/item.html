@@ -729,8 +729,19 @@
       }
       // pop-up end
       //get data
-      let urlParams = new URLSearchParams(window.location.search);
-
+      let _item = new URLSearchParams(window.location.search).get("item");
+      if (localStorage.getItem("_rv")) {
+        _rv = JSON.parse(localStorage.getItem("_rv"));
+        if (
+          !_rv.find((item) => {
+            item == _item;
+          })
+        ) {
+          _rv.push(_item);
+        }
+      } else {
+        localStorage.setItem("_rv", JSON.stringify([_item]));
+      }
       //get data end
     </script>
     <script>

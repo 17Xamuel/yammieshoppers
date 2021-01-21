@@ -258,18 +258,19 @@ input[type="range"]::-webkit-slider-thumb {
 /* one item end*/
 /*no data */
 .no-itms {
-  /* background-color: #fff; */
+  border-radius: 5px;
+  background-color: #fff;
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
   margin-bottom: 25px;
 }
-.no-itms > span {
+.no-itms > div {
   font-size: 20px;
 }
 #ctlg-rq-btn {
-  width: 45%;
+  width: 200px;
   margin: 5px 25px;
   padding: 15px 0px;
   font-size: 20px;

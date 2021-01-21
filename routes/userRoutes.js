@@ -143,8 +143,56 @@ router.get("/search/:l-:h", async (req, res) => {
         ? "SELECT * FROM products"
         : `SELECT * FROM products 
           WHERE product LIKE '%${query}%'
-            OR description LIKE '%${query}%'`;
+            OR description LIKE '%${query}%'
+            OR subcategory LIKE '%${query}%'`;
+
     conn.query(_query, (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        if (req.params.l == "min") {
+          res.send(result);
+        } else {
+          if (parseInt(req.params.h) > 1) {
+            let newResult = result
+              .filter((item) => item.price >= parseInt(req.params.l))
+              .filter((item) => item.price <= parseInt(req.params.h));
+            if (newResult.length == 0) {
+              res.send([]);
+            } else {
+              res.send(newResult);
+            }
+          } else {
+            let newResult = result
+              .filter((item) => item.discount >= parseFloat(req.params.l) * 100)
+              .filter(
+                (item) => item.discount <= parseFloat(req.params.h) * 100
+              );
+
+            if (newResult.length == 0) {
+              res.send([]);
+            } else {
+              res.send(newResult);
+            }
+          }
+        }
+      }
+    });
+  }
+});
+router.get("/ct/search/:l-:h", async (req, res) => {
+  let query = req.query.q;
+  let patt = /\W/g;
+  let checkQuery = patt.test(query);
+  if (checkQuery == true) {
+    res.send([]);
+    return;
+  } else {
+    let _query = `SELECT * FROM products 
+          WHERE category = ?
+           `;
+
+    conn.query(_query, query, (err, result) => {
       if (err) {
         throw err;
       } else {
@@ -209,15 +257,14 @@ router.get("/customer/:id", (req, res) => {
     }
   );
 });
+
 router.post("/customer/cart/amount/:id", (req, res) => {
-  console.log(req.body);
-  console.log(req.body[2]);
-  console.log(typeof req.body[2]);
   conn.query(
     "UPDATE customers SET ? where c_id = ?",
     [
       {
-        c_cart_amount: req.body[0],
+        c_cart_amount:
+          typeof req.body[0] == "string" ? parseInt(req.body[0]) : req.body[0],
         c_cart: req.body[2],
         c_cart_number: req.body[3],
       },
@@ -397,14 +444,35 @@ router.post("/customer/order", async (req, res) => {
 });
 //trending category items
 // route-->/category/category(name)/nature(trending, headsets,..etc)
-function category(ct, nature, res) {
-  conn.query(`SELECT * FROM products`, (err, result) => {
-    if (err) {
-      throw err;
-    } else {
-      res.send(result);
+function category(ct, sbct, res) {
+  let req;
+  if (sbct == "trending") {
+    req = "14";
+  } else if (sbct == "recommendedforyou") {
+    req = "20";
+  } else if (sbct == "gascookers") {
+    req = "20";
+  } else if (sbct == "recentlyviewed") {
+    req = "20";
+  } else if (sbct == "phoneaccessories") {
+    req = "14";
+  } else if (sbct == "rv") {
+    req = "14";
+  } else if (sbct == "rec") {
+    req = "14";
+  } else {
+    req = sbct;
+  }
+  conn.query(
+    `SELECT * FROM products WHERE subcategory = ${req}`,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result);
+      }
     }
-  });
+  );
 }
 router.get("/ct/:ct/:nature", (req, res) => {
   category(req.params.ct, req.params.nature, res);
@@ -503,7 +571,6 @@ router.post("/customer/cart/:id", (req, res) => {
     typeof req.body.cartNumber == "string"
       ? parseInt(req.body.cartNumber)
       : req.body.cartNumber;
-
   conn.query(
     `SELECT c_cart,c_cart_number FROM customers WHERE c_id = ?`,
     req.params.id,
@@ -639,12 +706,12 @@ router.post("/checkout/cart/:id", (req, res) => {
                     ? (result_0[0].price * (100 - result_0[0].discount)) / 100
                     : result_0[0].price,
                   qty: key.inCartNumber < 4 ? "few" : "many",
-                  urgent: req.body.urgent || true,
+                  urgent: (req.body.urgent == "false" ? false : true) || true,
                   size: product.Size || "small",
                   fragile: (product.Fragile == "Yes" ? true : false) || false,
                   location: "Lira",
                   weight: product.Weight || "Light",
-                  user: req.body._add == true ? result[0].zone : req.body._add,
+                  user: result[0].zone,
                 };
 
                 let fee = new charge(charge_obj).total;
