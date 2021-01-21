@@ -187,9 +187,7 @@
               <div class="col-xl-10 mx-auto my-5">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h5 class="text-info text-center">
-                      Product Number: <span id="number"></span>
-                    </h5>
+                    <h5 class="text-info text-center">Product Details</h5>
                     <table class="table text-left">
                       <tbody>
                         <tr>
@@ -211,7 +209,7 @@
                         </tr>
 
                         <tr>
-                          <td>Date Added:<span id="date"></span></td>
+                          <td>Net Weight: <span id="netW"></span></td>
                           <td>Fragile:<span id="frag"></span></td>
                         </tr>
 
@@ -232,9 +230,6 @@
                         <tr>
                           <td>Type of Product:<span id="types"></span></td>
                           <td>Number of Sales: <span id="nsales"></span></td>
-                        </tr>
-                        <tr>
-                          <td>Net Weight: <span id="netW"></span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -336,11 +331,6 @@
           document.getElementById("cat").innerHTML = outcome.category_name;
           document.getElementById("sct").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
-          document.getElementById("date").innerHTML = outcome.dateAdded.slice(
-            0,
-            10
-          );
-
           document.getElementById("netp").innerHTML =
             parseInt(outcome.price - (outcome.discount / 100) * outcome.price) +
             " UGX";
@@ -350,7 +340,6 @@
           document.getElementById("sname").innerHTML = outcome.username;
           document.getElementById("scontact").innerHTML = outcome.phonenumber;
           let specify = JSON.parse(outcome.specifications);
-          document.getElementById("number").innerHTML = specify.Number;
           document.getElementById("brand").innerHTML = specify.Brand || null;
           document.getElementById("frag").innerHTML = specify.Fragile;
           document.getElementById("size").innerHTML = specify.Size;

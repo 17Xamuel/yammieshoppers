@@ -229,7 +229,7 @@
                       <i class="fas fa-shopping-cart fa-3x text-danger"></i>
                       <div class="text-right text-secondary">
                         <h4>Sales</h4>
-                        <h5 id="sal"></h5>
+                        <h5 class="sal"></h5>
                       </div>
                     </div>
                   </div>
@@ -284,6 +284,10 @@
                       <tr>
                         <td>Pending Orders</td>
                         <td class="opending"></td>
+                      </tr>
+                      <tr>
+                        <td>Completed Orders</td>
+                        <td class="sal"></td>
                       </tr>
                     </table>
                   </div>
@@ -476,17 +480,23 @@
 
       const sale = new XMLHttpRequest();
       sale.onreadystatechange = () => {
+        let salings = document.querySelectorAll(".sal");
         if (sale.readyState < 4) {
-          document.getElementById(
-            "sal"
-          ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
+          salings.forEach((saling) => {
+            saling.innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
+          });
         }
         if (sale.readyState == 4 && sale.status == 200) {
           let [qty] = JSON.parse(sale.responseText);
+
           if (!qty.Qty) {
-            document.getElementById("sal").innerHTML = 0;
+            salings.forEach((saling) => {
+              saling.innerHTML = 0;
+            });
           } else {
-            document.getElementById("sal").innerHTML = qty.Qty;
+            salings.forEach((saling) => {
+              saling.innerHTML = qty.Qty;
+            });
           }
         }
       };

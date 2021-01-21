@@ -92,13 +92,6 @@
                   >
                 </li>
 
-                <li class="nav-item">
-                  <a
-                    href="profile"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
-                  >
-                </li>
                 <li class="nav-item current">
                   <a
                     href="products.html"
@@ -113,6 +106,13 @@
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
                     >Uploads</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    href="profile"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                    ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
                   >
                 </li>
               </ul>
@@ -195,9 +195,7 @@
               <div class="col-xl-10 mx-auto">
                 <div class="card rounded my-5">
                   <div class="card-body">
-                    <h5 class="text-info text-center">
-                      Product Number: <span id="number"></span>
-                    </h5>
+                    <h5 class="text-info text-center">Product Details</h5>
 
                     <table class="table text-left">
                       <tbody>
@@ -220,7 +218,7 @@
                         </tr>
 
                         <tr>
-                          <td>Date Added:<span id="date"></span></td>
+                          <td>Net Weight: <span id="netW"></span></td>
                           <td>Fragile:<span id="frag"></span></td>
                         </tr>
 
@@ -241,9 +239,6 @@
                         <tr>
                           <td>Type of Product:<span id="types"></span></td>
                           <td>No of Sales:<span id="nsales"></span></td>
-                        </tr>
-                        <tr>
-                          <td>Net Weight: <span id="netW"></span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -302,7 +297,7 @@
             <h5 class="modal-title">Edit Product</h5>
           </div>
           <div class="modal-body text-center">
-            Want to Edit this Product? Press OK to Continue
+            Want to Edit this Product Details? Press OK to Continue
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-success btn-sm" id="edit">
@@ -472,10 +467,6 @@
           document.getElementById("cat").innerHTML = outcome.category_name;
           document.getElementById("scat").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
-          document.getElementById("date").innerHTML = outcome.dateAdded.slice(
-            0,
-            10
-          );
 
           document.getElementById("netp").innerHTML =
             parseInt(outcome.price - (outcome.discount / 100) * outcome.price) +
@@ -486,7 +477,6 @@
           document.getElementById("sname").innerHTML = outcome.username;
           document.getElementById("contact").innerHTML = outcome.phonenumber;
           let specify = JSON.parse(outcome.specifications);
-          document.getElementById("number").innerHTML = specify.Number;
           document.getElementById("brand").innerHTML =
             specify.Brand || "Not specified";
           document.getElementById("frag").innerHTML = specify.Fragile;
@@ -505,7 +495,7 @@
           for (i = 0; i < images.length; i++) {
             data += `
               <li class="list-inline-item">
-                <img src="${images[i]}" width="100" height="100"/>
+                <img src="${images[i]}" width="150" height="150"/>
                 </li>`;
           }
           document.getElementById("-img").innerHTML = data;

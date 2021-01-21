@@ -26,7 +26,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
 });
 
 // Change bucket property to your Space name
@@ -38,8 +38,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      },
-    }),
+      }
+    })
   }).array("images");
   return upload;
 }
@@ -79,13 +79,11 @@ app.post("/addProduct", async (req, res) => {
       color,
       weight,
       fragility,
-      specification,
       dimensions,
       size,
       typeOfProduct,
-      netWeight,
+      netWeight
     } = req.body;
-    let code = Math.floor(Math.random() * 1000000 + 1).toString();
     conn.query(
       `SELECT subcategory_id,category_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
       (error, result) => {
@@ -103,10 +101,7 @@ app.post("/addProduct", async (req, res) => {
             images: path,
             seller_id: seller_id,
             detailedDescription,
-            quantity: quantity,
             specifications: JSON.stringify({
-              dateAdded: new Date(),
-              Number: code,
               Brand: brand || null,
               Color: color || null,
               Weight: weight,
@@ -114,8 +109,8 @@ app.post("/addProduct", async (req, res) => {
               Dimensions: dimensions || null,
               Size: size,
               TypeOfProduct: typeOfProduct,
-              NetWeight: netWeight || null,
-            }),
+              NetWeight: netWeight || null
+            })
           },
           (err, results) => {
             if (err) {
@@ -148,6 +143,72 @@ app.delete("/deleteProduct/:id", async (req, res) => {
   );
 });
 
+app.post("/editAndConfirm", async (req, res) => {
+  let {
+    id,
+    product,
+    price,
+    description,
+    subcategory,
+    discount,
+    seller_id,
+    quantity,
+    detailedDescription,
+    brand,
+    color,
+    weight,
+    fragility,
+    dimensions,
+    size,
+    typeOfProduct,
+    netWeight
+  } = req.body;
+
+  conn.query(
+    `SELECT images FROM pending_products WHERE id=?`,
+    [id],
+    async (err, result) => {
+      if (err) throw err;
+      conn.query(
+        `INSERT INTO products SET ?`,
+        {
+          id: id,
+          product: product,
+          price: price,
+          description: description,
+          subcategory: subcategory,
+          discount: discount,
+          images: JSON.stringify(result[0].images),
+          seller_id: seller_id,
+          quantity: quantity,
+          detailedDescription,
+          specifications: JSON.stringify({
+            Brand: brand || null,
+            Color: color || null,
+            Weight: weight,
+            Fragile: fragility,
+            Dimensions: dimensions || null,
+            Size: size,
+            TypeOfProduct: typeOfProduct,
+            NetWeight: netWeight || null
+          })
+        },
+        (error, results) => {
+          if (error) throw error;
+          conn.query(
+            `DELETE FROM pending_products WHERE id=?`,
+            [id],
+            (err1, res1) => {
+              if (err1) throw err1;
+              res.redirect("./admin/products.html");
+            }
+          );
+        }
+      );
+    }
+  );
+});
+
 app.post("/addImages", async (req, res) => {
   let imageId = uuid.v4();
   let uploading = getUpload(imageId);
@@ -164,11 +225,76 @@ app.post("/addImages", async (req, res) => {
       {
         image_id: imageId,
         image_path: pathing,
-        destination: Uploads,
+        destination: Uploads
       },
       (error, results) => {
         if (error) throw error;
         res.redirect("./admin/upload.html");
+      }
+    );
+  });
+});
+
+app.post("/edit", async (req, res) => {
+  let {
+    id,
+    product,
+    price,
+    description,
+    subcategory,
+    discount,
+    seller_id,
+    quantity,
+    detailedDescription,
+    brand,
+    color,
+    weight,
+    fragility,
+    dimensions,
+    size,
+    typeOfProduct,
+    netWeight
+  } = req.body;
+
+  let newSpecification = JSON.stringify({
+    Brand: brand || null,
+    Color: color || null,
+    Weight: weight,
+    Fragile: fragility,
+    Dimensions: dimensions || null,
+    Size: size,
+    TypeOfProduct: typeOfProduct,
+    NetWeight: netWeight || null
+  });
+
+  conn.query(
+    `UPDATE products SET product='${product}', price=${price},description='${description}',
+        subcategory=${subcategory},discount=${discount},seller_id='${seller_id}',quantity=${quantity}, 
+        detailedDescription='${detailedDescription}',specifications='${newSpecification}' WHERE id=?`,
+    [id],
+    (err1, res1) => {
+      if (err1) throw err1;
+      res.redirect("./admin/products.html");
+    }
+  );
+});
+
+app.post("/addSubcategoryImage", async (req, res) => {
+  let upload = getUpload(uuid.v4());
+  upload(req, res, (err) => {
+    if (err) throw err;
+    let image = [];
+    req.files.forEach((file) => {
+      image.push("https://yammie.nyc3.ondigitaloceanspaces.com/" + file.key);
+    });
+    let path = JSON.stringify(image);
+    let { subCategoryName } = req.body;
+    conn.query(
+      `UPDATE subCategories SET image='${path}' WHERE subCategoryName = ?`,
+      [subCategoryName.replace(/_/g, " ")],
+      (err, results) => {
+        if (err) throw err;
+        res.redirect("./admin/products.html");
       }
     );
   });

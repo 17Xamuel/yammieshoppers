@@ -111,59 +111,36 @@ router.post("/confirmEmail", async (req, res) => {
   }
 });
 
-try {
-  router.post("/loginSeller", async (req, res) => {
-    let { email, password } = req.body;
-    if (email.length <= 0 || password.length <= 0) {
-      return res.send("All fields are required");
-    }
-    conn.query(
-      "SELECT email FROM sellers WHERE  email=?",
-      [email],
-      async (err, results) => {
-        if (results.length == 0) {
-          return res.send(`Incorrect Email or Password`);
-        } else {
-          conn.query(
-            "SELECT * FROM sellers WHERE email=?",
-            [email],
-            async (err, result) => {
-              if (err) throw err;
-              if (
-                !result ||
-                !(await bycrpt.compare(password, result[0].password))
-              ) {
-                return res.send("Incorrect Email or Password");
-              } else {
-                conn.query(
-                  "SELECT * FROM sellers WHERE email=?",
-                  [email],
-                  async (err, result) => {
-                    if (
-                      result &&
-                      (await bycrpt.compare(password, result[0].password))
-                    ) {
-                      conn.query(
-                        "SELECT id,username,email,phonenumber,location,category,businessname FROM sellers WHERE email=?",
-                        [email],
-                        async (err, results) => {
-                          if (err) throw err;
-                          res.json(results);
-                        }
-                      );
-                    }
-                  }
-                );
-              }
-            }
-          );
+router.post("/loginSeller", async (req, res) => {
+  let { email, password } = req.body;
+  if (email.length == 0 || password.length == 0) {
+    return res.send("All fields are required");
+  }
+  conn.query(
+    `SELECT * FROM sellers WHERE email=?`,
+    [email],
+    async (err1, res1) => {
+      if (err1) throw err1;
+      if (res1.length == 0) {
+        return res.send("Incorrect Email or Password");
+      } else if (res1.length > 0) {
+        if (res1[0].seller_status == "Pending") {
+          return res.send("Wait for Admin Approval to Login");
+        } else if (res1[0].seller_status == "Approved") {
+          if (!res1 || !(await bycrpt.compare(password, res1[0].password))) {
+            return res.send("Incorrect Email or Password");
+          } else if (
+            res1 &&
+            (await bycrpt.compare(password, res1[0].password))
+          ) {
+            res.send(res1);
+          }
         }
       }
-    );
-  });
-} catch (error) {
-  console.log(error);
-}
+    }
+  );
+});
+
 router.get("/getPendingProducts/:id", async (req, res) => {
   conn.query(
     "SELECT * FROM pending_products WHERE seller_id=?",
@@ -174,6 +151,7 @@ router.get("/getPendingProducts/:id", async (req, res) => {
     }
   );
 });
+
 router.get("/getApprovedProducts/:id", async (req, res) => {
   conn.query(
     "SELECT * FROM products WHERE seller_id=?",
@@ -184,6 +162,7 @@ router.get("/getApprovedProducts/:id", async (req, res) => {
     }
   );
 });
+
 router.get("/items/:id", async (req, res) => {
   conn.query(
     "SELECT * FROM products WHERE seller_id=?",
@@ -212,7 +191,7 @@ router.get("/totalProducts/:id", async (req, res) => {
     [req.params.id],
     (err, result) => {
       if (err) {
-        throw err;
+        console.log(err);
       } else {
         conn.query(
           "SELECT * FROM pending_products WHERE seller_id=?",

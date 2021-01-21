@@ -535,6 +535,40 @@
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <h4 class="text-muted mb-3 text-center">
+                      Finished Orders <span id="fon"></span>
+                    </h4>
+                    <div class="table-responsive">
+                      <table class="table table-striped bg-light text-center">
+                        <thead>
+                          <tr class="text-muted">
+                            <th>OrderNumber</th>
+                            <th>OrderAmount</th>
+                            <th>Details</th>
+                          </tr>
+                        </thead>
+                        <tbody id="fOrders"></tbody>
+                      </table>
+                    </div>
+
+                    <div id="forderLoading" class="text-center"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- End Tables -->
 
     <!-- Comments -->
@@ -925,6 +959,9 @@
           });
           document.getElementById("sellerRequests").innerHTML = row;
           if (`${pendingSellers.length}` == 0) {
+            document.getElementById(
+              "seln"
+            ).innerHTML = `(${pendingSellers.length})`;
             document.getElementById("sellerLoading").innerHTML =
               "No seller found";
           } else {
@@ -1038,13 +1075,10 @@
         }
         if (orders.status == 200 && orders.readyState == 4) {
           let pendingOrders = JSON.parse(orders.responseText);
-          if (`${pendingOrders.length}` == 0) {
-            document.getElementById("orderLoading").innerHTML =
-              "No Pending Order found";
-          } else {
-            let row = "";
-            pendingOrders.forEach((pendingOrder) => {
-              row += `<tr>
+
+          let row = "";
+          pendingOrders.forEach((pendingOrder) => {
+            row += `<tr>
        <td>${pendingOrder.order_number}</td>
        <td>${pendingOrder.order_amount}</td>
        <td>
@@ -1054,10 +1088,10 @@
          </button></a>
        </td>
      </tr>`;
-            });
-            document.getElementById("pendingOrders").innerHTML = row;
-            document.getElementById("orderLoading").innerHTML = "";
-          }
+          });
+          document.getElementById("pendingOrders").innerHTML = row;
+          document.getElementById("on").innerHTML = `(${pendingOrders.length})`;
+          document.getElementById("orderLoading").innerHTML = "";
         }
       };
       orders.open("GET", "/api/admin/pendingOrders", true);
@@ -1110,6 +1144,40 @@
         search.open("GET", `/api/admin/orderSearch/${number}`, true);
         search.send();
       });
+
+      const fOrder = new XMLHttpRequest();
+      fOrder.onreadystatechange = () => {
+        if (fOrder.readyState < 4) {
+          document.getElementById(
+            "forderLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (fOrder.readyState == 4 && fOrder.status == 200) {
+          let outcomes = JSON.parse(fOrder.responseText);
+          let row = "";
+          outcomes.forEach((outcome) => {
+            row += `<tr>
+       <td>${outcome.order_number}</td>
+       <td>${outcome.order_amount}</td>
+       <td>
+       <a href="order?order=${outcome.order_id}">
+         <button type="button" class="btn btn-info btn-sm">
+           Details
+         </button></a>
+       </td>
+     </tr>`;
+          });
+          document.getElementById("fOrders").innerHTML = row;
+          document.getElementById("fon").innerHTML = `(${outcomes.length})`;
+          if (`${outcomes.length}` == 0) {
+            document.getElementById("forderLoading").innerHTML =
+              "No finished Order Found";
+          }
+          document.getElementById("forderLoading").innerHTML = "";
+        }
+      };
+      fOrder.open("GET", `/api/admin/getFinishedOrders`, true);
+      fOrder.send();
 
       let addZone = document.getElementById("zone-form");
       addZone.addEventListener("submit", (e) => {

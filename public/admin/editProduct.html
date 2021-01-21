@@ -42,6 +42,41 @@
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
+    <style>
+      .product_pic {
+        border-radius: 50%;
+        height: 150px;
+        width: 150px;
+        background-size: cover;
+        background-position: center;
+        background-blend-mode: multiply;
+        vertical-align: middle;
+        text-align: center;
+        color: transparent;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .product_pic:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 10000;
+        color: #fff;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      .product_pic span {
+        display: inline-block;
+        padding-top: 4.5em;
+        padding-bottom: 4.5em;
+      }
+
+      input[type="file"] {
+        display: none;
+        cursor: pointer;
+      }
+    </style>
   </head>
 
   <body class="bg-light">
@@ -198,12 +233,7 @@
             <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-10 m-auto">
                 <h4 class="text-center m-3">Edit Product</h4>
-                <form
-                  action="#"
-                  method="POST"
-                  enctype="multipart/form-data"
-                  id="editting"
-                >
+                <form action="/editAndConfirm" method="POST">
                   <div class="form-row">
                     <div class="form-group col-md-6">
                       <label for="productname">Product Name</label>
@@ -273,26 +303,24 @@
 
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="category">Select Category</label>
-                      <select
-                        class="form-control catSelection"
-                        required=""
+                      <label for="category">Category</label>
+                      <input
+                        class="form-control"
+                        required
                         name="category"
+                        placeholder="Category"
                         id="category"
-                      >
-                        <option value="">Please Select a Category</option>
-                      </select>
+                      />
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="subcategory"
-                        >Sub Category <span id="sub"></span
-                      ></label>
-                      <select
+                      <label for="subcategory">Sub Category</label>
+                      <input
                         class="form-control"
-                        required=""
+                        placeholder="SubCategory"
+                        required
                         id="subCat"
-                        name="subcategory"
-                      ></select>
+                        type="text"
+                      />
                     </div>
                   </div>
 
@@ -300,29 +328,26 @@
 
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label>What should the customer Expect(Select)</label>
-                      <select
-                        name="typeOfProduct"
+                      <label>What should the customer Expect</label>
+                      <input
+                        type="text"
                         class="form-control"
+                        placeholder="Carriage/Freight/Parcel"
+                        name="typeOfProduct"
                         required
                         id="customerExpect"
-                      >
-                        <option value="Carriage">Carriage</option>
-                        <option value="Parcel">Parcel</option>
-                        <option value="Freight">Freight</option>
-                      </select>
+                      />
                     </div>
                     <div class="form-group col-md-6">
-                      <label for="Size">Product Size(Select)</label>
-                      <select
-                        name="size"
+                      <label for="Size">Product Size</label>
+                      <input
+                        type="text"
+                        placeholder="Big or Small"
                         class="form-control"
+                        name="size"
                         required
                         id="size"
-                      >
-                        <option value="Big">Big</option>
-                        <option value="Small">Small</option>
-                      </select>
+                      />
                     </div>
                   </div>
                   <br />
@@ -351,15 +376,14 @@
                     </div>
                     <div class="form-group col-md-4">
                       <label for="Weight">Weight</label>
-                      <select
-                        class="form-control"
+                      <input
+                        placeholder="Light or Heavy"
+                        type="text"
                         name="weight"
-                        required
                         id="weight"
-                      >
-                        <option value="Heavy">Heavy</option>
-                        <option value="Light">Light</option>
-                      </select>
+                        class="form-control"
+                        required
+                      />
                     </div>
                   </div>
                   <br />
@@ -379,17 +403,16 @@
                     </div>
                     <div class="form-group col-md-6">
                       <label for="Fragility"
-                        >Is the Product Easily Broken?(Select)</label
+                        >Is the Product Easily Broken?(Fragility)</label
                       >
-                      <select
-                        name="fragility"
+                      <input
+                        type="text"
+                        placeholder="Yes or No"
                         class="form-control"
+                        name="fragility"
                         required
                         id="fragility"
-                      >
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </select>
+                      />
                     </div>
                   </div>
 
@@ -402,6 +425,7 @@
                         placeholder="Enter Net Weight"
                         name="netWeight"
                         id="netWeight"
+                        autocomplete="off"
                       />
                     </div>
                   </div>
@@ -424,6 +448,32 @@
                   <br />
 
                   <div class="row">
+                    <div class="col-xl-3 col-sm-6">
+                      <label for="fileToUpload">
+                        <div class="product_pic" id="img1"></div>
+                      </label>
+                      <input type="File" name="" id="fileToUpload1" />
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                      <label for="fileToUpload">
+                        <div class="product_pic" id="img2"></div>
+                      </label>
+                      <input type="File" name="" id="fileToUpload" />
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                      <label for="fileToUpload">
+                        <div class="product_pic" id="img3"></div>
+                      </label>
+                      <input type="File" name="" id="fileToUpload" />
+                    </div>
+                    <div class="col-xl-3 col-sm-6">
+                      <label for="fileToUpload">
+                        <div class="product_pic" id="img4"></div>
+                      </label>
+                      <input type="File" name="" id="fileToUpload" />
+                    </div>
+                  </div>
+                  <!-- <div class="row">
                     <div class="col-xl-6 col-12">
                       <div style="width: 400px">
                         <div
@@ -444,7 +494,6 @@
                               class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
-                              id="img1"
                             />
 
                             <span
@@ -475,10 +524,9 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input filing"
+                              class="custom-file-container__custom-file__custom-file-input"
                               accept="image/*"
                               name="images"
-                              id="img2"
                             />
 
                             <span
@@ -492,9 +540,9 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
-                  <div class="row">
+                  <!-- <div class="row">
                     <div class="col-xl-6 col-12">
                       <div style="width: 400px">
                         <div
@@ -512,10 +560,9 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input filing"
+                              class="custom-file-container__custom-file__custom-file-input"
                               accept="image/*"
                               name="images"
-                              id="img3"
                             />
 
                             <span
@@ -546,10 +593,9 @@
                           <label class="custom-file-container__custom-file"
                             ><input
                               type="file"
-                              class="custom-file-container__custom-file__custom-file-input filing"
+                              class="custom-file-container__custom-file__custom-file-input file"
                               accept="image/*"
                               name="images"
-                              id="img4"
                             />
 
                             <span
@@ -563,8 +609,11 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
+                  <input type="hidden" id="seller" name="seller_id" />
+                  <input type="hidden" id="subCate" name="subcategory" />
+                  <input type="hidden" id="product_id" name="id" />
                   <button class="btn btn-warning text-light btn-block my-3">
                     Update and Confirm Product
                   </button>
@@ -631,58 +680,17 @@
     <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
     <script src="scripts/account.js"></script>
     <script>
-      const upload = new FileUploadWithPreview("myUpload");
-      const uploads = new FileUploadWithPreview("myUploads");
-      const uploading = new FileUploadWithPreview("myUploading");
-      const Upload = new FileUploadWithPreview("Upload");
-
-      const catGet = new XMLHttpRequest();
-      catGet.onreadystatechange = () => {
-        if (catGet.readyState == 4 && catGet.status == 200) {
-          let categories = JSON.parse(catGet.responseText);
-          let cat = "";
-          categories.forEach((cats) => {
-            cat += `<option value="${cats.category_name.replace(/ /g, "_")}">${
-              cats.category_name
-            }</option>`;
-          });
-          let getting = document.querySelectorAll(".catSelection");
-          getting.forEach((get) => {
-            get.innerHTML += cat;
-          });
-        }
-      };
-      catGet.open("GET", "/api/admin/getCategory", true);
-      catGet.send();
-
-      subCat.addEventListener("change", (e) => {
-        let selectedCat = document.getElementById("category").value;
-        const subCatLoad = new XMLHttpRequest();
-        subCatLoad.onreadystatechange = () => {
-          if (subCatLoad.readyState < 4) {
-            document.getElementById("sub").innerHTML =
-              "Loading Subcategories...";
-          }
-          if (subCatLoad.readyState == 4 && subCatLoad.status == 200) {
-            let subCategories = JSON.parse(subCatLoad.responseText);
-            let subcate = "";
-            subCategories.forEach((subCategory) => {
-              subcate += `<option value="${subCategory.subCategoryName}">${subCategory.subCategoryName}</option>`;
-            });
-            document.getElementById("subCat").innerHTML = subcate;
-            document.getElementById("sub").innerHTML = "";
-          }
-        };
-        subCatLoad.open("GET", `/api/sellers/subCategory/${selectedCat}`, true);
-        subCatLoad.send();
-      });
+      // const upload = new FileUploadWithPreview("myUpload");
+      // const uploads = new FileUploadWithPreview("myUploads");
+      // const uploading = new FileUploadWithPreview("myUploading");
+      // const Upload = new FileUploadWithPreview("Upload");
 
       let product = new URLSearchParams(window.location.search).get("product");
       const data = new XMLHttpRequest();
       data.onreadystatechange = () => {
         if (data.readyState == 4 && data.status == 200) {
           let [result] = JSON.parse(data.responseText);
-          console.log(result);
+          document.getElementById("product_id").value = product;
           document.getElementById("product").value = result.product;
           document.getElementById("quantity").value = result.quantity;
           document.getElementById("description").value = result.description;
@@ -691,11 +699,38 @@
           document.getElementById("detail").value = result.detailedDescription;
           document.getElementById("category").value = result.category_name;
           document.getElementById("subCat").value = result.subCategoryName;
-          let image = JSON.parse(result.images);
-          let filing = document.querySelectorAll(".filing");
-          filing.forEach((fil) => {
-            fil.file = image;
-          });
+          document.getElementById("seller").value = result.seller_id;
+          document.getElementById("subCate").value = result.subcategory_id;
+
+          let specify = JSON.parse(result.specifications);
+
+          document.getElementById("color").value =
+            specify.Color || "Not Specified";
+          document.getElementById("dimensions").value =
+            specify.Dimensions || "Not Specified";
+          document.getElementById("brand").value =
+            specify.Brand || "Not Specified";
+          document.getElementById("netWeight").value =
+            specify.NetWeight || "Not Specified";
+          document.getElementById("weight").value = specify.Weight;
+          document.getElementById("customerExpect").value =
+            specify.TypeOfProduct;
+          document.getElementById("size").value = specify.Size;
+          document.getElementById("fragility").value = specify.Fragile;
+
+          let myImages = JSON.parse(result.images);
+          document.getElementById(
+            "img1"
+          ).style.backgroundImage = `url(${myImages[0]})`;
+          document.getElementById(
+            "img2"
+          ).style.backgroundImage = `url(${myImages[1]})`;
+          document.getElementById(
+            "img3"
+          ).style.backgroundImage = `url(${myImages[2]})`;
+          document.getElementById(
+            "img4"
+          ).style.backgroundImage = `url(${myImages[3]})`;
         }
       };
       data.open("GET", `/api/admin/productDetails/${product}`, true);
