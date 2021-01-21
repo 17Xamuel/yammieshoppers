@@ -23,7 +23,6 @@ router.post("/updateCart/:id", (req, res) => {
 });
 
 router.get("/checkout/cart/:id", (req, res) => {
-  console.log(req.params.id);
   conn.query(
     `SELECT c_cart_amount,c_cart,c_cart_number,zone
       FROM customers JOIN customer_address
@@ -33,6 +32,8 @@ router.get("/checkout/cart/:id", (req, res) => {
       if (err) {
         throw err;
       } else {
+        console.log(result[0].c_cart);
+        console.log(typeof result[0].c_cart);
         let cart = JSON.parse(result[0].c_cart);
         let total_charge = 0;
         let total_price = 0;
@@ -70,7 +71,6 @@ router.get("/checkout/cart/:id", (req, res) => {
                 total_charge += fee;
                 total_price += price * key.inCartNumber;
                 if (cart_arr.length == i + 1) {
-                  console.log("true");
                   console.log({ shipping: total_charge, total_price });
                   res.send({ shipping: total_charge, total_price });
                 }
@@ -89,8 +89,11 @@ router.post("/customer/cart/amount/:id", (req, res) => {
     [
       {
         c_cart_amount: parseInt(req.body.total),
-        c_cart: req.body.cartItems,
-        c_cart_number: req.body.inCart,
+        c_cart:
+          typeof req.body.cartItems == "string"
+            ? req.body.cart
+            : JSON.stringify(req.body.cartItems),
+        c_cart_number: parseInt(req.body.inCart),
       },
       req.params.id,
     ],
