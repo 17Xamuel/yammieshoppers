@@ -4,9 +4,8 @@ const uuid = require("uuid");
 const conn = require("./database/db.js");
 const aws = require("aws-sdk");
 const multerS3 = require("multer-s3");
-const PORT = process.env.PORT || 8000;
 
-const app = express();
+const router = require("express").Router();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api/admin/", require("./routes/adminRoutes"));
@@ -34,7 +33,7 @@ function getUpload(id) {
   let upload = multer({
     storage: multerS3({
       s3: s3,
-      bucket: "yammie",
+      bucket: "yammieuploads",
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
@@ -43,10 +42,10 @@ function getUpload(id) {
   }).array("images");
   return upload;
 }
-
+//deletes a file from spaces
 function _deleteFile(i) {
   var params = {
-    Bucket: "yammie",
+    Bucket: "yammieuploads",
     Key: i,
   };
   s3.deleteObject(params, function (err, data) {
@@ -172,8 +171,4 @@ app.post("/addImages", async (req, res) => {
       }
     );
   });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server started on ${PORT}...`);
 });
