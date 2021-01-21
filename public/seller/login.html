@@ -296,7 +296,8 @@
           if (xhr.readyState == 4 && xhr.status == 200) {
             if (
               xhr.responseText == "All fields are required" ||
-              xhr.responseText == `Incorrect Email or Password`
+              xhr.responseText == "Incorrect Email or Password" ||
+              xhr.responseText == "Wait for Admin Approval to Login"
             ) {
               document.getElementById("messages").innerHTML = xhr.responseText;
             } else {

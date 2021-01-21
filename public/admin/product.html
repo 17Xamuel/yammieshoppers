@@ -183,9 +183,7 @@
               <div class="col-xl-10 mx-auto my-5">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-center text-info">
-                      Product No: <span id="number"></span>
-                    </h4>
+                    <h4 class="text-center text-info">Product Details</h4>
 
                     <table class="table text-left">
                       <tbody>
@@ -208,7 +206,7 @@
                         </tr>
 
                         <tr>
-                          <td>Date Added:<span id="date"></span></td>
+                          <td>Net Weight: <span id="netW"></span></td>
                           <td>Fragile:<span id="frag"></span></td>
                         </tr>
 
@@ -229,9 +227,6 @@
                         <tr>
                           <td>Type of Product:<span id="types"></span></td>
                           <td>Number of Sales: <span id="nsales"></span></td>
-                        </tr>
-                        <tr>
-                          <td>Net Weight: <span id="netW"></span></td>
                         </tr>
                       </tbody>
                     </table>
@@ -255,11 +250,19 @@
                     <div class="text-center">
                       <button
                         type="button"
-                        class="btn btn-danger btn-block"
+                        class="btn btn-danger"
                         data-target="#rProduct"
                         data-toggle="modal"
                       >
-                        Remove Product
+                        Remove
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-target="#eProduct"
+                        data-toggle="modal"
+                      >
+                        EditProduct
                       </button>
                     </div>
                   </div>
@@ -271,6 +274,31 @@
       </div>
     </section>
     <!-- End details -->
+
+    <div class="modal fade" id="eProduct">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Want to Edit Product?</h5>
+          </div>
+          <div class="modal-body text-center" id="removeMessage">
+            Press Ok to Continue
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" id="editing">
+              Ok
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Remove Modal -->
     <div class="modal fade" id="rProduct">
@@ -374,10 +402,6 @@
           document.getElementById("cat").innerHTML = outcome.category_name;
           document.getElementById("sct").innerHTML = outcome.subCategoryName;
           document.getElementById("disc").innerHTML = outcome.discount + "%";
-          document.getElementById("date").innerHTML = outcome.dateAdded.slice(
-            0,
-            10
-          );
 
           document.getElementById("netp").innerHTML =
             parseInt(outcome.price - (outcome.discount / 100) * outcome.price) +
@@ -388,7 +412,6 @@
           document.getElementById("sname").innerHTML = outcome.username;
           document.getElementById("scontact").innerHTML = outcome.phonenumber;
           let specify = JSON.parse(outcome.specifications);
-          document.getElementById("number").innerHTML = specify.Number;
           document.getElementById("brand").innerHTML =
             specify.Brand || "Not specified";
           document.getElementById("frag").innerHTML = specify.Fragile;
@@ -414,7 +437,7 @@
           document.getElementById("detailLoading").innerHTML = "";
         }
       };
-      productDetails.open("GET", `/api/admin/approvedProduct/${product}`, true);
+      productDetails.open("GET", `/api/admin/productDetails/${product}`, true);
       productDetails.send();
 
       const saleNumber = new XMLHttpRequest();
@@ -426,6 +449,11 @@
       };
       saleNumber.open("GET", `/api/admin/saleNumber/${product}`, true);
       saleNumber.send();
+
+      let editing = document.getElementById("editing");
+      editing.addEventListener("click", (e) => {
+        window.location.assign(`changeProduct.html?product=${product}`);
+      });
     </script>
     <!-- End Scripts -->
   </body>

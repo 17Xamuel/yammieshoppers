@@ -17,6 +17,9 @@ let transporter = nodemailer.createTransport({
 
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
+  if (email.length == 0 || password.length == 0) {
+    return res.send("All Fields are Required");
+  }
   let user = [];
   if (
     email == "yammieshoppers@gmail.com" &&
@@ -64,7 +67,7 @@ try {
     conn.query(
       `UPDATE sellers SET seller_status = 'Approved' WHERE id=?`,
       [req.params.id],
-      (err, result) => {
+      async (err, result) => {
         if (err) throw err;
         conn.query(
           `SELECT username,email FROM sellers WHERE id=?`,
@@ -75,8 +78,8 @@ try {
               from: '"Yammie Shoppers"<info@yammieshoppers.com>',
               to: results[0].email,
               subject: `Hello ${results[0].username}`,
-              text: `Hello, ${results[0].username}  your email ${results[0].email} has been successfully 
-              confirmed you can start adding products to the website.`
+              text: `Hello, ${results[0].username}  your email ${results[0].email} has 
+              been successfully confirmed you can start adding products to the website.`
             };
 
             transporter.sendMail(mailOptions, (error, response) => {
@@ -355,6 +358,16 @@ router.get("/finishOrder/:id", async (req, res) => {
           res.status(200).send("ok");
         }
       );
+    }
+  );
+});
+
+router.get("/getFinishedOrders", async (req, res) => {
+  conn.query(
+    "SELECT * FROM pending_orders WHERE order_status='finished'",
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
     }
   );
 });

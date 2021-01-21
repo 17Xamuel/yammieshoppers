@@ -26,6 +26,11 @@
     ></script>
 
     <!-- End Scripts -->
+      <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.css"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
@@ -174,7 +179,13 @@
                         >Edit Category</a
                       >
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Edit SubCategory</a>
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#subImg"
+                        data-toggle="modal"
+                        >SubCategory Image</a
+                      >
                     </div>
                   </div>
                 </div>
@@ -312,6 +323,72 @@
       </div>
     </div>
     <!-- End Sub Category -->
+
+    <!-- SubCategory Images -->
+    <div class="modal fade" id="subImg">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add SubCategory Image</h5>
+          </div>
+          <div class="modal-body text-left">
+            <form action="/addSubcategoryImage" method="POST" enctype="multipart/form-data">
+              <div class="form-group">
+                <select
+                  required
+                  class="form-control catSelection"
+                  id="selCatImg"
+                >
+                  <option value="">Select Category</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <select class="form-control" id="imgSubCat" required name="subCategoryName">
+                  <option value="">Select SubCategory</option>
+                </select>
+              </div>
+              <div style="width: 400px">
+                <div class="custom-file-container" data-upload-id="myUpload">
+                  <label for="Fileupload"></label>
+                    Image
+                    <a
+                      href="javascript:void(0)"
+                      class="custom-file-container__image-clear"
+                      >&times;</a
+                    ></label
+                  >
+                  <label class="custom-file-container__custom-file"
+                    ><input
+                      type="file"
+                      class="custom-file-container__custom-file__custom-file-input filing"
+                      accept="image/*"
+                      name="images"
+                    />
+
+                    <span
+                      class="custom-file-container__custom-file__custom-file-control"
+                    ></span>
+                  </label>
+                  <div
+                    class="custom-file-container__image-preview"
+                    style="overflow: hidden"
+                  ></div>
+                </div>
+              </div>
+              <button  class="btn btn-block btn-primary">
+                Submit
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-success btn btn-sm auto">
+              Ok
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End -->
 
     <!-- Edit Category -->
     <div class="modal fade" id="editCategory">
@@ -528,8 +605,10 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+      <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
     <script src="scripts/account.js"></script>
     <script>
+      const upload = new FileUploadWithPreview("myUpload");
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {
         if (xhr.readyState < 4) {
@@ -779,6 +858,27 @@
         };
         myData.open("GET", `/api/sellers/subCategory/${category}`, true);
         myData.send();
+      });
+
+      let selCatImg = document.getElementById("selCatImg");
+      selCatImg.addEventListener("change", (e) => {
+        let myCategory = document.getElementById("selCatImg").value;
+        let data = new XMLHttpRequest();
+        data.onreadystatechange = () => {
+          if (data.readyState == 4 && data.status == 200) {
+            let results = JSON.parse(data.responseText);
+            let row = "";
+            results.forEach((result) => {
+              row += `<option value=${result.subCategoryName.replace(
+                / /g,
+                "_"
+              )}>${result.subCategoryName}</option>`;
+            });
+            document.getElementById("imgSubCat").innerHTML += row;
+          }
+        };
+        data.open("GET", `/api/sellers/subCategory/${myCategory}`, true);
+        data.send();
       });
 
       function reloading() {
