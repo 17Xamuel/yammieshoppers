@@ -91,7 +91,7 @@ router.post("/customer/cart/amount/:id", (req, res) => {
         c_cart_amount: parseInt(req.body.total),
         c_cart:
           typeof req.body.cartItems == "string"
-            ? req.body.cart
+            ? req.body.cartItems
             : JSON.stringify(req.body.cartItems),
         c_cart_number: parseInt(req.body.inCart),
       },

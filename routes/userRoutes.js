@@ -257,6 +257,7 @@ router.get("/customer/:id", (req, res) => {
     }
   );
 });
+
 router.post("/customer/cart/amount/:id", (req, res) => {
   conn.query(
     "UPDATE customers SET ? where c_id = ?",
@@ -570,7 +571,6 @@ router.post("/customer/cart/:id", (req, res) => {
     typeof req.body.cartNumber == "string"
       ? parseInt(req.body.cartNumber)
       : req.body.cartNumber;
-
   conn.query(
     `SELECT c_cart,c_cart_number FROM customers WHERE c_id = ?`,
     req.params.id,
