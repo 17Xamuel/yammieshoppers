@@ -89,24 +89,21 @@ router.post("/customer/cart/amount/:id", (req, res) => {
   console.log(req.body.cartItems);
   console.log(parseInt(req.body.total));
   console.log(parseInt(req.body.inCart));
-  // conn.query(
-  //   "UPDATE customers SET ? where c_id = ?",
-  //   [
-  //     {
-  //       c_cart_amount: parseInt(req.body.total),
-  //       c_cart:
-  //         typeof req.body.cartItems == "string"
-  //           ? req.body.cartItems
-  //           : JSON.stringify(req.body.cartItems),
-  //       c_cart_number: parseInt(req.body.inCart),
-  //     },
-  //     req.params.id,
-  //   ],
-  //   (err, result) => {
-  //     if (err) throw err;
-  //     res.status(200).send("cart amount upated");
-  //   }
-  // );
+  conn.query(
+    "UPDATE customers SET ? where c_id = ?",
+    [
+      {
+        c_cart_amount: parseInt(req.body.total),
+        c_cart: req.body.cartItems,
+        c_cart_number: parseInt(req.body.inCart),
+      },
+      req.params.id,
+    ],
+    (err, result) => {
+      if (err) throw err;
+      res.status(200).send("cart amount upated");
+    }
+  );
 });
 
 module.exports = router;
