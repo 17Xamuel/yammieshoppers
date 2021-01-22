@@ -43,6 +43,21 @@ function getUpload(id) {
   }).array("images");
   return upload;
 }
+//upload_other_files
+function getUploadFile(id) {
+  let upload = multer({
+    storage: multerS3({
+      s3: s3,
+      bucket: "yammieuploads",
+      acl: "public-read",
+      key: function (request, file, cb) {
+        cb(null, id + "-" + file.originalname);
+      },
+    }),
+  }).array("images");
+  return upload;
+}
+
 
 function _deleteFile(i) {
   var params = {
@@ -280,7 +295,7 @@ app.post("/edit", async (req, res) => {
 });
 
 app.post("/addSubcategoryImage", async (req, res) => {
-  let upload = getUpload(uuid.v4());
+  let upload = getUploadFile(uuid.v4());
   upload(req, res, (err) => {
     if (err) throw err;
     let image = [];
