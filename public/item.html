@@ -449,12 +449,6 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <a href="../catalog?q=recently_veiwed">
-            <span>
-              See All
-              <i class="fas fa-chevron-right"></i>
-            </span>
-          </a>
         </div>
         <div class="-scroll -ct -ct-recentlyviewed">
           <div class="item -ct-item -lazy">
@@ -732,12 +726,10 @@
       let _item = new URLSearchParams(window.location.search).get("item");
       if (localStorage.getItem("_rv")) {
         _rv = JSON.parse(localStorage.getItem("_rv"));
-        if (
-          !_rv.find((item) => {
-            item == _item;
-          })
-        ) {
+        _rvi = _rv.find((item) => item === _item);
+        if (_rvi == undefined) {
           _rv.push(_item);
+          localStorage.setItem("_rv", JSON.stringify(_rv));
         }
       } else {
         localStorage.setItem("_rv", JSON.stringify([_item]));
@@ -763,10 +755,6 @@
       scr(document.querySelectorAll(".-sc-b"));
 
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/profile/rec");
-      ctg(
-        document.querySelector(".-ct-recentlyviewed"),
-        "/api/user/ct/profile/recentlyviewed"
-      );
       function scr(b) {
         b.forEach((sc) => {
           sc.addEventListener("click", (e) => {
@@ -837,7 +825,6 @@
         xhr.open("GET", url, true);
         xhr.send();
       }
-
       //new header
       const sch = (i, sch) => {
         i.addEventListener("click", () => {
@@ -1093,6 +1080,7 @@
           };
         });
     </script>
+    <script src="./ym.min.js"></script>
     <!--scripts-->
   </body>
 </html>

@@ -705,12 +705,6 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <a href="./catalog?q=recentlyviewed">
-            <span class="-ch-all-w-t">
-              Check
-              <i class="fas fa-chevron-right"></i>
-            </span>
-          </a>
         </div>
         <div class="-scroll -ct -ct-recentlyviewed">
           <div class="item -ct-item -lazy">
@@ -1370,10 +1364,7 @@
       scr(document.querySelectorAll(".-sc-b"));
 
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/profile/rec");
-      ctg(
-        document.querySelector(".-ct-recentlyviewed"),
-        "/api/user/ct/profile/recentlyviewed"
-      );
+
       function scr(b) {
         b.forEach((sc) => {
           sc.addEventListener("click", (e) => {

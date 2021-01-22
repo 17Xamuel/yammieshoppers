@@ -1113,14 +1113,8 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <a href="./catalog?q=recentlyviewed">
-            <span class="-ch-all-w-t">
-              Check
-              <i class="fas fa-chevron-right"></i>
-            </span>
-          </a>
         </div>
-        <div class="-scroll -ct -ct-rv">
+        <div class="-scroll -ct -ct-recentlyviewed">
           <div class="item -ct-item -lazy">
             <img
               src="./resources/cart-link.png"
@@ -1938,7 +1932,6 @@
         document.querySelector(".-ct-gascookers"),
         "/api/user/ct/index/gascookers"
       );
-      ctg(document.querySelector(".-ct-rv"), "/api/user/ct/index/rv");
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/index/rec");
       //footer
 

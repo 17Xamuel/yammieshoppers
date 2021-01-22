@@ -114,16 +114,15 @@ class Deduct {
     }
     return index;
   }
-  // round(i) {
-  //   if (i % 10 != 0 || (i / 10) % 10 != 0) {
-  //     return parseInt(i / 100) * 100 + 100;
-  //   } else {
-  //     return i;
-  //   }
-  // }
+  round(i) {
+    if (i % 10 != 0 || (i / 10) % 10 != 0) {
+      return parseInt(i / 100) * 100 + 100;
+    } else {
+      return i;
+    }
+  }
   get price() {
-    // return this.round(this.product.price);
-    return this.product.price;
+    return this.round(this.product.price);
   }
   get total() {
     if (
@@ -131,11 +130,9 @@ class Deduct {
       this.product.price < 25000 &&
       this.product.location == "lira"
     ) {
-      return parseInt(0.05 * this.product.price + this.index());
-      // return this.round(parseInt(0.05 * this.product.price + this.index()));
+      return this.round(parseInt(0.05 * this.product.price + this.index()));
     } else {
-      return parseInt(this.index());
-      // return this.round(parseInt(this.index()));
+      return this.round(parseInt(this.index()));
     }
   }
 }

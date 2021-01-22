@@ -659,6 +659,20 @@ router.get("/product/:id", (req, res) => {
     }
   );
 });
+// recently_viewed and others
+router.get("/product/ct/:id", (req, res) => {
+  conn.query(
+    `SELECT * FROM products WHERE id = ?`,
+    req.params.id,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
 //for checkout page
 router.get("/checkout/cart/:id", (req, res) => {
   conn.query(

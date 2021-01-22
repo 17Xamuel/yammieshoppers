@@ -26,7 +26,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
 });
 
 // Change bucket property to your Space name
@@ -38,8 +38,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -82,7 +82,7 @@ app.post("/addProduct", async (req, res) => {
       dimensions,
       size,
       typeOfProduct,
-      netWeight
+      netWeight,
     } = req.body;
     conn.query(
       `SELECT subcategory_id,category_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
@@ -109,8 +109,8 @@ app.post("/addProduct", async (req, res) => {
               Dimensions: dimensions || null,
               Size: size,
               TypeOfProduct: typeOfProduct,
-              NetWeight: netWeight || null
-            })
+              NetWeight: netWeight || null,
+            }),
           },
           (err, results) => {
             if (err) {
@@ -161,7 +161,7 @@ app.post("/editAndConfirm", async (req, res) => {
     dimensions,
     size,
     typeOfProduct,
-    netWeight
+    netWeight,
   } = req.body;
 
   conn.query(
@@ -190,8 +190,8 @@ app.post("/editAndConfirm", async (req, res) => {
             Dimensions: dimensions || null,
             Size: size,
             TypeOfProduct: typeOfProduct,
-            NetWeight: netWeight || null
-          })
+            NetWeight: netWeight || null,
+          }),
         },
         (error, results) => {
           if (error) throw error;
@@ -225,7 +225,7 @@ app.post("/addImages", async (req, res) => {
       {
         image_id: imageId,
         image_path: pathing,
-        destination: Uploads
+        destination: Uploads,
       },
       (error, results) => {
         if (error) throw error;
@@ -253,7 +253,7 @@ app.post("/edit", async (req, res) => {
     dimensions,
     size,
     typeOfProduct,
-    netWeight
+    netWeight,
   } = req.body;
 
   let newSpecification = JSON.stringify({
@@ -264,7 +264,7 @@ app.post("/edit", async (req, res) => {
     Dimensions: dimensions || null,
     Size: size,
     TypeOfProduct: typeOfProduct,
-    NetWeight: netWeight || null
+    NetWeight: netWeight || null,
   });
 
   conn.query(
@@ -298,6 +298,11 @@ app.post("/addSubcategoryImage", async (req, res) => {
       }
     );
   });
+});
+
+app.use(function (req, res, next) {
+  res.status(404);
+  res.redirect("/404");
 });
 
 app.listen(PORT, () => {

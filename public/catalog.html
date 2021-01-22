@@ -906,13 +906,8 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
-          <a href="./catalog?q=recentlyviewed"></a>
-          <span class="-ch-all-w-t">
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
         </div>
-        <div class="-scroll -ct -ct-rv">
+        <div class="-scroll -ct -ct-recentlyviewed">
           <div class="item -ct-item -lazy">
             <img
               src="./resources/cart-link.png"
@@ -975,11 +970,6 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Recommended For You</span>
-          <a href="./catalog?q=recommendedforyou"></a>
-          <span class="-ch-all-w-t">
-            Check
-            <i class="fas fa-chevron-right"></i>
-          </span>
         </div>
         <div class="-scroll -ct -ct-rec">
           <div class="item -ct-item -lazy">
@@ -1581,7 +1571,7 @@
         document.querySelector(".-ct-trending"),
         "/api/user/ct/catalog/trending"
       );
-      ctg(document.querySelector(".-ct-rv"), "/api/user/ct/catalog/rv");
+
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/catalog/rec");
       //categories
       //search function
