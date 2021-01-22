@@ -285,7 +285,7 @@ app.post("/addSubcategoryImage", async (req, res) => {
     if (err) throw err;
     let image = [];
     req.files.forEach((file) => {
-      image.push("https://yammie.nyc3.ondigitaloceanspaces.com/" + file.key);
+      image.push("https://yammie.nyc3.digitaloceanspaces.com/" + file.key);
     });
     let path = JSON.stringify(image);
     let { subCategoryName } = req.body;
