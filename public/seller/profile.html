@@ -117,7 +117,34 @@
             >
               <div class="row align-items">
                 <div class="col-md-4 mb-0 text-light py-3">
-                  <h4>DASHBOARD</h4>
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-danger dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Change Profile
+                    </button>
+                    <div class="dropdown-menu">
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#profile"
+                        data-toggle="modal"
+                        >Edit User Profile</a
+                      >
+                      <div class="dropdown-divider"></div>
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#editcategory"
+                        >Edit Categories</a
+                      >
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
@@ -153,6 +180,49 @@
       </div>
     </nav>
     <!-- End Navbar -->
+
+    <!-- Edit Profile -->
+    <div class="modal fade" id="profile">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Profile</h5>
+          </div>
+          <div class="modal-body">
+            <form id="editProfile">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="newName"
+                  placeholder="New Username"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="newPhone"
+                  placeholder="New Phonenumber"
+                />
+                <button
+                  type="button"
+                  class="btn btn-warning btn-block my-3"
+                  data-toggle="collapse"
+                  data-target="#cPassword"
+                >
+                  Change Password
+                </button>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" id="pro">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End -->
 
     <!-- Modal -->
     <div class="modal fade" id="sign-out">
@@ -213,15 +283,6 @@
                     </table>
                     <h6>Category Of Products</h6>
                     <ul class="list-group" id="cat"></ul>
-                    <div class="text-center">
-                      <button
-                        type="button"
-                        data-target="#editProfile"
-                        data-toggle="modal"
-                      >
-                        EditProfile
-                      </button>
-                    </div>
                   </div>
                 </div>
               </div>
