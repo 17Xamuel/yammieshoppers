@@ -295,7 +295,7 @@ app.post("/edit", async (req, res) => {
 
 app.post("/addSubcategoryImage", async (req, res) => {
   let { sub } = req.body;
-  let upload = getUploadFile(sub);
+  let upload = getUploadFile(uuid.v4());
   upload(req, res, (err) => {
     if (err) throw err;
     let image = [];
