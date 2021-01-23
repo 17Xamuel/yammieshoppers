@@ -230,7 +230,9 @@ app.post("/addImages", async (req, res) => {
     if (err) throw err;
     let images = [];
     req.files.forEach((file) => {
-      images.push("https://yammie.nyc3.digitaloceanspaces.com/" + file.key);
+      images.push(
+        "https://yammieuploads.nyc3.digitaloceanspaces.com/" + file.key
+      );
     });
     let pathing = JSON.stringify(images);
     let { Uploads } = req.body;
@@ -299,7 +301,9 @@ app.post("/addSubcategoryImage", async (req, res) => {
     if (err) throw err;
     let image = [];
     req.files.forEach((file) => {
-      image.push("https://yammie.nyc3.digitaloceanspaces.com/" + file.key);
+      image.push(
+        "https://yammieuploads.nyc3.digitaloceanspaces.com/" + file.key
+      );
     });
     let path = JSON.stringify(image);
     let { sub } = req.body;
