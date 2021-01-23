@@ -225,12 +225,12 @@ app.post("/editAndConfirm", async (req, res) => {
 
 app.post("/addImages", async (req, res) => {
   let imageId = uuid.v4();
-  let uploading = getUpload(imageId);
+  let uploading = getUploadFile(imageId);
   uploading(req, res, (err) => {
     if (err) throw err;
     let images = [];
     req.files.forEach((file) => {
-      images.push("https://yammie.nyc3.ondigitaloceanspaces.com/" + file.key);
+      images.push("https://yammie.nyc3.digitaloceanspaces.com/" + file.key);
     });
     let pathing = JSON.stringify(images);
     let { Uploads } = req.body;
@@ -294,7 +294,6 @@ app.post("/edit", async (req, res) => {
 });
 
 app.post("/addSubcategoryImage", async (req, res) => {
-  let { sub } = req.body;
   let upload = getUploadFile(uuid.v4());
   upload(req, res, (err) => {
     if (err) throw err;
@@ -303,9 +302,10 @@ app.post("/addSubcategoryImage", async (req, res) => {
       image.push("https://yammie.nyc3.digitaloceanspaces.com/" + file.key);
     });
     let path = JSON.stringify(image);
+    let { sub } = req.body;
     conn.query(
-      `UPDATE subCategories SET image='${path}' WHERE subcategory_id = ?`,
-      [sub],
+      `UPDATE subCategories SET image='${path}' WHERE subCategoryName = ?`,
+      [sub.replace(/_/g, " ")],
       (err, results) => {
         if (err) throw err;
         res.redirect("./admin/products.html");
