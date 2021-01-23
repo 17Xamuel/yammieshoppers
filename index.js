@@ -111,7 +111,7 @@ app.post("/addProduct", async (req, res) => {
             description: description,
             category: result[0].category_id,
             subcategory: result[0].subcategory_id,
-            discount: parseInt(discount),
+            discount: parseInt(discount) || 0,
             images: path,
             seller_id: seller_id,
             detailedDescription,
