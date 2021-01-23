@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./font-awesome/css/all.css" />
     <link rel="stylesheet" href="./font-awesome/css/all.css" />
     <link rel="stylesheet" href="../styles/products.css" />
+    <link rel="stylesheet" href="./styles/animations.min.css" />
     <title>Cart | Yammie online Market for Groceries</title>
     <style>
       /*cart*/
@@ -379,6 +380,14 @@
     </script>
   </head>
   <body>
+    <div id="ldr-overlay">
+      <div class="ldr-overlay-ctr">
+        <div class="ldr-overlay-circle circle-1"></div>
+        <div class="ldr-overlay-circle circle-2"></div>
+        <div class="ldr-overlay-circle circle-3"></div>
+      </div>
+      <div class="ldr-overlay-text">Loading Cart, Please Wait...</div>
+    </div>
     <div id="pop-up-overlay"></div>
     <div class="popup">
       <button class="close-pp" onclick="imageDialogClose()">&times;</button>
@@ -699,7 +708,7 @@
           <button id="-o-st">Start Order</button>
         </div>
       </div>
-      <div class="-ct -b-x">
+      <div class="-ct -b-x rv-ctr">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
 
@@ -763,7 +772,7 @@
           </div>
         </div>
       </div>
-      <div class="-ct">
+      <div class="-ct -b-x">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
         <div class="-ch-all -ch-all-w">
@@ -1131,6 +1140,7 @@
           </div>
         </div>
             `;
+
             const _ms = document.getElementsByClassName("minus");
             for (let i = 0; i < _ms.length; i++) {
               _ms[i].addEventListener("click", (e) => {
@@ -1191,6 +1201,13 @@
               }
             });
             //st-ony
+            //loader
+            if (
+              document.querySelectorAll(".cart-itm").length ==
+              Object.values(cartItems).length
+            ) {
+              document.querySelector("#ldr-overlay").style.display = "none";
+            }
           });
           function minus(id) {
             for (const item in cartItems) {
@@ -1215,7 +1232,7 @@
                   cartNumber: cartNumber,
                   delete: false,
                 });
-              }, 1500);
+              }, 500);
             }
           }
           function plus(id) {
@@ -1290,6 +1307,7 @@
           //total end
           //cart display
         } else {
+          document.querySelector("#ldr-overlay").style.display = "none";
           let et = document.querySelector(".cart");
           et.innerHTML = `
           <div class="no-itms">
