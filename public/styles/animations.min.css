@@ -1,0 +1,60 @@
+/*loader*/
+#ldr-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.ldr-overlay-ctr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#ldr-overlay > .ldr-overlay-ctr > .ldr-overlay-circle {
+  height: 30px;
+  width: 30px;
+  background-color: #fff;
+  margin: 5px;
+  border-radius: 15px;
+}
+#ldr-overlay > .ldr-overlay-ctr > .ldr-overlay-circle.circle-1 {
+  animation: circle-scale 0.6s infinite forwards ease-in-out;
+}
+#ldr-overlay > .ldr-overlay-ctr > .ldr-overlay-circle.circle-2 {
+  animation: circle-scale 1s infinite backwards ease-in-out;
+}
+#ldr-overlay > .ldr-overlay-ctr > .ldr-overlay-circle.circle-3 {
+  animation: circle-scale 0.8s infinite forwards ease-in-out;
+}
+#ldr-overlay > .ldr-overlay-text {
+  color: #fff;
+  font-size: 20px;
+}
+
+@keyframes circle-scale {
+  0% {
+    transform: scale(0);
+  }
+  20% {
+    transform: scale(0.2);
+  }
+  40% {
+    transform: scale(0.4);
+  }
+  60% {
+    transform: scale(0.6);
+  }
+  80% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

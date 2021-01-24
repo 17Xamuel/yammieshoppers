@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../resources/cartlink.png" />
     <link rel="stylesheet" href="../styles/main.css" />
+    <link rel="stylesheet" href="../styles/animations.min.css" />
     <link rel="stylesheet" href="../font-awesome/css/all.css" />
     <title>Yammie | checkout - complete your order</title>
     <style>
@@ -352,14 +353,6 @@
       .other_dn {
         display: none;
       }
-      .-ony-ldr {
-        text-align: center;
-        padding: 10px 0px;
-        color: green;
-      }
-      .-ony-ldr > span {
-        display: none;
-      }
       @media screen and (max-width: 768px) {
         .nav {
           height: 8vh;
@@ -395,12 +388,22 @@
       }
     </style>
     <script>
-      // if (document.referrer == "") {
-      //   self.location = "/";
-      // }
+      if (document.referrer == "") {
+        self.location = "/";
+      }
     </script>
   </head>
   <body>
+    <div id="ldr-overlay">
+      <div class="ldr-overlay-ctr">
+        <div class="ldr-overlay-circle circle-1"></div>
+        <div class="ldr-overlay-circle circle-2"></div>
+        <div class="ldr-overlay-circle circle-3"></div>
+      </div>
+      <div class="ldr-overlay-text">
+        <span>Processing</span>, Please Wait...
+      </div>
+    </div>
     <div class="nav">
       <div class="search-nav">
         <div class="logo">
@@ -645,11 +648,6 @@
                       >
                     </div>
                   </div>
-                  <div class="-ony-ldr">
-                    <span>
-                      <i class="fas fa-spinner fa-spin fa-2x"></i>
-                    </span>
-                  </div>
                   <button type="submit" class="-btn-s-pyf">
                     FINISH YOUR ORDER
                   </button>
@@ -699,6 +697,9 @@
     </div>
     <!--scripts-->
     <script>
+      //animation
+      document.querySelector("#ldr-overlay").style.display = "none";
+      //animation
       //static
       let numberFormat = new Intl.NumberFormat();
       let totalPrice = 0;
@@ -942,8 +943,7 @@
           );
           document.querySelector("._pf").addEventListener("submit", (e) => {
             e.preventDefault();
-            document.querySelector(".-ony-ldr > span ").style.display =
-              "inline";
+            document.querySelector("#ldr-overlay").style.display = "flex";
             let pf = new FormData(document.querySelector("._pf"));
             pf.append("yammie", yammie);
             pf.append("_shp", _order.shipping);

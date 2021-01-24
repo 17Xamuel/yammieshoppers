@@ -660,32 +660,48 @@ router.get("/product/:id", (req, res) => {
   );
 });
 // recently_viewed and others
-router.get("/product/ct/:id", (req, res) => {
-  conn.query(
-    `SELECT * FROM products WHERE id = ?`,
-    req.params.id,
-    (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        res.send(result);
+router.get("/product/:ct/:id", (req, res) => {
+  if (req.params.ct == "trending") {
+    conn.query(
+      `select * from cleared_orders 
+        join products 
+        on cleared_orders.product_id = products.id 
+        order by order_qty desc limit 25`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
       }
-    }
-  );
+    );
+  } else {
+    conn.query(
+      `SELECT * FROM products WHERE id = ?`,
+      req.params.id,
+      (err, result) => {
+        if (err) {
+          throw err;
+        } else {
+          res.send(result);
+        }
+      }
+    );
+  }
 });
 //for checkout page
-router.get("/checkout/cart/:id", (req, res) => {
-  conn.query(
-    `SELECT c_cart_amount,c_cart,c_cart_number FROM customers WHERE c_id = ?`,
-    req.params.id,
-    (err, results) => {
-      if (err) {
-        throw err;
-      } else {
-      }
-    }
-  );
-});
+// router.get("/checkout/cart/:id", (req, res) => {
+//   conn.query(
+//     `SELECT c_cart_amount,c_cart,c_cart_number FROM customers WHERE c_id = ?`,
+//     req.params.id,
+//     (err, results) => {
+//       if (err) {
+//         throw err;
+//       } else {
+//       }
+//     }
+//   );
+// });
 router.post("/checkout/cart/:id", (req, res) => {
   conn.query(
     `SELECT c_cart_amount,c_cart,c_cart_number,zone 
