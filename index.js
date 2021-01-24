@@ -108,6 +108,7 @@ app.post("/addProduct", async (req, res) => {
             id: productId,
             product: product,
             price: price,
+            quantity: quantity,
             description: description,
             category: result[0].category_id,
             subcategory: result[0].subcategory_id,

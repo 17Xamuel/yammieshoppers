@@ -434,18 +434,21 @@ router.get("/orderProduct/:id", async (req, res) => {
 });
 
 router.get("/orderSearch/:id", async (req, res) => {
-  conn.query(
-    `SELECT order_id FROM pending_orders WHERE order_number = ?`,
-    [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      if (result.length == 0) {
-        return res.send("No Order Matches that Number Please try again");
-      } else {
+  let pattern = /\W/g;
+  let check = pattern.test(req.params.id);
+  if (check == true) {
+    res.send([]);
+    return;
+  } else {
+    conn.query(
+      `SELECT order_id,order_number,order_amount FROM pending_orders WHERE order_number
+     LIKE '%${req.params.id}%'`,
+      (err, result) => {
+        if (err) throw err;
         res.send(result);
       }
-    }
-  );
+    );
+  }
 });
 
 router.post("/addZone", async (req, res) => {
@@ -510,6 +513,23 @@ router.get("/getAddresses", async (req, res) => {
   });
 });
 
+router.get("/getAddress/:id", async (req, res) => {
+  conn.query(
+    `SELECT zone_id FROM zones WHERE zone_name = ?`,
+    [req.params.id.replace(/_/g, " ")],
+    (err, result) => {
+      if (err) throw err;
+      conn.query(
+        `SELECT * FROM  addresses WHERE zone_id=${result[0].zone_id}`,
+        (error, results) => {
+          if (err) throw err;
+          res.send(results);
+        }
+      );
+    }
+  );
+});
+
 router.get("/zoneGet/:id", async (req, res) => {
   conn.query(
     `SELECT * FROM zones WHERE zone_name=?`,
@@ -537,8 +557,21 @@ router.post("/zoneEdit/:id", async (req, res) => {
   );
 });
 
+router.post("/editAddress/:id", async (req, res) => {
+  let { newName } = req.body;
+  conn.query(
+    `UPDATE addresses SET address_name=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send("Address Editted Successfully");
+    }
+  );
+});
+
 router.post("/editCategory/:id", async (req, res) => {
   let { newName } = req.body;
+
   conn.query(
     `UPDATE category SET category_name='${newName}' WHERE category_name=?`,
     [req.params.id.replace(/_/g, " ")],
@@ -547,6 +580,36 @@ router.post("/editCategory/:id", async (req, res) => {
       res.send("Category Edited Successfully");
     }
   );
+});
+
+router.post("/editSubCategory/:id", async (req, res) => {
+  let { newSubName } = req.body;
+
+  conn.query(
+    `UPDATE subCategories SET subCategoryName='${newSubName}' WHERE subCategoryName=?`,
+    [req.params.id.replace(/_/g, " ")],
+    (err, result) => {
+      if (err) throw err;
+      res.send("Subcategory Editted Successfully");
+    }
+  );
+});
+
+router.get("/searchProduct/:id", async (req, res) => {
+  let patt = /\W/g;
+  let myCheck = patt.test(req.params.id);
+  if (myCheck == true) {
+    res.send([]);
+    return;
+  } else {
+    conn.query(
+      `SELECT * FROM products WHERE product LIKE '%${req.params.id}%'`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  }
 });
 
 module.exports = router;

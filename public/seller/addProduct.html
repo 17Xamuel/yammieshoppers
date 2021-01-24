@@ -218,7 +218,7 @@
                       <label for="price">Quantity Available</label>
                       <input
                         type="number"
-                        class="form-control"
+                        class="form-control mynum"
                         required=""
                         placeholder="Quantity"
                         name="quantity"
@@ -244,7 +244,7 @@
                       <label for="Product Brand">Price</label>
                       <input
                         type="number"
-                        class="form-control"
+                        class="form-control mynum"
                         required=""
                         placeholder="Price(UGX)"
                         name="price"
@@ -255,10 +255,11 @@
                       <label for="Product Brand">Discount(%)</label>
                       <input
                         type="number"
-                        class="form-control"
+                        class="form-control mynum"
                         placeholder="Discount(%) in terms of Price"
                         name="discount"
                         autocomplete="off"
+                        required
                       />
                     </div>
                   </div>
@@ -668,10 +669,17 @@
         let fileNumber = document.querySelector(".filing");
         if (fileNumber.files.length == 0) {
           e.preventDefault();
-          alert(
-            "Total images should be atleast one and should not exceed four!!!"
-          );
+          alert("Please Select Main Image");
         }
+      });
+
+      let characterPrevent = document.querySelectorAll(".mynum");
+      characterPrevent.forEach((input) => {
+        input.addEventListener("keydown", (e) => {
+          if (e.which === 69) {
+            e.preventDefault();
+          }
+        });
       });
 
       function lg() {
