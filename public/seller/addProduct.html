@@ -349,7 +349,7 @@
 
                   <br />
                   <h6 class="text-center">Product Variation</h6>
-                  <label for="size"
+                  <label for="size" class="col-md-3"
                     >Size Variation(if any)
                     <button
                       type="button"
@@ -361,7 +361,7 @@
                   >
                   <div class="text-center newSize"></div>
                   <br />
-                  <label for="Flavours"
+                  <label for="Flavours" class="col-md-3"
                     >Add Flavours(if any)
                     <button
                       type="button"
@@ -373,7 +373,7 @@
                   >
                   <div class="text-center newFlavour"></div>
                   <br />
-                  <label for="Flavours"
+                  <label for="Flavours" class="col-md-3"
                     >Add Colors(if any)
                     <button
                       type="button"
@@ -385,7 +385,7 @@
                   >
                   <div class="text-center newColor"></div>
                   <br />
-                  <label for="Ingridient">
+                  <label for="Ingridient" class="col-md-3">
                     Ingridients(if any)
                     <button
                       type="button"
@@ -432,7 +432,7 @@
                         type="number"
                         class="form-control mynum"
                         required=""
-                        placeholder="Discount(UGX)"
+                        placeholder="Given Perentage(%) of the Price"
                         name="discount"
                         autocomplete="off"
                         id="discount"
@@ -708,14 +708,14 @@
       //   });
       // });
 
-      // let testFileNumber = document.querySelector(".btn-block");
-      // testFileNumber.addEventListener("click", (e) => {
-      //   let fileNumber = document.querySelector(".filing");
-      //   if (fileNumber.files.length == 0) {
-      //     e.preventDefault();
-      //     alert("Please Select Main Image");
-      //   }
-      // });
+      let testFileNumber = document.querySelector(".btn-block");
+      testFileNumber.addEventListener("click", (e) => {
+        let fileNumber = document.querySelector(".filing");
+        if (fileNumber.files.length == 0) {
+          e.preventDefault();
+          alert("Please Select Main Image");
+        }
+      });
 
       let characterPrevent = document.querySelectorAll(".mynum");
       characterPrevent.forEach((input) => {
@@ -729,7 +729,7 @@
       document.getElementById("discount").addEventListener("keyup", (e) => {
         let price = parseInt(document.getElementById("price").value);
         let discount = parseInt(document.getElementById("discount").value);
-        let newPrice = price - discount;
+        let newPrice = (discount / price) * 100;
         document.getElementById("nprice").innerHTML = "New Price: " + newPrice;
       });
 
