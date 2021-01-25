@@ -148,7 +148,13 @@
                         >Edit Zone</a
                       >
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Edit Zone Address</a>
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#editAddress"
+                        data-toggle="modal"
+                        >Edit Zone Address</a
+                      >
                     </div>
                   </div>
                 </div>
@@ -156,13 +162,9 @@
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
-                      <a
-                        href="#"
-                        class="nav-link"
-                        data-target="#order-search"
-                        data-toggle="modal"
-                      >
-                        <i class="fas fa-search text-muted fa-2x"></i
+                      <a href="#" class="nav-link"
+                        ><span class="text-white icon-bullet">0</span
+                        ><i class="fas fa-comments text-muted fa-2x"></i
                       ></a>
                     </li>
                     <li class="list-item icon-parent">
@@ -275,6 +277,50 @@
     </div>
     <!-- End Address -->
 
+    <!-- Address Edit -->
+    <div class="modal fade" id="editAddress">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Eidt Address</h5>
+          </div>
+          <div class="modal-body text-center" id="aMessage">
+            <form id="editAddress">
+              <div class="form-group">
+                <select id="zonningA" required class="form-control zonal">
+                  <option value="">Select a Zone</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <select id="myAdd" class="form-control" required>
+                  <option value="">Select Address to Edit</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  autocomplete="off"
+                  class="form-control"
+                  id="newAddress"
+                  placeholder="Enter New Address Name"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-block btn-primary">
+                Update
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm autoReload">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Edit Address -->
+
     <!-- Zone Edit -->
     <div class="modal fade" id="editZone">
       <div class="modal-dialog">
@@ -348,42 +394,6 @@
       </div>
     </div>
     <!-- End Logout Modal -->
-
-    <!-- Order Search -->
-    <div class="modal fade" id="order-search">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Search an Order</h5>
-          </div>
-          <div class="modal-body text-center" id="orderFeedBack">
-            <form id="order-form">
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Order Number"
-                  id="orderNumber"
-                  autocomplete="off"
-                />
-              </div>
-              <button
-                type="submit"
-                class="btn btn-warning btn-block text-light"
-              >
-                Search
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm" id="orderOk">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Order Search -->
 
     <!-- Cards -->
     <section>
@@ -475,11 +485,29 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-muted mb-3 text-center">
-                      Pending Orders <span id="on"></span>
-                    </h4>
+                    <nav class="navbar navbar-light bg-light">
+                      <div class="container-fluid">
+                        <a class="navbar-brand"
+                          >Pending Orders <span id="on"></span
+                        ></a>
+                        <form class="d-flex">
+                          <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Order Number"
+                            aria-label="Search"
+                            id="sorder"
+                          />
+                          <!-- <button class="btn btn-outline-success" type="submit">
+                            Search
+                          </button> -->
+                        </form>
+                      </div>
+                    </nav>
                     <div class="table-responsive">
-                      <table class="table table-striped bg-light text-center">
+                      <table
+                        class="table table-striped bg-light text-center my-3"
+                      >
                         <thead>
                           <tr class="text-muted">
                             <th>OrderNumber</th>
@@ -1115,30 +1143,34 @@
       request.open("GET", "/api/admin/orderNumber", true);
       request.send();
 
-      let orderSearch = document.getElementById("order-form");
-      orderSearch.addEventListener("submit", (e) => {
+      let orderSearch = document.getElementById("sorder");
+      orderSearch.addEventListener("keyup", (e) => {
         e.preventDefault();
-        let number = document.getElementById("orderNumber").value;
+        let number = document.getElementById("sorder").value;
         const search = new XMLHttpRequest();
         search.onreadystatechange = () => {
           if (search.readyState < 4) {
             document.getElementById(
-              "orderFeedBack"
+              "orderLoading"
             ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
           }
           if (search.readyState == 4 && search.status == 200) {
-            if (
-              search.responseText ==
-              "No Order Matches that Number Please try again"
-            ) {
-              document.getElementById("orderFeedBack").innerHTML =
-                search.responseText;
-            } else {
-              let [orderSearching] = JSON.parse(search.responseText);
-              window.location.assign(
-                `order.html?order=${orderSearching.order_id}`
-              );
-            }
+            let pendingOrders = JSON.parse(search.responseText);
+            let row = "";
+            pendingOrders.forEach((pendingOrder) => {
+              row += `<tr>
+       <td>${pendingOrder.order_number}</td>
+       <td>${pendingOrder.order_amount}</td>
+       <td>
+       <a href="order?order=${pendingOrder.order_id}">
+         <button type="button" class="btn btn-info btn-sm">
+           Details
+         </button></a>
+       </td>
+     </tr>`;
+            });
+            document.getElementById("pendingOrders").innerHTML = row;
+            document.getElementById("orderLoading").innerHTML = "";
           }
         };
         search.open("GET", `/api/admin/orderSearch/${number}`, true);
@@ -1293,6 +1325,46 @@
         data.open("POST", `/api/admin/zoneEdit/${zonename}`, true);
         data.setRequestHeader("Content-Type", "application/json");
         data.send(editString);
+      });
+
+      let addressGet = document.getElementById("zonningA");
+      addressGet.addEventListener("change", (e) => {
+        let = zone = document.getElementById("zonningA").value;
+        let myAdd = new XMLHttpRequest();
+        myAdd.onreadystatechange = function () {
+          if (myAdd.readyState == 4 && myAdd.status == 200) {
+            let outcome = JSON.parse(myAdd.responseText);
+            let data = "";
+            outcome.forEach((out) => {
+              data += `<option value=${out.address_id}>${out.address_name}</option>`;
+            });
+            document.getElementById("myAdd").innerHTML += data;
+          }
+        };
+        myAdd.open("GET", `/api/admin/getAddress/${zone}`, true);
+        myAdd.send();
+      });
+
+      let editAddress = document.getElementById("editAddress");
+      editAddress.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let original = document.getElementById("myAdd").value;
+        let newAddress = {};
+        newAddress.newName = document.getElementById("newAddress").value;
+        let edit = new XMLHttpRequest();
+        edit.onreadystatechange = function () {
+          if (edit.readyState < 4) {
+            document.getElementById(
+              "aMessage"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (edit.readyState == 4 && edit.status == 200) {
+            document.getElementById("aMessage").innerHTML = edit.responseText;
+          }
+        };
+        edit.open("POST", `/api/admin/editAddress/${original}`, true);
+        edit.setRequestHeader("Content-Type", "application/json");
+        edit.send(JSON.stringify(newAddress));
       });
     </script>
     <!-- End Scripts -->

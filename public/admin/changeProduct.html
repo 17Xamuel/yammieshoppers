@@ -226,6 +226,44 @@
     </div>
     <!-- End Modal -->
 
+    <!-- edit Category -->
+    <div class="modal fade" id="editCat">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Change Product Category</h5>
+          </div>
+          <div class="modal-body">
+            <form id="editting">
+              <div class="form-group">
+                <select required id="mySelCat" class="form-control">
+                  <option value="">Please Select Category</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <select required id="mySelSubCat" class="form-control">
+                  <option value="">Select SubCategory</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                Update
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-sm btn-success"
+              data-dismiss="modal"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end -->
+
     <section>
       <div class="container-fluid">
         <div class="row">
@@ -303,13 +341,24 @@
 
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="category">Category</label>
+                      <label for="category"
+                        >Category
+                        <button
+                          type="button"
+                          class="btn btn-sm btn-warning text-light"
+                          data-target="#editCat"
+                          data-toggle="modal"
+                        >
+                          Edit Category
+                        </button></label
+                      >
                       <input
                         class="form-control"
                         required
                         name="category"
                         placeholder="Category"
                         id="category"
+                        readonly
                       />
                     </div>
                     <div class="form-group col-md-6">
@@ -320,6 +369,7 @@
                         required
                         id="subCat"
                         type="text"
+                        readonly
                       />
                     </div>
                   </div>
@@ -560,14 +610,12 @@
 
           let specify = JSON.parse(result.specifications);
 
-          document.getElementById("color").value =
-            specify.Color || "Not Specified";
+          document.getElementById("color").value = specify.Color || null;
           document.getElementById("dimensions").value =
-            specify.Dimensions || "Not Specified";
-          document.getElementById("brand").value =
-            specify.Brand || "Not Specified";
+            specify.Dimensions || null;
+          document.getElementById("brand").value = specify.Brand || null;
           document.getElementById("netWeight").value =
-            specify.NetWeight || "Not Specified";
+            specify.NetWeight || null;
           document.getElementById("weight").value = specify.Weight;
           document.getElementById("customerExpect").value =
             specify.TypeOfProduct;

@@ -178,6 +178,13 @@
                         data-toggle="modal"
                         >Edit Category</a
                       >
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#editSubCategory"
+                        data-toggle="modal"
+                        >Edit SubCategory</a
+                      >
                       <div class="dropdown-divider"></div>
                       <a
                         class="dropdown-item"
@@ -281,6 +288,49 @@
       </div>
     </div>
     <!-- End Category -->
+
+    <!-- Edit SubCategory -->
+    <div class="modal fade" id="editSubCategory">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit SubCategory</h5>
+          </div>
+          <div class="modal-body text-center" id="edittingSub">
+            <form id="editSub">
+              <div class="form-group">
+                <select id="myCate" class="form-control catSelection" required>
+                  <option value="">Select Category</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <select class="form-control" id="mySubCate" required>
+                  <option value="">Select SubCategory</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="New SubCategory Name"
+                  id="newSname"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                Update
+              </button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm auto">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End -->
 
     <!--Sub Category Modal  -->
     <div class="modal fade" id="newSubCategory">
@@ -516,12 +566,13 @@
                           <input
                             class="form-control me-2"
                             type="search"
-                            placeholder="Search"
+                            placeholder="Product Name"
                             aria-label="Search"
+                            id="sproduct"
                           />
-                          <button class="btn btn-outline-success" type="submit">
+                          <!-- <button class="btn btn-outline-success" type="submit">
                             Search
-                          </button>
+                          </button> -->
                         </form>
                       </div>
                     </nav>
@@ -891,7 +942,6 @@
         data.onreadystatechange = () => {
           if (data.readyState == 4 && data.status == 200) {
             let results = JSON.parse(data.responseText);
-            console.log(results);
             let row = "";
             results.forEach((result) => {
               row += `<option value=${result.subCategoryName.replace(
@@ -904,6 +954,102 @@
         };
         data.open("GET", `/api/sellers/subCategory/${myCategory}`, true);
         data.send();
+      });
+
+      let searchProduct = document.getElementById("sproduct");
+      searchProduct.addEventListener("keyup", (e) => {
+        e.preventDefault();
+        let myValue = document.getElementById("sproduct").value;
+        let data = new XMLHttpRequest();
+        data.onreadystatechange = () => {
+          if (data.readyState < 4) {
+            document.getElementById(
+              "onlineLoading"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (data.readyState == 4 && data.status == 200) {
+            let online = JSON.parse(data.responseText);
+            let row = "";
+            online.forEach((onlineProduct) => {
+              let images = JSON.parse(onlineProduct.images);
+              row += `<tr>
+                      <td>
+                        <img
+                          src="${images[0]}"
+                          width="50"
+                          height="50"
+                          class="rounded-circle"
+                        />
+                      </td>
+                      <td>${onlineProduct.product}</td>
+                      <td>${onlineProduct.price}</td>
+                      <td>
+                   <a href="product.html?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
+                       data-pp="${onlineProduct.id}">
+                          Details
+                        </button></a>
+                        </td>
+                      <td>
+                      <button
+                      type="submit"
+                      class="btn btn-danger btn-sm"
+                      data-id="${onlineProduct.id}"
+                      data-images="${onlineProduct.images}">
+                        Delete
+                      </button></td>
+                    </tr>`;
+            });
+            document.getElementById("onlineProducts").innerHTML = row;
+            document.getElementById("onlineLoading").innerHTML = "";
+          }
+        };
+        data.open("GET", `/api/admin/searchProduct/${myValue}`, true);
+        data.send();
+      });
+
+      let myCate = document.getElementById("myCate");
+      myCate.addEventListener("change", (e) => {
+        let category = document.getElementById("myCate").value;
+        let myData = new XMLHttpRequest();
+        myData.onreadystatechange = () => {
+          if (myData.readyState == 4 && myData.status == 200) {
+            let outcomes = JSON.parse(myData.responseText);
+            let row = "";
+            outcomes.forEach((outcome) => {
+              row += `<option value=${outcome.subCategoryName.replace(
+                / /g,
+                "_"
+              )}>${outcome.subCategoryName}</option>`;
+            });
+            document.getElementById("mySubCate").innerHTML += row;
+          }
+        };
+        myData.open("GET", `/api/sellers/subCategory/${category}`, true);
+        myData.send();
+      });
+
+      let editSub = document.getElementById("editSub");
+      editSub.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let original = document.getElementById("mySubCate").value;
+        let newSub = {};
+        newSub.newSubName = document.getElementById("newSname").value;
+
+        let data = new XMLHttpRequest();
+        data.onreadystatechange = () => {
+          if (data.readyState < 4) {
+            document.getElementById(
+              "edittingSub"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (data.readyState == 4 && data.status == 200) {
+            document.getElementById("edittingSub").innerHTML =
+              data.responseText;
+          }
+        };
+        data.open("POST", `/api/admin/editSubCategory/${original}`, true);
+        data.setRequestHeader("Content-Type", "application/json");
+        data.send(JSON.stringify(newSub));
       });
 
       function reloading() {

@@ -218,7 +218,7 @@
                       <label for="price">Quantity Available</label>
                       <input
                         type="number"
-                        class="form-control"
+                        class="form-control mynum"
                         required=""
                         placeholder="Quantity"
                         name="quantity"
@@ -227,6 +227,7 @@
                     </div>
                   </div>
                   <br />
+
                   <div class="form-group">
                     <label for="description">Brief Description</label>
                     <input
@@ -239,29 +240,7 @@
                     />
                   </div>
                   <br />
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="Product Brand">Price</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        required=""
-                        placeholder="Price(UGX)"
-                        name="price"
-                        autocomplete="off"
-                      />
-                    </div>
-                    <div class="form-group col-md-6">
-                      <label for="Product Brand">Discount(%)</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        placeholder="Discount(%) in terms of Price"
-                        name="discount"
-                        autocomplete="off"
-                      />
-                    </div>
-                  </div>
+
                   <br />
 
                   <div class="form-row">
@@ -325,21 +304,22 @@
                       />
                     </div>
                     <div class="form-group col-md-4">
-                      <label for="Colors">Colors</label>
-                      <input
-                        type="text"
-                        placeholder="Main Color"
-                        class="form-control"
-                        autocomplete="off"
-                        name="color"
-                      />
-                    </div>
-                    <div class="form-group col-md-4">
-                      <label for="Weight">Weight</label>
+                      <label for="Weight">Weight(Select)</label>
                       <select class="form-control" name="weight" required>
                         <option value="Heavy">Heavy</option>
                         <option value="Light">Light</option>
                       </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                      <label for="netWeight">Net Weight</label>
+                      <input
+                        type="text"
+                        placeholder="Net Weight Eg 10Kg, 4g"
+                        class="form-control"
+                        autocomplete="off"
+                        name="netWeight"
+                        required
+                      />
                     </div>
                   </div>
                   <br />
@@ -367,19 +347,56 @@
                     </div>
                   </div>
 
-                  <div class="form-row">
-                    <div class="form-group col-md-6">
-                      <label for="Net Weight">Net Weight(In any Unit)</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Enter Net Weight"
-                        autocomplete="off"
-                        name="netWeight"
-                      />
-                    </div>
-                  </div>
                   <br />
+                  <h6 class="text-center">Product Variation</h6>
+                  <label for="size"
+                    >Size Variation(if any)
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-warning text-light"
+                      id="sizing"
+                    >
+                      Add Size Variation
+                    </button></label
+                  >
+                  <div class="text-center newSize"></div>
+                  <br />
+                  <label for="Flavours"
+                    >Add Flavours(if any)
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-warning text-light"
+                      id="Flavour"
+                    >
+                      + Flavour Variation
+                    </button></label
+                  >
+                  <div class="text-center newFlavour"></div>
+                  <br />
+                  <label for="Flavours"
+                    >Add Colors(if any)
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-warning text-light"
+                      id="color"
+                    >
+                      Add Color Variation
+                    </button></label
+                  >
+                  <div class="text-center newColor"></div>
+                  <br />
+                  <label for="Ingridient">
+                    Ingridients(if any)
+                    <button
+                      type="button"
+                      class="btn btn-sm btn-warning text-light"
+                      id="Ingridient"
+                    >
+                      + Ingridients Variation
+                    </button></label
+                  >
+                  <div class="text-center newIngridients"></div>
+                  <br /><br />
                   <label for="Detailed Description"
                     >Product Detailed Description</label
                   >
@@ -393,9 +410,37 @@
                       rows="4"
                     ></textarea>
                   </div>
+                  <br />
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="productname">Price</label>
+                      <input
+                        type="number"
+                        class="form-control mynum"
+                        required
+                        placeholder="Price(UGX)"
+                        name="price"
+                        autocomplete="off"
+                        id="price"
+                      />
+                    </div>
+                    <div class="form-group col-md-6">
+                      <label for="price"
+                        >Discount <span id="nprice"></span
+                      ></label>
+                      <input
+                        type="number"
+                        class="form-control mynum"
+                        required=""
+                        placeholder="Discount(UGX)"
+                        name="discount"
+                        autocomplete="off"
+                        id="discount"
+                      />
+                    </div>
+                  </div>
 
                   <br />
-
                   <div class="row">
                     <div class="col-xl-6 col-12">
                       <div style="width: 400px">
@@ -663,20 +708,151 @@
       //   });
       // });
 
-      let testFileNumber = document.querySelector(".btn-block");
-      testFileNumber.addEventListener("click", (e) => {
-        let fileNumber = document.querySelector(".filing");
-        if (fileNumber.files.length == 0) {
-          e.preventDefault();
-          alert(
-            "Total images should be atleast one and should not exceed four!!!"
-          );
-        }
+      // let testFileNumber = document.querySelector(".btn-block");
+      // testFileNumber.addEventListener("click", (e) => {
+      //   let fileNumber = document.querySelector(".filing");
+      //   if (fileNumber.files.length == 0) {
+      //     e.preventDefault();
+      //     alert("Please Select Main Image");
+      //   }
+      // });
+
+      let characterPrevent = document.querySelectorAll(".mynum");
+      characterPrevent.forEach((input) => {
+        input.addEventListener("keydown", (e) => {
+          if (e.which === 69) {
+            e.preventDefault();
+          }
+        });
+      });
+
+      document.getElementById("discount").addEventListener("keyup", (e) => {
+        let price = parseInt(document.getElementById("price").value);
+        let discount = parseInt(document.getElementById("discount").value);
+        let newPrice = price - discount;
+        document.getElementById("nprice").innerHTML = "New Price: " + newPrice;
+      });
+
+      const mySize = document.querySelector(".newSize");
+      document.getElementById("sizing").addEventListener("click", (e) => {
+        let main = document.createElement("div");
+        main.classList.add("form-row");
+        let innerdiv = document.createElement("div");
+        innerdiv.classList.add("form-group", "col-md-4");
+        let input1 = document.createElement("input");
+        input1.classList.add("form-control");
+        input1.setAttribute("placeholder", "Size");
+        input1.setAttribute("type", "text");
+        input1.setAttribute("required", "required");
+        input1.setAttribute("name", "mySize");
+        innerdiv.appendChild(input1);
+        let indiv = document.createElement("div");
+        indiv.classList.add("form-group", "col-md-4");
+        let input2 = document.createElement("input");
+        input2.classList.add("form-control", "mynum");
+        input2.setAttribute("placeholder", "Size Price(UGX)");
+        input2.setAttribute("type", "number");
+        input2.setAttribute("required", "required");
+        input2.setAttribute("name", "myprice");
+        indiv.appendChild(input2);
+        let lastdiv = document.createElement("div");
+        lastdiv.classList.add("form-group", "col-md-4");
+        let input3 = document.createElement("input");
+        input3.classList.add("form-control", "mynum");
+        input3.setAttribute("placeholder", "Size Discount(UGX)");
+        input3.setAttribute("type", "number");
+        input3.setAttribute("required", "required");
+        input3.setAttribute("name", "mydiscount");
+        lastdiv.appendChild(input3);
+        main.append(innerdiv, indiv, lastdiv);
+        mySize.appendChild(main);
+      });
+
+      const myIngridient = document.querySelector(".newIngridients");
+      document.getElementById("Ingridient").addEventListener("click", (e) => {
+        let main = document.createElement("div");
+        main.classList.add("form-row");
+        let innerdiv = document.createElement("div");
+        innerdiv.classList.add("form-group", "col-md-4");
+        let input1 = document.createElement("input");
+        input1.classList.add("form-control");
+        input1.setAttribute("placeholder", "Ingridients");
+        input1.setAttribute("type", "text");
+        input1.setAttribute("required", "required");
+        input1.setAttribute("name", "ingridient");
+        innerdiv.appendChild(input1);
+        let indiv = document.createElement("div");
+        indiv.classList.add("form-group", "col-md-4");
+        let input2 = document.createElement("input");
+        input2.classList.add("form-control", "mynum");
+        input2.setAttribute("placeholder", "Ingridients Price(UGX)");
+        input2.setAttribute("type", "number");
+        input2.setAttribute("required", "required");
+        input2.setAttribute("name", "ingridientPrice");
+        indiv.appendChild(input2);
+        let lastdiv = document.createElement("div");
+        lastdiv.classList.add("form-group", "col-md-4");
+        let input3 = document.createElement("input");
+        input3.classList.add("form-control", "mynum");
+        input3.setAttribute("placeholder", "Discount(UGX)");
+        input3.setAttribute("type", "number");
+        input3.setAttribute("required", "required");
+        input3.setAttribute("name", "ingridientdiscount");
+        lastdiv.appendChild(input3);
+        main.append(innerdiv, indiv, lastdiv);
+        myIngridient.appendChild(main);
+      });
+
+      const myFlavor = document.querySelector(".newFlavour");
+      document.getElementById("Flavour").addEventListener("click", (e) => {
+        let maindiv = document.createElement("div");
+        maindiv.classList.add("form-row");
+        let inner = document.createElement("div");
+        inner.classList.add("form-group", "col-md-6");
+        let input0 = document.createElement("input");
+        input0.classList.add("form-control");
+        input0.setAttribute("type", "text");
+        input0.setAttribute("Placeholder", "Flavor Name");
+        input0.setAttribute("name", "flavor");
+        inner.appendChild(input0);
+        let inner1 = document.createElement("div");
+        inner1.classList.add("form-group", "col-md-6");
+        let input1 = document.createElement("input");
+        input1.classList.add("form-control");
+        input1.setAttribute("type", "text");
+        input1.setAttribute("Placeholder", "Flavor Name");
+        input1.setAttribute("name", "flavor");
+        inner1.appendChild(input1);
+        maindiv.append(inner, inner1);
+        myFlavor.appendChild(maindiv);
+      });
+
+      const myColor = document.querySelector(".newColor");
+      document.getElementById("color").addEventListener("click", (e) => {
+        let maindiv = document.createElement("div");
+        maindiv.classList.add("form-row");
+        let inner = document.createElement("div");
+        inner.classList.add("form-group", "col-md-6");
+        let input0 = document.createElement("input");
+        input0.classList.add("form-control");
+        input0.setAttribute("type", "text");
+        input0.setAttribute("Placeholder", "Color Name");
+        input0.setAttribute("name", "color");
+        inner.appendChild(input0);
+        let inner1 = document.createElement("div");
+        inner1.classList.add("form-group", "col-md-6");
+        let input1 = document.createElement("input");
+        input1.classList.add("form-control");
+        input1.setAttribute("type", "text");
+        input1.setAttribute("Placeholder", "Color Name");
+        input1.setAttribute("name", "color");
+        inner1.appendChild(input1);
+        maindiv.append(inner, inner1);
+        myColor.appendChild(maindiv);
       });
 
       function lg() {
-        let lg = document.getElementById("slg");
-        lg.addEventListener("click", (e) => {
+        document.getElementById("slg").addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
           window.location.assign("login.html");
         });

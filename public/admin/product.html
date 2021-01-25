@@ -412,18 +412,14 @@
           document.getElementById("sname").innerHTML = outcome.username;
           document.getElementById("scontact").innerHTML = outcome.phonenumber;
           let specify = JSON.parse(outcome.specifications);
-          document.getElementById("brand").innerHTML =
-            specify.Brand || "Not specified";
+          document.getElementById("brand").innerHTML = specify.Brand || null;
           document.getElementById("frag").innerHTML = specify.Fragile;
           document.getElementById("size").innerHTML = specify.Size;
-          document.getElementById("col").innerHTML =
-            specify.Color || "Not specified";
-          document.getElementById("dim").innerHTML =
-            specify.Dimensions || "Not Specified";
+          document.getElementById("col").innerHTML = specify.Color || null;
+          document.getElementById("dim").innerHTML = specify.Dimensions || null;
           document.getElementById("weight").innerHTML = specify.Weight;
           document.getElementById("types").innerHTML = specify.TypeOfProduct;
-          document.getElementById("netW").innerHTML =
-            specify.NetWeight || "Not Specified";
+          document.getElementById("netW").innerHTML = specify.NetWeight || null;
 
           let images = JSON.parse(outcome.images);
           let data = "";
