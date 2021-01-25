@@ -81,7 +81,7 @@
         <li class="n-l-itm">
           <a href="./kitchen">
             <i class="fas fa-utensils ctg-icon"></i>
-            Kitchen Staff &amp; Utensils
+            Kitchen stuff &amp; Utensils
           </a>
         </li>
         <li class="n-l-itm">
@@ -824,7 +824,7 @@
                     <a class="item -ct-item" href="./item?item=${item.id}">
                       <div class="-d">
                         ${
-                          item.discount !== null
+                          item.discount != 0 && item.discount !== null
                             ? "-" + item.discount + "%"
                             : ""
                         }
@@ -855,6 +855,9 @@
                     `;
             });
             c.innerHTML = group;
+            document.querySelectorAll(".-d").forEach((item) => {
+              if (item.innerText == "") item.style.display = "none";
+            });
           }
         };
         xhr.open("GET", url, true);
@@ -884,9 +887,8 @@
       }
       //depends on the url
       ctg(document.querySelector(".-ct-soft-drinks"), "/api/user/ct/5/27");
-      ctg(document.querySelector(".-ct-wine"), "/api/user/ct/5/28");
+      // ctg(document.querySelector(".-ct-wine"), "/api/user/ct/5/28");
       ctg(document.querySelector(".-ct-local-foods"), "/api/user/ct/5/30");
-      ctg(document.querySelector(".-ct-software"), "/api/user/ct/3/15");
 
       scl(document.querySelectorAll(".-sc-n"));
       scr(document.querySelectorAll(".-sc-b"));
@@ -1112,11 +1114,15 @@
               <div class="-test -catalog itm-searched">
               <div class="a-s-discount">
                 <span class="d">
-                  ${itm.discount !== null ? "-" + itm.discount + "%" : ""}
+                  ${
+                    itm.discount !== null && itm.discount !== 0
+                      ? "-" + itm.discount + "%"
+                      : ""
+                  }
                 </span>
               </div>
-              <a class="itm-s-img" href="./item?item=${itm.id}">
-                 <div class="_img-ctr">
+              <a class="itm-s-img" href="./item?item=${itm.product_id}">
+                <div class="_img-ctr">
                   <img
                     src="${JSON.parse(itm.images)[0]}"
                     alt="${itm.product}"
@@ -1127,10 +1133,10 @@
               </a>
               <div class="itm-s-dtl">
                 <div class="seller">
-                  <b>Seller:</b> Yammie Shoppers
+                  <b>Seller:</b> ${itm.businessname}
                 </div>
                 <a class="itm-name" style="font-size:13.5px;" 
-                  href="./item?item=${itm.id}">
+                  href="./item?item=${itm.product_id}">
                   ${itm.product} - ${itm.description}
                 </a>
                 <div class="price-current">${
@@ -1144,28 +1150,24 @@
                 <div class="price-prev">${
                   itm.discount ? "UGX " + itm.price : ""
                 }</div>
-                <div class="location">
+                <div class="location" style="padding:5px 0px;">
                   <i class="fas fa-map-marker-alt"></i>
-                  <span>Lira</span>
+                  <span>${itm.location}</span>
                 </div>
                 <div class="delivery-by">
                   <i class="fab fa-telegram-plane"></i>
                   Yammie Delivery
                 </div>
                 <div class="a-t-c add-to-c"
-                  data-item=${itm.id}
+                  data-item=${itm.product_id}
                 >
-                  <img
-                    src="./resources/shopping_cart_add_white.svg"
-                    alt=""
-                    width="25px"
-                    height="25px"
-                    data-item=${itm.id}
-                  />
                   Add to Cart
                 </div>
               </div>
             </div>`;
+              });
+              document.querySelectorAll(".d").forEach((item) => {
+                if (item.innerText == "") item.style.display = "none";
               });
               document.getElementById("s-itms-ctr").innerHTML = itmsSearched;
               let btns = document.querySelectorAll(".add-to-c");

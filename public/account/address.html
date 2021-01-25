@@ -270,7 +270,7 @@
         <li class="n-l-itm">
           <a href="../kitchen">
             <i class="fas fa-utensils ctg-icon"></i>
-            Kitchen Staff &amp; Utensils
+            Kitchen stuff &amp; Utensils
           </a>
         </li>
         <li class="n-l-itm">
@@ -1028,7 +1028,7 @@
             <a class="item -ct-item" href="../item?item=${item.id}">
                       <div class="-d">
                         ${
-                          item.discount !== null
+                          item.discount != 0 && item.discount !== null
                             ? "-" + item.discount + "%"
                             : ""
                         }
@@ -1059,6 +1059,9 @@
                     `;
             });
             c.innerHTML = group;
+              document.querySelectorAll(".-d").forEach((item) => {
+        if (item.innerText == "") item.style.display = "none";
+      });
           }
         };
         xhr.open("GET", url, true);

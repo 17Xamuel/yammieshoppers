@@ -452,7 +452,7 @@
         <li class="n-l-itm">
           <a href="./kitchen">
             <i class="fas fa-utensils ctg-icon"></i>
-            Kitchen Staff &amp; Utensils
+            Kitchen stuff &amp; Utensils
           </a>
         </li>
         <li class="n-l-itm">
@@ -1008,9 +1008,13 @@
           let cartDom = document.querySelector("#ct-items");
           cartDom.innerHTML = "";
           async function itemCollect(i) {
-            let res = await fetch(`/api/user/product/${i}`);
-            let item = await res.json();
-            return item;
+            try {
+              let res = await fetch(`/api/user/product/${i}`);
+              let item = await res.json();
+              return item;
+            } catch (error) {
+              console.log("Error: ", error);
+            }
           }
           Object.values(cartItems).forEach(async (key) => {
             let item = await itemCollect(key.cartItemAdded);
@@ -1416,7 +1420,7 @@
             <a class="item -ct-item" href="./item?item=${item.id}">
                       <div class="-d">
                         ${
-                          item.discount !== null
+                          item.discount != 0 && item.discount !== null
                             ? "-" + item.discount + "%"
                             : ""
                         }
@@ -1448,6 +1452,9 @@
             `;
             });
             c.innerHTML = group;
+            document.querySelectorAll(".-d").forEach((item) => {
+              if (item.innerText == "") item.style.display = "none";
+            });
           }
         };
         xhr.open("GET", url, true);
