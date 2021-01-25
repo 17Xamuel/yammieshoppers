@@ -560,7 +560,7 @@ router.post("/zoneEdit/:id", async (req, res) => {
 router.post("/editAddress/:id", async (req, res) => {
   let { newName } = req.body;
   conn.query(
-    `UPDATE addresses SET address_name=?`,
+    `UPDATE addresses SET address_name= '${newName}' WHERE address_id=?`,
     [req.params.id],
     (err, result) => {
       if (err) throw err;
