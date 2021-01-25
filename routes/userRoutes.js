@@ -140,11 +140,16 @@ router.get("/search/:l-:h", async (req, res) => {
       query == "recommendedforyou" ||
       query == "gascookers" ||
       query == "trending"
-        ? "SELECT * FROM products"
-        : `SELECT * FROM products 
-          WHERE product LIKE '%${query}%'
-            OR description LIKE '%${query}%'
-            OR subcategory LIKE '%${query}%'`;
+        ? `
+        SELECT *,products.id AS product_id FROM products 
+            JOIN sellers 
+            ON products.seller_id = sellers.id`
+        : `SELECT *,products.id AS product_id FROM products 
+            JOIN sellers 
+            ON products.seller_id = sellers.id
+              WHERE product LIKE '%${query}%'
+                OR description LIKE '%${query}%'
+                OR subcategory LIKE '%${query}%'`;
 
     conn.query(_query, (err, result) => {
       if (err) {
@@ -188,9 +193,10 @@ router.get("/ct/search/:l-:h", async (req, res) => {
     res.send([]);
     return;
   } else {
-    let _query = `SELECT * FROM products 
-          WHERE category = ?
-           `;
+    let _query = `SELECT *,products.id AS product_id FROM products 
+                      JOIN sellers 
+                      ON products.seller_id = sellers.id 
+                      WHERE products.category = ?`;
 
     conn.query(_query, query, (err, result) => {
       if (err) {
@@ -446,20 +452,26 @@ router.post("/customer/order", async (req, res) => {
 // route-->/category/category(name)/nature(trending, headsets,..etc)
 function category(ct, sbct, res) {
   let req;
-  if (sbct == "trending") {
-    req = "14";
-  } else if (sbct == "recommendedforyou") {
-    req = "20";
+  if (sbct == "recommendedforyou") {
+    req = "32";
   } else if (sbct == "gascookers") {
     req = "20";
+  } else if (sbct == "yammie-for-you") {
+    req = "30";
+  } else if (sbct == "recently-added") {
+    req = "30";
+  } else if (sbct == "yammie-for-you") {
+    req = "30";
   } else if (sbct == "recentlyviewed") {
     req = "20";
+  } else if (sbct == "vegetables") {
+    req = "36";
   } else if (sbct == "phoneaccessories") {
     req = "14";
   } else if (sbct == "rv") {
     req = "14";
   } else if (sbct == "rec") {
-    req = "14";
+    req = "32";
   } else {
     req = sbct;
   }

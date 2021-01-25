@@ -193,9 +193,9 @@
         background-color: #ffbb00;
         font-size: 17px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        width: 200px;
+        /* width: 200px; */
         color: white;
         border-radius: 5px;
         opacity: 0;
@@ -204,8 +204,9 @@
         padding: 5px 25px;
         margin-bottom: 5px;
         bottom: 5px;
-        left: auto;
-        right: auto;
+        left: 5px;
+        right: 5px;
+        box-shadow: 0 0 10px #c3c3c3;
       }
       .itms-ctr {
         padding: 10px 30px 10px 20px;
@@ -263,6 +264,7 @@
         left: 0;
         z-index: 1;
         display: flex;
+        color: white;
         justify-content: center;
       }
       .location > .fas {
@@ -433,7 +435,6 @@
         }
         .a-s-discount {
           width: 18%;
-          height: 5%;
         }
         .itms-ctr {
           display: grid;
@@ -566,7 +567,7 @@
         <li class="n-l-itm">
           <a href="./kitchen">
             <i class="fas fa-utensils ctg-icon"></i>
-            Kitchen Staff &amp; Utensils
+            Kitchen stuff &amp; Utensils
           </a>
         </li>
         <li class="n-l-itm">
@@ -825,7 +826,7 @@
       <div class="ctlg-ctr" id="ctlg-ctr">
         <div class="ctlg-itm-ctr">
           <div class="a-search">
-            <span class="items-got _no">Counting Products...</span>
+            <span class="items-got _no">Searching...</span>
             <span class="search-input">
               You searched for : "<span id="s-word"></span>"
             </span>
@@ -1507,7 +1508,7 @@
                     <a class="item -ct-item" href="./item?item=${item.id}">
                       <div class="-d">
                         ${
-                          item.discount !== null
+                          item.discount != 0 && item.discount !== null
                             ? "-" + item.discount + "%"
                             : ""
                         }
@@ -1539,6 +1540,9 @@
                     `;
             });
             c.innerHTML = group;
+            document.querySelectorAll(".-d").forEach((item) => {
+              if (item.innerText == "") item.style.display = "none";
+            });
           }
         };
         xhr.open("GET", url, true);
@@ -1567,12 +1571,11 @@
         });
       }
       //categories
+      ctg(document.querySelector(".-ct-rec"), "/api/user/ct/catalog/rec");
       ctg(
         document.querySelector(".-ct-trending"),
-        "/api/user/ct/catalog/trending"
+        "/api/user/product/trending/index"
       );
-
-      ctg(document.querySelector(".-ct-rec"), "/api/user/ct/catalog/rec");
       //categories
       //search function
       function search(url) {
@@ -1609,10 +1612,14 @@
               <div class="-test -catalog itm-searched">
               <div class="a-s-discount">
                 <span class="d">
-                  ${itm.discount !== null ? "-" + itm.discount + "%" : ""}
+                  ${
+                    itm.discount !== null && itm.discount !== 0
+                      ? "-" + itm.discount + "%"
+                      : ""
+                  }
                 </span>
               </div>
-              <a class="itm-s-img" href="./item?item=${itm.id}">
+              <a class="itm-s-img" href="./item?item=${itm.product_id}">
                 <div class="_img-ctr">
                   <img
                     src="${JSON.parse(itm.images)[0]}"
@@ -1624,10 +1631,10 @@
               </a>
               <div class="itm-s-dtl">
                 <div class="seller">
-                  <b>Seller:</b> Yammie Shoppers
+                  <b>Seller:</b> ${itm.businessname}
                 </div>
                 <a class="itm-name" style="font-size:13.5px;" 
-                  href="./item?item=${itm.id}">
+                  href="./item?item=${itm.product_id}">
                   ${itm.product} - ${itm.description}
                 </a>
                 <div class="price-current">${
@@ -1641,28 +1648,24 @@
                 <div class="price-prev">${
                   itm.discount ? "UGX " + itm.price : ""
                 }</div>
-                <div class="location">
+                <div class="location" style="padding:5px 0px;">
                   <i class="fas fa-map-marker-alt"></i>
-                  <span>Lira</span>
+                  <span>${itm.location}</span>
                 </div>
                 <div class="delivery-by">
                   <i class="fab fa-telegram-plane"></i>
                   Yammie Delivery
                 </div>
                 <div class="a-t-c add-to-c"
-                  data-item=${itm.id}
+                  data-item=${itm.product_id}
                 >
-                  <img
-                    src="./resources/shopping_cart_add_white.svg"
-                    alt=""
-                    width="25px"
-                    height="25px"
-                    data-item=${itm.id}
-                  />
                   Add to Cart
                 </div>
               </div>
             </div>`;
+              });
+              document.querySelectorAll(".d").forEach((item) => {
+                if (item.innerText == "") item.style.display = "none";
               });
               document.getElementById("s-itms-ctr").innerHTML = itmsSearched;
               document.getElementById(
