@@ -595,6 +595,37 @@ router.post("/editSubCategory/:id", async (req, res) => {
   );
 });
 
+router.post("/editMyCategory/:id", async (req, res) => {
+  let { category_name, subCategoryName } = req.body;
+  conn.query(
+    `SELECT category_id FROM category WHERE category_name='${category_name.replace(
+      /_/g,
+      " "
+    )}'`,
+    (err1, res1) => {
+      if (err1) throw err1;
+      conn.query(
+        `SELECT subcategory_id FROM subCategories WHERE subCategoryName='${subCategoryName.replace(
+          /_/g,
+          " "
+        )}'`,
+        (err2, res2) => {
+          if (err2) throw err2;
+          conn.query(
+            `UPDATE products SET subcategory=${res2[0].subcategory_id},
+            category=${res1[0].category_id} WHERE id=?`,
+            [req.params.id],
+            (err, result) => {
+              if (err) throw err;
+              res.send("Category Editted Successfully");
+            }
+          );
+        }
+      );
+    }
+  );
+});
+
 router.get("/searchProduct/:id", async (req, res) => {
   let patt = /\W/g;
   let myCheck = patt.test(req.params.id);

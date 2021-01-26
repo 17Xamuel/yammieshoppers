@@ -348,8 +348,143 @@
                   </div>
 
                   <br />
-                  <h6 class="text-center">Product Variation</h6>
-                  <label for="size" class="col-md-3"
+                  <h6 class="text-center">Product Variation(Add if Any)</h6>
+                  <div class="accordion" id="accordionExample">
+                    <div class="card">
+                      <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                          <button
+                            class="btn btn-link btn-block text-left"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapseOne"
+                            aria-expanded="true"
+                            aria-controls="collapseOne"
+                          >
+                            Click to Add Size Variation
+                          </button>
+                        </h2>
+                      </div>
+
+                      <div
+                        id="collapseOne"
+                        class="collapse show"
+                        aria-labelledby="headingOne"
+                        data-parent="#accordionExample"
+                      >
+                        <div class="card-body">
+                          <button
+                            type="button"
+                            class="btn btn-warning text-light"
+                            id="sizing"
+                          >
+                            Add Size Variation
+                          </button>
+                          <div class="text-center newSize mt-2"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                          <button
+                            class="btn btn-link btn-block text-left collapsed"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapseTwo"
+                            aria-expanded="false"
+                            aria-controls="collapseTwo"
+                          >
+                            Click to Add Ingridient Variation
+                          </button>
+                        </h2>
+                      </div>
+                      <div
+                        id="collapseTwo"
+                        class="collapse"
+                        aria-labelledby="headingTwo"
+                        data-parent="#accordionExample"
+                      >
+                        <div class="card-body">
+                          <button
+                            type="button"
+                            class="btn btn-warning text-light"
+                            id="Ingridient"
+                          >
+                            Add Ingridients
+                          </button>
+                          <div class="text-center newIngridients mt-2"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                          <button
+                            class="btn btn-link btn-block text-left collapsed"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapseThree"
+                            aria-expanded="false"
+                            aria-controls="collapseThree"
+                          >
+                            Flavor Variation
+                          </button>
+                        </h2>
+                      </div>
+                      <div
+                        id="collapseThree"
+                        class="collapse"
+                        aria-labelledby="headingThree"
+                        data-parent="#accordionExample"
+                      >
+                        <div class="card-body">
+                          <button
+                            type="button"
+                            class="btn btn-warning text-light"
+                            id="Flavour"
+                          >
+                            Add Flavour
+                          </button>
+                          <div class="text-center newFlavour mt-2"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card">
+                      <div class="card-header" id="headingFour">
+                        <h2 class="mb-0">
+                          <button
+                            class="btn btn-link btn-block text-left collapsed"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#collapseFour"
+                            aria-expanded="false"
+                            aria-controls="collapseFour"
+                          >
+                            Colors Variation
+                          </button>
+                        </h2>
+                      </div>
+                      <div
+                        id="collapseFour"
+                        class="collapse"
+                        aria-labelledby="headingFour"
+                        data-parent="#accordionExample"
+                      >
+                        <div class="card-body">
+                          <button
+                            type="button"
+                            class="btn btn-warning text-light"
+                            id="color"
+                          >
+                            Add Colors
+                          </button>
+                          <div class="text-center newColor mt-2"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <label for="size" class="col-md-3"
                     >Size Variation(if any)
                     <button
                       type="button"
@@ -395,7 +530,7 @@
                       + Ingridients Variation
                     </button></label
                   >
-                  <div class="text-center newIngridients"></div>
+                  <div class="text-center newIngridients"></div> -->
                   <br /><br />
                   <label for="Detailed Description"
                     >Product Detailed Description</label
@@ -581,7 +716,9 @@
 
                   <input type="hidden" name="seller_id" id="auth" />
 
-                  <button class="btn btn-warning text-light btn-block my-3">
+                  <button
+                    class="btn btn-warning text-light btn-block submitting my-3"
+                  >
                     Add Product
                   </button>
                 </form>
@@ -708,7 +845,7 @@
       //   });
       // });
 
-      let testFileNumber = document.querySelector(".btn-block");
+      let testFileNumber = document.querySelector(".submitting");
       testFileNumber.addEventListener("click", (e) => {
         let fileNumber = document.querySelector(".filing");
         if (fileNumber.files.length == 0) {
@@ -729,7 +866,7 @@
       document.getElementById("discount").addEventListener("keyup", (e) => {
         let price = parseInt(document.getElementById("price").value);
         let discount = parseInt(document.getElementById("discount").value);
-        let newPrice = (discount / price) * 100;
+        let newPrice = price - (discount / price) * 100;
         document.getElementById("nprice").innerHTML = "New Price: " + newPrice;
       });
 
