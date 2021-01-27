@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="./styles/catalog.css" />
     <title>Yammie | Online Store for Groceries and Home Items</title>
     <script>
+      if (new URLSearchParams(window.location.search).get("item") == undefined)
+        window.location.replace("/");
       document.addEventListener("DOMContentLoaded", (e) => {
         sch(document.querySelector("#-is"), document.querySelector(".-sh"));
         cnd(
@@ -358,78 +360,88 @@
         </button>
       </form>
     </div>
-    <div class="itm-m-ctr">
-      <!-- <div class="itm-nav-panel">Home > Easy Market > Jesa</div> -->
+    <div class="itm-m-ctr m-ctr">
       <div class="itm-ctr">
-        <div class="itm -b-x">
-          <div class="itm-top-m">
-            <div class="itm-imgs">
-              <div class="main-img" onclick="imageDialog()">
-                <img
-                  src="./resources/cart-link.png"
-                  alt=""
-                  width="250px"
-                  height="250px"
-                  class="main-image"
-                  style="border-radius: 5px"
-                />
-              </div>
-              <div class="other-itm-imgs"></div>
-            </div>
-            <div class="itm-name-price">
-              <h2 class="itm-f-name">
-                <div class="-shm"></div>
-              </h2>
-              <span class="itm-f-name">
-                <b class="_brand"><span class="-shm -sm"></span></b>
-              </span>
-              <div class="price-tags">
-                <h1 class="current-price _price">
-                  <div class="-shm"></div>
-                </h1>
-                <div class="prev-price _discount-p">
-                  <span class="-shm -sm"></span>
-                </div>
-                <span class="_discount discount">
-                  <span class="-shm -sm"></span>
-                </span>
-              </div>
-              <div class="add-cart">
-                <button class="btn-add-to-cart itm-f-name -cart">
-                  <span style="padding: 0px 20px">Add This Item To Cart</span>
+        <div class="itm">
+          <div class="itm-b -b-x">
+            <div class="itm-top-m">
+              <div class="itm-imgs">
+                <div class="main-img" onclick="imageDialog()">
                   <img
-                    src="./resources/shopping_cart_add_white.svg"
+                    src="./resources/cart-link.png"
                     alt=""
-                    width="35px"
-                    height="25px"
+                    width="250px"
+                    height="250px"
+                    class="main-image"
+                    style="border-radius: 5px"
                   />
-                </button>
+                </div>
+                <div class="other-itm-imgs"></div>
               </div>
-              <div class="itm-f-name">
-                <b>No</b>
-                Promotions for this product at the moment
+              <div class="itm-name-price">
+                <div class="item_seller"></div>
+                <div class="itm-f-name item-name">
+                  <div class="-shm"></div>
+                </div>
+                <span class="itm-f-name">
+                  <b class="_brand"><span class="-shm -sm"></span></b>
+                </span>
+                <div class="price-tags">
+                  <h1 class="current-price _price">
+                    <div class="-shm"></div>
+                  </h1>
+                  <div class="prev-price _discount-p">
+                    <span class="-shm -sm"></span>
+                  </div>
+                  <span class="_discount discount">
+                    <span class="-shm -sm"></span>
+                  </span>
+                </div>
+                <div class="add-cart">
+                  <select name="" id="" class="_variation -is-nw">
+                    <option value="" selected hidden>Select Size</option>
+                    <option value="">Xlarge</option>
+                    <option value="">large</option>
+                    <option value="">Small</option>
+                  </select>
+                  <button class="btn-add-to-cart itm-f-name -cart">
+                    <span style="padding: 0px 20px">Add This Item To Cart</span>
+                    <img
+                      src="./resources/shopping_cart_add_white.svg"
+                      alt=""
+                      width="35px"
+                      height="25px"
+                    />
+                  </button>
+                </div>
+                <div class="itm-f-name">
+                  <b>No</b>
+                  Promotions for this product at the moment
+                </div>
               </div>
-              <a href=""></a>
             </div>
           </div>
-          <div class="delivery-info">Brought To &amp; Delivered By: Yammie</div>
+          <div class="item-details itm-bottom-m -b-x">
+            <div class="item-details-i">
+              <div class="dds">
+                <div class="dds-header">
+                  <b> Detailed Description </b>
+                </div>
+                <p class="dds-ctr"></p>
+              </div>
+            </div>
+            <div class="item-details-i images-l-ctr"></div>
+          </div>
         </div>
         <div class="itm-side-info -b-x">
-          <h4>Product Details</h4>
-          <ul class="product-name-dtl">
+          <h4 style="margin-top: 5px">Specifications</h4>
+          <ul class="product-name-dtl specifications">
             <br />
             !!!No Details at the moment
             <br />
             <br />
           </ul>
-          <h4>Specifications</h4>
-          <ul class="product-name-dtl">
-            <br />
-            !!!No Specifications at the moment
-            <br />
-            <br />
-          </ul>
-          <h4>Delivery Information</h4>
+          <h4 style="margin-top: 5px">Delivery Information</h4>
           <ul class="product-name-dt">
             <li>
               Delivered from yammie between 9:00am and 8:00pm Daily or a day
@@ -963,10 +975,17 @@
         req.onreadystatechange = function () {
           if (req.status == 200 && req.readyState == 4) {
             let item = JSON.parse(req.responseText)[0];
-            document.querySelector(".itm-f-name").innerHTML =
+            let _sp = JSON.parse(item.specifications);
+            let _images = JSON.parse(item.images);
+            document.querySelector(
+              ".item_seller"
+            ).innerHTML = `Seller: ${item.businessname}`;
+            document.querySelector(".item-name").innerHTML =
               item.product + " - " + item.description;
             document.querySelector("._brand").innerHTML =
-              "Brand: " + item.brand;
+              _sp.Brand == null || _sp.Brand == "Not Specified"
+                ? ""
+                : "Brand: " + _sp.Brand;
             document.querySelector("._price").innerHTML = `${
               "UGX " +
               (item.discount
@@ -975,6 +994,38 @@
                   )
                 : new Intl.NumberFormat().format(item.price))
             }`;
+            let _spDom = "";
+            Object.keys(_sp).forEach((item) => {
+              if (_sp[item] != null) {
+                if (item == "TypeOfProduct") {
+                  _spDom += `<li class="specification"><b>Nature: </b> ${_sp[item]}</li>`;
+                } else {
+                  _spDom += `<li class="specification"><b>${item}: </b> ${_sp[item]}</li>`;
+                }
+              }
+            });
+            document.querySelector(".specifications").innerHTML = _spDom;
+
+            let _imageDom = "";
+            _images.forEach((image) => {
+              _imageDom += `
+                <img
+                  src="${image}"
+                  alt="${item.product}"
+                  width="100%"
+                  height="100%"
+                  style="border-radius: 5px; margin: 10px 0px"
+                />
+              `;
+            });
+            document.querySelector(".images-l-ctr").innerHTML = _imageDom;
+            if (item.detailedDescription && item.detailedDescription != null) {
+              document.querySelector(".dds-ctr").innerHTML =
+                item.detailedDescription;
+            } else {
+              document.querySelector(".dds").style.display = "none";
+            }
+
             document.querySelector("._discount-p").innerHTML = `${
               item.discount
                 ? "You Save: " +
