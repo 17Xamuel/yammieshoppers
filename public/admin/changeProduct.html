@@ -233,10 +233,14 @@
           <div class="modal-header">
             <h5 class="modal-title">Change Product Category</h5>
           </div>
-          <div class="modal-body">
+          <div class="modal-body text-center" id="eCat">
             <form id="editting">
               <div class="form-group">
-                <select required id="mySelCat" class="form-control">
+                <select
+                  required
+                  id="mySelCat"
+                  class="form-control catSelection"
+                >
                   <option value="">Please Select Category</option>
                 </select>
               </div>
@@ -591,7 +595,9 @@
     <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
     <script src="scripts/account.js"></script>
     <script>
-      let product = new URLSearchParams(window.location.search).get("product");
+      const product = new URLSearchParams(window.location.search).get(
+        "product"
+      );
       const data = new XMLHttpRequest();
       data.onreadystatechange = () => {
         if (data.readyState == 4 && data.status == 200) {
@@ -639,6 +645,70 @@
       };
       data.open("GET", `/api/admin/productDetails/${product}`, true);
       data.send();
+
+      const catGet = new XMLHttpRequest();
+      catGet.onreadystatechange = () => {
+        if (catGet.readyState == 4 && catGet.status == 200) {
+          let categories = JSON.parse(catGet.responseText);
+          let cat = "";
+          categories.forEach((cats) => {
+            cat += `<option value="${cats.category_name.replace(/ /g, "_")}">${
+              cats.category_name
+            }</option>`;
+          });
+          let getting = document.querySelectorAll(".catSelection");
+          getting.forEach((get) => {
+            get.innerHTML += cat;
+          });
+        }
+      };
+      catGet.open("GET", "/api/admin/getCategory", true);
+      catGet.send();
+
+      document.getElementById("mySelCat").addEventListener("change", (e) => {
+        let category = document.getElementById("mySelCat").value;
+        let myData = new XMLHttpRequest();
+        myData.onreadystatechange = function () {
+          if (myData.readyState == 4 && myData.status == 200) {
+            let results = JSON.parse(myData.responseText);
+            let row = "";
+            results.forEach((result) => {
+              row += `<option value=${result.subCategoryName.replace(
+                / /g,
+                "_"
+              )}>${result.subCategoryName}</option>`;
+            });
+            document.getElementById("mySelSubCat").innerHTML += row;
+          }
+        };
+        myData.open("GET", `/api/sellers/subCategory/${category}`, true);
+        myData.send();
+      });
+
+      document.getElementById("editting").addEventListener("submit", (e) => {
+        e.preventDefault();
+        let newCategory = {};
+        newCategory.category_name = document.getElementById("mySelCat").value;
+        newCategory.subCategoryName = document.getElementById(
+          "mySelSubCat"
+        ).value;
+        let editting = new XMLHttpRequest();
+        editting.onreadystatechange = function () {
+          if (editting.readyState < 4) {
+            document.getElementById(
+              "eCat"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (editting.readyState == 4 && editting.status == 200) {
+            if (editting.responseText == "Category Editted Successfully") {
+              window.location.assign("products.html");
+            }
+          }
+        };
+        editting.open("POST", `/api/admin/editMyCategory/${product}`, true);
+        editting.setRequestHeader("Content-Type", "application/json");
+        editting.send(JSON.stringify(newCategory));
+      });
     </script>
     <!-- End Scripts -->
   </body>

@@ -105,11 +105,6 @@ app.post("/addProduct", async (req, res) => {
       ingridientdiscount,
       flavor
     } = req.body;
-    console.log(req.body);
-    let newprice = parseInt(price);
-    let newdiscount = parseInt(discount);
-
-    let productDiscount = (newdiscount / newprice) * 100;
     conn.query(
       `SELECT subcategory_id,category_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
       (error, result) => {
@@ -124,7 +119,7 @@ app.post("/addProduct", async (req, res) => {
             description: description,
             category: result[0].category_id,
             subcategory: result[0].subcategory_id,
-            discount: Math.floor(productDiscount) || 0,
+            discount: parseInt(discount) || 0,
             images: path,
             seller_id: seller_id,
             detailedDescription,
