@@ -26,7 +26,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
 });
 
 // Change bucket property to your Space name
@@ -38,8 +38,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -52,8 +52,8 @@ function getUploadFile(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -61,7 +61,7 @@ function getUploadFile(id) {
 function _deleteFile(i) {
   var params = {
     Bucket: "yammie",
-    Key: i
+    Key: i,
   };
   s3.deleteObject(params, function (err, data) {
     if (err) console.log(err, err.stack);
@@ -103,8 +103,13 @@ app.post("/addProduct", async (req, res) => {
       ingridient,
       ingridientPrice,
       ingridientdiscount,
-      flavor
+      flavor,
     } = req.body;
+    console.log(req.body);
+    let newprice = parseInt(price);
+    let newdiscount = parseInt(discount);
+
+    let productDiscount = (newdiscount / newprice) * 100;
     conn.query(
       `SELECT subcategory_id,category_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
       (error, result) => {
@@ -119,7 +124,7 @@ app.post("/addProduct", async (req, res) => {
             description: description,
             category: result[0].category_id,
             subcategory: result[0].subcategory_id,
-            discount: parseInt(discount) || 0,
+            discount: Math.floor(productDiscount) || 0,
             images: path,
             seller_id: seller_id,
             detailedDescription,
@@ -137,10 +142,10 @@ app.post("/addProduct", async (req, res) => {
               sizeVaritionPrice: myprice || null,
               sizeVaritionDiscount: mydiscount || null,
               sizeVaritionDescription: mySize || null,
-              ingridientDescription: ingridient || null,
-              ingridientPricing: ingridientPrice || null,
-              ingridientDiscount: ingridientdiscount || null
-            })
+              ingredientDescription: ingridient || null,
+              ingredientPricing: ingridientPrice || null,
+              ingredientDiscount: ingridientdiscount || null,
+            }),
           },
           (err, results) => {
             if (err) {
@@ -191,7 +196,7 @@ app.post("/editAndConfirm", async (req, res) => {
     dimensions,
     size,
     typeOfProduct,
-    netWeight
+    netWeight,
   } = req.body;
 
   conn.query(
@@ -220,8 +225,8 @@ app.post("/editAndConfirm", async (req, res) => {
             Dimensions: dimensions || null,
             Size: size,
             TypeOfProduct: typeOfProduct,
-            NetWeight: netWeight || null
-          })
+            NetWeight: netWeight || null,
+          }),
         },
         (error, results) => {
           if (error) throw error;
@@ -257,7 +262,7 @@ app.post("/addImages", async (req, res) => {
       {
         image_id: imageId,
         image_path: pathing,
-        destination: Uploads
+        destination: Uploads,
       },
       (error, results) => {
         if (error) throw error;
@@ -285,7 +290,7 @@ app.post("/edit", async (req, res) => {
     dimensions,
     size,
     typeOfProduct,
-    netWeight
+    netWeight,
   } = req.body;
 
   let newSpecification = JSON.stringify({
@@ -296,7 +301,7 @@ app.post("/edit", async (req, res) => {
     Dimensions: dimensions || null,
     Size: size,
     TypeOfProduct: typeOfProduct,
-    NetWeight: netWeight || null
+    NetWeight: netWeight || null,
   });
 
   conn.query(
