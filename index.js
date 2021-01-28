@@ -29,7 +29,6 @@ const s3 = new aws.S3({
   secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
 });
 
-// Change bucket property to your Space name
 function getUpload(id) {
   let upload = multer({
     storage: multerS3({

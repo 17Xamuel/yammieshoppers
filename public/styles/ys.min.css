@@ -54,10 +54,14 @@
   padding: 10px 20px;
 }
 /*request*/
-.hp-image,
 .form-req {
   width: 75%;
   height: 50vh;
+  margin: auto;
+}
+.hp-image {
+  width: 75%;
+  height: 25vh;
   margin: auto;
 }
 .heading {

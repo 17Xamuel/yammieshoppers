@@ -406,7 +406,7 @@
         display: none;
       }
       ._img-ctr {
-        background-color: rgba(0, 0, 0, 0.1);
+        /* background-color: rgba(0, 0, 0, 0.1); */
         width: 100%;
         height: 75%;
       }
@@ -842,7 +842,7 @@
           <div class="a-search">
             <span class="items-got _no">Searching...</span>
             <span class="search-input">
-              You searched for : "<span id="s-word"></span>"
+              <span id="s-word"></span>
             </span>
           </div>
           <div class="itms-ctr" id="s-itms-ctr"></div>
@@ -1611,7 +1611,9 @@
                 <br/>
                 Try Requesting Your Item.
                 </span>
-                <button id="ctlg-rq-btn">Make A Request</button>
+                <button id="ctlg-rq-btn" onclick="window.location.assign('./support/request')">
+                  Make A Request
+                </button>
             </div>`;
               document.getElementById("ctlg-ctr").innerHTML = noData;
               document.getElementById("ctlg-ctr").style.justifyContent =
@@ -1638,7 +1640,9 @@
               <a class="itm-s-img" href="./item?item=${itm.product_id}">
                 <div class="_img-ctr">
                   <img
-                    src="${JSON.parse(itm.images)[0]}"
+                    src="./resources/placeholder.png"
+                    class="_ctg-image-load"
+                    data-src="${JSON.parse(itm.images)[0]}"
                     alt="${itm.product}"
                     width="100%"
                     height="100%"
@@ -1761,6 +1765,20 @@
                   .classList.add("active");
                 document.querySelector(".popup").classList.add("pp-active");
               }
+            }
+            //lazy load
+            let images = document.images;
+            for (let i = 0; i < images.length; i++) {
+              if (images[i].className == "_ctg-image-load") {
+                _load(images[i], images[i].dataset.src);
+              }
+            }
+            function _load(i, d) {
+              let image_true = new Image();
+              image_true.onload = function () {
+                i.src = this.src;
+              };
+              image_true.src = d;
             }
           }
         };

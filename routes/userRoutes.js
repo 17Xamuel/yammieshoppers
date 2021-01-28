@@ -794,6 +794,28 @@ router.post("/f-comment", (req, res) => {
       console.log("Error Ocurred!!!");
     });
 });
+router.post("/s-request", (req, res) => {
+  let mail_request = {
+    from: '"Yammie Shoppers"<info@yammieshoppers.com>',
+    to: "theyammieinc@gmail.com",
+    subject: `REQUEST MADE: ${req.body.request_name}`,
+    text: `From: ${
+      req.body.user_contact ? req.body.user_contact : "Did not include Contact"
+    }\nDescription: ${req.body.request_description}\nEstimated Price: ${
+      req.body.request_price
+        ? req.body.request_price
+        : "Did not include Contact"
+    }`,
+  };
+  transporter
+    .sendMail(mail_request)
+    .then((response) => {
+      res.status(200).send("Request Recieved...");
+    })
+    .catch((err) => {
+      console.log("Error Ocurred!!!");
+    });
+});
 router.get("/customer/orders/:id", (req, res) => {
   conn.query(
     `SELECT * FROM pending_orders where c_id = ?`,
