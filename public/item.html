@@ -20,6 +20,7 @@
     <link rel="shortcut icon" href="./resources/cartlink.png" />
     <link rel="stylesheet" href="./styles/footer2.css" />
     <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/catalog.css" />
     <link rel="stylesheet" href="./styles/item.css" />
     <link rel="stylesheet" href="./styles/products.css" />
     <link rel="stylesheet" href="./styles/main.css" />
@@ -27,8 +28,8 @@
     <link rel="stylesheet" href="./styles/catalog.css" />
     <title>Yammie | Online Store for Groceries and Home Items</title>
     <script>
-      if (new URLSearchParams(window.location.search).get("item") == undefined)
-        window.location.replace("/");
+      // if (new URLSearchParams(window.location.search).get("item") == undefined)
+      //   window.location.replace("/");
       document.addEventListener("DOMContentLoaded", (e) => {
         sch(document.querySelector("#-is"), document.querySelector(".-sh"));
         cnd(
@@ -51,10 +52,14 @@
     </style>
   </head>
   <body>
+    <!-- _variation -->
+    <div id="pop-up-overlay-var"></div>
+    <div class="var"></div>
+    <!-- _variation -->
     <!--image dialog div-->
     <div id="pop-up-overlay-i"></div>
     <div class="popup-i">
-      <button class="close-pp-i" onclick="imageDialogClose()">&times;</button>
+      <button class="close-pp-i" onclick="imageDialogClose_i()">&times;</button>
       <div class="itm-imgs-pp">
         <div class="main-img-pp" onclick="imageDialog()">
           <img
@@ -412,12 +417,6 @@
                   </span>
                 </div>
                 <div class="add-cart">
-                  <select name="" id="" class="_variation -is-nw">
-                    <option value="" selected hidden>Select Size</option>
-                    <option value="">Xlarge</option>
-                    <option value="">large</option>
-                    <option value="">Small</option>
-                  </select>
                   <button class="btn-add-to-cart itm-f-name -cart">
                     <span style="padding: 0px 20px">Add This Item To Cart</span>
                     <img
@@ -451,7 +450,7 @@
           <h4 style="margin-top: 5px">Specifications</h4>
           <ul class="product-name-dtl specifications">
             <br />
-            !!!No Details at the moment
+            !!!No Specifications at the moment
             <br />
             <br />
           </ul>
@@ -745,7 +744,7 @@
         document.querySelector(".popup-i").classList.add("pp-active");
         document.querySelector("#pop-up-overlay-i").classList.add("active");
       }
-      function imageDialogClose() {
+      function imageDialogClose_i() {
         document.querySelector(".popup-i").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay-i").classList.remove("active");
       }
@@ -1010,9 +1009,15 @@
                   )
                 : new Intl.NumberFormat().format(item.price))
             }`;
+
+            //specifications
             let _spDom = "";
             Object.keys(_sp).forEach((item) => {
-              if (_sp[item] != null) {
+              if (
+                _sp[item] != null &&
+                typeof _sp[item] != "object" &&
+                item != "date"
+              ) {
                 if (item == "TypeOfProduct") {
                   _spDom += `<li class="specification"><b>Nature: </b> ${_sp[item]}</li>`;
                 } else {
@@ -1021,6 +1026,88 @@
               }
             });
             document.querySelector(".specifications").innerHTML = _spDom;
+
+            //variations
+            let _varKeys = Object.keys(_sp);
+            let _theVariables = 0;
+            Object.keys(_sp).forEach((item) => {
+              if (typeof _sp[item] == "object" && _sp[item] != null) {
+                let _varDom = ` <div class="var_ctr">
+                                  <h3 class="_var_heading">
+                                    Please Select Your ${item}
+                                  </h3>`;
+                if (typeof _sp[item][0] == "string") {
+                  _sp[item].forEach((i) => {
+                    _varDom += `<div class="_var">
+                                  <div class="var_name_chip">${i}</div>
+                                  <div class="var_qty_ctr">
+                                     <input type="radio"  name="${item}">
+                                  </div>
+                                </div>`;
+                  });
+                  document.querySelector(".var").innerHTML +=
+                    _varDom + `</div>`;
+                } else if (item == "Ingredients") {
+                  _sp[item].forEach((i) => {
+                    _varDom += `<div class="_var">
+                                  <div class="var_name">${i.descriptions}</div>
+                                  <div class="var_price">
+                                    <div class="_n_price">
+                                      UGX ${
+                                        i.getDiscount <= 0
+                                          ? i.getPrice
+                                          : i.getPrice *
+                                            ((100 - i.getDiscount) / 100)
+                                      }
+                                    </div>
+                                    <div class="_d_price">${
+                                      i.getDiscount <= 0 ? "" : i.getPrice
+                                    }</div>
+                                  </div>
+                                  <div class="var_qty_ctr">
+                                    <button class="var_minus">&minus;</button>
+                                    <input type="text" class="var_qty _increase" readonly />
+                                    <button class="var_plus">&plus;</button>
+                                  </div>
+                                </div>`;
+                  });
+
+                  document.querySelector(".var").innerHTML +=
+                    _varDom + `</div>`;
+                } else {
+                  _sp[item].forEach((i) => {
+                    _varDom += `<div class="_var">
+                                  <div class="var_name">${i.descriptions}</div>
+                                  <div class="var_price">
+                                    <div class="_n_price">
+                                      UGX ${
+                                        i.getDiscount <= 0
+                                          ? i.getPrice
+                                          : i.getPrice *
+                                            ((100 - i.getDiscount) / 100)
+                                      }
+                                    </div>
+                                    <div class="_d_price">${
+                                      i.getDiscount <= 0 ? "" : i.getPrice
+                                    }</div>
+                                  </div>
+                                  <div class="var_qty_ctr">
+                                    <input type="radio" name="${item}">
+                                  </div>
+                                </div>`;
+                  });
+                  document.querySelector(".var").innerHTML +=
+                    _varDom + `</div>`;
+                }
+              }
+              if (_sp.findIndex((elem) => elem == item) == _sp.length - 1) {
+                console.log("done");
+                document.querySelector(".var").innerHTML += `
+                <div class="" style="display: flex; justify-content: center">
+                  <button class="btn_variation">Ok</button>
+                </div>`;
+              }
+            });
 
             let _imageDom = "";
             _images.forEach((image) => {
