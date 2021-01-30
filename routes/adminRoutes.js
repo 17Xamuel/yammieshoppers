@@ -45,11 +45,14 @@ router.get("/customers", async (req, res) => {
   });
 });
 
-router.get("/allProducts", async (req, res) => {
-  conn.query("SELECT * FROM products", async (error, results) => {
-    if (error) throw error;
-    res.json(results.length);
-  });
+router.get("/allSellers", async (req, res) => {
+  conn.query(
+    "SELECT * FROM sellers WHERE seller_status='Approved'",
+    async (error, results) => {
+      if (error) throw error;
+      res.json(results.length);
+    }
+  );
 });
 
 router.get("/sellerRequests", async (req, res) => {
@@ -79,7 +82,8 @@ try {
               to: results[0].email,
               subject: `Hello ${results[0].username}`,
               text: `Hello, ${results[0].username}  your email ${results[0].email} has 
-              been successfully confirmed you can start adding products to the website.`
+              been successfully confirmed you can start adding products to the website.
+              https://www.yammieshoppers.com/seller/addProduct`
             };
 
             transporter.sendMail(mailOptions, (error, response) => {
@@ -375,13 +379,24 @@ router.get("/getFinishedOrders", async (req, res) => {
 router.post("/addCategory", async (req, res) => {
   let = { catName } = req.body;
   conn.query(
-    `INSERT INTO category SET ? `,
-    {
-      category_name: catName
-    },
-    (err, result) => {
-      if (err) throw err;
-      res.send("Category Added Successfully");
+    `SELECT * FROM category WHERE category_nmae=?`,
+    [catName],
+    (error, results) => {
+      if (error) throw error;
+      if (results.length > 0) {
+        return res.send("Category Already Exists");
+      } else {
+        conn.query(
+          `INSERT INTO category SET ? `,
+          {
+            category_name: catName
+          },
+          (err, result) => {
+            if (err) throw err;
+            res.send("Category Added Successfully");
+          }
+        );
+      }
     }
   );
 });
@@ -396,21 +411,32 @@ router.get("/getCategory", async (req, res) => {
 router.post("/addSubCategory", async (req, res) => {
   let { categoryName, subName } = req.body;
   conn.query(
-    `SELECT category_id FROM category WHERE category_name=?`,
-    [categoryName.replace(/_/g, " ")],
-    (err, result) => {
-      if (err) throw err;
-      conn.query(
-        `INSERT INTO subCategories SET ?`,
-        {
-          category_id: result[0].category_id,
-          subCategoryName: subName
-        },
-        (error, results) => {
-          if (error) throw error;
-          res.send("SubCategory Added Successfully");
-        }
-      );
+    `SELECT * FROM subCategories WHERE subCategoryName=?`,
+    [subName],
+    (err1, res1) => {
+      if (err1) throw err1;
+      if (res1.length > 0) {
+        return res.send("SubCategory Already Exists");
+      } else {
+        conn.query(
+          `SELECT category_id FROM category WHERE category_name=?`,
+          [categoryName.replace(/_/g, " ")],
+          (err, result) => {
+            if (err) throw err;
+            conn.query(
+              `INSERT INTO subCategories SET ?`,
+              {
+                category_id: result[0].category_id,
+                subCategoryName: subName
+              },
+              (error, results) => {
+                if (error) throw error;
+                res.send("SubCategory Added Successfully");
+              }
+            );
+          }
+        );
+      }
     }
   );
 });
@@ -454,14 +480,25 @@ router.get("/orderSearch/:id", async (req, res) => {
 router.post("/addZone", async (req, res) => {
   let { zoneName, zoneWeight } = req.body;
   conn.query(
-    "INSERT INTO zones SET ?",
-    {
-      zone_name: zoneName,
-      zone_weight: zoneWeight
-    },
-    (err, result) => {
-      if (err) throw err;
-      res.send("Zone Added Successfully");
+    `SELECT * FROM zones WHERE zone_name=?`,
+    [zoneName],
+    (err1, res1) => {
+      if (err1) throw err1;
+      if (res1.length > 0) {
+        return res.send("Zone Already Exits");
+      } else {
+        conn.query(
+          "INSERT INTO zones SET ?",
+          {
+            zone_name: zoneName,
+            zone_weight: zoneWeight
+          },
+          (err, result) => {
+            if (err) throw err;
+            res.send("Zone Added Successfully");
+          }
+        );
+      }
     }
   );
 });
@@ -476,21 +513,32 @@ router.get("/getZone", async (req, res) => {
 router.post("/addAdresses", async (req, res) => {
   let { zone_name, addressName } = req.body;
   conn.query(
-    `SELECT zone_id FROM zones WHERE zone_name = ?`,
-    [zone_name.replace(/_/g, " ")],
-    (err, result) => {
-      if (err) throw err;
-      conn.query(
-        `INSERT INTO addresses SET ?`,
-        {
-          zone_id: result[0].zone_id,
-          address_name: addressName
-        },
-        (error, results) => {
-          if (error) throw error;
-          res.send("Address Added Successfully");
-        }
-      );
+    `SELECT * FROM addresses WHERE address_name=?`,
+    [addressName],
+    (err1, res1) => {
+      if (err1) throw err1;
+      if (res1.length > 0) {
+        return res.send("Address Already Exists");
+      } else {
+        conn.query(
+          `SELECT zone_id FROM zones WHERE zone_name = ?`,
+          [zone_name.replace(/_/g, " ")],
+          (err, result) => {
+            if (err) throw err;
+            conn.query(
+              `INSERT INTO addresses SET ?`,
+              {
+                zone_id: result[0].zone_id,
+                address_name: addressName
+              },
+              (error, results) => {
+                if (error) throw error;
+                res.send("Address Added Successfully");
+              }
+            );
+          }
+        );
+      }
     }
   );
 });
@@ -502,6 +550,23 @@ router.get("/saleNumber/:id", async (req, res) => {
     (error, result) => {
       if (error) throw error;
       res.send(result);
+    }
+  );
+});
+
+router.get("/myAddresses/:id", async (req, res) => {
+  conn.query(
+    `SELECT zone_id FROM zones WHERE zone_name=?`,
+    [req.params.id.replace(/_/g, " ")],
+    (err1, res1) => {
+      if (err1) throw err1;
+      conn.query(
+        `SELECT * FROM addresses WHERE zone_id='${res1[0].zone_id}'`,
+        (err2, res2) => {
+          if (err2) throw err2;
+          res.send(res2);
+        }
+      );
     }
   );
 });
@@ -641,6 +706,102 @@ router.get("/searchProduct/:id", async (req, res) => {
       }
     );
   }
+});
+
+router.get("/getSpecifications/:id", async (req, res) => {
+  conn.query(
+    `SELECT specifications FROM pending_products WHERE id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      if (result.length == 0) {
+        conn.query(
+          `SELECT specifications FROM products WHERE id=?`,
+          [req.params.id],
+          (error, results) => {
+            if (error) throw error;
+            res.send(results);
+          }
+        );
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+router.post("/editSpecifications/:id", async (req, res) => {
+  let {
+    newBrand,
+    newSize,
+    newWeight,
+    NetWeight,
+    typeOfProduct,
+    Fragile,
+    Dimensions,
+    color,
+    flavor,
+    sizes,
+    ingridients
+  } = req.body;
+
+  let newSpecifications = JSON.stringify({
+    date: Date.now(),
+    Brand: newBrand,
+    Color: color || null,
+    Weight: newWeight,
+    Fragile: Fragile,
+    Dimensions: Dimensions || null,
+    Size: newSize,
+    TypeOfProduct: typeOfProduct,
+    NetWeight: NetWeight || null,
+    TypeOfProduct: typeOfProduct,
+    Flavor: flavor || null,
+    Sizes: sizes || null,
+    Ingredients: ingridients || null
+  });
+
+  conn.query(
+    `SELECT * FROM pending_products WHERE id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      if (result.length > 0) {
+        conn.query(
+          `UPDATE pending_products SET specifications='${newSpecifications}' WHERE id=?`,
+          [req.params.id],
+          (err1, res1) => {
+            if (err1) throw err1;
+            res.send("OK");
+          }
+        );
+      } else if (result.length == 0) {
+        conn.query(
+          `UPDATE products SET specifications='${newSpecifications}' WHERE id=?`,
+          [req.params.id],
+          (err1, res1) => {
+            if (err1) throw err1;
+            res.send("OK");
+          }
+        );
+      }
+    }
+  );
+});
+
+router.get("/income", async (req, res) => {
+  conn.query(
+    `SELECT order_info FROM pending_orders WHERE order_status='finished'`,
+    (err, results) => {
+      if (err) throw err;
+      let total = 0;
+      results.forEach((result) => {
+        let income = JSON.parse(result.order_info);
+        total += parseInt(income.shipping);
+      });
+      res.json(total);
+    }
+  );
 });
 
 module.exports = router;

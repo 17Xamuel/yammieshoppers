@@ -32,19 +32,11 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/home.css" />
-    <link rel="stylesheet" href="../styles/products.css" />
-    <link rel="stylesheet" href="../styles/main.css" />
+
     <title>Yammie | Sales</title>
     <script>
       // if (document.referrer == "") window.location.assign("./index");
     </script>
-
-    <style>
-      a:hover {
-        text-decoration: none;
-        color: #ffbb00;
-      }
-    </style>
   </head>
 
   <body>
@@ -69,12 +61,6 @@
                 >YammieShoppers</a
               >
               <div class="border-bottom pb-3">
-                <img
-                  src="./images/user-1.jpg"
-                  width="50"
-                  height="50"
-                  class="rounded-circle mr-3"
-                />
                 <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
@@ -202,86 +188,7 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded mt-3">
                   <div class="card-body">
-                    <div class="-ct">
-                      <button class="-sc-b" style="outline: none">
-                        <i
-                          class="fas fa-chevron-left"
-                          style="pointer-events: none"
-                        ></i>
-                      </button>
-                      <button class="-sc-n" style="outline: none">
-                        <i
-                          class="fas fa-chevron-right"
-                          style="pointer-events: none"
-                        ></i>
-                      </button>
-
-                      <div class="-ch-all">
-                        <span>Top Selling Products</span>
-                        <a href="#">
-                          <span class="-ch-all-t">
-                            See All
-                            <i class="fas fa-chevron-right"></i>
-                          </span>
-                        </a>
-                      </div>
-                      <div class="-scroll -ct -ct-trending">
-                        <div class="item -ct-item -lazy">
-                          <img
-                            src="../resources/cart-link.png"
-                            alt=""
-                            width="100px"
-                            height="75px"
-                            style="opacity: 0.1"
-                          />
-                        </div>
-                        <div class="item -ct-item -lazy">
-                          <img
-                            src="../resources/cart-link.png"
-                            alt=""
-                            width="100px"
-                            height="75px"
-                            style="opacity: 0.1"
-                          />
-                        </div>
-                        <div class="item -ct-item -lazy">
-                          <img
-                            src="../resources/cart-link.png"
-                            alt=""
-                            width="100px"
-                            height="75px"
-                            style="opacity: 0.1"
-                          />
-                        </div>
-                        <div class="item -ct-item -lazy">
-                          <img
-                            src="../resources/cart-link.png"
-                            alt=""
-                            width="100px"
-                            height="75px"
-                            style="opacity: 0.1"
-                          />
-                        </div>
-                        <div class="item -ct-item -lazy">
-                          <img
-                            src="../resources/cart-link.png"
-                            alt=""
-                            width="100px"
-                            height="75px"
-                            style="opacity: 0.1"
-                          />
-                        </div>
-                        <div class="item -ct-item -lazy">
-                          <img
-                            src="../resources/cart-link.png"
-                            alt=""
-                            width="100px"
-                            height="75px"
-                            style="opacity: 0.1"
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    <h6 class="text-center my-3">Top Selling Products</h6>
                   </div>
                 </div>
               </div>
@@ -299,7 +206,7 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-center my-3">Medium Selling Products</h4>
+                    <h6 class="text-center my-3">Medium Selling Products</h6>
                   </div>
                 </div>
               </div>
@@ -317,7 +224,7 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-center my-3">Least Selling Products</h4>
+                    <h6 class="text-center my-3">Least Selling Products</h6>
                   </div>
                 </div>
               </div>
@@ -381,100 +288,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="scripts/account.js"></script>
-    <script>
-      scl(document.querySelectorAll(".-sc-n"));
-      scr(document.querySelectorAll(".-sc-b"));
-
-      //search
-      const sch = (i, sch) => {
-        i.addEventListener("click", () => {
-          sch.classList.toggle("sch-s");
-          window.scroll({
-            top: 0,
-            left: 0,
-            behavior: "smooth"
-          });
-        });
-      };
-      function ctg(c, url) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            function _load(i, d) {
-              if (i.complete != true) {
-                i.height = "35%";
-                i.width = "35%";
-              }
-              i.src = i.complete != true ? d : i.src;
-              i.src = i.complete != true ? d : i.src;
-            }
-            let _c = JSON.parse(xhr.responseText),
-              group = "";
-            _c.forEach((item) => {
-              // src = "${JSON.parse(item.images)[0]}"
-              //src="./resources/cart-link.png"
-              group += `
-                     <a class="item -ct-item" href="">
-                      <div class="_image">
-                        <img
-                          src="${JSON.parse(item.images)[0]}"
-                          alt="${item.name}"
-                          width="100%"
-                          height="100%"
-                        />
-                      </div>
-                      <div class="-i-dtl">
-                        <div class="it-nm">
-                          ${item.product} - ${item.description}
-                        </div>
-                        <div class="it-pr pr price-current">${
-                          "UGX " +
-                          (item.discount
-                            ? (item.price * (100 - item.discount)) / 100
-                            : item.price)
-                        }</div>
-                         <div class="pre-it-pr pr price-prev">${
-                           item.discount ? "UGX " + item.price : ""
-                         }</div>
-                      </div>
-                    </a>
-                    
-                    `;
-            });
-            c.innerHTML = group;
-          }
-        };
-        xhr.open("GET", url, true);
-        xhr.send();
-      }
-      function scr(b) {
-        b.forEach((sc) => {
-          sc.addEventListener("click", (e) => {
-            e.target.parentNode.querySelector(".-scroll").scrollBy({
-              top: 0,
-              left: -250,
-              behavior: "smooth"
-            });
-          });
-        });
-      }
-      function scl(b) {
-        b.forEach((sc) => {
-          sc.addEventListener("click", (e) => {
-            e.target.parentNode.querySelector(".-scroll").scrollBy({
-              top: 0,
-              left: 250,
-              behavior: "smooth"
-            });
-          });
-        });
-      }
-      //depends on the url
-      ctg(
-        document.querySelector(".-ct-trending"),
-        "/api/user/ct/index/trending"
-      );
-    </script>
+    <script></script>
     <!-- End Scripts -->
   </body>
 </html>

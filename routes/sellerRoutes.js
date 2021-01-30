@@ -104,6 +104,18 @@ router.post("/confirmEmail", async (req, res) => {
       res.send(
         "You have registered successfully.Please wait for confirmation from the Admin"
       );
+
+      let mailing = {
+        from: '"Yammie Shoppers" <info@yammieshoppers.com',
+        to: "theyammieinc@gmail.com",
+        subject: `New Seller ${code}`,
+        text:
+          "Hello Admin, yammieshoppers has received a new seller waiting for confirmation. Thanks"
+      };
+
+      transporter.sendMail(mailing, (error, results) => {
+        if (error) throw error;
+      });
       newSeller, (code = "");
     });
   } else {
