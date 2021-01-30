@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-74SV9XV7X5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-74SV9XV7X5");
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -831,7 +845,7 @@
             <li><a href="#">Special Order</a></li>
             <li><a href="#">Delivery Time</a></li>
             <li><a href="#">Payment Methods</a></li>
-            <li><a href="#">Request An Item</a></li>
+            <li><a href="./support/request">Request An Item</a></li>
             <li><a href="#">Report an Item</a></li>
             <li><a href="#">Return Policy</a></li>
           </ul>
@@ -889,7 +903,7 @@
               group = "";
             _c.forEach((item) => {
               group += `
-                    <a class="item -ct-item" href="./item?item=${item.id}">
+                     <a class="item -ct-item" href="./item?item=${item.id}">
                       <div class="-d">
                         ${
                           item.discount != 0 && item.discount !== null
@@ -899,10 +913,12 @@
                       </div>
                       <div class="_image">
                         <img
-                          src="${JSON.parse(item.images)[0]}"
-                          alt="${item.name}"
+                          src="./resources/placeholder.png"
+                          data-src="${JSON.parse(item.images)[0]}"
+                          alt="${item.product}"
                           width="100%"
                           height="100%"
+                          class="_ctg-image-load"
                         />
                       </div>
                       <div class="-i-dtl">
@@ -926,6 +942,19 @@
             document.querySelectorAll(".-d").forEach((item) => {
               if (item.innerText == "") item.style.display = "none";
             });
+            let images = document.images;
+            for (let i = 0; i < images.length; i++) {
+              if (images[i].className == "_ctg-image-load") {
+                _load(images[i], images[i].dataset.src);
+              }
+            }
+            function _load(i, d) {
+              let image_true = new Image();
+              image_true.onload = function () {
+                i.src = this.src;
+              };
+              image_true.src = d;
+            }
           }
         };
         xhr.open("GET", url, true);
@@ -1197,7 +1226,9 @@
               <a class="itm-s-img" href="./item?item=${itm.product_id}">
                 <div class="_img-ctr">
                   <img
-                    src="${JSON.parse(itm.images)[0]}"
+                    src="./resources/placeholder.png"
+                    class="_ctg-image-load"
+                    data-src="${JSON.parse(itm.images)[0]}"
                     alt="${itm.product}"
                     width="100%"
                     height="100%"
@@ -1317,6 +1348,20 @@
                   .classList.add("active");
                 document.querySelector(".popup").classList.add("pp-active");
               }
+            }
+            //lazy load
+            let images = document.images;
+            for (let i = 0; i < images.length; i++) {
+              if (images[i].className == "_ctg-image-load") {
+                _load(images[i], images[i].dataset.src);
+              }
+            }
+            function _load(i, d) {
+              let image_true = new Image();
+              image_true.onload = function () {
+                i.src = this.src;
+              };
+              image_true.src = d;
             }
           }
         };

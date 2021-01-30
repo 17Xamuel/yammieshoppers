@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-74SV9XV7X5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-74SV9XV7X5");
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="/resources/cartlink.png" />
@@ -279,7 +293,7 @@
         <li><a href="../404">Special Order</a></li>
         <li><a href="../404">Delivery Time</a></li>
         <li><a href="../404">Payment Methods</a></li>
-        <li><a href="../404">Request An Item</a></li>
+        <li><a href="../support/request.html">Request An Item</a></li>
         <li><a href="../404">Report an Item</a></li>
         <li><a href="../404">Return Policy</a></li>
       </ul>
@@ -288,8 +302,8 @@
         <li><a href="../404">About Yammie</a></li>
         <li><a href="../404">How to Order</a></li>
         <li><a href="../404">Our Partners</a></li>
-        <li><a href="../404">Terms &amp; Conditions For Use</a></li>
-        <li><a href="../404">Privacy Policy</a></li>
+        <li><a href="../support/terms">Terms &amp; Conditions For Use</a></li>
+        <li><a href="../support/privacy-policy">Privacy Policy</a></li>
       </ul>
       <div class="ftr-down">
         <div class="ftr-official" style="color: black !important">
@@ -572,7 +586,7 @@
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
         </div>
-        <div class="-scroll -ct -ct-recentlyviewed">
+        <div class="-scroll -ct -ct-recentlyviewed_a">
           <div class="item -ct-item -lazy">
             <img
               src="../resources/cart-link.png"
@@ -747,8 +761,10 @@
             <li><a href="#">How to Order</a></li>
             <li><a href="#">Help &amp; FAQs</a></li>
             <li><a href="#">Our Partners</a></li>
-            <li><a href="#">Terms &amp; Conditions For Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li>
+              <a href="../support/terms">Terms &amp; Conditions For Use</a>
+            </li>
+            <li><a href="../support/privacy-policy">Privacy Policy</a></li>
           </ul>
         </div>
         <div class="ftr-u-third">
@@ -809,7 +825,7 @@
             <li><a href="#">Special Order</a></li>
             <li><a href="#">Delivery Time</a></li>
             <li><a href="#">Payment Methods</a></li>
-            <li><a href="#">Request An Item</a></li>
+            <li><a href="../support/request.html">Request An Item</a></li>
             <li><a href="#">Report an Item</a></li>
             <li><a href="#">Return Policy</a></li>
           </ul>
@@ -925,10 +941,7 @@
       scr(document.querySelectorAll(".-sc-b"));
 
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/profile/rec");
-      ctg(
-        document.querySelector(".-ct-recentlyviewed"),
-        "/api/user/ct/profile/recentlyviewed"
-      );
+
       function scr(b) {
         b.forEach((sc) => {
           sc.addEventListener("click", (e) => {
@@ -969,8 +982,10 @@
                       </div>
                       <div class="_image">
                         <img
-                          src="${JSON.parse(item.images)[0]}"
-                          alt="${item.name}"
+                         src="../resources/placeholder.png"
+                          data-src="${JSON.parse(item.images)[0]}"
+                          class="_ctg-image-load"
+                          alt="${item.product}"
                           width="100%"
                           height="100%"
                         />
@@ -996,6 +1011,19 @@
             document.querySelectorAll(".-d").forEach((item) => {
               if (item.innerText == "") item.style.display = "none";
             });
+            let images = document.images;
+            for (let i = 0; i < images.length; i++) {
+              if (images[i].className == "_ctg-image-load") {
+                _load(images[i], images[i].dataset.src);
+              }
+            }
+            function _load(i, d) {
+              let image_true = new Image();
+              image_true.onload = function () {
+                i.src = this.src;
+              };
+              image_true.src = d;
+            }
           }
         };
         xhr.open("GET", url, true);
@@ -1122,6 +1150,96 @@
             }
           };
         });
+
+      function ctg_storage_a(c, url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let _c = JSON.parse(xhr.responseText),
+              group = "";
+            _c.forEach((item) => {
+              group += `
+             <a class="item -ct-item" href="../item?item=${item.id}">
+                      <div class="-d">
+                        ${
+                          item.discount != 0 && item.discount !== null
+                            ? "-" + item.discount + "%"
+                            : ""
+                        }
+                      </div>
+                      <div class="_image">
+                        <img
+                          src="../resources/placeholder.png"
+                          data-src="${JSON.parse(item.images)[0]}"
+                          alt="${item.product}"
+                          width="100%"
+                          height="100%"
+                          class="_ctg-image-load"
+                        />
+                      </div>
+                      <div class="-i-dtl">
+                        <div class="it-nm">
+                          ${item.product} - ${item.description}
+                        </div>
+                        <div class="it-pr pr price-current">${
+                          "UGX " +
+                          (item.discount
+                            ? (item.price * (100 - item.discount)) / 100
+                            : item.price)
+                        }</div>
+                         <div class="pre-it-pr pr price-prev">${
+                           item.discount ? "UGX " + item.price : ""
+                         }</div>
+                      </div>
+                    </a>
+                    
+            `;
+            });
+            c.innerHTML += group;
+            document.querySelectorAll(".-d").forEach((item) => {
+              if (item.innerText == "") item.style.display = "none";
+            });
+            let images = document.images;
+            for (let i = 0; i < images.length; i++) {
+              if (images[i].className == "_ctg-image-load") {
+                _load(images[i], images[i].dataset.src);
+              }
+            }
+            function _load(i, d) {
+              let image_true = new Image();
+              image_true.onload = function () {
+                i.src = this.src;
+              };
+              image_true.src = d;
+            }
+          }
+        };
+        xhr.open("GET", url, true);
+        xhr.send();
+      }
+
+      function _rv_a() {
+        if (
+          localStorage.getItem("_rv") &&
+          document.querySelector(".-ct-recentlyviewed_a")
+        ) {
+          let _rv = JSON.parse(localStorage.getItem("_rv"));
+          document.querySelector(".-ct-recentlyviewed_a").innerHTML = "";
+          _rv.forEach((item) => {
+            ctg_storage_a(
+              document.querySelector(".-ct-recentlyviewed_a"),
+              `/api/user/product/ct/${item}`
+            );
+          });
+        }
+      }
+      if (
+        !localStorage.getItem("_rv") &&
+        document.querySelector(".rv-ctr") != null
+      ) {
+        document.querySelector(".rv-ctr").style.display = "none";
+      }
+      _rv_a();
     </script>
     <script src="../ym.min.js"></script>
     <!--scripts-->

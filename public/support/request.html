@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-74SV9XV7X5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-74SV9XV7X5");
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../resources/cartlink.png" />
@@ -147,7 +161,7 @@
         <li><a href="../404">Special Order</a></li>
         <li><a href="../404">Delivery Time</a></li>
         <li><a href="../404">Payment Methods</a></li>
-        <li><a href="../404">Request An Item</a></li>
+        <li><a href="../support/request.html">Request An Item</a></li>
         <li><a href="../404">Report an Item</a></li>
         <li><a href="../404">Return Policy</a></li>
       </ul>
@@ -156,8 +170,8 @@
         <li><a href="../404">About Yammie</a></li>
         <li><a href="../404">How to Order</a></li>
         <li><a href="../404">Our Partners</a></li>
-        <li><a href="../404">Terms &amp; Conditions For Use</a></li>
-        <li><a href="../404">Privacy Policy</a></li>
+        <li><a href="../support/terms">Terms &amp; Conditions For Use</a></li>
+        <li><a href="../support/privacy-policy">Privacy Policy</a></li>
       </ul>
       <div class="ftr-down">
         <div class="ftr-official" style="color: black !important">
@@ -326,7 +340,7 @@
       <div class="hp-ctr">
         <div class="hp-image">
           <img
-            src="../resources/image-slider/slider-image-1.jpg"
+            src="../resources/request_1 (1).svg"
             alt=""
             width="100%"
             height="100%"
@@ -336,29 +350,37 @@
           <div class="hdr-req-1">DESCRIBE YOUR REQUEST</div>
         </div>
         <div class="form-req">
-          <form id="_req">
+          <form id="user_request">
             <div class="_input">
               <label for="_req">Name of Item</label><br />
-              <input type="text" class="-is" />
+              <input type="text" class="-is" name="request_name" />
             </div>
             <div class="_input">
               <label for="_description">Description</label>
               <br />
               <textarea
-                name=""
                 id=""
                 cols="30"
                 rows="10"
                 class="-is"
+                name="request_description"
               ></textarea>
             </div>
             <div class="_input">
               <label for="_price">Estimated Price</label>
               <br />
-              <input type="number" class="-is" />
+              <input type="number" class="-is" name="request_price" />
+            </div>
+            <div class="_input">
+              <label for="_price">Your Contact</label>
+              <br />
+              <input type="text" class="-is" name="user_contact" />
             </div>
             <div class="_input">
               <button type="submit" class="btn">Send Request</button>
+            </div>
+            <div class="r-request" style="font-size: 18.5px; opacity: 0">
+              Sending Request...
             </div>
           </form>
         </div>
@@ -411,8 +433,10 @@
             <li><a href="#">How to Order</a></li>
             <li><a href="#">Help &amp; FAQs</a></li>
             <li><a href="#">Our Partners</a></li>
-            <li><a href="#">Terms &amp; Conditions For Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li>
+              <a href="../support/terms">Terms &amp; Conditions For Use</a>
+            </li>
+            <li><a href="../support/privacy-policy">Privacy Policy</a></li>
           </ul>
         </div>
         <div class="ftr-u-third">
@@ -473,7 +497,7 @@
             <li><a href="#">Special Order</a></li>
             <li><a href="#">Delivery Time</a></li>
             <li><a href="#">Payment Methods</a></li>
-            <li><a href="#">Request An Item</a></li>
+            <li><a href="../support/request.html">Request An Item</a></li>
             <li><a href="#">Report an Item</a></li>
             <li><a href="#">Return Policy</a></li>
           </ul>
@@ -585,12 +609,6 @@
       });
     </script>
     <script>
-      document.querySelector("#logout").addEventListener("click", () => {
-        localStorage.removeItem(
-          "https://yammieshoppers.com/useLocalStorage/Storage"
-        );
-        window.location.assign("/");
-      });
       //comment
 
       document
@@ -617,6 +635,35 @@
               setTimeout(() => {
                 document.querySelector("._r-comment").style.opacity = "0";
               }, 2000);
+            }
+          };
+        });
+    </script>
+    <script>
+      //request
+      document
+        .querySelector("#user_request")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          document.querySelector(".r-request").style.opacity = "0.6";
+          let form = new FormData(document.querySelector("#user_request"));
+          let request = {};
+          form.forEach((value, key) => {
+            request[key] = value;
+          });
+          let xhr = new XMLHttpRequest();
+          xhr.open("POST", "/api/user/s-request", true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.send(JSON.stringify(request));
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              document.querySelector(".r-request").innerHTML =
+                "Your Request has been sent...";
+              document.querySelector(".r-request").style.opacity = "0.9";
+              setTimeout(() => {
+                document.querySelector(".r-request").style.opacity = "0";
+                window.location.assign("/");
+              }, 3000);
             }
           };
         });

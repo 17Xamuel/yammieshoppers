@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-74SV9XV7X5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-74SV9XV7X5");
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="../resources/cartlink.png" />
@@ -134,7 +148,7 @@
         <li><a href="../404">Special Order</a></li>
         <li><a href="../404">Delivery Time</a></li>
         <li><a href="../404">Payment Methods</a></li>
-        <li><a href="../404">Request An Item</a></li>
+        <li><a href="../support/request.html">Request An Item</a></li>
         <li><a href="../404">Report an Item</a></li>
         <li><a href="../404">Return Policy</a></li>
       </ul>
@@ -143,8 +157,8 @@
         <li><a href="../404">About Yammie</a></li>
         <li><a href="../404">How to Order</a></li>
         <li><a href="../404">Our Partners</a></li>
-        <li><a href="../404">Terms &amp; Conditions For Use</a></li>
-        <li><a href="../404">Privacy Policy</a></li>
+        <li><a href="../support/terms">Terms &amp; Conditions For Use</a></li>
+        <li><a href="../support/privacy-policy">Privacy Policy</a></li>
       </ul>
       <div class="ftr-down">
         <div class="ftr-official" style="color: black !important">
@@ -978,8 +992,10 @@
             <li><a href="#">How to Order</a></li>
             <li><a href="#">Help &amp; FAQs</a></li>
             <li><a href="#">Our Partners</a></li>
-            <li><a href="#">Terms &amp; Conditions For Use</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li>
+              <a href="../support/terms">Terms &amp; Conditions For Use</a>
+            </li>
+            <li><a href="../support/privacy-policy">Privacy Policy</a></li>
           </ul>
         </div>
         <div class="ftr-u-third">
@@ -1040,7 +1056,7 @@
             <li><a href="#">Special Order</a></li>
             <li><a href="#">Delivery Time</a></li>
             <li><a href="#">Payment Methods</a></li>
-            <li><a href="#">Request An Item</a></li>
+            <li><a href="../support/request.html">Request An Item</a></li>
             <li><a href="#">Report an Item</a></li>
             <li><a href="#">Return Policy</a></li>
           </ul>
@@ -1152,14 +1168,7 @@
       });
     </script>
     <script>
-      document.querySelector("#logout").addEventListener("click", () => {
-        localStorage.removeItem(
-          "https://yammieshoppers.com/useLocalStorage/Storage"
-        );
-        window.location.assign("/");
-      });
       //comment
-
       document
         .querySelector("#user_comment")
         .addEventListener("submit", (e) => {

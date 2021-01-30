@@ -26,10 +26,9 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
 });
 
-// Change bucket property to your Space name
 function getUpload(id) {
   let upload = multer({
     storage: multerS3({
@@ -38,8 +37,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -52,8 +51,8 @@ function getUploadFile(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -61,7 +60,7 @@ function getUploadFile(id) {
 function _deleteFile(i) {
   var params = {
     Bucket: "yammie",
-    Key: i
+    Key: i,
   };
   s3.deleteObject(params, function (err, data) {
     if (err) console.log(err, err.stack);
@@ -103,8 +102,9 @@ app.post("/addProduct", async (req, res) => {
       ingridient,
       ingridientPrice,
       ingridientdiscount,
-      flavor
+      flavor,
     } = req.body;
+<<<<<<< HEAD
     if (color !== undefined) {
       var colors = [];
       if (typeof color == "string") {
@@ -218,6 +218,13 @@ app.post("/addProduct", async (req, res) => {
       }
     }
 
+=======
+    console.log(req.body);
+    let newprice = parseInt(price);
+    let newdiscount = parseInt(discount);
+
+    let productDiscount = (newdiscount / newprice) * 100;
+>>>>>>> a7d8b65c53f301c646d737de98e85db2d505e6b9
     conn.query(
       `SELECT subcategory_id,category_id FROM subCategories WHERE 
       subCategoryName = '${subcategory}'`,
@@ -233,7 +240,7 @@ app.post("/addProduct", async (req, res) => {
             description: description,
             category: result[0].category_id,
             subcategory: result[0].subcategory_id,
-            discount: parseInt(discount) || 0,
+            discount: Math.floor(productDiscount) || 0,
             images: path,
             seller_id: seller_id,
             detailedDescription,
@@ -247,6 +254,7 @@ app.post("/addProduct", async (req, res) => {
               Size: size,
               TypeOfProduct: typeOfProduct,
               NetWeight: netWeight || null,
+<<<<<<< HEAD
               Flavor: flavors || null,
               Sizes: getVariations(sizes, sizePrices, sizeDiscounts) || null,
               Ingredients:
@@ -256,6 +264,16 @@ app.post("/addProduct", async (req, res) => {
                   ingridientdiscounts
                 ) || null
             })
+=======
+              Flavor: flavor || null,
+              sizeVaritionPrice: myprice || null,
+              sizeVaritionDiscount: mydiscount || null,
+              sizeVaritionDescription: mySize || null,
+              ingredientDescription: ingridient || null,
+              ingredientPricing: ingridientPrice || null,
+              ingredientDiscount: ingridientdiscount || null,
+            }),
+>>>>>>> a7d8b65c53f301c646d737de98e85db2d505e6b9
           },
           (err, results) => {
             if (err) {
@@ -325,17 +343,60 @@ app.post("/editProduct", async (req, res) => {
     discount,
     seller_id,
     quantity,
+<<<<<<< HEAD
     detailedDescription
+=======
+    detailedDescription,
+    brand,
+    color,
+    weight,
+    fragility,
+    dimensions,
+    size,
+    typeOfProduct,
+    netWeight,
+>>>>>>> a7d8b65c53f301c646d737de98e85db2d505e6b9
   } = req.body;
 
   conn.query(
     `SELECT * FROM pending_products WHERE id=?`,
     [id],
+<<<<<<< HEAD
     (err1, res1) => {
       if (err1) throw err1;
       if (res1.length > 0) {
         conn.query(`INSERT INTO products SET?`, res1, (err2, res2) => {
           if (err2) throw err2;
+=======
+    async (err, result) => {
+      if (err) throw err;
+      conn.query(
+        `INSERT INTO products SET ?`,
+        {
+          id: id,
+          product: product,
+          price: price,
+          description: description,
+          subcategory: subcategory,
+          discount: discount,
+          images: JSON.stringify(result[0].images),
+          seller_id: seller_id,
+          quantity: quantity,
+          detailedDescription,
+          specifications: JSON.stringify({
+            Brand: brand || null,
+            Color: color || null,
+            Weight: weight,
+            Fragile: fragility,
+            Dimensions: dimensions || null,
+            Size: size,
+            TypeOfProduct: typeOfProduct,
+            NetWeight: netWeight || null,
+          }),
+        },
+        (error, results) => {
+          if (error) throw error;
+>>>>>>> a7d8b65c53f301c646d737de98e85db2d505e6b9
           conn.query(
             `DELETE FROM pending_prodcts WHERE id=?`,
             [id],
@@ -379,7 +440,7 @@ app.post("/addImages", async (req, res) => {
       {
         image_id: imageId,
         image_path: pathing,
-        destination: Uploads
+        destination: Uploads,
       },
       (error, results) => {
         if (error) throw error;
@@ -389,6 +450,53 @@ app.post("/addImages", async (req, res) => {
   });
 });
 
+<<<<<<< HEAD
+=======
+app.post("/edit", async (req, res) => {
+  let {
+    id,
+    product,
+    price,
+    description,
+    subcategory,
+    discount,
+    seller_id,
+    quantity,
+    detailedDescription,
+    brand,
+    color,
+    weight,
+    fragility,
+    dimensions,
+    size,
+    typeOfProduct,
+    netWeight,
+  } = req.body;
+
+  let newSpecification = JSON.stringify({
+    Brand: brand || null,
+    Color: color || null,
+    Weight: weight,
+    Fragile: fragility,
+    Dimensions: dimensions || null,
+    Size: size,
+    TypeOfProduct: typeOfProduct,
+    NetWeight: netWeight || null,
+  });
+
+  conn.query(
+    `UPDATE products SET product='${product}', price=${price},description='${description}',
+        subcategory=${subcategory},discount=${discount},seller_id='${seller_id}',quantity=${quantity}, 
+        detailedDescription='${detailedDescription}',specifications='${newSpecification}' WHERE id=?`,
+    [id],
+    (err1, res1) => {
+      if (err1) throw err1;
+      res.redirect("./admin/products.html");
+    }
+  );
+});
+
+>>>>>>> a7d8b65c53f301c646d737de98e85db2d505e6b9
 app.post("/addSubcategoryImage", async (req, res) => {
   let upload = getUploadFile(uuid.v4());
   upload(req, res, (err) => {
