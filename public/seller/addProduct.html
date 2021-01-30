@@ -252,7 +252,9 @@
                         name="category"
                         id="category"
                       >
-                        <option value="">Please Select a Category</option>
+                        <option value="" hidden>
+                          Please Select a Category
+                        </option>
                       </select>
                     </div>
                     <div class="form-group col-md-6">
@@ -395,7 +397,7 @@
                             aria-expanded="false"
                             aria-controls="collapseTwo"
                           >
-                            Click to Add Ingridient Variation
+                            Click to Add Ingredient Variation
                           </button>
                         </h2>
                       </div>
@@ -411,7 +413,7 @@
                             class="btn btn-warning text-light"
                             id="Ingridient"
                           >
-                            Add Ingridients
+                            Add Ingredients
                           </button>
                           <div class="text-center newIngridients mt-2"></div>
                         </div>
@@ -428,7 +430,7 @@
                             aria-expanded="false"
                             aria-controls="collapseThree"
                           >
-                            Flavor Variation
+                            Click to Add Flavor Variation
                           </button>
                         </h2>
                       </div>
@@ -461,7 +463,7 @@
                             aria-expanded="false"
                             aria-controls="collapseFour"
                           >
-                            Colors Variation
+                            Click to Add Colors Variation
                           </button>
                         </h2>
                       </div>
@@ -484,53 +486,6 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <label for="size" class="col-md-3"
-                    >Size Variation(if any)
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-warning text-light"
-                      id="sizing"
-                    >
-                      Add Size Variation
-                    </button></label
-                  >
-                  <div class="text-center newSize"></div>
-                  <br />
-                  <label for="Flavours" class="col-md-3"
-                    >Add Flavours(if any)
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-warning text-light"
-                      id="Flavour"
-                    >
-                      + Flavour Variation
-                    </button></label
-                  >
-                  <div class="text-center newFlavour"></div>
-                  <br />
-                  <label for="Flavours" class="col-md-3"
-                    >Add Colors(if any)
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-warning text-light"
-                      id="color"
-                    >
-                      Add Color Variation
-                    </button></label
-                  >
-                  <div class="text-center newColor"></div>
-                  <br />
-                  <label for="Ingridient" class="col-md-3">
-                    Ingridients(if any)
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-warning text-light"
-                      id="Ingridient"
-                    >
-                      + Ingridients Variation
-                    </button></label
-                  >
-                  <div class="text-center newIngridients"></div> -->
                   <br /><br />
                   <label for="Detailed Description"
                     >Product Detailed Description</label
@@ -846,14 +801,14 @@
       //   });
       // });
 
-      let testFileNumber = document.querySelector(".submitting");
-      testFileNumber.addEventListener("click", (e) => {
-        let fileNumber = document.querySelector(".filing");
-        if (fileNumber.files.length == 0) {
-          e.preventDefault();
-          alert("Please Select Main Image");
-        }
-      });
+      // let testFileNumber = document.querySelector(".submitting");
+      // testFileNumber.addEventListener("click", (e) => {
+      //   let fileNumber = document.querySelector(".filing");
+      //   if (fileNumber.files.length == 0) {
+      //     e.preventDefault();
+      //     alert("Please Select Main Image");
+      //   }
+      // });
 
       let characterPrevent = document.querySelectorAll(".mynum");
       characterPrevent.forEach((input) => {
@@ -882,7 +837,7 @@
         input1.setAttribute("placeholder", "Size");
         input1.setAttribute("type", "text");
         input1.setAttribute("required", "required");
-        input1.setAttribute("name", "mySize");
+        input1.setAttribute("name", "mySize[]");
         innerdiv.appendChild(input1);
         let indiv = document.createElement("div");
         indiv.classList.add("form-group", "col-md-4");
@@ -891,7 +846,7 @@
         input2.setAttribute("placeholder", "Size Price(UGX)");
         input2.setAttribute("type", "number");
         input2.setAttribute("required", "required");
-        input2.setAttribute("name", "myprice");
+        input2.setAttribute("name", "myprice[]");
         indiv.appendChild(input2);
         let lastdiv = document.createElement("div");
         lastdiv.classList.add("form-group", "col-md-4");
@@ -900,7 +855,7 @@
         input3.setAttribute("placeholder", "Size Discount(UGX)");
         input3.setAttribute("type", "number");
         input3.setAttribute("required", "required");
-        input3.setAttribute("name", "mydiscount");
+        input3.setAttribute("name", "mydiscount[]");
         lastdiv.appendChild(input3);
         main.append(innerdiv, indiv, lastdiv);
         mySize.appendChild(main);
@@ -914,19 +869,19 @@
         innerdiv.classList.add("form-group", "col-md-4");
         let input1 = document.createElement("input");
         input1.classList.add("form-control");
-        input1.setAttribute("placeholder", "Ingridients");
+        input1.setAttribute("placeholder", "Ingredients");
         input1.setAttribute("type", "text");
         input1.setAttribute("required", "required");
-        input1.setAttribute("name", "ingridient");
+        input1.setAttribute("name", "ingridient[]");
         innerdiv.appendChild(input1);
         let indiv = document.createElement("div");
         indiv.classList.add("form-group", "col-md-4");
         let input2 = document.createElement("input");
         input2.classList.add("form-control", "mynum");
-        input2.setAttribute("placeholder", "Ingridients Price(UGX)");
+        input2.setAttribute("placeholder", "Ingredients Price(UGX)");
         input2.setAttribute("type", "number");
         input2.setAttribute("required", "required");
-        input2.setAttribute("name", "ingridientPrice");
+        input2.setAttribute("name", "ingridientPrice[]");
         indiv.appendChild(input2);
         let lastdiv = document.createElement("div");
         lastdiv.classList.add("form-group", "col-md-4");
@@ -935,7 +890,7 @@
         input3.setAttribute("placeholder", "Discount(UGX)");
         input3.setAttribute("type", "number");
         input3.setAttribute("required", "required");
-        input3.setAttribute("name", "ingridientdiscount");
+        input3.setAttribute("name", "ingridientdiscount[]");
         lastdiv.appendChild(input3);
         main.append(innerdiv, indiv, lastdiv);
         myIngridient.appendChild(main);
@@ -943,50 +898,28 @@
 
       const myFlavor = document.querySelector(".newFlavour");
       document.getElementById("Flavour").addEventListener("click", (e) => {
-        let maindiv = document.createElement("div");
-        maindiv.classList.add("form-row");
         let inner = document.createElement("div");
-        inner.classList.add("form-group", "col-md-6");
+        inner.classList.add("form-group");
         let input0 = document.createElement("input");
         input0.classList.add("form-control");
         input0.setAttribute("type", "text");
         input0.setAttribute("Placeholder", "Flavor Name");
-        input0.setAttribute("name", "flavor");
+        input0.setAttribute("name", "flavor[]");
         inner.appendChild(input0);
-        let inner1 = document.createElement("div");
-        inner1.classList.add("form-group", "col-md-6");
-        let input1 = document.createElement("input");
-        input1.classList.add("form-control");
-        input1.setAttribute("type", "text");
-        input1.setAttribute("Placeholder", "Flavor Name");
-        input1.setAttribute("name", "flavor");
-        inner1.appendChild(input1);
-        maindiv.append(inner, inner1);
-        myFlavor.appendChild(maindiv);
+        myFlavor.appendChild(inner);
       });
 
       const myColor = document.querySelector(".newColor");
       document.getElementById("color").addEventListener("click", (e) => {
-        let maindiv = document.createElement("div");
-        maindiv.classList.add("form-row");
         let inner = document.createElement("div");
-        inner.classList.add("form-group", "col-md-6");
+        inner.classList.add("form-group");
         let input0 = document.createElement("input");
         input0.classList.add("form-control");
         input0.setAttribute("type", "text");
         input0.setAttribute("Placeholder", "Color Name");
-        input0.setAttribute("name", "color");
+        input0.setAttribute("name", "color[]");
         inner.appendChild(input0);
-        let inner1 = document.createElement("div");
-        inner1.classList.add("form-group", "col-md-6");
-        let input1 = document.createElement("input");
-        input1.classList.add("form-control");
-        input1.setAttribute("type", "text");
-        input1.setAttribute("Placeholder", "Color Name");
-        input1.setAttribute("name", "color");
-        inner1.appendChild(input1);
-        maindiv.append(inner, inner1);
-        myColor.appendChild(maindiv);
+        myColor.appendChild(inner);
       });
 
       function lg() {

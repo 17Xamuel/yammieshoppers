@@ -58,12 +58,6 @@
                 >YammieShoppers</a
               >
               <div class="border-bottom pb-3">
-                <img
-                  src="./images/user-1.jpg"
-                  width="50"
-                  height="50"
-                  class="rounded-circle mr-3"
-                />
                 <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
@@ -80,7 +74,7 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="analytics" class="nav-link text-white p-3 mb-2"
+                  <a href="#" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-chart-line text-light fa-lg mr-3"></i
                     >Analytics</a
                   >
@@ -136,17 +130,26 @@
                       <a
                         class="dropdown-item"
                         href="#"
-                        data-toggle="modal"
-                        data-target="#addAddress"
-                        >Add Zone Addresses</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        href="#"
                         data-target="#editZone"
                         data-toggle="modal"
                         >Edit Zone</a
                       >
+
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#viewAddress"
+                        data-toggle="modal"
+                        >View Addresses</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-toggle="modal"
+                        data-target="#addAddress"
+                        >Add Zone Addresses</a
+                      >
+
                       <div class="dropdown-divider"></div>
                       <a
                         class="dropdown-item"
@@ -238,6 +241,32 @@
     </div>
     <!-- End Zone Modal -->
 
+    <!-- view Address -->
+    <div class="modal fade" id="viewAddress">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">View Zone Addresses</h5>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <select class="form-control zonal" id="viewing">
+                <option value="">Select a Zone</option>
+              </select>
+            </div>
+            <span id="load"></span>
+            <ul class="list-group" id="view"></ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm autoReload">
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end -->
+
     <!-- Zone Address -->
     <div class="modal fade" id="addAddress">
       <div class="modal-dialog">
@@ -248,7 +277,7 @@
           <div class="modal-body text-center" id="addressMessage">
             <form id="zoneAddress">
               <div class="form-group">
-                <select required class="form-control zonal">
+                <select required class="form-control zonal" id="zonal">
                   <option value="">Select a Zone</option>
                 </select>
               </div>
@@ -408,7 +437,7 @@
                       <i class="fas fa-shopping-bag fa-3x text-warning"></i>
                       <div class="text-right text-secondary">
                         <h4>Orders</h4>
-                        <h3 id="orders"></h3>
+                        <h5 id="orders"></h5>
                       </div>
                     </div>
                   </div>
@@ -422,10 +451,10 @@
                 <div class="card card-common">
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
-                      <i class="fas fa-table fa-3x text-success"></i>
+                      <i class="fas fa-user fa-3x text-success"></i>
                       <div class="text-right text-secondary">
-                        <h4>Products</h4>
-                        <h3 id="products"></h3>
+                        <h4>Sellers</h4>
+                        <h5 id="sellers"></h5>
                       </div>
                     </div>
                   </div>
@@ -442,7 +471,7 @@
                       <i class="fas fa-users fa-3x text-info"></i>
                       <div class="text-right text-secondary">
                         <h4>Customers</h4>
-                        <h3 id="users-number"></h3>
+                        <h5 id="users-number"></h5>
                       </div>
                     </div>
                   </div>
@@ -456,10 +485,10 @@
                 <div class="card card-common">
                   <div class="card-body">
                     <div class="d-flex justify-content-between">
-                      <i class="fas fa-chart-line fa-3x text-danger"></i>
+                      <i class="fas fa-dollar-sign fa-3x text-danger"></i>
                       <div class="text-right text-secondary">
-                        <h4>Visitors</h4>
-                        <h3>10,000</h3>
+                        <h4>Income</h4>
+                        <h5 id="income"></h5>
                       </div>
                     </div>
                   </div>
@@ -537,9 +566,9 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-muted mb-3 text-center">
+                    <h5 class="text-muted mb-3 text-center">
                       Pending Sellers <span id="seln"></span>
-                    </h4>
+                    </h5>
                     <div class="table-responsive">
                       <table class="table table-dark table-hover text-center">
                         <thead>
@@ -572,9 +601,9 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h4 class="text-muted mb-3 text-center">
+                    <h5 class="text-muted mb-3 text-center">
                       Finished Orders <span id="fon"></span>
-                    </h4>
+                    </h5>
                     <div class="table-responsive">
                       <table class="table table-striped bg-light text-center">
                         <thead>
@@ -598,180 +627,6 @@
       </div>
     </section>
     <!-- End Tables -->
-
-    <!-- Comments -->
-    <!-- <section>
-      <div class="container-fluid">
-        <div class="row mb-5">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row align-items-center">
-              <div class="col-xl-11 mx-auto">
-                <div class="card rounded">
-                  <div class="card-body">
-                    <h4 class="text-muted text-center mb-4">
-                      Recent Customer Comments
-                    </h4>
-                    <div id="accordion">
-                      <div class="card">
-                        <div class="card-header">
-                          <button
-                            class="btn btn-block bg-secondary text-light text-left"
-                            data-toggle="collapse"
-                            data-target="#collapseOne"
-                          >
-                            <img
-                              src="./images/user-1.jpg "
-                              width="50"
-                              height="50"
-                              class="mr-3 rounded"
-                            />
-                            Livingstone posted a new comment
-                          </button>
-                        </div>
-                        <div
-                          class="collapse show"
-                          id="collapseOne"
-                          data-parent="#accordion"
-                        >
-                          <div class="card-body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Deserunt natus neque doloribus, atque
-                            voluptatum et nulla nobis ipsum consectetur
-                            quibusdam est laboriosam. Atque placeat accusamus
-                            ad. Suscipit rerum deleniti expedita.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <button
-                            class="btn btn-block bg-secondary text-light text-left"
-                            data-toggle="collapse"
-                            data-target="#collapseTwo"
-                          >
-                            <img
-                              src="./images/user-1.jpg"
-                              width="50"
-                              height="50"
-                              class="mr-3 rounded"
-                            />
-                            Denis posted a new comment
-                          </button>
-                        </div>
-                        <div
-                          class="collapse"
-                          id="collapseTwo"
-                          data-parent="#accordion"
-                        >
-                          <div class="card-body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Deserunt natus neque doloribus, atque
-                            voluptatum et nulla nobis ipsum consectetur
-                            quibusdam est laboriosam. Atque placeat accusamus
-                            ad. Suscipit rerum deleniti expedita.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <button
-                            class="btn btn-block bg-secondary text-light text-left"
-                            data-toggle="collapse"
-                            data-target="#collapseThree"
-                          >
-                            <img
-                              src="./images/user-1.jpg "
-                              width="50"
-                              height="50"
-                              class="mr-3 rounded"
-                            />
-                            Sam posted a new comment
-                          </button>
-                        </div>
-                        <div
-                          class="collapse"
-                          id="collapseThree"
-                          data-parent="#accordion"
-                        >
-                          <div class="card-body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Deserunt natus neque doloribus, atque
-                            voluptatum et nulla nobis ipsum consectetur
-                            quibusdam est laboriosam. Atque placeat accusamus
-                            ad. Suscipit rerum deleniti expedita.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <button
-                            class="btn btn-block bg-secondary text-light text-left"
-                            data-toggle="collapse"
-                            data-target="#collapseFour"
-                          >
-                            <img
-                              src="./images/user-1.jpg "
-                              width="50"
-                              height="50"
-                              class="mr-3 rounded"
-                            />
-                            Maureen posted a new comment
-                          </button>
-                        </div>
-                        <div
-                          class="collapse"
-                          id="collapseFour"
-                          data-parent="#accordion"
-                        >
-                          <div class="card-body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Deserunt natus neque doloribus, atque
-                            voluptatum et nulla nobis ipsum consectetur
-                            quibusdam est laboriosam. Atque placeat accusamus
-                            ad. Suscipit rerum deleniti expedita.
-                          </div>
-                        </div>
-                      </div>
-                      <div class="card">
-                        <div class="card-header">
-                          <button
-                            class="btn btn-block bg-secondary text-light text-left"
-                            data-toggle="collapse"
-                            data-target="#collapseFive"
-                          >
-                            <img
-                              src="./images/user-1.jpg "
-                              width="50"
-                              height="50"
-                              class="mr-3 rounded"
-                            />
-                            Stephen posted a new comment
-                          </button>
-                        </div>
-                        <div
-                          class="collapse"
-                          id="collapseFive"
-                          data-parent="#accordion"
-                        >
-                          <div class="card-body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Deserunt natus neque doloribus, atque
-                            voluptatum et nulla nobis ipsum consectetur
-                            quibusdam est laboriosam. Atque placeat accusamus
-                            ad. Suscipit rerum deleniti expedita.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section> -->
-    <!-- End comments -->
 
     <!-- sellerModal -->
     <div class="modal fade" id="sellerInformation">
@@ -1060,18 +915,18 @@
       xhr1.onreadystatechange = () => {
         if (xhr1.readyState < 4) {
           document.getElementById(
-            "products"
+            "sellers"
           ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
         }
         if (xhr1.readyState == 4 && xhr1.status == 200) {
           if (xhr1.responseText == "") {
-            document.getElementById("products").innerHTML = 0;
+            document.getElementById("sellers").innerHTML = 0;
           } else {
-            document.getElementById("products").innerHTML = xhr1.responseText;
+            document.getElementById("sellers").innerHTML = xhr1.responseText;
           }
         }
       };
-      xhr1.open("GET", "/api/admin/allProducts", true);
+      xhr1.open("GET", "/api/admin/allSellers", true);
       xhr1.send();
 
       //Number of Users
@@ -1103,22 +958,42 @@
         }
         if (orders.status == 200 && orders.readyState == 4) {
           let pendingOrders = JSON.parse(orders.responseText);
+          let orderChecking = Math.round(pendingOrders.length / 2);
+          let email = JSON.parse(localStorage.getItem("admin/yammie"));
+          let data = "";
+          if (email[3] == "admin@yammieshoppers.com") {
+            for (let i = 0; i < orderChecking; i++) {
+              data += `
+              <tr>
+              <td>${pendingOrders[i].order_number}</td>
+              <td>${pendingOrders[i].order_amount}</td>
+              <td>
+                <a href="order?order=${pendingOrders[i].order_id}">
+                  <button type="button" class="btn btn-info btn-sm">Details</button>
+                </a>
+              </td></tr>
+              `;
+            }
+            document.getElementById("pendingOrders").innerHTML = data;
+            document.getElementById("on").innerHTML = `(${orderChecking})`;
+          } else if (email[3] == "yammieshoppers@gmail.com") {
+            for (let j = orderChecking; j < pendingOrders.length; j++) {
+              data += `
+              <tr>
+              <td>${pendingOrders[j].order_number}</td>
+              <td>${pendingOrders[j].order_amount}</td>
+              <td>
+                <a href="order?order=${pendingOrders[j].order_id}">
+                  <button type="button" class="btn btn-info btn-sm">Details</button>
+                </a>
+              </td></tr>
+              `;
+            }
+            document.getElementById("pendingOrders").innerHTML = data;
+            let newOrders = pendingOrders.length - orderChecking;
+            document.getElementById("on").innerHTML = `(${newOrders})`;
+          }
 
-          let row = "";
-          pendingOrders.forEach((pendingOrder) => {
-            row += `<tr>
-       <td>${pendingOrder.order_number}</td>
-       <td>${pendingOrder.order_amount}</td>
-       <td>
-       <a href="order?order=${pendingOrder.order_id}">
-         <button type="button" class="btn btn-info btn-sm">
-           Details
-         </button></a>
-       </td>
-     </tr>`;
-          });
-          document.getElementById("pendingOrders").innerHTML = row;
-          document.getElementById("on").innerHTML = `(${pendingOrders.length})`;
           document.getElementById("orderLoading").innerHTML = "";
         }
       };
@@ -1255,6 +1130,25 @@
       getZone.open("GET", `/api/admin/getZone`, true);
       getZone.send();
 
+      const income = new XMLHttpRequest();
+      income.onreadystatechange = function () {
+        if (income.readyState < 4) {
+          document.getElementById(
+            "income"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin  text-warning"></i>`;
+        }
+        if (income.readyState == 4 && income.status == 200) {
+          if (income.responseText == "") {
+            document.getElementById("income").innerHTML = "UGX " + 0;
+          } else {
+            document.getElementById("income").innerHTML =
+              "UGX " + income.responseText;
+          }
+        }
+      };
+      income.open("GET", `/api/admin/income`, true);
+      income.send();
+
       let address = document.getElementById("zoneAddress");
       address.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -1365,6 +1259,28 @@
         edit.open("POST", `/api/admin/editAddress/${original}`, true);
         edit.setRequestHeader("Content-Type", "application/json");
         edit.send(JSON.stringify(newAddress));
+      });
+
+      document.getElementById("viewing").addEventListener("change", (e) => {
+        let zone = document.getElementById("viewing").value;
+        let zonedata = new XMLHttpRequest();
+        zonedata.onreadystatechange = function () {
+          if (zonedata.readyState < 4) {
+            document.getElementById("load").innerHTML =
+              "Loading Addresses.....";
+          }
+          if (zonedata.readyState == 4 && zonedata.status == 200) {
+            let results = JSON.parse(zonedata.responseText);
+            let rows = "";
+            results.forEach((result) => {
+              rows += `<li class="list-group-item">${result.address_name}</li>`;
+            });
+            document.getElementById("view").innerHTML = rows;
+            document.getElementById("load").innerHTML = "";
+          }
+        };
+        zonedata.open("GET", `/api/admin/myAddresses/${zone}`, true);
+        zonedata.send();
       });
     </script>
     <!-- End Scripts -->

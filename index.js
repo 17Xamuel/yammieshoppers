@@ -26,7 +26,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
 });
 
 function getUpload(id) {
@@ -37,8 +37,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      },
-    }),
+      }
+    })
   }).array("images");
   return upload;
 }
@@ -51,8 +51,8 @@ function getUploadFile(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      },
-    }),
+      }
+    })
   }).array("images");
   return upload;
 }
@@ -60,7 +60,7 @@ function getUploadFile(id) {
 function _deleteFile(i) {
   var params = {
     Bucket: "yammie",
-    Key: i,
+    Key: i
   };
   s3.deleteObject(params, function (err, data) {
     if (err) console.log(err, err.stack);
@@ -102,15 +102,124 @@ app.post("/addProduct", async (req, res) => {
       ingridient,
       ingridientPrice,
       ingridientdiscount,
-      flavor,
+      flavor
     } = req.body;
-    console.log(req.body);
-    let newprice = parseInt(price);
-    let newdiscount = parseInt(discount);
+    if (color !== undefined) {
+      var colors = [];
+      if (typeof color == "string") {
+        colors.push(color.replace(/ /g, "_"));
+        console.log(colors);
+      } else {
+        color.forEach((col) => {
+          colors.push(col.replace(/ /g, "_"));
+        });
+      }
+    }
 
-    let productDiscount = (newdiscount / newprice) * 100;
+    if (flavor !== undefined) {
+      var flavors = [];
+      if (typeof flavor == "string") {
+        flavors.push(flavor.replace(/ /g, "_"));
+      } else {
+        flavor.forEach((flav) => {
+          flavors.push(flav.replace(/ /g, "_"));
+        });
+      }
+    }
+
+    if (mySize !== undefined) {
+      var sizes = [];
+      if (typeof mySize == "string") {
+        sizes.push(mySize.replace(/ /g, "_"));
+      } else {
+        mySize.forEach((size) => {
+          sizes.push(size.replace(/ /g, "_"));
+        });
+      }
+    }
+
+    if (myprice !== undefined) {
+      var sizePrices = [];
+      if (typeof myprice == "string") {
+        sizePrices.push(parseInt(myprice));
+      } else {
+        myprice.forEach((sizePrice) => {
+          sizePrices.push(parseInt(sizePrice));
+        });
+      }
+    }
+
+    if (mydiscount !== undefined) {
+      var sizeDiscounts = [];
+      if (typeof mydiscount == "string") {
+        sizeDiscounts.push(parseInt(mydiscount));
+      } else {
+        mydiscount.forEach((sizeDiscount) => {
+          sizeDiscounts.push(parseInt(sizeDiscount));
+        });
+      }
+    } else {
+      sizeDiscounts = [0];
+    }
+
+    if (ingridient !== undefined) {
+      var ingridients = [];
+      if (typeof ingridient == "string") {
+        ingridients.push(ingridient.replace(/ /g, "_"));
+      } else {
+        ingridient.forEach((ing) => {
+          ingridients.push(ing.replace(/ /g, "_"));
+        });
+      }
+    }
+
+    if (ingridientPrice !== undefined) {
+      var ingridientPrices = [];
+      if (typeof ingridientPrice == "string") {
+        ingridientPrices.push(parseInt(ingridientPrice));
+      } else {
+        ingridientPrice.forEach((ingPrice) => {
+          ingridientPrices.push(parseInt(ingPrice));
+        });
+      }
+    }
+
+    if (ingridientdiscount !== undefined) {
+      var ingridientdiscounts = [];
+      if (typeof ingridientdiscount == "string") {
+        ingridientdiscounts.push(parseInt(ingridientdiscount));
+      } else {
+        ingridientdiscount.forEach((ingDis) => {
+          ingridientdiscounts.push(parseInt(ingDis));
+        });
+      }
+    } else {
+      ingridientdiscounts = [0];
+    }
+
+    function getVariations(mydescription, pricing, discounting) {
+      if (
+        mydescription !== undefined &&
+        pricing !== undefined &&
+        discounting !== undefined
+      ) {
+        let myVariations = [];
+        for (let j = 0; j < mydescription.length; j++) {
+          myVariations.push({
+            descriptions: mydescription[j],
+            getPrice: pricing[j],
+            getDiscount: discounting[j]
+          });
+        }
+        return myVariations;
+      } else {
+        return undefined;
+      }
+    }
+
     conn.query(
-      `SELECT subcategory_id,category_id FROM subCategories WHERE subCategoryName = '${subcategory}'`,
+      `SELECT subcategory_id,category_id FROM subCategories WHERE 
+      subCategoryName = '${subcategory}'`,
       (error, result) => {
         if (error) throw err;
         conn.query(
@@ -130,21 +239,22 @@ app.post("/addProduct", async (req, res) => {
             specifications: JSON.stringify({
               date: Date.now(),
               Brand: brand || null,
-              Color: color || null,
+              Color: colors || null,
               Weight: weight,
               Fragile: fragility,
               Dimensions: dimensions || null,
               Size: size,
               TypeOfProduct: typeOfProduct,
               NetWeight: netWeight || null,
-              Flavor: flavor || null,
-              sizeVaritionPrice: myprice || null,
-              sizeVaritionDiscount: mydiscount || null,
-              sizeVaritionDescription: mySize || null,
-              ingredientDescription: ingridient || null,
-              ingredientPricing: ingridientPrice || null,
-              ingredientDiscount: ingridientdiscount || null,
-            }),
+              Flavor: flavors || null,
+              Sizes: getVariations(sizes, sizePrices, sizeDiscounts) || null,
+              Ingredients:
+                getVariations(
+                  ingridients,
+                  ingridientPrices,
+                  ingridientdiscounts
+                ) || null
+            })
           },
           (err, results) => {
             if (err) {
@@ -161,23 +271,50 @@ app.post("/addProduct", async (req, res) => {
 
 app.delete("/deleteProduct/:id", async (req, res) => {
   conn.query(
-    "SELECT images from pending_products WHERE id = ? ",
+    `SELECT * FROM pending_products WHERE id=?`,
     [req.params.id],
-    (err, results) => {
-      if (err) throw "Error" + err;
-      conn.query(
-        "DELETE FROM pending_products WHERE id = ? ",
-        [req.params.id],
-        async (err, results) => {
-          if (err) throw err;
-          res.send("Deleted");
-        }
-      );
+    (err1, res1) => {
+      if (err1) throw err1;
+      if (res1.length > 0) {
+        let images = JSON.parse(res1[0].images);
+        images.forEach((image) => {
+          _deleteFile(image.slice(43, image.length));
+        });
+        conn.query(
+          `DELETE FROM pending_products WHERE  id= ?`,
+          [req.params.id],
+          (err2, res2) => {
+            if (err2) throw err2;
+            res.send("OK");
+          }
+        );
+      } else {
+        conn.query(
+          `SELECT * FROM products WHERE id=?`,
+          [req.params.id],
+          (err3, res3) => {
+            if (err3) throw err3;
+            let _images = JSON.parse(res3[0].images);
+            _images.forEach((file) => {
+              _deleteFile(file.slice(43, file.length));
+              console.log("Image");
+            });
+            conn.query(
+              `DELETE FROM products WHERE id=?`,
+              [req.params.id],
+              (err4, res4) => {
+                if (err4) throw err4;
+                res.send("OK");
+              }
+            );
+          }
+        );
+      }
     }
   );
 });
 
-app.post("/editAndConfirm", async (req, res) => {
+app.post("/editProduct", async (req, res) => {
   let {
     id,
     product,
@@ -187,58 +324,38 @@ app.post("/editAndConfirm", async (req, res) => {
     discount,
     seller_id,
     quantity,
-    detailedDescription,
-    brand,
-    color,
-    weight,
-    fragility,
-    dimensions,
-    size,
-    typeOfProduct,
-    netWeight,
+    detailedDescription
   } = req.body;
 
   conn.query(
-    `SELECT images FROM pending_products WHERE id=?`,
+    `SELECT * FROM pending_products WHERE id=?`,
     [id],
-    async (err, result) => {
-      if (err) throw err;
-      conn.query(
-        `INSERT INTO products SET ?`,
-        {
-          id: id,
-          product: product,
-          price: price,
-          description: description,
-          subcategory: subcategory,
-          discount: discount,
-          images: JSON.stringify(result[0].images),
-          seller_id: seller_id,
-          quantity: quantity,
-          detailedDescription,
-          specifications: JSON.stringify({
-            Brand: brand || null,
-            Color: color || null,
-            Weight: weight,
-            Fragile: fragility,
-            Dimensions: dimensions || null,
-            Size: size,
-            TypeOfProduct: typeOfProduct,
-            NetWeight: netWeight || null,
-          }),
-        },
-        (error, results) => {
-          if (error) throw error;
+    (err1, res1) => {
+      if (err1) throw err1;
+      if (res1.length > 0) {
+        conn.query(`INSERT INTO products SET?`, res1, (err2, res2) => {
+          if (err2) throw err2;
           conn.query(
-            `DELETE FROM pending_products WHERE id=?`,
+            `DELETE FROM pending_prodcts WHERE id=?`,
             [id],
-            (err1, res1) => {
-              if (err1) throw err1;
+            (err3, res3) => {
+              if (err3) throw err3;
               res.redirect("./admin/products.html");
             }
           );
-        }
-      );
+        });
+      } else if (res1.length == 0) {
+        conn.query(
+          `UPDATE products SET product='${product}', price=${price},description='${description}',
+        subcategory=${subcategory},discount=${discount},seller_id='${seller_id}',quantity=${quantity}, 
+        detailedDescription='${detailedDescription}' WHERE id=?`,
+          [id],
+          (err1, res1) => {
+            if (err1) throw err1;
+            res.redirect("./admin/products.html");
+          }
+        );
+      }
     }
   );
 });
@@ -261,7 +378,7 @@ app.post("/addImages", async (req, res) => {
       {
         image_id: imageId,
         image_path: pathing,
-        destination: Uploads,
+        destination: Uploads
       },
       (error, results) => {
         if (error) throw error;
@@ -269,50 +386,6 @@ app.post("/addImages", async (req, res) => {
       }
     );
   });
-});
-
-app.post("/edit", async (req, res) => {
-  let {
-    id,
-    product,
-    price,
-    description,
-    subcategory,
-    discount,
-    seller_id,
-    quantity,
-    detailedDescription,
-    brand,
-    color,
-    weight,
-    fragility,
-    dimensions,
-    size,
-    typeOfProduct,
-    netWeight,
-  } = req.body;
-
-  let newSpecification = JSON.stringify({
-    Brand: brand || null,
-    Color: color || null,
-    Weight: weight,
-    Fragile: fragility,
-    Dimensions: dimensions || null,
-    Size: size,
-    TypeOfProduct: typeOfProduct,
-    NetWeight: netWeight || null,
-  });
-
-  conn.query(
-    `UPDATE products SET product='${product}', price=${price},description='${description}',
-        subcategory=${subcategory},discount=${discount},seller_id='${seller_id}',quantity=${quantity}, 
-        detailedDescription='${detailedDescription}',specifications='${newSpecification}' WHERE id=?`,
-    [id],
-    (err1, res1) => {
-      if (err1) throw err1;
-      res.redirect("./admin/products.html");
-    }
-  );
 });
 
 app.post("/addSubcategoryImage", async (req, res) => {

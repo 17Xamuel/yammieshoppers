@@ -75,12 +75,6 @@
                 >YammieShoppers</a
               >
               <div class="border-bottom pb-3">
-                <img
-                  src="./images/user-1.jpg"
-                  width="50"
-                  height="50"
-                  class="rounded-circle mr-3"
-                />
                 <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
@@ -97,9 +91,7 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a
-                    href="analytics"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                  <a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-chart-line text-light fa-lg mr-3"></i
                     >Analytics</a
                   >
@@ -522,9 +514,9 @@
               <div class="col-xl-11 mx-auto text-center">
                 <div class="card rounded my-3">
                   <div class="card-body">
-                    <h4 class="text-center my-3">
+                    <h5 class="text-center my-3">
                       Pending Products <span id="ppn"></span>
-                    </h4>
+                    </h5>
                     <div class="table-responsive">
                       <table class="table table-dark table-hover text-left">
                         <thead>
@@ -602,13 +594,39 @@
       </div>
     </section>
 
+    <div class="modal fade" id="deletingOnline">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete Product</h5>
+          </div>
+          <div class="modal-body text-center" id="onlin">
+            Want to Delete <span id="oname"></span> from Online Products?
+            <br />Press OK to continue
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" id="okB">
+              OK
+            </button>
+            <button
+              type="button"
+              class="btn-danger btn-sm"
+              data-dismiss="modal"
+            >
+              NO
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="modal fade" id="dPending">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Delete Pending Product</h5>
           </div>
-          <div class="modal-body text-center">
+          <div class="modal-body text-center" id="pend">
             Want to Delete <span id="pname"></span> from Pending Products?
             <br />Press OK to continue
           </div>
@@ -751,11 +769,14 @@
               deleting.addEventListener("click", (e) => {
                 const _xhr = new XMLHttpRequest();
                 _xhr.onreadystatechange = () => {
+                  if (_xhr.readyState < 4) {
+                    document.getElementById(
+                      "pend"
+                    ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                  }
                   if (_xhr.readyState == 4 && _xhr.status == 200) {
-                    if (_xhr.responseText == "Deleted") {
+                    if (_xhr.responseText == "OK") {
                       window.location.reload("products.html");
-                    } else {
-                      console.log("Error");
                     }
                   }
                 };
@@ -801,8 +822,10 @@
                       <td>
                       <button
                       type="submit"
-                      class="btn btn-danger btn-sm"
+                      class="btn btn-danger btn-sm _deleting"
+                      data-target="#deletingOnline" data-toggle="modal"
                       data-id="${onlineProduct.id}"
+                      data-name="${onlineProduct.product}"
                       data-images="${onlineProduct.images}">
                         Delete
                       </button></td>
@@ -817,6 +840,30 @@
             document.getElementById("onlineLoading").innerHTML = "";
           }
         }
+        let deletingButtons = document.querySelectorAll("._deleting");
+        deletingButtons.forEach((deletingButton) => {
+          deletingButton.addEventListener("click", (e) => {
+            document.getElementById("oname").innerHTML = e.target.dataset.name;
+            let i = e.target.dataset.id;
+            document.getElementById("okB").addEventListener("click", (e) => {
+              let _delete = new XMLHttpRequest();
+              _delete.onreadystatechange = function () {
+                if (_delete.readyState < 4) {
+                  document.getElementById(
+                    "onlin"
+                  ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                }
+                if (_delete.readyState == 4 && _delete.status == 200) {
+                  if (_delete.responseText == "OK") {
+                    window.location.reload("products.html");
+                  }
+                }
+              };
+              _delete.open("DELETE", `/deleteProduct/${i}`, true);
+              _delete.send({});
+            });
+          });
+        });
       };
       load.open("GET", `/api/admin/getOnlineProducts`, true);
       load.send();
@@ -984,7 +1031,9 @@
                       <td>${onlineProduct.product}</td>
                       <td>${onlineProduct.price}</td>
                       <td>
-                   <a href="product.html?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
+                   <a href="product.html?product=${
+                     onlineProduct.id
+                   }"><button type="button" class="btn btn-info btn-sm"
                        data-pp="${onlineProduct.id}">
                           Details
                         </button></a>
@@ -992,9 +1041,12 @@
                       <td>
                       <button
                       type="submit"
-                      class="btn btn-danger btn-sm"
-                      data-id="${onlineProduct.id}"
-                      data-images="${onlineProduct.images}">
+                      data-toggle="modal" data-target="#deletingOnline"
+                      class="btn btn-danger btn-sm _del"
+                      data-idm="${onlineProduct.id}"
+                      data-images="${
+                        onlineProduct.images
+                      }" data-name=${onlineProduct.product.replace(/ /g, "_")}>
                         Delete
                       </button></td>
                     </tr>`;
@@ -1002,6 +1054,32 @@
             document.getElementById("onlineProducts").innerHTML = row;
             document.getElementById("onlineLoading").innerHTML = "";
           }
+          let _deletingButtons = document.querySelectorAll("._del");
+          _deletingButtons.forEach((deletingButton) => {
+            deletingButton.addEventListener("click", (e) => {
+              document.getElementById(
+                "oname"
+              ).innerHTML = e.target.dataset.name.replace(/_/g, " ");
+              let id = e.target.dataset.idm;
+              document.getElementById("okB").addEventListener("click", (e) => {
+                let mydelete = new XMLHttpRequest();
+                mydelete.onreadystatechange = function () {
+                  if (mydelete.readyState < 4) {
+                    document.getElementById(
+                      "onlin"
+                    ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                  }
+                  if (mydelete.readyState == 4 && mydelete.status == 200) {
+                    if (mydelete.responseText == "OK") {
+                      window.location.reload("products.html");
+                    }
+                  }
+                };
+                mydelete.open("DELETE", `/deleteProduct/${id}`, true);
+                mydelete.send({});
+              });
+            });
+          });
         };
         data.open("GET", `/api/admin/searchProduct/${myValue}`, true);
         data.send();
