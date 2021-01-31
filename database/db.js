@@ -9,8 +9,8 @@ const MYSQL_CONFIG = {
   database: "yammie_db",
   port: 25060,
   ssl: {
-    ca: fs.readFileSync(path.join(__dirname, "ca.crt")),
-  },
+    ca: fs.readFileSync(path.join(__dirname, "ca.crt"))
+  }
 };
 
 const conn = mysql.createConnection(MYSQL_CONFIG);

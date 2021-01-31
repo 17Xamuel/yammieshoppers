@@ -577,7 +577,8 @@
                             <th>Images</th>
                             <th>Name</th>
                             <th>Price</th>
-                            <th colspan="2">Operations</th>
+                            <th>Qty(InStock)</th>
+                            <th>Details</th>
                           </tr>
                         </thead>
                         <tbody id="onlineProducts"></tbody>
@@ -813,22 +814,13 @@
                       </td>
                       <td>${onlineProduct.product}</td>
                       <td>${onlineProduct.price}</td>
+                      <td>${onlineProduct.quantity}</td>
                       <td>
                    <a href="product.html?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
                        data-pp="${onlineProduct.id}">
                           Details
                         </button></a>
                         </td>
-                      <td>
-                      <button
-                      type="submit"
-                      class="btn btn-danger btn-sm _deleting"
-                      data-target="#deletingOnline" data-toggle="modal"
-                      data-id="${onlineProduct.id}"
-                      data-name="${onlineProduct.product}"
-                      data-images="${onlineProduct.images}">
-                        Delete
-                      </button></td>
                     </tr>`;
           });
           document.getElementById("onlineProducts").innerHTML = row;
@@ -840,30 +832,6 @@
             document.getElementById("onlineLoading").innerHTML = "";
           }
         }
-        let deletingButtons = document.querySelectorAll("._deleting");
-        deletingButtons.forEach((deletingButton) => {
-          deletingButton.addEventListener("click", (e) => {
-            document.getElementById("oname").innerHTML = e.target.dataset.name;
-            let i = e.target.dataset.id;
-            document.getElementById("okB").addEventListener("click", (e) => {
-              let _delete = new XMLHttpRequest();
-              _delete.onreadystatechange = function () {
-                if (_delete.readyState < 4) {
-                  document.getElementById(
-                    "onlin"
-                  ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-                }
-                if (_delete.readyState == 4 && _delete.status == 200) {
-                  if (_delete.responseText == "OK") {
-                    window.location.reload("products.html");
-                  }
-                }
-              };
-              _delete.open("DELETE", `/deleteProduct/${i}`, true);
-              _delete.send({});
-            });
-          });
-        });
       };
       load.open("GET", `/api/admin/getOnlineProducts`, true);
       load.send();
@@ -1030,56 +998,18 @@
                       </td>
                       <td>${onlineProduct.product}</td>
                       <td>${onlineProduct.price}</td>
+                       <td>${onlineProduct.quantity}</td>
                       <td>
-                   <a href="product.html?product=${
-                     onlineProduct.id
-                   }"><button type="button" class="btn btn-info btn-sm"
+                   <a href="product.html?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
                        data-pp="${onlineProduct.id}">
                           Details
                         </button></a>
                         </td>
-                      <td>
-                      <button
-                      type="submit"
-                      data-toggle="modal" data-target="#deletingOnline"
-                      class="btn btn-danger btn-sm _del"
-                      data-idm="${onlineProduct.id}"
-                      data-images="${
-                        onlineProduct.images
-                      }" data-name=${onlineProduct.product.replace(/ /g, "_")}>
-                        Delete
-                      </button></td>
                     </tr>`;
             });
             document.getElementById("onlineProducts").innerHTML = row;
             document.getElementById("onlineLoading").innerHTML = "";
           }
-          let _deletingButtons = document.querySelectorAll("._del");
-          _deletingButtons.forEach((deletingButton) => {
-            deletingButton.addEventListener("click", (e) => {
-              document.getElementById(
-                "oname"
-              ).innerHTML = e.target.dataset.name.replace(/_/g, " ");
-              let id = e.target.dataset.idm;
-              document.getElementById("okB").addEventListener("click", (e) => {
-                let mydelete = new XMLHttpRequest();
-                mydelete.onreadystatechange = function () {
-                  if (mydelete.readyState < 4) {
-                    document.getElementById(
-                      "onlin"
-                    ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-                  }
-                  if (mydelete.readyState == 4 && mydelete.status == 200) {
-                    if (mydelete.responseText == "OK") {
-                      window.location.reload("products.html");
-                    }
-                  }
-                };
-                mydelete.open("DELETE", `/deleteProduct/${id}`, true);
-                mydelete.send({});
-              });
-            });
-          });
         };
         data.open("GET", `/api/admin/searchProduct/${myValue}`, true);
         data.send();
