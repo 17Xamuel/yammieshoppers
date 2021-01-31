@@ -521,7 +521,6 @@
                       <input
                         type="number"
                         class="form-control mynum"
-                        required=""
                         placeholder="Given Perentage(%) of the Price"
                         name="discount"
                         autocomplete="off"
@@ -801,14 +800,14 @@
       //   });
       // });
 
-      // let testFileNumber = document.querySelector(".submitting");
-      // testFileNumber.addEventListener("click", (e) => {
-      //   let fileNumber = document.querySelector(".filing");
-      //   if (fileNumber.files.length == 0) {
-      //     e.preventDefault();
-      //     alert("Please Select Main Image");
-      //   }
-      // });
+      let testFileNumber = document.querySelector(".submitting");
+      testFileNumber.addEventListener("click", (e) => {
+        let fileNumber = document.querySelector(".filing");
+        if (fileNumber.files.length == 0) {
+          e.preventDefault();
+          alert("Please Select Main Image");
+        }
+      });
 
       let characterPrevent = document.querySelectorAll(".mynum");
       characterPrevent.forEach((input) => {
@@ -836,8 +835,7 @@
         input1.classList.add("form-control");
         input1.setAttribute("placeholder", "Size");
         input1.setAttribute("type", "text");
-        input1.setAttribute("required", "required");
-        input1.setAttribute("name", "mySize[]");
+        input1.setAttribute("name", "mySize");
         innerdiv.appendChild(input1);
         let indiv = document.createElement("div");
         indiv.classList.add("form-group", "col-md-4");
@@ -845,8 +843,7 @@
         input2.classList.add("form-control", "mynum");
         input2.setAttribute("placeholder", "Size Price(UGX)");
         input2.setAttribute("type", "number");
-        input2.setAttribute("required", "required");
-        input2.setAttribute("name", "myprice[]");
+        input2.setAttribute("name", "myprice");
         indiv.appendChild(input2);
         let lastdiv = document.createElement("div");
         lastdiv.classList.add("form-group", "col-md-4");
@@ -854,8 +851,7 @@
         input3.classList.add("form-control", "mynum");
         input3.setAttribute("placeholder", "Size Discount(UGX)");
         input3.setAttribute("type", "number");
-        input3.setAttribute("required", "required");
-        input3.setAttribute("name", "mydiscount[]");
+        input3.setAttribute("name", "mydiscount");
         lastdiv.appendChild(input3);
         main.append(innerdiv, indiv, lastdiv);
         mySize.appendChild(main);
@@ -871,8 +867,7 @@
         input1.classList.add("form-control");
         input1.setAttribute("placeholder", "Ingredients");
         input1.setAttribute("type", "text");
-        input1.setAttribute("required", "required");
-        input1.setAttribute("name", "ingridient[]");
+        input1.setAttribute("name", "ingridient");
         innerdiv.appendChild(input1);
         let indiv = document.createElement("div");
         indiv.classList.add("form-group", "col-md-4");
@@ -880,8 +875,7 @@
         input2.classList.add("form-control", "mynum");
         input2.setAttribute("placeholder", "Ingredients Price(UGX)");
         input2.setAttribute("type", "number");
-        input2.setAttribute("required", "required");
-        input2.setAttribute("name", "ingridientPrice[]");
+        input2.setAttribute("name", "ingridientPrice");
         indiv.appendChild(input2);
         let lastdiv = document.createElement("div");
         lastdiv.classList.add("form-group", "col-md-4");
@@ -889,8 +883,7 @@
         input3.classList.add("form-control", "mynum");
         input3.setAttribute("placeholder", "Discount(UGX)");
         input3.setAttribute("type", "number");
-        input3.setAttribute("required", "required");
-        input3.setAttribute("name", "ingridientdiscount[]");
+        input3.setAttribute("name", "ingridientdiscount");
         lastdiv.appendChild(input3);
         main.append(innerdiv, indiv, lastdiv);
         myIngridient.appendChild(main);
@@ -904,7 +897,7 @@
         input0.classList.add("form-control");
         input0.setAttribute("type", "text");
         input0.setAttribute("Placeholder", "Flavor Name");
-        input0.setAttribute("name", "flavor[]");
+        input0.setAttribute("name", "flavor");
         inner.appendChild(input0);
         myFlavor.appendChild(inner);
       });
@@ -917,7 +910,7 @@
         input0.classList.add("form-control");
         input0.setAttribute("type", "text");
         input0.setAttribute("Placeholder", "Color Name");
-        input0.setAttribute("name", "color[]");
+        input0.setAttribute("name", "color");
         inner.appendChild(input0);
         myColor.appendChild(inner);
       });

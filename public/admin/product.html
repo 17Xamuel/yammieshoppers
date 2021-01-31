@@ -301,7 +301,7 @@
           <div class="modal-header">
             <h5 class="modal-title">Want to Remove Product?</h5>
           </div>
-          <div class="modal-body text-center" id="removeMessage">
+          <div class="modal-body text-center" id="onlin">
             Press Ok to Continue
           </div>
           <div class="modal-footer">
@@ -380,7 +380,9 @@
 
     <script src="scripts/account.js"></script>
     <script>
-      let product = new URLSearchParams(window.location.search).get("product");
+      const product = new URLSearchParams(window.location.search).get(
+        "product"
+      );
       const productDetails = new XMLHttpRequest();
       productDetails.onreadystatechange = () => {
         if (productDetails.readyState < 4) {
@@ -444,6 +446,26 @@
       editing.addEventListener("click", (e) => {
         window.location.assign(`editProduct.html?product=${product}`);
       });
+
+      document
+        .getElementById("removeProduct")
+        .addEventListener("click", (e) => {
+          let _delete = new XMLHttpRequest();
+          _delete.onreadystatechange = function () {
+            if (_delete.readyState < 4) {
+              document.getElementById(
+                "onlin"
+              ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+            }
+            if (_delete.readyState == 4 && _delete.status == 200) {
+              if (_delete.responseText == "OK") {
+                window.location.reload("products.html");
+              }
+            }
+          };
+          _delete.open("DELETE", `/deleteProduct/${product}`, true);
+          _delete.send({});
+        });
     </script>
     <!-- End Scripts -->
   </body>
