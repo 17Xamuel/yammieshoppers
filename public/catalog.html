@@ -410,6 +410,121 @@
         width: 100%;
         height: 75%;
       }
+
+      /*for varing products*/
+      ._var {
+        margin: 25px 0px;
+        padding: 0px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      ._n_price {
+        font-size: 17px;
+        font-weight: 600;
+        text-align: center;
+      }
+      ._d_price {
+        font-size: 15px;
+        text-decoration: line-through;
+        opacity: 0.5;
+        text-align: center;
+      }
+      .var_name {
+        font-size: 18.5px;
+      }
+      .var_minus,
+      .var_plus {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        height: 30px;
+        width: 30px;
+        text-align: center;
+        font-size: 20px;
+        border-radius: 5px;
+        background-color: #ffbb00;
+        color: #fff;
+        cursor: pointer;
+        align-content: center;
+        box-shadow: 0px 0px 5px #9b9b9b;
+      }
+      .var_minus:hover,
+      .var_plus:hover {
+        opacity: 0.75;
+      }
+      .var_qty_ctr > input[type="radio"] {
+        width: 20px;
+        height: 20px;
+      }
+      .var_qty_ctr > ._increase {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        text-align: center;
+        margin: 0px 10px;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      #pop-up-overlay-var.v-active {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 30;
+        transition: all 0.3s ease-in-out;
+      }
+      .var {
+        background-color: white;
+        width: 450px;
+        max-height: 500px;
+        height: fit-content;
+        padding: 20px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 5px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: 0.2s ease-in-out;
+        max-width: 90%;
+        z-index: 35;
+        overflow-y: scroll;
+      }
+      .var.var-active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      .var_ctr {
+        width: 90%;
+        margin: 10px auto;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .btn_variation {
+        font-size: 16px;
+        margin: 20px 0px;
+        padding: 10px 25px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 70%;
+        height: 35px;
+        background-color: #ffbb00;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+      }
+      /*for varing products*/
+
       @media screen and (max-width: 768px) {
         .popup {
           width: 75%;
@@ -512,6 +627,9 @@
     </script>
   </head>
   <body>
+    <div id="pop-up-overlay-var"></div>
+    <form class="var" id="var_form"></form>
+    <!-- _variation -->
     <!--add c popup-->
     <div id="pop-up-overlay"></div>
     <div class="popup">
@@ -1593,6 +1711,7 @@
         "/api/user/product/trending/index"
       );
       //categories
+
       //search function
       function search(url) {
         xhr = new XMLHttpRequest();
@@ -1600,13 +1719,14 @@
           if (xhr.readyState == 4 && xhr.status == 200) {
             let searchData = JSON.parse(xhr.responseText);
             if (searchData.length === 0) {
-              let noData = `<div class="no-itms">
-              <img
-                src="./resources/undraw_blank_canvas_3rbb.svg"
-                width="50%"
-                height="50%"
-                alt=""
-              />
+              let noData = `
+              <div class="no-itms">
+                <img
+                  src="./resources/undraw_blank_canvas_3rbb.svg"
+                  width="50%"
+                  height="50%"
+                  alt=""
+                />
                 <span>Sorry, "${validSearch}" OR your Sort did not match any item.
                 <br/>
                 Try Requesting Your Item.
@@ -1626,6 +1746,7 @@
               document.querySelector("._no").innerHTML =
                 searchData.length + " Products Got";
               searchData.forEach((itm) => {
+                let _sp = JSON.parse(itm.specifications);
                 itmsSearched += `
               <div class="-test -catalog itm-searched">
               <div class="a-s-discount">
@@ -1678,6 +1799,14 @@
                 </div>
                 <div class="a-t-c add-to-c"
                   data-item=${itm.product_id}
+                  data-sp=${
+                    Object.keys(_sp).find(
+                      (elem) =>
+                        typeof _sp[elem] == "object" && _sp[elem] != null
+                    )
+                      ? "true"
+                      : "false"
+                  }
                 >
                   Add to Cart
                 </div>
@@ -1697,14 +1826,32 @@
                   btn.innerHTML = "Add To Cart";
                 });
               }
+              //for specifications;
+              async function itemCollect(i) {
+                try {
+                  let res = await fetch(`/api/user/product/${i}`);
+                  let item = await res.json();
+                  return item;
+                } catch (error) {
+                  console.log("Error: ", error);
+                }
+              }
+
               btns.forEach((btn) => {
-                btn.addEventListener("click", (e) => {
-                  let cartItem = {
-                    cartItemAdded: e.target.dataset.item,
-                    inCartNumber: 0,
-                  };
-                  cartNumbers(cartItem);
-                  wait();
+                btn.addEventListener("click", async (e) => {
+                  if (e.target.dataset.sp == "true") {
+                    let _itm = await itemCollect(e.target.dataset.item);
+                    getVar(_itm.specifications, e.target.dataset.item);
+                  } else {
+                    console.log("_sp: ", e.target.dataset.sp);
+                    console.log("this: ", this);
+                    let cartItem = {
+                      cartItemAdded: e.target.dataset.item,
+                      inCartNumber: 0,
+                    };
+                    cartNumbers(cartItem);
+                    wait();
+                  }
                 });
               });
               function wait() {
@@ -1780,6 +1927,165 @@
               };
               image_true.src = d;
             }
+
+            //variations
+            // if(variations)
+            function getVar(sp, _i) {
+              let _sp = JSON.parse(sp);
+              Object.keys(_sp).forEach((item) => {
+                if (typeof _sp[item] == "object" && _sp[item] != null) {
+                  let _varDom = ` <div class="var_ctr">
+                                  <h3 class="_var_heading">
+                                    Please Select Your ${item}
+                                  </h3>`;
+                  if (typeof _sp[item][0] == "string") {
+                    _sp[item].forEach((i) => {
+                      _varDom += `<div class="_var">
+                                  <div class="var_name_chip">${i}</div>
+                                  <div class="var_qty_ctr">
+                                     <input type="radio" value="${i}"  name="${item}">
+                                  </div>
+                                </div>`;
+                    });
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  } else if (item == "Ingredients") {
+                    _sp[item].forEach((i) => {
+                      _varDom += `<div class="_var">
+                                  <div class="var_name">${i.descriptions}</div>
+                                  <div class="var_price">
+                                    <div class="_n_price">
+                                      UGX ${
+                                        i.getDiscount <= 0
+                                          ? i.getPrice
+                                          : i.getPrice *
+                                            ((100 - i.getDiscount) / 100)
+                                      }
+                                    </div>
+                                    <div class="_d_price">${
+                                      i.getDiscount <= 0 ? "" : i.getPrice
+                                    }</div>
+                                  </div>
+                                  <div class="var_qty_ctr">
+                                    <div class="var_minus ${i.descriptions}">
+                                      &minus;
+                                    </div>
+                                    <input
+                                      type="text"
+                                      class="var_qty _increase"
+                                      name="_${i.descriptions}"
+                                      readonly
+                                      value="${1}"
+                                    />
+                                    <div class="var_plus ${i.descriptions}">
+                                      &plus;
+                                    </div>
+                                  </div>
+                                </div>`;
+                    });
+
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  } else {
+                    _sp[item].forEach((i) => {
+                      _varDom += `<div class="_var">
+                                  <div class="var_name">${i.descriptions}</div>
+                                  <div class="var_price">
+                                    <div class="_n_price">
+                                      UGX ${
+                                        i.getDiscount <= 0
+                                          ? i.getPrice
+                                          : i.getPrice *
+                                            ((100 - i.getDiscount) / 100)
+                                      }
+                                    </div>
+                                    <div class="_d_price">${
+                                      i.getDiscount <= 0 ? "" : i.getPrice
+                                    }</div>
+                                  </div>
+                                  <div class="var_qty_ctr">
+                                    <input type="radio" value="${
+                                      i.descriptions
+                                    }" name="${item}">
+                                  </div>
+                                </div>`;
+                    });
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  }
+                }
+                if (
+                  Object.keys(_sp).findIndex((elem) => elem == item) ==
+                  Object.keys(_sp).length - 1
+                ) {
+                  document.querySelector(".var").innerHTML += `
+                <div class="" style="display: flex; justify-content: center; width:100%">
+                  <button class="btn_variation">Add To Cart</button>
+                </div>`;
+                }
+              });
+              document.querySelector(".var").classList.add("var-active");
+              document
+                .querySelector("#pop-up-overlay-var")
+                .classList.add("v-active");
+
+              document.querySelectorAll(".var_minus").forEach((item) => {
+                item.addEventListener("click", (e) => {
+                  let _value = parseInt(
+                    document.querySelector(
+                      `input[name=_${e.target.classList[1]}]`
+                    ).value
+                  );
+                  let newValue = _value < 2 ? _value : _value - 1;
+                  document.querySelector(
+                    `input[name=_${e.target.classList[1]}]`
+                  ).value = newValue;
+                });
+              });
+              document.querySelectorAll(".var_plus").forEach((item) => {
+                item.addEventListener("click", (e) => {
+                  let _value = parseInt(
+                    document.querySelector(
+                      `input[name=_${e.target.classList[1]}]`
+                    ).value
+                  );
+                  let newValue = _value + 1;
+                  document.querySelector(
+                    `input[name=_${e.target.classList[1]}]`
+                  ).value = newValue;
+                });
+              });
+
+              document
+                .querySelector("#var_form")
+                .addEventListener("submit", (e) => {
+                  e.preventDefault();
+                  let _varForm = new FormData(
+                    document.querySelector("#var_form")
+                  );
+                  document.querySelector(".var").classList.remove("var-active");
+                  document
+                    .querySelector("#pop-up-overlay-var")
+                    .classList.remove("v-active");
+                  let specs = {};
+                  specs.Ingredients = {};
+                  _varForm.forEach((v, k) => {
+                    if (k.charAt(0) == "_") {
+                      specs.Ingredients[k.slice(1)] = v;
+                    } else {
+                      specs[k] = v;
+                    }
+                  });
+                  let cartItem = {
+                    cartItemAdded: _i,
+                    specs,
+                    inCartNumber: 0,
+                  };
+                  cartNumbers(cartItem);
+                  wait();
+                });
+            }
+            //variations
           }
         };
         xhr.open("GET", url, true);
