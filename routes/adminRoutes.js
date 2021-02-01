@@ -81,8 +81,7 @@ try {
               from: '"Yammie Shoppers"<info@yammieshoppers.com>',
               to: results[0].email,
               subject: `Hello ${results[0].username}`,
-              text: `Hello, ${results[0].username}  your email ${results[0].email} has 
-              been successfully confirmed you can start adding products to the website.
+              text: `Hello, ${results[0].username}  your email ${results[0].email} has been successfully confirmed you can start adding products to the website.
               https://www.yammieshoppers.com/seller/addProduct`
             };
 
@@ -359,7 +358,22 @@ router.get("/finishOrder/:id", async (req, res) => {
         [req.params.id],
         (err8, res8) => {
           if (err8) throw err8;
-          res.status(200).send("ok");
+          conn.query(
+            `SELECT c_email,c_last_name FROM  customers WHERE c_id='${res1[0].c_id}'`,
+            (errs, qres) => {
+              if (errs) throw errs;
+              let email = {
+                from: '"Yammie Shoppers" <info@yammieshoppers.com',
+                to: `${qres[0].c_email}`,
+                subject: `Yammie Order ${res1[0].order_number}`,
+                text: `Hello ${qres[0].c_last_name}, your order ${res1[0].order_number} has been successfully finished.Thanks for Shopping with Yammie Shoppers.`
+              };
+              transporter.sendMail(email, (mailErr, response) => {
+                if (mailErr) throw mailErr;
+                res.status(200).send("ok");
+              });
+            }
+          );
         }
       );
     }
@@ -800,6 +814,39 @@ router.get("/income", async (req, res) => {
         total += parseInt(income.shipping);
       });
       res.json(total);
+    }
+  );
+});
+
+router.get("/trending", async (req, res) => {
+  conn.query(
+    `SELECT images,product,price FROM products JOIN cleared_orders   ON 
+    products.id=cleared_orders.product_id WHERE order_qty >= 10`,
+    (err1, res1) => {
+      if (err1) throw err1;
+      res.send(res1);
+    }
+  );
+});
+
+router.get("/medium", async (req, res) => {
+  conn.query(
+    `SELECT images,product,price FROM products JOIN cleared_orders   ON 
+    products.id=cleared_orders.product_id WHERE order_qty BETWEEN 5 AND 9`,
+    (err1, res1) => {
+      if (err1) throw err1;
+      res.send(res1);
+    }
+  );
+});
+
+router.get("/least", async (req, res) => {
+  conn.query(
+    `SELECT images,product,price FROM products JOIN cleared_orders   ON 
+    products.id=cleared_orders.product_id WHERE order_qty < 5`,
+    (err1, res1) => {
+      if (err1) throw err1;
+      res.send(res1);
     }
   );
 });
