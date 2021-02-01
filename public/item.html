@@ -79,7 +79,7 @@
     <!-- End Google Tag Manager (noscript) -->
     <!-- _variation -->
     <div id="pop-up-overlay-var"></div>
-    <div class="var"></div>
+    <form class="var" id="var_form"></form>
     <!-- _variation -->
     <!--image dialog div-->
     <div id="pop-up-overlay-i"></div>
@@ -954,6 +954,22 @@
     </script>
     <script>
       //cart
+      function _cdb(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+          }
+        };
+      }
       function wait() {
         let popUp = document.querySelector(".popup");
         let pContent = popUp.innerHTML;
@@ -997,7 +1013,15 @@
             [item.cartItemAdded]: item
           };
         }
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        if (!yammie) {
+          localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        } else {
+          _cdb(`/api/user/customer/cart/${yammie}`, {
+            cart: cartItems,
+            cartNumber: localStorage.getItem("cartNumber"),
+            delete: false,
+          });
+        }
 
         document.querySelector("#pop-up-overlay").classList.add("active");
         document.querySelector(".popup").classList.add("pp-active");
@@ -1053,28 +1077,29 @@
             document.querySelector(".specifications").innerHTML = _spDom;
 
             //variations
-            let _varKeys = Object.keys(_sp);
-            let _theVariables = 0;
-            Object.keys(_sp).forEach((item) => {
-              if (typeof _sp[item] == "object" && _sp[item] != null) {
-                let _varDom = ` <div class="var_ctr">
+            // if(variations)
+
+            function getVar() {
+              Object.keys(_sp).forEach((item) => {
+                if (typeof _sp[item] == "object" && _sp[item] != null) {
+                  let _varDom = ` <div class="var_ctr">
                                   <h3 class="_var_heading">
                                     Please Select Your ${item}
                                   </h3>`;
-                if (typeof _sp[item][0] == "string") {
-                  _sp[item].forEach((i) => {
-                    _varDom += `<div class="_var">
+                  if (typeof _sp[item][0] == "string") {
+                    _sp[item].forEach((i) => {
+                      _varDom += `<div class="_var">
                                   <div class="var_name_chip">${i}</div>
                                   <div class="var_qty_ctr">
-                                     <input type="radio"  name="${item}">
+                                     <input type="radio" value="${i}"  name="${item}">
                                   </div>
                                 </div>`;
-                  });
-                  document.querySelector(".var").innerHTML +=
-                    _varDom + `</div>`;
-                } else if (item == "Ingredients") {
-                  _sp[item].forEach((i) => {
-                    _varDom += `<div class="_var">
+                    });
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  } else if (item == "Ingredients") {
+                    _sp[item].forEach((i) => {
+                      _varDom += `<div class="_var">
                                   <div class="var_name">${i.descriptions}</div>
                                   <div class="var_price">
                                     <div class="_n_price">
@@ -1090,18 +1115,28 @@
                                     }</div>
                                   </div>
                                   <div class="var_qty_ctr">
-                                    <button class="var_minus">&minus;</button>
-                                    <input type="text" class="var_qty _increase" readonly />
-                                    <button class="var_plus">&plus;</button>
+                                    <div class="var_minus ${i.descriptions}">
+                                      &minus;
+                                    </div>
+                                    <input
+                                      type="text"
+                                      class="var_qty _increase"
+                                      name="_${i.descriptions}"
+                                      readonly
+                                      value="${1}"
+                                    />
+                                    <div class="var_plus ${i.descriptions}">
+                                      &plus;
+                                    </div>
                                   </div>
                                 </div>`;
-                  });
+                    });
 
-                  document.querySelector(".var").innerHTML +=
-                    _varDom + `</div>`;
-                } else {
-                  _sp[item].forEach((i) => {
-                    _varDom += `<div class="_var">
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  } else {
+                    _sp[item].forEach((i) => {
+                      _varDom += `<div class="_var">
                                   <div class="var_name">${i.descriptions}</div>
                                   <div class="var_price">
                                     <div class="_n_price">
@@ -1117,23 +1152,87 @@
                                     }</div>
                                   </div>
                                   <div class="var_qty_ctr">
-                                    <input type="radio" name="${item}">
+                                    <input type="radio" value="${
+                                      i.descriptions
+                                    }" name="${item}">
                                   </div>
                                 </div>`;
-                  });
-                  document.querySelector(".var").innerHTML +=
-                    _varDom + `</div>`;
+                    });
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  }
                 }
-              }
-              if (_sp.findIndex((elem) => elem == item) == _sp.length - 1) {
-                console.log("done");
-                document.querySelector(".var").innerHTML += `
-                <div class="" style="display: flex; justify-content: center">
-                  <button class="btn_variation">Ok</button>
+                if (
+                  Object.keys(_sp).findIndex((elem) => elem == item) ==
+                  Object.keys(_sp).length - 1
+                ) {
+                  document.querySelector(".var").innerHTML += `
+                <div class="" style="display: flex; justify-content: center; width:100%">
+                  <button class="btn_variation">Add To Cart</button>
                 </div>`;
-              }
-            });
+                }
+              });
+              document.querySelector(".var").classList.add("var-active");
+              document
+                .querySelector("#pop-up-overlay-var")
+                .classList.add("v-active");
 
+              document.querySelectorAll(".var_minus").forEach((item) => {
+                item.addEventListener("click", (e) => {
+                  let _value = parseInt(
+                    document.querySelector(
+                      `input[name=_${e.target.classList[1]}]`
+                    ).value
+                  );
+                  let newValue = _value < 2 ? _value : _value - 1;
+                  document.querySelector(
+                    `input[name=_${e.target.classList[1]}]`
+                  ).value = newValue;
+                });
+              });
+              document.querySelectorAll(".var_plus").forEach((item) => {
+                item.addEventListener("click", (e) => {
+                  let _value = parseInt(
+                    document.querySelector(
+                      `input[name=_${e.target.classList[1]}]`
+                    ).value
+                  );
+                  let newValue = _value + 1;
+                  document.querySelector(
+                    `input[name=_${e.target.classList[1]}]`
+                  ).value = newValue;
+                });
+              });
+
+              document
+                .querySelector("#var_form")
+                .addEventListener("submit", (e) => {
+                  e.preventDefault();
+                  let _varForm = new FormData(
+                    document.querySelector("#var_form")
+                  );
+                  document.querySelector(".var").classList.remove("var-active");
+                  document
+                    .querySelector("#pop-up-overlay-var")
+                    .classList.remove("v-active");
+                  let specs = {};
+                  specs.Ingredients = {};
+                  _varForm.forEach((v, k) => {
+                    if (k.charAt(0) == "_") {
+                      specs.Ingredients[k.slice(1)] = v;
+                    } else {
+                      specs[k] = v;
+                    }
+                  });
+                  let cartItem = {
+                    cartItemAdded: item.id,
+                    specs,
+                    inCartNumber: 0,
+                  };
+                  cartNumbers(cartItem);
+                  wait();
+                });
+            }
             let _imageDom = "";
             _images.forEach((image) => {
               _imageDom += `
@@ -1215,12 +1314,29 @@
 
             //for the image pop-up end
             document.querySelector(".-cart").addEventListener("click", (e) => {
+<<<<<<< HEAD
               let cartItem = {
                 cartItemAdded: item.id,
                 inCartNumber: 0
               };
               cartNumbers(cartItem);
               wait();
+=======
+              if (
+                Object.keys(_sp).find(
+                  (elem) => typeof _sp[elem] == "object" && _sp[elem] != null
+                )
+              ) {
+                getVar();
+              } else {
+                let cartItem = {
+                  cartItemAdded: item.id,
+                  inCartNumber: 0,
+                };
+                cartNumbers(cartItem);
+                wait();
+              }
+>>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
             });
           }
         };

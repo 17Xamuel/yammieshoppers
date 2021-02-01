@@ -673,6 +673,8 @@
         </div>
       </div>
     </div>
+    <div id="pop-up-overlay-var"></div>
+    <form class="var" id="var_form"></form>
     <div id="pop-up-overlay"></div>
     <div class="popup">
       <button class="close-pp" onclick="imageDialogClose()">&times;</button>
@@ -821,6 +823,7 @@
         </div>
       </div>
     </footer>
+    <script src="./catalog.min.js"></script>
     <script>
       function _cdb(url, i) {
         let xhr = new XMLHttpRequest();
@@ -1131,6 +1134,7 @@
     <script>
       //search function
 
+<<<<<<< HEAD
       function search(url) {
         xhr = new XMLHttpRequest();
         xhr.onreadystatechange = () => {
@@ -1292,18 +1296,181 @@
                     delete: false
                   });
                 }
+=======
+      // function search(url) {
+      //   xhr = new XMLHttpRequest();
+      //   xhr.onreadystatechange = () => {
+      //     if (xhr.readyState == 4 && xhr.status == 200) {
+      //       let searchData = JSON.parse(xhr.responseText);
+      //       if (searchData.length === 0) {
+      //         let noData = `<div class="no-itms">
+      //         <img
+      //           src="./resources/undraw_blank_canvas_3rbb.svg"
+      //           width="50%"
+      //           height="50%"
+      //           alt=""
+      //         />
+      //           <div style="text-align:center">
+      //             <span>
+      //               Sorry, Some Items Are Not Here.
+      //               <br/>
+      //             </span>
+      //             Try Making a request.
+      //             <br>
+      //             <a href="./support/request">
+      //               <button id="ctlg-rq-btn">Make A Request</button>
+      //             </a>
+      //           </div>
+      //       </div>`;
+      //         document.getElementById("ctlg-ctr").innerHTML = noData;
+      //         document.getElementById("ctlg-ctr").style.justifyContent =
+      //           "center";
+      //         document.getElementById("ctlg-ctr").style.justifyContent =
+      //           "center";
+      //       } else {
+      //         let itmsSearched = "";
+      //         searchData.forEach((itm) => {
+      //           itmsSearched += `
+      //         <div class="-test -catalog itm-searched">
+      //         <div class="a-s-discount">
+      //           <span class="d">
+      //             ${
+      //               itm.discount !== null && itm.discount !== 0
+      //                 ? "-" + itm.discount + "%"
+      //                 : ""
+      //             }
+      //           </span>
+      //         </div>
+      //         <a class="itm-s-img" href="./item?item=${itm.product_id}">
+      //           <div class="_img-ctr">
+      //             <img
+      //               src="${JSON.parse(itm.images)[0]}"
+      //               alt="${itm.product}"
+      //               width="100%"
+      //               height="100%"
+      //             />
+      //           </div>
+      //         </a>
+      //         <div class="itm-s-dtl">
+      //           <div class="seller">
+      //             <b>Seller:</b> ${itm.businessname}
+      //           </div>
+      //           <a class="itm-name" style="font-size:13.5px;"
+      //             href="./item?item=${itm.product_id}">
+      //             ${itm.product} - ${itm.description}
+      //           </a>
+      //           <div class="price-current">${
+      //             "UGX " +
+      //             (itm.discount
+      //               ? new Intl.NumberFormat().format(
+      //                   (itm.price * (100 - itm.discount)) / 100
+      //                 )
+      //               : new Intl.NumberFormat().format(itm.price))
+      //           }</div>
+      //           <div class="price-prev">${
+      //             itm.discount ? "UGX " + itm.price : ""
+      //           }</div>
+      //           <div class="location" style="padding:5px 0px;">
+      //             <i class="fas fa-map-marker-alt"></i>
+      //             <span>${itm.location}</span>
+      //           </div>
+      //           <div class="delivery-by">
+      //             <i class="fab fa-telegram-plane"></i>
+      //             Yammie Delivery
+      //           </div>
+      //           <div class="a-t-c add-to-c"
+      //             data-item=${itm.product_id}
+      //           >
+      //             Add to Cart
+      //           </div>
+      //         </div>
+      //       </div>`;
+      //         });
+      //         document.querySelectorAll(".d").forEach((item) => {
+      //           if (item.innerText == "") item.style.display = "none";
+      //         });
+      //         document.getElementById("s-itms-ctr").innerHTML = itmsSearched;
+      //         let btns = document.querySelectorAll(".add-to-c");
+      //         if (screen.availWidth < 768) {
+      //           btns.forEach((btn) => {
+      //             btn.innerHTML = "Add To Cart";
+      //           });
+      //         }
+      //         btns.forEach((btn) => {
+      //           btn.addEventListener("click", (e) => {
+      //             let cartItem = {
+      //               cartItemAdded: e.target.dataset.item,
+      //               inCartNumber: 0,
+      //             };
+      //             cartNumbers(cartItem);
+      //             wait();
+      //           });
+      //         });
+      //         function wait() {
+      //           let popUp = document.querySelector(".popup");
+      //           let pContent = popUp.innerHTML;
+      //           popUp.innerHTML = `
+      //         <div>
+      //         <div id="cartLoader"></div>
+      //         <br />
+      //         <div>Adding to Cart . . .
+      //         </div>
+      //         </div>`;
+      //           setTimeout(() => {
+      //             popUp.innerHTML = pContent;
+      //           }, 2000);
+      //         }
+      //         function cartNumbers(item) {
+      //           let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+      //           if (cartNumber) {
+      //             localStorage.setItem("cartNumber", cartNumber + 1);
+      //             document.querySelector("#cartNumberItems").textContent =
+      //               cartNumber + 1;
+      //           } else {
+      //             localStorage.setItem("cartNumber", 1);
+      //             document.querySelector("#cartNumberItems").textContent = 1;
+      //           }
+      //           setItem(item);
+      //         }
+      //         function setItem(item) {
+      //           let cartItems = localStorage.getItem("cartItems");
+      //           cartItems = JSON.parse(cartItems);
+      //           if (cartItems != null) {
+      //             if (cartItems[item.cartItemAdded] == undefined) {
+      //               cartItems = {
+      //                 ...cartItems,
+      //                 [item.cartItemAdded]: item,
+      //               };
+      //             }
+      //             cartItems[item.cartItemAdded].inCartNumber += 1;
+      //           } else {
+      //             item.inCartNumber = 1;
+      //             cartItems = {
+      //               [item.cartItemAdded]: item,
+      //             };
+      //           }
+      //           if (!yammie) {
+      //             localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      //           } else {
+      //             _cdb(`/api/user/customer/cart/${yammie}`, {
+      //               cart: cartItems,
+      //               cartNumber: localStorage.getItem("cartNumber"),
+      //               delete: false,
+      //             });
+      //           }
+>>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
 
-                document
-                  .querySelector("#pop-up-overlay")
-                  .classList.add("active");
-                document.querySelector(".popup").classList.add("pp-active");
-              }
-            }
-          }
-        };
-        xhr.open("GET", url, true);
-        xhr.send();
-      }
+      //           document
+      //             .querySelector("#pop-up-overlay")
+      //             .classList.add("active");
+      //           document.querySelector(".popup").classList.add("pp-active");
+      //         }
+      //       }
+      //     }
+      //   };
+      //   xhr.open("GET", url, true);
+      //   xhr.send();
+      // }
       function imageDialogClose() {
         document.querySelector(".popup").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay").classList.remove("active");
