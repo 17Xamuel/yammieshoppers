@@ -760,11 +760,12 @@ router.post("/checkout/cart/:id", (req, res) => {
                 };
 
                 let fee = new charge(charge_obj).total;
-                let price = new charge(charge_obj).price;
                 total_charge += fee;
-                total_price += price * key.inCartNumber;
                 if (cart_arr.length == i + 1) {
-                  res.send({ shipping: total_charge, total_price });
+                  res.send({
+                    shipping: total_charge,
+                    total_price: result[0].c_cart_amount,
+                  });
                 }
               }
             }

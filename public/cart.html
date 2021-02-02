@@ -314,6 +314,12 @@
         border: 1px solid #ffbb00;
         display: none;
       }
+      /* _sp */
+      .cart-spec,
+      .delivery {
+        margin: 5px 1px;
+      }
+      /* _sp */
       /*media*/
       @media screen and (max-width: 1024px) {
         .cart-itm-sm {
@@ -1034,6 +1040,34 @@
           }
           Object.values(cartItems).forEach(async (key) => {
             let item = await itemCollect(key.cartItemAdded);
+            let _var = key.specs ? true : false;
+            let str = "";
+            let in_price = 0;
+            let size_ing = true;
+            if (_var == true) {
+              let _sp = JSON.parse(item.specifications);
+              Object.keys(key.specs).forEach((spec) => {
+                if (spec == "Ingredients") {
+                  let str_in = "";
+                  key.specs[spec].forEach((i) => {
+                    str_in += ` ${i.descriptions}: ${i.qtty} `;
+                    in_price += parseInt(i.qtty) * parseInt(i.price);
+                  });
+                  str += `<div class="cart-spec">${spec}: ${str_in}</div>`;
+                } else if (spec == "Sizes") {
+                  Object.keys(key.specs[spec])[0];
+                  in_price += parseInt(
+                    key.specs[spec][Object.keys(key.specs[spec])[0]]
+                  );
+                  str += `<div class="cart-spec">${spec}: ${
+                    Object.keys(key.specs[spec])[0]
+                  }</div>`;
+                } else {
+                  size_ing = false;
+                  str += `<div class="cart-spec">${spec}: ${key.specs[spec]}</div>`;
+                }
+              });
+            }
             cartDom.innerHTML += `
         <div class="cart-itm">
           <div class="cart-itm-sm">
@@ -1056,13 +1090,20 @@
                 </div>
                 UGX
                 <span class="cart-t-price l-t-price">${
-                  key.inCartNumber *
-                  (item.discount
-                    ? (item.price * (100 - item.discount)) / 100
-                    : item.price)
+                  _var == false && in_price == 0
+                    ? key.inCartNumber *
+                      (item.discount
+                        ? (item.price * (100 - item.discount)) / 100
+                        : item.price)
+                    : in_price != 0
+                    ? key.inCartNumber * in_price
+                    : key.inCartNumber *
+                      (item.discount
+                        ? (item.price * (100 - item.discount)) / 100
+                        : item.price)
                 }</span>
                 <div class="delivery">YammieDelivery</div>
-                <div class="_sp"></div>
+                <div class="_sp">${str}</div>
               </div>
             </div>
             <div class="ct-sm-bottom">
@@ -1107,6 +1148,7 @@
                 </span>
               </div>
               <div class="delivery">YammieDelivery</div>
+              <div class="_sp">${str}</div>
               <div class="like-remove">
                 <span class="itm-r-lg" data-id=${key.cartItemAdded}>
                   <i class="fas fa-trash"></i>
@@ -1130,20 +1172,39 @@
           </div>
           <div class="ct-itm-unit-price">
             <div class="ct-a-price">
-              <span class="cart-t-price">${
-                "UGX " +
-                (item.discount
+              <span class="cart-t-price">UGX ${
+                _var == false && in_price == 0
+                  ? item.discount
+                    ? (item.price * (100 - item.discount)) / 100
+                    : item.price
+                  : in_price != 0
+                  ? in_price
+                  : item.discount
                   ? (item.price * (100 - item.discount)) / 100
-                  : item.price)
+                  : item.price
               }</span>
             </div>
             <div class="ct-discount-s">
               <div class="discount">${
-                item.discount ? item.discount + "%" : ""
+                _var == false && in_price == 0
+                  ? item.discount
+                    ? item.discount + "%"
+                    : ""
+                  : size_ing == false
+                  ? ""
+                  : item.discount
+                  ? item.discount + "%"
+                  : ""
               }</div>
               <div class="save">
                 ${
-                  item.discount
+                  _var == false && in_price == 0
+                    ? item.discount
+                      ? "Save: UGX " + (item.price * item.discount) / 100
+                      : ""
+                    : in_price != 0
+                    ? ""
+                    : item.discount
                     ? "Save: UGX " + (item.price * item.discount) / 100
                     : ""
                 }
@@ -1153,10 +1214,17 @@
           <div class="ct-itm-sub-total">
             <span style="font-size:20px; padding-right:5px;">UGX</span>
             <span class="cart-t-price l-t-price">${
-              key.inCartNumber *
-              (item.discount
-                ? (item.price * (100 - item.discount)) / 100
-                : item.price)
+              _var == false && in_price == 0
+                ? key.inCartNumber *
+                  (item.discount
+                    ? (item.price * (100 - item.discount)) / 100
+                    : item.price)
+                : in_price != 0
+                ? key.inCartNumber * in_price
+                : key.inCartNumber *
+                  (item.discount
+                    ? (item.price * (100 - item.discount)) / 100
+                    : item.price)
             }</span>
           </div>
         </div>
@@ -1188,13 +1256,11 @@
             }
             //total
             totalAmount();
+            // console.log("total: ", totalAmount());
             //total
             //st-ony
             let st = document.querySelector("#-o-st");
             st.addEventListener("click", () => {
-              // alert(
-              //   `Message: Our Beloved customer, this system is in beta testing, Incase of any orders now \n PLEASE CALL SALES ON +256771860476, OR +256700835756`
-              // );
               if (yammie) {
                 let req = JSON.stringify([
                   totalAmount(),
@@ -1316,14 +1382,14 @@
               ".cart-tt-p"
             ).textContent = numFormats.format(total);
             return total;
+          }
 
-            cartNumbersDisplay();
-            function cartNumbersDisplay() {
-              let cartNumber = parseInt(localStorage.getItem("cartNumber"));
-              document.querySelector(
-                "#cartNumberItems"
-              ).textContent = cartNumber ? cartNumber : 0;
-            }
+          cartNumbersDisplay();
+          function cartNumbersDisplay() {
+            let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+            document.querySelector("#cartNumberItems").textContent = cartNumber
+              ? cartNumber
+              : 0;
           }
           //total end
           //cart display
@@ -1465,7 +1531,7 @@
                          }</div>
                       </div>
                     </a>
-                    
+
             `;
             });
             c.innerHTML = group;
