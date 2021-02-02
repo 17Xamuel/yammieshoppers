@@ -813,7 +813,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: -250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -824,7 +824,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: 250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -887,7 +887,7 @@
           window.scroll({
             top: 0,
             left: 0,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         });
       };
@@ -1003,14 +1003,14 @@
           if (cartItems[item.cartItemAdded] == undefined) {
             cartItems = {
               ...cartItems,
-              [item.cartItemAdded]: item
+              [item.cartItemAdded]: item,
             };
           }
           cartItems[item.cartItemAdded].inCartNumber += 1;
         } else {
           item.inCartNumber = 1;
           cartItems = {
-            [item.cartItemAdded]: item
+            [item.cartItemAdded]: item,
           };
         }
         if (!yammie) {
@@ -1147,30 +1147,23 @@
                       _varDom + `</div>`;
                   } else {
                     _sp[item].forEach((i) => {
+                      let _price =
+                        i.getDiscount <= 0
+                          ? i.getPrice
+                          : i.getPrice * ((100 - i.getDiscount) / 100);
                       _varDom += `<div class="_var">
                                   <div class="var_name">${i.descriptions}</div>
                                   <div class="var_price">
                                     <div class="_n_price">
-                                      UGX ${
-                                        i.getDiscount <= 0
-                                          ? i.getPrice
-                                          : i.getPrice *
-                                            ((100 - i.getDiscount) / 100)
-                                      }
+                                      UGX ${_price}
                                     </div>
                                     <div class="_d_price">${
                                       i.getDiscount <= 0 ? "" : i.getPrice
                                     }</div>
                                   </div>
                                   <div class="var_qty_ctr">
-                                    <input type="radio" value="${`${
-                                      i.descriptions
-                                    }_${
-                                      i.getDiscount <= 0
-                                        ? i.getPrice
-                                        : i.getPrice *
-                                          ((100 - i.getDiscount) / 100)
-                                    }`}" name="${item}">
+                                    <input type="radio" value="${`
+                                      ${i.descriptions}_${_price}`}" name="${item}">
                                   </div>
                                 </div>`;
                     });
@@ -1341,14 +1334,6 @@
 
             //for the image pop-up end
             document.querySelector(".-cart").addEventListener("click", (e) => {
-<<<<<<< HEAD
-              let cartItem = {
-                cartItemAdded: item.id,
-                inCartNumber: 0
-              };
-              cartNumbers(cartItem);
-              wait();
-=======
               if (
                 Object.keys(_sp).find(
                   (elem) => typeof _sp[elem] == "object" && _sp[elem] != null
@@ -1363,7 +1348,6 @@
                 cartNumbers(cartItem);
                 wait();
               }
->>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
             });
           }
         };
