@@ -24,7 +24,6 @@
       integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
       crossorigin="anonymous"
     ></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
     <!-- End Scripts -->
     <link
@@ -37,6 +36,28 @@
     <script>
       // if (document.referrer == "") window.location.assign("./index");
     </script>
+    <style>
+      .pr-name {
+        text-overflow: ellipsis;
+        width: 100%;
+        overflow-x: hidden;
+        white-space: nowrap;
+        font-size: 15px;
+        font-weight: bold;
+      }
+      ._images {
+        display: flex;
+      }
+      ._image {
+        margin: 5px;
+        height: 300px;
+      }
+      ._card {
+        position: relative;
+        overflow-x: scroll;
+        display: flex;
+      }
+    </style>
   </head>
 
   <body>
@@ -71,17 +92,11 @@
                 </li>
 
                 <li class="nav-item current">
-                  <a href="#" class="nav-link text-white p-3 mb-2 sidebar-link"
+                  <a
+                    href="sales.html"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    href="analytics"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
-                    ><i class="fas fa-chart-line text-light fa-lg mr-3"></i
-                    >Analytics</a
                   >
                 </li>
 
@@ -187,9 +202,13 @@
             <div class="row pt-md-5 mt-md-3 align-items-center">
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded mt-3">
-                  <div class="card-body">
-                    <h6 class="text-center my-3">Top Selling Products</h6>
+                  <h6 class="text-center text-primary mt-3 mb-1">
+                    Top Selling Products
+                  </h6>
+                  <div class="card-body _card">
+                    <div class="_images text-left" id="trending"></div>
                   </div>
+                  <div id="messaget" class="text-center"></div>
                 </div>
               </div>
             </div>
@@ -205,9 +224,13 @@
             <div class="row align-items-center">
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
-                  <div class="card-body">
-                    <h6 class="text-center my-3">Medium Selling Products</h6>
+                  <h6 class="text-center text-primary my-3">
+                    Medium Selling Products
+                  </h6>
+                  <div class="card-body _card">
+                    <div class="_images text-left" id="mediums"></div>
                   </div>
+                  <div id="messagem" class="text-center"></div>
                 </div>
               </div>
             </div>
@@ -222,10 +245,14 @@
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row align-items-center">
               <div class="col-xl-11 mx-auto">
-                <div class="card rounded">
-                  <div class="card-body">
-                    <h6 class="text-center my-3">Least Selling Products</h6>
+                <div class="card rounded _card2">
+                  <h6 class="text-center text-primary my-3">
+                    Least Selling Products
+                  </h6>
+                  <div class="card-body _card">
+                    <div class="_images text-left" id="least"></div>
                   </div>
+                  <div id="messagel" class="text-center"></div>
                 </div>
               </div>
             </div>
@@ -288,7 +315,100 @@
       crossorigin="anonymous"
     ></script>
     <script src="scripts/account.js"></script>
-    <script></script>
+    <script>
+      let trend = new XMLHttpRequest();
+      trend.onreadystatechange = () => {
+        if (trend.readyState < 4) {
+          document.getElementById(
+            "messaget"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (trend.status == 200 && trend.readyState == 4) {
+          let trendings = JSON.parse(trend.responseText);
+          let data = "";
+          trendings.forEach((trending) => {
+            let image = JSON.parse(trending.images);
+            data += ` <div class="card _image card-common" style="width: 16rem">
+                        <img src="${image[0]}" class="card-img-top" height="200px" width="4rem" alt="..." />
+                        <div class="card-body">
+                        <div class="pr-name mb-3">${trending.product}</div>
+                        <div class="pr-name">${trending.price} UGX</div>
+                        </div>
+                      </div>`;
+          });
+          document.getElementById("trending").innerHTML = data;
+          if (trendings.length == 0) {
+            document.getElementById("messaget").innerHTML = "";
+          } else {
+            document.getElementById("messaget").innerHTML = "";
+          }
+        }
+      };
+      trend.open("GET", `/api/admin/trending`, true);
+      trend.send();
+
+      let medium = new XMLHttpRequest();
+      medium.onreadystatechange = () => {
+        if (medium.readyState < 4) {
+          document.getElementById(
+            "messagem"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (medium.status == 200 && medium.readyState == 4) {
+          let mediumings = JSON.parse(medium.responseText);
+          let data = "";
+          mediumings.forEach((mediums) => {
+            let image = JSON.parse(mediums.images);
+            data += ` <div class="card _image card-common" style="width: 16rem">
+                        <img src="${image[0]}" class="card-img-top" height="200px" width="4rem" alt="..." />
+                        <div class="card-body">
+                        <div class="pr-name mb-3">${mediums.product}</div>
+                        <div class="pr-name">${mediums.price} UGX</div>
+                        </div>
+                      </div>`;
+          });
+          document.getElementById("mediums").innerHTML = data;
+          if (mediumings.length == 0) {
+            document.getElementById("messagem").innerHTML = "";
+          } else {
+            document.getElementById("messagem").innerHTML = "";
+          }
+        }
+      };
+      medium.open("GET", `/api/admin/medium`, true);
+      medium.send();
+
+      let least = new XMLHttpRequest();
+      least.onreadystatechange = () => {
+        if (least.readyState < 4) {
+          document.getElementById(
+            "messagel"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+        }
+        if (least.status == 200 && least.readyState == 4) {
+          let leastings = JSON.parse(least.responseText);
+          let data = "";
+          leastings.forEach((leasting) => {
+            let image = JSON.parse(leasting.images);
+            data += ` <div class="card _image card-common" style="width: 16rem">
+                        <img src="${image[0]}" class="card-img-top" height="200px" alt="..." />
+                        <div class="card-body">
+                        <div class="pr-name mb-3">${leasting.product}</div>
+                        <div class="pr-name">${leasting.price} UGX</div>
+                        </div>
+                      </div>`;
+          });
+          document.getElementById("least").innerHTML = data;
+          if (leastings.length == 0) {
+            document.getElementById("messagel").innerHTML = "";
+          } else {
+            document.getElementById("messagel").innerHTML = "";
+          }
+        }
+      };
+      least.open("GET", `/api/admin/least`, true);
+      least.send();
+    </script>
     <!-- End Scripts -->
   </body>
 </html>

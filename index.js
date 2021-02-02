@@ -67,6 +67,17 @@ function _deleteFile(i) {
     else return true;
   });
 }
+
+function _deleteUploadFile(i) {
+  var params = {
+    Bucket: "yammieuploads",
+    Key: i
+  };
+  s3.deleteObject(params, function (err, data) {
+    if (err) console.log(err, err.stack);
+    else return true;
+  });
+}
 //spaces for image files
 
 app.post("/addProduct", async (req, res) => {
@@ -347,7 +358,9 @@ app.post("/editProduct", async (req, res) => {
       } else if (res1.length == 0) {
         conn.query(
           `UPDATE products SET product='${product}', price=${price},description='${description}',
-        subcategory=${subcategory},discount=${discount},seller_id='${seller_id}',quantity=${quantity}, 
+        subcategory=${subcategory},discount=${parseInt(
+            discount
+          )},seller_id='${seller_id}',quantity=${quantity}, 
         detailedDescription='${detailedDescription}' WHERE id=?`,
           [id],
           (err1, res1) => {

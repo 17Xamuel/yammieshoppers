@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-KNRCTV3");
+    </script>
+    <!-- End Google Tag Manager -->
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
@@ -627,9 +642,22 @@
     </script>
   </head>
   <body>
+<<<<<<< HEAD
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KNRCTV3"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+=======
     <div id="pop-up-overlay-var"></div>
     <form class="var" id="var_form"></form>
     <!-- _variation -->
+>>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
     <!--add c popup-->
     <div id="pop-up-overlay"></div>
     <div class="popup">
@@ -1565,7 +1593,7 @@
           window.scroll({
             top: 0,
             left: 0,
-            behavior: "smooth",
+            behavior: "smooth"
           });
         });
       };
@@ -1688,7 +1716,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: -250,
-              behavior: "smooth",
+              behavior: "smooth"
             });
           });
         });
@@ -1699,7 +1727,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: 250,
-              behavior: "smooth",
+              behavior: "smooth"
             });
           });
         });
@@ -1838,6 +1866,15 @@
               }
 
               btns.forEach((btn) => {
+<<<<<<< HEAD
+                btn.addEventListener("click", (e) => {
+                  let cartItem = {
+                    cartItemAdded: e.target.dataset.item,
+                    inCartNumber: 0
+                  };
+                  cartNumbers(cartItem);
+                  wait();
+=======
                 btn.addEventListener("click", async (e) => {
                   if (e.target.dataset.sp == "true") {
                     let _itm = await itemCollect(e.target.dataset.item);
@@ -1852,6 +1889,7 @@
                     cartNumbers(cartItem);
                     wait();
                   }
+>>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
                 });
               });
               function wait() {
@@ -1887,14 +1925,14 @@
                   if (cartItems[item.cartItemAdded] == undefined) {
                     cartItems = {
                       ...cartItems,
-                      [item.cartItemAdded]: item,
+                      [item.cartItemAdded]: item
                     };
                   }
                   cartItems[item.cartItemAdded].inCartNumber += 1;
                 } else {
                   item.inCartNumber = 1;
                   cartItems = {
-                    [item.cartItemAdded]: item,
+                    [item.cartItemAdded]: item
                   };
                 }
                 if (!yammie) {
@@ -1903,7 +1941,7 @@
                   _cdb(`/api/user/customer/cart/${yammie}`, {
                     cart: cartItems,
                     cartNumber: localStorage.getItem("cartNumber"),
-                    delete: false,
+                    delete: false
                   });
                 }
 
