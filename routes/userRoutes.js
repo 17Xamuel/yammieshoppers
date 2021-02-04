@@ -828,16 +828,19 @@ router.get("/customer/orders/:id", (req, res) => {
         if (result.length > 0) {
           let pending = [];
           let finished = [];
+          let cancelled = [];
           result.forEach((order) => {
             if (order.order_status == "pending") {
               pending.push(order);
-            } else {
+            } else if (order.order_status == "finished") {
               finished.push(order);
+            } else {
+              cancelled.push(order);
             }
           });
-          res.send({ pending, finished });
+          res.send({ pending, finished, cancelled });
         } else {
-          res.send({ pending: [], finished: [] });
+          res.send({ pending: [], finished: [], cancelled: [] });
         }
       }
     }
