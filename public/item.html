@@ -1162,8 +1162,10 @@
                                     }</div>
                                   </div>
                                   <div class="var_qty_ctr">
-                                    <input type="radio" value="${`
-                                      ${i.descriptions}_${_price}`}" name="${item}">
+                                    <input type="radio" value="
+                                      ${
+                                        i.descriptions + "_" + _price
+                                      }" name="${item}">
                                   </div>
                                 </div>`;
                     });
@@ -1234,7 +1236,9 @@
                         specs.Ingredients.push({
                           descriptions: k.slice(1),
                           qtty: v,
-                          price: _varForm.get(`-${k.slice(1)}`),
+                          price:
+                            parseInt(v) *
+                            parseInt(_varForm.get(`-${k.slice(1)}`)),
                         });
                       } else if (k == "Sizes") {
                         let arr = v.split("_");
@@ -1244,6 +1248,12 @@
                       }
                     }
                   });
+                  if (Object.keys(specs.Sizes).length == 0) {
+                    delete specs.Sizes;
+                  }
+                  if (specs.Ingredients.length == 0) {
+                    delete specs.Ingredients;
+                  }
                   let cartItem = {
                     cartItemAdded: item.id,
                     specs,

@@ -434,14 +434,11 @@
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <div id="ldr-overlay">
-      <div class="ldr-overlay-ctr">
-        <div class="ldr-overlay-circle circle-1"></div>
-        <div class="ldr-overlay-circle circle-2"></div>
-        <div class="ldr-overlay-circle circle-3"></div>
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
       </div>
-      <div class="ldr-overlay-text">
-        <span>Processing</span>, Please Wait...
-      </div>
+      <div class="ldr-overlay-text">Loading Cart, Please Wait...</div>
     </div>
     <div class="nav">
       <div class="search-nav">
@@ -775,7 +772,7 @@
             Object.keys(key.specs).forEach((spec) => {
               if (spec == "Ingredients") {
                 key.specs[spec].forEach((i) => {
-                  in_price += parseInt(i.qtty) * parseInt(i.price);
+                  in_price += parseInt(i.price);
                 });
               } else if (spec == "Sizes") {
                 Object.keys(key.specs[spec])[0];
@@ -783,7 +780,6 @@
                   key.specs[spec][Object.keys(key.specs[spec])[0]]
                 );
               } else {
-                console.log("Checkout");
               }
             });
           }
@@ -985,7 +981,7 @@
         _add: localStorage.getItem("_upa")
           ? localStorage.getItem("_upa")
           : true,
-        urgent: "true"
+        urgent: "true",
       };
       let xhr_f = new XMLHttpRequest();
       xhr_f.open("POST", `/api/user/checkout/cart/${yammie}`, true);

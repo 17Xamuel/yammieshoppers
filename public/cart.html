@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <!-- Google Tag Manager -->
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-KNRCTV3");
-    </script>
-    <!-- End Google Tag Manager -->
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
@@ -129,7 +114,7 @@
         transition: all 0.3s ease-in-out;
       }
       /*pop up */
-      #cartLoader {
+      /* #cartLoader {
         border: 10px solid #f3f3f3;
         border-top: 10px solid #ffbb00;
         border-radius: 50%;
@@ -145,7 +130,7 @@
         100% {
           transform: rotate(360deg);
         }
-      }
+      } */
 
       #pop-up-overlay.active {
         position: fixed;
@@ -157,11 +142,14 @@
         z-index: 30;
         transition: all 0.3s ease-in-out;
       }
+      #text-add {
+        margin: 15px 0px;
+      }
       .close-pp {
         position: absolute;
         top: 5px;
         right: 15px;
-        font-size: 3.5rem;
+        font-size: 2rem;
         border: none;
         outline: none;
         cursor: pointer;
@@ -190,6 +178,7 @@
       }
       .pp-content > a > button,
       .pp-content > button {
+        width: 250px;
         cursor: pointer;
         border: 0;
         outline: 0;
@@ -401,6 +390,12 @@
         .cart-btns > button {
           width: 100%;
         }
+        /*pop-up*/
+        .popup {
+          width: 75%;
+          height: 30%;
+        }
+        /*pop-up*/
       }
       /*media end*/
     </style>
@@ -415,21 +410,10 @@
     </script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-KNRCTV3"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div id="ldr-overlay">
-      <div class="ldr-overlay-ctr">
-        <div class="ldr-overlay-circle circle-1"></div>
-        <div class="ldr-overlay-circle circle-2"></div>
-        <div class="ldr-overlay-circle circle-3"></div>
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
       </div>
       <div class="ldr-overlay-text">Loading Cart, Please Wait...</div>
     </div>
@@ -440,6 +424,8 @@
         <h2 id="text-add">Login</h2>
         <div id="text-add-m">
           You Need to login to Start Processing Your order.
+          <br />
+          Tap This Button below
         </div>
         <a href="./account/login">
           <button class="check-ct">Login</button>
@@ -1066,21 +1052,22 @@
           Object.values(cartItems).forEach(async (key) => {
             let item = await itemCollect(key.cartItemAdded);
             let _var = key.specs ? true : false;
-            let str = "";
-            let in_price = 0;
-            let size_ing = true;
             if (_var == true) {
+              let str = "";
+              let in_price = 0;
+              let size_ing = false;
               let _sp = JSON.parse(item.specifications);
               Object.keys(key.specs).forEach((spec) => {
                 if (spec == "Ingredients") {
+                  size_ing = true;
                   let str_in = "";
                   key.specs[spec].forEach((i) => {
                     str_in += ` ${i.descriptions}: ${i.qtty} `;
-                    in_price += parseInt(i.qtty) * parseInt(i.price);
+                    in_price += parseInt(i.price);
                   });
                   str += `<div class="cart-spec">${spec}: ${str_in}</div>`;
                 } else if (spec == "Sizes") {
-                  Object.keys(key.specs[spec])[0];
+                  size_ing = true;
                   in_price += parseInt(
                     key.specs[spec][Object.keys(key.specs[spec])[0]]
                   );
@@ -1088,12 +1075,10 @@
                     Object.keys(key.specs[spec])[0]
                   }</div>`;
                 } else {
-                  size_ing = false;
                   str += `<div class="cart-spec">${spec}: ${key.specs[spec]}</div>`;
                 }
               });
-            }
-            cartDom.innerHTML += `
+              cartDom.innerHTML += `
         <div class="cart-itm">
           <div class="cart-itm-sm">
             <div class="ct-sm-top">
@@ -1115,17 +1100,12 @@
                 </div>
                 UGX
                 <span class="cart-t-price l-t-price">${
-                  _var == false && in_price == 0
+                  size_ing == false
                     ? key.inCartNumber *
                       (item.discount
                         ? (item.price * (100 - item.discount)) / 100
                         : item.price)
-                    : in_price != 0
-                    ? key.inCartNumber * in_price
-                    : key.inCartNumber *
-                      (item.discount
-                        ? (item.price * (100 - item.discount)) / 100
-                        : item.price)
+                    : key.inCartNumber * in_price
                 }</span>
                 <div class="delivery">YammieDelivery</div>
                 <div class="_sp">${str}</div>
@@ -1198,39 +1178,27 @@
           <div class="ct-itm-unit-price">
             <div class="ct-a-price">
               <span class="cart-t-price">UGX ${
-                _var == false && in_price == 0
+                size_ing == false
                   ? item.discount
                     ? (item.price * (100 - item.discount)) / 100
                     : item.price
-                  : in_price != 0
-                  ? in_price
-                  : item.discount
-                  ? (item.price * (100 - item.discount)) / 100
-                  : item.price
+                  : in_price
               }</span>
             </div>
             <div class="ct-discount-s">
               <div class="discount">${
-                _var == false && in_price == 0
+                size_ing == false
                   ? item.discount
                     ? item.discount + "%"
                     : ""
-                  : size_ing == false
-                  ? ""
-                  : item.discount
-                  ? item.discount + "%"
                   : ""
               }</div>
               <div class="save">
                 ${
-                  _var == false && in_price == 0
+                  size_ing == false
                     ? item.discount
                       ? "Save: UGX " + (item.price * item.discount) / 100
                       : ""
-                    : in_price != 0
-                    ? ""
-                    : item.discount
-                    ? "Save: UGX " + (item.price * item.discount) / 100
                     : ""
                 }
               </div>
@@ -1239,21 +1207,143 @@
           <div class="ct-itm-sub-total">
             <span style="font-size:20px; padding-right:5px;">UGX</span>
             <span class="cart-t-price l-t-price">${
-              _var == false && in_price == 0
+              size_ing == false
                 ? key.inCartNumber *
                   (item.discount
                     ? (item.price * (100 - item.discount)) / 100
                     : item.price)
-                : in_price != 0
-                ? key.inCartNumber * in_price
-                : key.inCartNumber *
-                  (item.discount
-                    ? (item.price * (100 - item.discount)) / 100
-                    : item.price)
+                : key.inCartNumber * in_price
             }</span>
           </div>
         </div>
             `;
+            } else {
+              cartDom.innerHTML += `
+          <div class="cart-itm">
+            <div class="cart-itm-sm">
+              <div class="ct-sm-top">
+                <div class="ct-sm-img">
+                  <img
+                    src="${JSON.parse(item.images)[0]}"
+                    alt="cart-item"
+                    width="100px"
+                    height="100px"
+                  />
+                </div>
+                <div class="ct-sm-name-price">
+                   <div>
+                      <span style="font-weight:bold;font-size:17px";>
+                        ${item.product}
+                      </span>
+                     -
+                    ${item.description}
+                  </div>
+                  UGX
+                  <span class="cart-t-price l-t-price">${
+                    key.inCartNumber *
+                    (item.discount
+                      ? (item.price * (100 - item.discount)) / 100
+                      : item.price)
+                  }</span>
+                  <div class="delivery">YammieDelivery</div>
+                </div>
+              </div>
+              <div class="ct-sm-bottom">
+                <div class="ct-sm-b-left">
+                  <span class="itm-r-sm" data-id=${key.cartItemAdded}>
+                    <i class="fas fa-trash"></i>
+                    Remove From Cart
+                  </span>
+                </div>
+                <div class="ct-sm-b-right">
+                  <div class="ct-qty-center">
+                    <button
+                      class="btn-i minus"
+                      data-id=${key.cartItemAdded}
+                    >&minus;</button>
+                    <span class="ct-number">${key.inCartNumber}</span>
+                    <button
+                      class="plus"
+                      data-id=${key.cartItemAdded}
+                    >&plus;</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="ct-itm-name">
+              <div class="ct-left">
+                <img
+                  src="${JSON.parse(item.images)[0]}"
+                  alt="${item.product}"
+                  width="120px"
+                  height="100px"
+                />
+              </div>
+              <div class="ct-right">
+                <div class="ct-itm">
+                  <span>
+                      <span style="font-weight:bold;font-size:20px;">
+                        ${item.product}
+                      </span>
+                     -
+                    ${item.description}
+                  </span>
+                </div>
+                <div class="delivery">YammieDelivery</div>
+                <div class="like-remove">
+                  <span class="itm-r-lg" data-id=${key.cartItemAdded}>
+                    <i class="fas fa-trash"></i>
+                    Remove From Cart
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="ct-itm-qty">
+              <div class="ct-qty-center">
+                <button
+                  class="btn-i minus"
+                  data-id=${key.cartItemAdded}
+                >&minus;</button>
+                <span class="ct-number">${key.inCartNumber}</span>
+                <button
+                  class="plus"
+                  data-id=${key.cartItemAdded}
+                >&plus;</button>
+              </div>
+            </div>
+            <div class="ct-itm-unit-price">
+              <div class="ct-a-price">
+                <span class="cart-t-price">UGX ${
+                  item.discount
+                    ? (item.price * (100 - item.discount)) / 100
+                    : item.price
+                }</span>
+              </div>
+              <div class="ct-discount-s">
+                <div class="discount">${
+                  item.discount ? item.discount + "%" : ""
+                }</div>
+                <div class="save">
+                  ${
+                    item.discount
+                      ? "Save: UGX " + (item.price * item.discount) / 100
+                      : ""
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="ct-itm-sub-total">
+              <span style="font-size:20px; padding-right:5px;">UGX</span>
+              <span class="cart-t-price l-t-price">${
+                key.inCartNumber *
+                (item.discount
+                  ? (item.price * (100 - item.discount)) / 100
+                  : item.price)
+              }</span>
+            </div>
+          </div>
+              `;
+            }
 
             const _ms = document.getElementsByClassName("minus");
             for (let i = 0; i < _ms.length; i++) {
@@ -1291,7 +1381,7 @@
                   totalAmount(),
                   yammie,
                   localStorage.getItem("cartItems"),
-                  cartNumber
+                  cartNumber,
                 ]);
                 let xhr2 = new XMLHttpRequest();
                 xhr2.open(
@@ -1342,7 +1432,7 @@
                 _cdb(`/api/user/customer/cart/${yammie}`, {
                   cart: cartItems,
                   cartNumber: cartNumber,
-                  delete: false
+                  delete: false,
                 });
               }, 500);
             }
@@ -1368,7 +1458,7 @@
                 _cdb(`/api/user/customer/cart/${yammie}`, {
                   cart: cartItems,
                   cartNumber: cartNumber,
-                  delete: false
+                  delete: false,
                 });
               }, 1500);
             }
@@ -1391,7 +1481,7 @@
                   cart: cartItems,
                   cartNumber: cartNumber,
                   deleteId: id,
-                  delete: "true"
+                  delete: "true",
                 });
               }, 1000);
             }
@@ -1482,7 +1572,7 @@
         _cdbNoReload(`/api/user/customer/cart/${yammie}`, {
           cart: JSON.parse(localStorage.getItem("cartItems")),
           cartNumber: parseInt(localStorage.getItem("cartNumber")),
-          delete: "false"
+          delete: "false",
         });
       } else {
         displayCart();
@@ -1501,7 +1591,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: -250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -1512,7 +1602,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: 250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -1576,7 +1666,7 @@
           window.scroll({
             top: 0,
             left: 0,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         });
       };

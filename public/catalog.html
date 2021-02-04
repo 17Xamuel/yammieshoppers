@@ -642,7 +642,6 @@
     </script>
   </head>
   <body>
-    <<<<<<< HEAD
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
@@ -653,11 +652,9 @@
       ></iframe
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    =======
     <div id="pop-up-overlay-var"></div>
     <form class="var" id="var_form"></form>
     <!-- _variation -->
-    >>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
     <!--add c popup-->
     <div id="pop-up-overlay"></div>
     <div class="popup">
@@ -1871,8 +1868,6 @@
                     let _itm = await itemCollect(e.target.dataset.item);
                     getVar(_itm.specifications, e.target.dataset.item);
                   } else {
-                    console.log("_sp: ", e.target.dataset.sp);
-                    console.log("this: ", this);
                     let cartItem = {
                       cartItemAdded: e.target.dataset.item,
                       inCartNumber: 0,
@@ -1979,62 +1974,73 @@
                       _varDom + `</div>`;
                   } else if (item == "Ingredients") {
                     _sp[item].forEach((i) => {
-                      _varDom += `<div class="_var">
-                                  <div class="var_name">${i.descriptions}</div>
-                                  <div class="var_price">
-                                    <div class="_n_price">
-                                      UGX ${
-                                        i.getDiscount <= 0
-                                          ? i.getPrice
-                                          : i.getPrice *
-                                            ((100 - i.getDiscount) / 100)
-                                      }
-                                    </div>
-                                    <div class="_d_price">${
-                                      i.getDiscount <= 0 ? "" : i.getPrice
-                                    }</div>
-                                  </div>
-                                  <div class="var_qty_ctr">
-                                    <div class="var_minus ${i.descriptions}">
-                                      &minus;
-                                    </div>
-                                    <input
-                                      type="text"
-                                      class="var_qty _increase"
-                                      name="_${i.descriptions}"
-                                      readonly
-                                      value="${1}"
-                                    />
-                                    <div class="var_plus ${i.descriptions}">
-                                      &plus;
-                                    </div>
-                                  </div>
-                                </div>`;
+                      _varDom += `
+                      <div class="_var">
+                          <div class="var_name">${i.descriptions}</div>
+                          <div class="var_price">
+                            <div class="_n_price">
+                              UGX ${
+                                i.getDiscount <= 0
+                                  ? i.getPrice
+                                  : i.getPrice * ((100 - i.getDiscount) / 100)
+                              }
+                            </div>
+                            <div class="_d_price">${
+                              i.getDiscount <= 0 ? "" : i.getPrice
+                            }</div>
+                          </div>
+                          <div class="var_qty_ctr">
+                            <div class="var_minus ${i.descriptions}">
+                              &minus;
+                            </div>
+                            <input
+                              type="text"
+                              class="var_qty _increase"
+                              name="_${i.descriptions}"
+                              readonly
+                              value="${1}"
+                              />
+                            <input
+                              type="text"
+                              class="var_qty _increase"
+                              name="-${i.descriptions}""
+                              hidden
+                              value="${
+                                i.getDiscount <= 0
+                                  ? i.getPrice
+                                  : i.getPrice * ((100 - i.getDiscount) / 100)
+                              }"
+                              />
+                              <div class="var_plus ${i.descriptions}">
+                                &plus;
+                              </div>
+                            </div>
+                          </div>`;
                     });
 
                     document.querySelector(".var").innerHTML +=
                       _varDom + `</div>`;
                   } else {
                     _sp[item].forEach((i) => {
+                      let _price =
+                        i.getDiscount <= 0
+                          ? i.getPrice
+                          : i.getPrice * ((100 - i.getDiscount) / 100);
                       _varDom += `<div class="_var">
                                   <div class="var_name">${i.descriptions}</div>
                                   <div class="var_price">
                                     <div class="_n_price">
-                                      UGX ${
-                                        i.getDiscount <= 0
-                                          ? i.getPrice
-                                          : i.getPrice *
-                                            ((100 - i.getDiscount) / 100)
-                                      }
+                                      UGX ${_price}
                                     </div>
                                     <div class="_d_price">${
                                       i.getDiscount <= 0 ? "" : i.getPrice
                                     }</div>
                                   </div>
                                   <div class="var_qty_ctr">
-                                    <input type="radio" value="${
-                                      i.descriptions
-                                    }" name="${item}">
+                                    <input type="radio" value="
+                                      ${
+                                        i.descriptions + "_" + _price
+                                      }" name="${item}">
                                   </div>
                                 </div>`;
                     });
@@ -2096,14 +2102,31 @@
                     .querySelector("#pop-up-overlay-var")
                     .classList.remove("v-active");
                   let specs = {};
-                  specs.Ingredients = {};
+
+                  specs.Ingredients = [];
+                  specs.Sizes = {};
                   _varForm.forEach((v, k) => {
-                    if (k.charAt(0) == "_") {
-                      specs.Ingredients[k.slice(1)] = v;
-                    } else {
-                      specs[k] = v;
+                    if (k.charAt(0) !== "-") {
+                      if (k.charAt(0) == "_") {
+                        specs.Ingredients.push({
+                          descriptions: k.slice(1),
+                          qtty: v,
+                          price: _varForm.get(`-${k.slice(1)}`),
+                        });
+                      } else if (k == "Sizes") {
+                        let arr = v.split("_");
+                        specs.Sizes[arr[0]] = arr[1];
+                      } else {
+                        specs[k] = v;
+                      }
                     }
                   });
+                  if (Object.keys(specs.Sizes).length == 0) {
+                    delete specs.Sizes;
+                  }
+                  if (specs.Ingredients.length == 0) {
+                    delete specs.Ingredients;
+                  }
                   let cartItem = {
                     cartItemAdded: _i,
                     specs,
