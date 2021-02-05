@@ -1019,7 +1019,7 @@
           _cdb(`/api/user/customer/cart/${yammie}`, {
             cart: cartItems,
             cartNumber: localStorage.getItem("cartNumber"),
-            delete: false,
+            delete: false
           });
         }
 
@@ -1265,7 +1265,7 @@
                   let cartItem = {
                     cartItemAdded: item.id,
                     specs,
-                    inCartNumber: 0,
+                    inCartNumber: 0
                   };
                   cartNumbers(cartItem);
                   wait();
@@ -1361,7 +1361,7 @@
               } else {
                 let cartItem = {
                   cartItemAdded: item.id,
-                  inCartNumber: 0,
+                  inCartNumber: 0
                 };
                 cartNumbers(cartItem);
                 wait();

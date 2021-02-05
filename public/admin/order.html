@@ -211,7 +211,7 @@
                     </div>
 
                     <h6 class="text-center text-primary">Product details</h6>
-                    <ul class="list-group my-3 font-weight-bold" id="id"></ul>
+                    <ul class="list-group my-3" id="id"></ul>
                     <div class="text-center">
                       <button
                         type="button"
@@ -279,19 +279,24 @@
             <h5 class="modal-title">Want to Cancel Order?</h5>
           </div>
           <div class="modal-body text-center" id="cancelMessage">
-            Press Ok to Continue
+            <form id="co">
+              <div class="form-group">
+                <textarea
+                  id="cancelReason"
+                  cols="30"
+                  rows="3"
+                  class="form-control"
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-danger btn-block">
+                Cancel
+              </button>
+            </form>
           </div>
           <div class="modal-footer">
             <button
               type="button"
-              class="btn btn-success btn-sm"
-              id="cancelOrder"
-            >
-              Ok
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm"
+              class="btn btn-info btn-sm"
               data-dismiss="modal"
             >
               No
@@ -431,73 +436,206 @@
             items
           ).length;
           let itemdetails = Object.values(items);
-          let data = "";
           itemdetails.forEach((item) => {
-            let spec = JSON.parse(item.specs);
-            console.log(spec.Sizes);
-            let [ing] = spec.Ingredients;
-            if (spec.Sizes !== null) {
-              for (const [key, value] of Object.entries(spec.Sizes)) {
-                console.log(`${key}: ${value}`);
-              }
-            }
-
-            const orderProduct = new XMLHttpRequest();
-            orderProduct.onreadystatechange = () => {
-              if (orderProduct.readyState == 4 && orderProduct.status == 200) {
-                let [orderedProduct] = JSON.parse(orderProduct.responseText);
-                let total =
-                  (orderedProduct.price -
-                    (orderedProduct.discount / 100) * orderedProduct.price) *
-                  item.inCartNumber;
-                data += `<li class="list-group-item">
-                          <ul class="list-inline">
-                            <li class="list-inline-item mr-3">Product : ${orderedProduct.product}</li>,
-                            <li class="list-inline-item mx-3">Price : ${orderedProduct.price}</li>,
-                            <li class="list-inline-item mx-3">Discount : ${orderedProduct.discount} %</li>,
-                            <li class="list-inline-item mx-3">Quantity : ${item.inCartNumber}</li>
-                          </ul>
-                          Specifications : <ul class="list-inline">
-                            <li class="list-inline-item">Color : ${spec.Color}</li>
-                            <li class="list-inline-item">Flavor : ${spec.Flavor}</li>
-                            <li class="list-inline-item">Ingridients :
-                               ${ing.descriptions}, ${ing.qtty}, ${ing.price}</li>
-                          </ul>
-                         </li>`;
-              }
-              document.getElementById("id").innerHTML = data;
-              let contactButtons = document.querySelectorAll(".btn-info");
-              contactButtons.forEach((contactButton) => {
-                contactButton.addEventListener("click", (e) => {
-                  let contact = e.target.dataset.it;
-                  const xhr = new XMLHttpRequest();
-                  xhr.onreadystatechange = () => {
-                    if (xhr.readyState < 4) {
-                      document.getElementById(
-                        "contentLoad"
-                      ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-                    }
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                      let [result] = JSON.parse(xhr.responseText);
-                      document.getElementById("sn").innerHTML = result.username;
-                      document.getElementById("spn").innerHTML =
-                        result.phonenumber;
-                      document.getElementById("se").innerHTML = result.email;
-                      document.getElementById("sl").innerHTML = result.location;
-                      document.getElementById("contentLoad").innerHTML = "";
-                    }
-                  };
-                  xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
-                  xhr.send();
+            let data = "";
+            let orderProduct = new XMLHttpRequest();
+            if (item.specs === null || item.specs === undefined) {
+              orderProduct.onreadystatechange = () => {
+                if (
+                  orderProduct.readyState == 4 &&
+                  orderProduct.status == 200
+                ) {
+                  let [_product] = JSON.parse(orderProduct.responseText);
+                  let total =
+                    (_product.price -
+                      (_product.discount / 100) * _product.price) *
+                    item.inCartNumber;
+                  data += `<li class="list-group-item">
+                             <ul class="list-inline">
+                              <li class="list-inline-item mr-3">
+                                <span class="font-weight-bold">Product:</span>
+                                ${_product.product}
+                              </li>
+                              <li class="list-inline-item mx-3">
+                                <span class="font-weight-bold">OriginalPrice:</span>
+                                ${_product.price} UGX
+                              </li>
+                               <li class="list-inline-item mx-3">
+                                <span class="font-weight-bold">Discount:</span>
+                                ${_product.discount} %
+                              </li>
+                               <li class="list-inline-item mx-3">
+                                <span class="font-weight-bold">Quantity:</span>
+                                ${item.inCartNumber}
+                              </li>
+                               <li class="list-inline-item mr-3">
+                                <span class="font-weight-bold">TotalPrice:</span>
+                                ${Math.round(total)} UGX
+                              </li>
+                             </ul>
+                             <span class="btn btn-info float-end mt-3" data-target="#sellerInfo"
+                             data-toggle="modal" data-id="${
+                               item.cartItemAdded
+                             }">Contact Seller</span>
+                           </li>`;
+                }
+                document.getElementById("id").innerHTML += data;
+                let contactButtons = document.querySelectorAll(".btn-info");
+                contactButtons.forEach((contactButton) => {
+                  contactButton.addEventListener("click", (e) => {
+                    let contact = e.target.dataset.id;
+                    const xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = () => {
+                      if (xhr.readyState < 4) {
+                        document.getElementById(
+                          "contentLoad"
+                        ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                      }
+                      if (xhr.readyState == 4 && xhr.status == 200) {
+                        let [result] = JSON.parse(xhr.responseText);
+                        document.getElementById("sn").innerHTML =
+                          result.username;
+                        document.getElementById("spn").innerHTML =
+                          result.phonenumber;
+                        document.getElementById("se").innerHTML = result.email;
+                        document.getElementById("sl").innerHTML =
+                          result.location;
+                        document.getElementById("contentLoad").innerHTML = "";
+                      }
+                    };
+                    xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
+                    xhr.send();
+                  });
                 });
-              });
-            };
-            orderProduct.open(
-              "GET",
-              `/api/admin/orderProduct/${item.cartItemAdded}`,
-              true
-            );
-            orderProduct.send();
+              };
+              orderProduct.open(
+                "GET",
+                `/api/admin/orderProduct/${item.cartItemAdded}`,
+                true
+              );
+              orderProduct.send();
+            } else {
+              let totalPrice = 0;
+              let color = "";
+              item.specs.Color === null || item.specs.Color === undefined
+                ? (color = "No Color")
+                : (color = item.specs.Color);
+              let flavor = "";
+              item.specs.Flavor === null || item.specs.Flavor === undefined
+                ? (flavor = "No Flavor")
+                : (flavor = item.specs.Flavor);
+              let size = "";
+              if (item.specs.Sizes === null || item.specs.Sizes === undefined) {
+                size = "No Size";
+              } else {
+                for (let [key, value] of Object.entries(item.specs.Sizes)) {
+                  size = `${key}-${value}`;
+                  totalPrice += parseInt(`${value}`);
+                }
+              }
+              let ingredients = "";
+              function ing(obj) {
+                ingredients += `
+              <li class="list-inline-item">${obj.descriptions}</li>,
+              <li class="list-inline-item">${obj.qtty}</li>,
+              <li class="list-inline-item">${obj.price} UGX</li>`;
+              }
+              if (
+                item.specs.Ingredients === null ||
+                item.specs.Ingredients === undefined
+              ) {
+                ingredients = "No Ingredients";
+              } else {
+                for (let i = 0; i < item.specs.Ingredients.length; i++) {
+                  ing(item.specs.Ingredients[i]);
+                  totalPrice += parseInt(item.specs.Ingredients[i].price);
+                }
+              }
+              orderProduct.onreadystatechange = () => {
+                if (
+                  orderProduct.readyState == 4 &&
+                  orderProduct.status == 200
+                ) {
+                  let [mproduct] = JSON.parse(orderProduct.responseText);
+                  let productPrice = parseInt(mproduct.price);
+                  let productDis = parseInt(mproduct.discount);
+                  let price;
+                  totalPrice !== 0
+                    ? (price = totalPrice)
+                    : (price =
+                        (productPrice - (productDis / 100) * productPrice) *
+                        item.inCartNumber);
+                  data += `
+                  <li class="list-group-item">
+                        <ul class="list-inline my-3">
+                            <li class="list-inline-item mr-3"><span
+                              class="font-weight-bold">Product</span> :
+                              ${mproduct.product}</li>,
+                            <li class="list-inline-item mx-3"><span
+                              class="font-weight-bold">OriginalPrice</span> :
+                              ${mproduct.price} UGX</li>,
+                            <li class="list-inline-item mx-3"><span
+                               class="font-weight-bold">Discount</span> :
+                               ${mproduct.discount} %</li>,
+                           <li class="list-inline-item mx-3"><span
+                              class="font-weight-bold">Quantity</span> :
+                              ${item.inCartNumber}</li>
+                              <li class="list-inline-item mr-3 mt-2"><span
+                              class="font-weight-bold">TotalPrice</span> :
+                              ${price} UGX</li>
+                          </ul>
+                          <span class="font-weight-bold">Specifications</span> :
+                           <ul class="list-inline mb-3">
+                           <li class="list-inline-item">Color : ${color}</li>
+                            <li class="list-inline-item">Flavor : ${flavor}</li>
+                          <li class="list-inline-item">Sizes : ${size} </li>
+                         </ul>
+                         <span class="font-weight-bold">Ingredients</span>:
+                         <ul class="list-inline mb-3">
+                           ${ingredients}
+                          </ul>
+                          <span class="btn btn-info float-end"
+                          data-target="#sellerInfo" data-toggle="modal"
+                          data-it="${item.cartItemAdded}">
+                        Contact Seller</span>
+                         </li>`;
+                }
+                document.getElementById("id").innerHTML += data;
+                let contactButtons = document.querySelectorAll(".btn-info");
+                contactButtons.forEach((contactButton) => {
+                  contactButton.addEventListener("click", (e) => {
+                    let contact = e.target.dataset.it;
+                    const xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = () => {
+                      if (xhr.readyState < 4) {
+                        document.getElementById(
+                          "contentLoad"
+                        ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+                      }
+                      if (xhr.readyState == 4 && xhr.status == 200) {
+                        let [result] = JSON.parse(xhr.responseText);
+                        document.getElementById("sn").innerHTML =
+                          result.username;
+                        document.getElementById("spn").innerHTML =
+                          result.phonenumber;
+                        document.getElementById("se").innerHTML = result.email;
+                        document.getElementById("sl").innerHTML =
+                          result.location;
+                        document.getElementById("contentLoad").innerHTML = "";
+                      }
+                    };
+                    xhr.open("GET", `/api/admin/sellerInfo/${contact}`, true);
+                    xhr.send();
+                  });
+                });
+              };
+              orderProduct.open(
+                "GET",
+                `/api/admin/orderProduct/${item.cartItemAdded}`,
+                true
+              );
+              orderProduct.send();
+            }
           });
           document.getElementById("detailLoading").innerHTML = "";
         }
@@ -522,6 +660,27 @@
         };
         orderFinish.open("GET", `/api/admin/finishOrder/${orderId}`, true);
         orderFinish.send();
+      });
+
+      document.getElementById("co").addEventListener("submit", (e) => {
+        let co = {};
+        co.reason = document.getElementById("cancelReason").value;
+        let _co = new XMLHttpRequest();
+        _co.onreadystatechange = () => {
+          if (_co.readyState < 4) {
+            document.getElementById(
+              "cancelMessage"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x"></i>`;
+          }
+          if (_co.readyState == 4 && _co.status == 200) {
+            if (_co.responseText == "ok") {
+              window.location.assign("home.html");
+            }
+          }
+        };
+        _co.open("POST", `/api/admin/cancelOrder/${orderId}`, true);
+        _co.setRequestHeader("Content-Type", "application/json");
+        _co.send(JSON.stringify(co));
       });
     </script>
     <script src="scripts/account.js"></script>

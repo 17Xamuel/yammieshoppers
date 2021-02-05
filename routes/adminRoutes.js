@@ -50,7 +50,7 @@ router.get("/allSellers", async (req, res) => {
     "SELECT * FROM sellers WHERE seller_status='Approved'",
     async (error, results) => {
       if (error) throw error;
-      res.json(results.length);
+      res.send(results);
     }
   );
 });
@@ -63,6 +63,34 @@ router.get("/sellerRequests", async (req, res) => {
       res.json(result);
     }
   );
+});
+
+router.get("/seller/:id", async (req, res) => {
+  conn.query(
+    `SELECT id,username,email,phonenumber,location,businessname,category FROM sellers WHERE id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.get("/searchSeller/:id", async (req, res) => {
+  let _patt = /\W/g;
+  let ch = _patt.test(req.params.id);
+  if (ch === true) {
+    res.send([]);
+    return;
+  } else {
+    conn.query(
+      `SELECT * FROM sellers WHERE username LIKE '%${req.params.id}%'`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  }
 });
 
 try {
@@ -298,51 +326,43 @@ router.get("/getOnlineProducts", async (req, res) => {
 
 router.get("/finishOrder/:id", async (req, res) => {
   conn.query(
-    `SELECT * FROM pending_orders WHERE order_id =?`,
+    `SELECT * FROM pending_orders WHERE order_id=?`,
     [req.params.id],
     (err1, res1) => {
       if (err1) throw err1;
-      let orderItems = Object.values(JSON.parse(res1[0].order_items));
-      orderItems.forEach((order) => {
+      let items = Object.values(JSON.parse(res1[0].order_items));
+      items.forEach((item) => {
         conn.query(
-          `SELECT * FROM cleared_orders WHERE product_id='${order.cartItemAdded}'`,
+          `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'
+           AND order_status='Approved'`,
           (err2, res2) => {
             if (err2) throw err2;
             if (res2.length == 0) {
               conn.query(
-                `SELECT * FROM seller_orders WHERE product_id ='${order.cartItemAdded}'`,
+                `UPDATE seller_orders SET order_status='Approved' WHERE 
+                product_id='${item.cartItemAdded}'`,
                 (err3, res3) => {
                   if (err3) throw err3;
-                  conn.query(
-                    `INSERT INTO cleared_orders SET ?`,
-                    res3,
-                    (err4, res4) => {
-                      if (err4) throw err4;
-                      conn.query(
-                        `DELETE FROM seller_orders WHERE id='${res3[0].id}'`,
-                        (err5, res5) => {
-                          if (err5) throw err5;
-                        }
-                      );
-                    }
-                  );
                 }
               );
-            } else if (res2.length > 0) {
+            } else {
               conn.query(
-                `SELECT order_qty FROM cleared_orders WHERE product_id='${order.cartItemAdded}'`,
-                (err6, res6) => {
-                  if (err6) throw err6;
+                `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'
+              AND order_status='Pending'`,
+                (err4, res4) => {
+                  if (err4) throw err4;
                   let qtyChange =
-                    parseInt(res6[0].order_qty) + order.inCartNumber;
+                    parseInt(res2[0].order_qty) + parseInt(res4[0].order_qty);
                   conn.query(
-                    `UPDATE cleared_orders SET order_qty=${qtyChange} WHERE product_id='${order.cartItemAdded}'`,
-                    (err7, res7) => {
-                      if (err7) throw err7;
+                    `UPDATE seller_orders SET order_qty =${qtyChange} WHERE 
+                    product_id='${item.cartItemAdded}' AND order_status='Approved'`,
+                    (err5, res5) => {
+                      if (err5) throw err5;
                       conn.query(
-                        `DELETE  FROM seller_orders WHERE product_id='${order.cartItemAdded}'`,
-                        (err10, res10) => {
-                          if (err10) throw err10;
+                        `DELETE FROM seller_orders WHERE product_id='${items.cartItemAdded}'
+                        AND order_status='Pending'`,
+                        (err6, res6) => {
+                          if (err6) throw err6;
                         }
                       );
                     }
@@ -365,7 +385,7 @@ router.get("/finishOrder/:id", async (req, res) => {
               let email = {
                 from: '"Yammie Shoppers" <info@yammieshoppers.com',
                 to: `${qres[0].c_email}`,
-                subject: `Yammie Order ${res1[0].order_number}`,
+                subject: `Yammie Finish Order ${res1[0].order_number}`,
                 text: `Hello ${qres[0].c_last_name}, your order ${res1[0].order_number} has been successfully finished.Thanks for Shopping with Yammie Shoppers.`
               };
               transporter.sendMail(email, (mailErr, response) => {
@@ -376,6 +396,18 @@ router.get("/finishOrder/:id", async (req, res) => {
           );
         }
       );
+    }
+  );
+});
+
+router.post("/cancelOrder/:id", async (req, res) => {
+  conn.query(
+    `SELECT * FROM pending_orders WHERE order_id=?`,
+    [req.params.id],
+    (err1, res1) => {
+      if (err1) throw err1;
+      let items = Object.values(JSON.parse(res1[0].order_items));
+      items.forEach((item) => {});
     }
   );
 });
@@ -517,6 +549,40 @@ router.post("/addZone", async (req, res) => {
   );
 });
 
+router.get("/mzone/:id", async (req, res) => {
+  let pattern = /\W/g;
+  let check = pattern.test(req.params.id);
+  if (check === true) {
+    res.send([]);
+    return;
+  } else {
+    conn.query(
+      `SELECT * FROM zones WHERE zone_name LIKE '%${req.params.id}%'`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  }
+});
+
+router.get("/maddress/:id", async (req, res) => {
+  let pattern = /\W/g;
+  let check = pattern.test(req.params.id);
+  if (check === true) {
+    res.send([]);
+    return;
+  } else {
+    conn.query(
+      `SELECT * FROM addresses WHERE address_name LIKE '%${req.params.id}%'`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  }
+});
+
 router.get("/getZone", async (req, res) => {
   conn.query("SELECT * FROM zones", (err, result) => {
     if (err) throw err;
@@ -557,30 +623,24 @@ router.post("/addAdresses", async (req, res) => {
   );
 });
 
-router.get("/saleNumber/:id", async (req, res) => {
+router.get("/myAddresses/:id", async (req, res) => {
   conn.query(
-    `SELECT SUM(order_qty) AS sales FROM cleared_orders WHERE product_id=?`,
+    `SELECT address_name FROM addresses WHERE zone_id=?`,
     [req.params.id],
-    (error, result) => {
-      if (error) throw error;
+    (err, result) => {
+      if (err) throw err;
       res.send(result);
     }
   );
 });
 
-router.get("/myAddresses/:id", async (req, res) => {
+router.get("/_zone/:id", async (req, res) => {
   conn.query(
-    `SELECT zone_id FROM zones WHERE zone_name=?`,
-    [req.params.id.replace(/_/g, " ")],
-    (err1, res1) => {
-      if (err1) throw err1;
-      conn.query(
-        `SELECT * FROM addresses WHERE zone_id='${res1[0].zone_id}'`,
-        (err2, res2) => {
-          if (err2) throw err2;
-          res.send(res2);
-        }
-      );
+    `SELECT zone_name FROM zones WHERE zone_id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
     }
   );
 });
@@ -803,6 +863,17 @@ router.post("/editSpecifications/:id", async (req, res) => {
   );
 });
 
+router.get("/saleNumber/:id", async (req, res) => {
+  conn.query(
+    `SELECT SUM(order_qty) AS sales FROM seller_orders WHERE product_id=? AND order_status='Approved'`,
+    [req.params.id],
+    (error, result) => {
+      if (error) throw error;
+      res.send(result);
+    }
+  );
+});
+
 router.get("/income", async (req, res) => {
   conn.query(
     `SELECT order_info FROM pending_orders WHERE order_status='finished'`,
@@ -820,8 +891,8 @@ router.get("/income", async (req, res) => {
 
 router.get("/trending", async (req, res) => {
   conn.query(
-    `SELECT images,product,price FROM products JOIN cleared_orders   ON 
-    products.id=cleared_orders.product_id WHERE order_qty >= 10`,
+    `SELECT images,product,price FROM products JOIN seller_orders   ON 
+    products.id=seller_orders.product_id WHERE order_qty >= 10 AND order_status='Approved'`,
     (err1, res1) => {
       if (err1) throw err1;
       res.send(res1);
@@ -831,8 +902,8 @@ router.get("/trending", async (req, res) => {
 
 router.get("/medium", async (req, res) => {
   conn.query(
-    `SELECT images,product,price FROM products JOIN cleared_orders   ON 
-    products.id=cleared_orders.product_id WHERE order_qty BETWEEN 5 AND 9`,
+    `SELECT images,product,price FROM products JOIN seller_orders   ON 
+    products.id=seller_orders.product_id WHERE order_qty BETWEEN 5 AND 9 AND order_status='Approved'`,
     (err1, res1) => {
       if (err1) throw err1;
       res.send(res1);
@@ -842,8 +913,8 @@ router.get("/medium", async (req, res) => {
 
 router.get("/least", async (req, res) => {
   conn.query(
-    `SELECT images,product,price FROM products JOIN cleared_orders   ON 
-    products.id=cleared_orders.product_id WHERE order_qty < 5`,
+    `SELECT images,product,price FROM products JOIN seller_orders   ON 
+    products.id=seller_orders.product_id WHERE order_qty < 5 AND order_status='Approved'`,
     (err1, res1) => {
       if (err1) throw err1;
       res.send(res1);

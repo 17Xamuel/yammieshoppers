@@ -1597,7 +1597,7 @@
           window.scroll({
             top: 0,
             left: 0,
-            behavior: "smooth",
+            behavior: "smooth"
           });
         });
       };
@@ -1720,7 +1720,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: -250,
-              behavior: "smooth",
+              behavior: "smooth"
             });
           });
         });
@@ -1731,7 +1731,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: 250,
-              behavior: "smooth",
+              behavior: "smooth"
             });
           });
         });
@@ -1887,7 +1887,7 @@
                   } else {
                     let cartItem = {
                       cartItemAdded: e.target.dataset.item,
-                      inCartNumber: 0,
+                      inCartNumber: 0
                     };
                     cartNumbers(cartItem);
                     wait();
@@ -1927,14 +1927,14 @@
                   if (cartItems[item.cartItemAdded] == undefined) {
                     cartItems = {
                       ...cartItems,
-                      [item.cartItemAdded]: item,
+                      [item.cartItemAdded]: item
                     };
                   }
                   cartItems[item.cartItemAdded].inCartNumber += 1;
                 } else {
                   item.inCartNumber = 1;
                   cartItems = {
-                    [item.cartItemAdded]: item,
+                    [item.cartItemAdded]: item
                   };
                 }
                 if (!yammie) {
@@ -1943,7 +1943,7 @@
                   _cdb(`/api/user/customer/cart/${yammie}`, {
                     cart: cartItems,
                     cartNumber: localStorage.getItem("cartNumber"),
-                    delete: false,
+                    delete: false
                   });
                 }
 
@@ -2128,7 +2128,7 @@
                         specs.Ingredients.push({
                           descriptions: k.slice(1),
                           qtty: v,
-                          price: _varForm.get(`-${k.slice(1)}`),
+                          price: _varForm.get(`-${k.slice(1)}`)
                         });
                       } else if (k == "Sizes") {
                         let arr = v.split("_");
@@ -2147,7 +2147,7 @@
                   let cartItem = {
                     cartItemAdded: _i,
                     specs,
-                    inCartNumber: 0,
+                    inCartNumber: 0
                   };
                   cartNumbers(cartItem);
                   wait();

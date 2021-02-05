@@ -283,7 +283,23 @@ router.get("/orders/:id", async (req, res) => {
     `SELECT seller_orders.order_price,seller_orders.order_amount,
   seller_orders.order_product,seller_orders.order_qty,seller_orders.order_discount,
   products.images FROM seller_orders JOIN products ON seller_orders.product_id
-  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=? AND 
+  order_status='Pending'`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.get("/doneOrder/:id", async (req, res) => {
+  conn.query(
+    `SELECT seller_orders.order_price,seller_orders.order_amount,
+  seller_orders.order_product,seller_orders.order_qty,seller_orders.order_discount,
+  products.images FROM seller_orders JOIN products ON seller_orders.product_id
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=? AND 
+  order_status='Approved'`,
     [req.params.id],
     (err, result) => {
       if (err) throw err;
@@ -295,7 +311,8 @@ router.get("/orders/:id", async (req, res) => {
 router.get("/pendingOrdernumber/:id", (req, res) => {
   conn.query(
     `SELECT*FROM seller_orders JOIN products ON seller_orders.product_id
-  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?
+  AND order_status='Pending'`,
     [req.params.id],
     (err, result) => {
       if (err) throw err;
@@ -304,24 +321,11 @@ router.get("/pendingOrdernumber/:id", (req, res) => {
   );
 });
 
-router.get("/doneOrder/:id", (req, res) => {
-  conn.query(
-    `SELECT cleared_orders.order_price,cleared_orders.order_amount,
-  cleared_orders.order_product,cleared_orders.order_qty,cleared_orders.order_discount,
-   products.images FROM cleared_orders JOIN products ON cleared_orders.product_id
-  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
-    [req.params.id],
-    (err, result) => {
-      if (err) throw err;
-      res.send(result);
-    }
-  );
-});
-
 router.get("/doneOrdernumber/:id", async (req, res) => {
   conn.query(
-    `SELECT *FROM cleared_orders JOIN products ON cleared_orders.product_id
-  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?`,
+    `SELECT *FROM seller_orders JOIN products ON seller_orders.product_id
+  =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=?
+  AND order_status='Approved'`,
     [req.params.id],
     (err, result) => {
       if (err) throw err;
@@ -332,9 +336,9 @@ router.get("/doneOrdernumber/:id", async (req, res) => {
 
 router.get("/sales/:id", async (req, res) => {
   conn.query(
-    `SELECT SUM(order_amount) AS Sales FROM cleared_orders JOIN
-  products ON cleared_orders.product_id=products.id JOIN sellers ON sellers.id=
-  products.seller_id WHERE sellers.id=?`,
+    `SELECT SUM(order_amount) AS Sales FROM seller_orders JOIN
+  products ON seller_orders.product_id=products.id JOIN sellers ON sellers.id=
+  products.seller_id WHERE sellers.id=? AND order_status='Approved'`,
     [req.params.id],
     (err, result) => {
       res.send(result);
@@ -344,9 +348,9 @@ router.get("/sales/:id", async (req, res) => {
 
 router.get("/sale/:id", async (req, res) => {
   conn.query(
-    `SELECT SUM(order_qty) AS Qty FROM cleared_orders JOIN
-  products ON cleared_orders.product_id=products.id JOIN sellers ON sellers.id=
-  products.seller_id WHERE sellers.id=?`,
+    `SELECT SUM(order_qty) AS Qty FROM seller_orders JOIN
+  products ON seller_orders.product_id=products.id JOIN sellers ON sellers.id=
+  products.seller_id WHERE sellers.id=? AND order_status='Approved'`,
     [req.params.id],
     (err, result) => {
       res.send(result);
