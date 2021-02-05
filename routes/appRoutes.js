@@ -70,11 +70,43 @@ router.post("/likedItems/:id", async (req, res) => {
 
 router.get("/getLikedItems/:id", async (req, res) => {
   conn.query(
-    `SELECT c_liked_items WHERE c_id = ?`,
+    `SELECT c_liked_items  FROM customers WHERE c_id = ?`,
     [req.params.id],
     (err, result) => {
       if (err) throw err;
       res.send(result);
+    }
+  );
+});
+
+router.post("/removeLikedItem/:id", async (req, res) => {
+  conn.query(
+    `SELECT c_liked_items FROM  customers WHERE c_id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      let products = [];
+      if (result[0].c_liked_items !== null) {
+        let items = JSON.parse(result[0].c_liked_items);
+        items.forEach((item) => {
+          if (item !== req.body.product_id) {
+            products.push(item);
+          }
+        });
+        conn.query(
+          `UPDATE customers SET ? WHERE c_id=?`,
+          [
+            {
+              c_liked_items: JSON.stringify(products)
+            },
+            req.params.id
+          ],
+          (err1, res1) => {
+            if (err1) throw err;
+            res.send(true);
+          }
+        );
+      }
     }
   );
 });
