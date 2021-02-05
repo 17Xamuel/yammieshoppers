@@ -23,7 +23,7 @@ router.post("/updateCart/:id", (req, res) => {
 });
 //likeditem
 router.post("/addLikedItem/:id", (req, res) => {
-  con.query(
+  conn.query(
     `SELECT c_liked_items,
       FROM customers WHERE c_id = ?`,
     [req.params.id],
