@@ -22,22 +22,6 @@ router.post("/updateCart/:id", (req, res) => {
   );
 });
 
-//get Liked items
-router.get("/cLikedItems/:id", (req, res) => {
-  conn.query(
-    `SELECT c_liked_items
-      FROM customers  WHERE c_id = ?`,
-    req.params.id,
-    (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        res.send(result);
-      }
-    }
-  );
-});
-
 router.get("/checkout/cart/:id", (req, res) => {
   conn.query(
     `SELECT c_cart_amount,c_cart,c_cart_number,zone
