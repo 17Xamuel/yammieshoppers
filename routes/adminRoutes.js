@@ -493,7 +493,7 @@ router.post("/cancelOrder/:id", async (req, res) => {
 
 router.get("/getFinishedOrders", async (req, res) => {
   conn.query(
-    "SELECT * FROM pending_orders WHERE order_status='finished'",
+    "SELECT * FROM pending_orders WHERE order_status='finished' OR order_status='cancelled'",
     (err, result) => {
       if (err) throw err;
       res.send(result);
@@ -501,10 +501,33 @@ router.get("/getFinishedOrders", async (req, res) => {
   );
 });
 
+router.post("/addQuestion", async (req, res) => {
+  let { qns, ans } = req.body;
+  conn.query(`SELECT * FROM faqs  WHERE question =?`, [qns], (err, result) => {
+    if (err) throw err;
+    if (result.length > 0) {
+      return res.send("Question Already Exists");
+    } else {
+      conn.query(
+        `INSERT INTO faqs SET ?`,
+        {
+          faqId: uuid.v4(),
+          question: qns,
+          answer: ans
+        },
+        (error, results) => {
+          if (error) throw error;
+          res.send("ok");
+        }
+      );
+    }
+  });
+});
+
 router.post("/addCategory", async (req, res) => {
-  let = { catName } = req.body;
+  let { catName } = req.body;
   conn.query(
-    `SELECT * FROM category WHERE category_nmae=?`,
+    `SELECT * FROM category WHERE category_name=?`,
     [catName],
     (error, results) => {
       if (error) throw error;
@@ -593,7 +616,25 @@ router.get("/orderSearch/:id", async (req, res) => {
   } else {
     conn.query(
       `SELECT order_id,order_number,order_amount FROM pending_orders WHERE order_number
-     LIKE '%${req.params.id}%'`,
+     LIKE '%${req.params.id}%' AND order_status='pending'`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  }
+});
+
+router.get("/processedOrder/:id", async (req, res) => {
+  let pattern = /\W/g;
+  let check = pattern.test(req.params.id);
+  if (check == true) {
+    res.send([]);
+    return;
+  } else {
+    conn.query(
+      `SELECT order_id,order_number,order_amount FROM pending_orders WHERE order_number
+     LIKE '%${req.params.id}%' AND order_status='finished' OR order_status='cancelled'`,
       (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -765,9 +806,15 @@ router.post("/zoneEdit/:id", async (req, res) => {
     return res.send("All feilds Required");
   }
   conn.query(
-    `UPDATE zones SET zone_name='${newName}',zone_weight='${newWeight}'
-  WHERE zone_name = ?`,
-    [req.params.id.replace(/_/g, " ")],
+    `UPDATE zones SET ? WHERE
+   zone_name = ?`,
+    [
+      {
+        zone_name: newName,
+        zone_weight: newWeight
+      },
+      req.params.id.replace(/_/g, " ")
+    ],
     (err, result) => {
       if (err) throw err;
       res.send("Zone Successfully Updated");
@@ -778,8 +825,13 @@ router.post("/zoneEdit/:id", async (req, res) => {
 router.post("/editAddress/:id", async (req, res) => {
   let { newName } = req.body;
   conn.query(
-    `UPDATE addresses SET address_name= '${newName}' WHERE address_id=?`,
-    [req.params.id],
+    `UPDATE addresses SET ? WHERE address_id=?`,
+    [
+      {
+        address_name: newName
+      },
+      req.params.id
+    ],
     (err, result) => {
       if (err) throw err;
       res.send("Address Editted Successfully");
@@ -791,8 +843,13 @@ router.post("/editCategory/:id", async (req, res) => {
   let { newName } = req.body;
 
   conn.query(
-    `UPDATE category SET category_name='${newName}' WHERE category_name=?`,
-    [req.params.id.replace(/_/g, " ")],
+    `UPDATE category SET ? WHERE category_name=?`,
+    [
+      {
+        category_name: newName
+      },
+      req.params.id.replace(/_/g, " ")
+    ],
     (err, result) => {
       if (err) throw err;
       res.send("Category Edited Successfully");
@@ -804,8 +861,13 @@ router.post("/editSubCategory/:id", async (req, res) => {
   let { newSubName } = req.body;
 
   conn.query(
-    `UPDATE subCategories SET subCategoryName='${newSubName}' WHERE subCategoryName=?`,
-    [req.params.id.replace(/_/g, " ")],
+    `UPDATE subCategories SET? WHERE subCategoryName=?`,
+    [
+      {
+        subCategoryName: newSubName
+      },
+      req.params.id.replace(/_/g, " ")
+    ],
     (err, result) => {
       if (err) throw err;
       res.send("Subcategory Editted Successfully");

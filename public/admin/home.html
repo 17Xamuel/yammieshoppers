@@ -108,10 +108,9 @@
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
-                    <li class="list-item icon-parent">
-                      <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">0</span
-                        ><i class="fas fa-comments text-muted fa-2x"></i
+                    <li class="list-item">
+                      <a href="faqs.html" class="nav-link">
+                        <i class="fas fa-question text-muted fa-2x"></i
                       ></a>
                     </li>
                     <li class="list-item icon-parent">
@@ -341,40 +340,6 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded">
                   <div class="card-body">
-                    <h5 class="text-muted mb-3 text-center">
-                      Finished Orders <span id="fon"></span>
-                    </h5>
-                    <div class="table-responsive">
-                      <table class="table table-striped bg-light text-left">
-                        <thead>
-                          <tr class="text-muted">
-                            <th>OrderNumber</th>
-                            <th>OrderAmount</th>
-                            <th>Details</th>
-                          </tr>
-                        </thead>
-                        <tbody id="fOrders"></tbody>
-                      </table>
-                    </div>
-
-                    <div id="forderLoading" class="text-center"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container-fluid">
-        <div class="row mb-5">
-          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row align-items-center">
-              <div class="col-xl-11 mx-auto">
-                <div class="card rounded">
-                  <div class="card-body">
                     <nav class="navbar navbar-light bg-light">
                       <div class="container-fluid">
                         <a class="navbar-brand"
@@ -417,6 +382,54 @@
         </div>
       </div>
     </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <nav class="navbar navbar-light bg-light">
+                      <div class="container-fluid">
+                        <a class="navbar-brand"
+                          >Processed Orders <span id="fon"></span
+                        ></a>
+                        <form class="d-flex">
+                          <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Order Number"
+                            aria-label="Search"
+                            id="sporder"
+                          />
+                        </form>
+                      </div>
+                    </nav>
+                    <div class="table-responsive">
+                      <table class="table table-striped bg-light text-left">
+                        <thead>
+                          <tr class="text-muted">
+                            <th>OrderNumber</th>
+                            <th>OrderAmount</th>
+                            <th>Details</th>
+                          </tr>
+                        </thead>
+                        <tbody id="fOrders"></tbody>
+                      </table>
+                    </div>
+
+                    <div id="forderLoading" class="text-center"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- End Tables -->
 
     <!-- sellerModal -->
@@ -823,6 +836,7 @@
           }
           if (search.readyState == 4 && search.status == 200) {
             let pendingOrders = JSON.parse(search.responseText);
+            document.getElementById("on").innerHTML = pendingOrders.length;
             let row = "";
             pendingOrders.forEach((pendingOrder) => {
               row += `<tr>
@@ -859,7 +873,7 @@
        <td>${outcome.order_number}</td>
        <td>${outcome.order_amount}</td>
        <td>
-       <a href="order?order=${outcome.order_id}">
+       <a href="processedOrder?order=${outcome.order_id}">
          <button type="button" class="btn btn-info btn-sm">
            Details
          </button></a>
@@ -945,6 +959,34 @@
         };
         searching.open("GET", `/api/admin/searchSeller/${svalue}`, true);
         searching.send();
+      });
+
+      document.getElementById("sporder").addEventListener("keyup", (e) => {
+        e.preventDefault();
+        let _value = document.getElementById("sporder").value;
+        let outcome = new XMLHttpRequest();
+        outcome.onreadystatechange = () => {
+          if (outcome.readyState == 4 && outcome.status == 200) {
+            let results = JSON.parse(outcome.responseText);
+            document.getElementById("fon").innerHTML = results.length;
+            let row = "";
+            results.forEach((res) => {
+              row += `<tr>
+       <td>${res.order_number}</td>
+       <td>${res.order_amount}</td>
+       <td>
+       <a href="processedOrder?order=${res.order_id}">
+         <button type="button" class="btn btn-info btn-sm">
+           Details
+         </button></a>
+       </td>
+     </tr>`;
+            });
+            document.getElementById("fOrders").innerHTML = row;
+          }
+        };
+        outcome.open("GET", `/api/admin/processedOrder/${_value}`, true);
+        outcome.send();
       });
     </script>
     <!-- End Scripts -->
