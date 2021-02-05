@@ -31,24 +31,23 @@ router.post("/addLikedItem/:id", (req, res) => {
       if (err) {
         throw err;
       } else {
-        console.log(result);
-
         var cLikedItems = JSON.parse(result);
         cLikedItems.push(req.body.product_id);
+
+        conn.query(
+          "UPDATE customers SET ? where c_id = ?",
+          [
+            {
+              c_liked_items: cLikedItems,
+            },
+            req.params.id,
+          ],
+          (err, result) => {
+            if (err) throw err;
+            if (result.affectedRows > 0) res.status(200).send("likeditemAdded");
+          }
+        );
       }
-    }
-  );
-  conn.query(
-    "UPDATE customers SET ? where c_id = ?",
-    [
-      {
-        c_liked_items: cLikedItems,
-      },
-      req.params.id,
-    ],
-    (err, result) => {
-      if (err) throw err;
-      if (result.affectedRows > 0) res.status(200).send("likeditemAdded");
     }
   );
 });
