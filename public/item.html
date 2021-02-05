@@ -1058,6 +1058,14 @@
                   )
                 : new Intl.NumberFormat().format(item.price))
             }`;
+            if (item.quantity == 0) {
+              let btn = document.querySelector(".btn-add-to-cart");
+              btn.classList.add("no-qty");
+              btn.innerHTML = `<i class="fas fa-ban"></i>
+                               <span style="padding-left:5px">
+                                Out of Stock
+                               </span>`;
+            }
 
             //specifications
             let _spDom = "";

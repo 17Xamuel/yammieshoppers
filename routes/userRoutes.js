@@ -678,9 +678,10 @@ router.get("/product/:id", (req, res) => {
 router.get("/product/:ct/:id", (req, res) => {
   if (req.params.ct == "trending") {
     conn.query(
-      `select * from cleared_orders 
+      `select * from seller_orders
         join products 
-        on cleared_orders.product_id = products.id 
+        on seller_orders.product_id = products.id
+        Where order_status = 'Approved'
         order by order_qty desc limit 25`,
       (err, result) => {
         if (err) {

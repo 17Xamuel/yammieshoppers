@@ -492,7 +492,15 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 5px;
 }
 /*for varing products*/
-
+/*no qty*/
+.no-qty {
+  pointer-events: none;
+  opacity: 1;
+  background-color: white;
+  color: red;
+  border: 2px solid red;
+}
+/*no qty*/
 @media screen and (max-width: 768px) {
   .popup {
     width: 320px;
