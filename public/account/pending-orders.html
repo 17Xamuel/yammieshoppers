@@ -921,7 +921,7 @@
                   <div class="order-amount">Amount: UGX ${numberFormat.format(
                     parseInt(order.order_amount) + parseInt(order_info.shipping)
                   )}</div>
-                  <div class="order-status">Status: Closed</div>
+                  <div class="order-status">Status: Pending</div>
                   <a class="order-details" href="./order-details?order=${
                     order.order_id
                   }">
@@ -951,7 +951,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: -250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -962,7 +962,7 @@
             e.target.parentNode.querySelector(".-scroll").scrollBy({
               top: 0,
               left: 250,
-              behavior: "smooth"
+              behavior: "smooth",
             });
           });
         });
@@ -1053,7 +1053,7 @@
           window.scroll({
             top: 0,
             left: 0,
-            behavior: "smooth"
+            behavior: "smooth",
           });
         });
       };

@@ -434,14 +434,11 @@
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <div id="ldr-overlay">
-      <div class="ldr-overlay-ctr">
-        <div class="ldr-overlay-circle circle-1"></div>
-        <div class="ldr-overlay-circle circle-2"></div>
-        <div class="ldr-overlay-circle circle-3"></div>
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
       </div>
-      <div class="ldr-overlay-text">
-        <span>Processing</span>, Please Wait...
-      </div>
+      <div class="ldr-overlay-text">Processing Order...</div>
     </div>
     <div class="nav">
       <div class="search-nav">
@@ -762,36 +759,64 @@
           let item = await res.json();
           return item;
         }
+
         Object.values(cartItems).forEach(async (key) => {
           //dom
           let item = await itemCollect(key.cartItemAdded);
+
+          //var
+          let _var = key.specs ? true : false;
+          let in_price = 0;
+          if (_var == true) {
+            let _sp = JSON.parse(item.specifications);
+            Object.keys(key.specs).forEach((spec) => {
+              if (spec == "Ingredients") {
+                key.specs[spec].forEach((i) => {
+                  in_price += parseInt(i.price);
+                });
+              } else if (spec == "Sizes") {
+                Object.keys(key.specs[spec])[0];
+                in_price += parseInt(
+                  key.specs[spec][Object.keys(key.specs[spec])[0]]
+                );
+              } else {
+              }
+            });
+          }
+          //var
           //dom
           cartDom.innerHTML += `
             <div class="_check-item">
-                    <div class="img">
-                      <div class="">
-                      <img
-                        src="${JSON.parse(item.images)[0]}"
-                        alt=""
-                        width="100%"
-                        height="100%"
-                      />
-                      </div>
-                    </div>
-                    <div class="-item">
-                      <div class="name" style="overflow: hidden">
-                        ${item.product}
-                      </div>
-                      <div class="price _usp">Price: UGX
-                        <span class="item_price">${numberFormat.format(
-                          item.discount
-                            ? (item.price * (100 - item.discount)) / 100
-                            : item.price
-                        )}</span>
-                      </div>
-                      <div class="qty _usq">Quantity: ${key.inCartNumber}</div>
-                    </div>
-                  </div>
+              <div class="img">
+                <div class="">
+                <img
+                  src="${JSON.parse(item.images)[0]}"
+                  alt=""
+                  width="100%"
+                  height="100%"
+                />
+                </div>
+              </div>
+              <div class="-item">
+                <div class="name" style="overflow: hidden">
+                  ${item.product}
+                </div>
+                <div class="price _usp">Price: UGX
+                  <span class="item_price">${numberFormat.format(
+                    _var == false && in_price == 0
+                      ? item.discount
+                        ? (item.price * (100 - item.discount)) / 100
+                        : item.price
+                      : in_price != 0
+                      ? in_price
+                      : item.discount
+                      ? (item.price * (100 - item.discount)) / 100
+                      : item.price
+                  )}</span>
+                </div>
+                <div class="qty _usq">Quantity: ${key.inCartNumber}</div>
+              </div>
+            </div>
             `;
         });
       }
@@ -956,7 +981,7 @@
         _add: localStorage.getItem("_upa")
           ? localStorage.getItem("_upa")
           : true,
-        urgent: "true"
+        urgent: "true",
       };
       let xhr_f = new XMLHttpRequest();
       xhr_f.open("POST", `/api/user/checkout/cart/${yammie}`, true);
@@ -993,6 +1018,7 @@
             pf.forEach((value, key) => {
               _ony[key] = value;
             });
+
             let _or = new XMLHttpRequest();
             _or.onreadystatechange = () => {
               if (_or.readyState == 4 && _or.status == 200) {

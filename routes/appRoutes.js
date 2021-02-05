@@ -32,7 +32,6 @@ router.get("/checkout/cart/:id", (req, res) => {
       if (err) {
         throw err;
       } else {
-        console.log(typeof result[0].c_cart);
         let cart = JSON.parse(result[0].c_cart);
         let total_charge = 0;
         let total_price = 0;

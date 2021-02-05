@@ -762,11 +762,12 @@ router.post("/checkout/cart/:id", (req, res) => {
                 };
 
                 let fee = new charge(charge_obj).total;
-                let price = new charge(charge_obj).price;
                 total_charge += fee;
-                total_price += price * key.inCartNumber;
                 if (cart_arr.length == i + 1) {
-                  res.send({ shipping: total_charge, total_price });
+                  res.send({
+                    shipping: total_charge,
+                    total_price: result[0].c_cart_amount,
+                  });
                 }
               }
             }
@@ -829,16 +830,19 @@ router.get("/customer/orders/:id", (req, res) => {
         if (result.length > 0) {
           let pending = [];
           let finished = [];
+          let cancelled = [];
           result.forEach((order) => {
             if (order.order_status == "pending") {
               pending.push(order);
-            } else {
+            } else if (order.order_status == "finished") {
               finished.push(order);
+            } else {
+              cancelled.push(order);
             }
           });
-          res.send({ pending, finished });
+          res.send({ pending, finished, cancelled });
         } else {
-          res.send({ pending: [], finished: [] });
+          res.send({ pending: [], finished: [], cancelled: [] });
         }
       }
     }
