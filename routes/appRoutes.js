@@ -21,36 +21,7 @@ router.post("/updateCart/:id", (req, res) => {
     }
   );
 });
-//likeditem
-router.post("/addLikedItem/:id", (req, res) => {
-  conn.query(
-    `SELECT c_liked_items
-      FROM customers WHERE c_id = ?`,
-    [req.params.id],
-    (err, result) => {
-      if (err) {
-        throw err;
-      } else {
-        var cLikedItems = JSON.parse(result);
-        cLikedItems.push(req.body.product_id);
 
-        conn.query(
-          "UPDATE customers SET ? where c_id = ?",
-          [
-            {
-              c_liked_items: cLikedItems,
-            },
-            req.params.id,
-          ],
-          (err, result) => {
-            if (err) throw err;
-            if (result.affectedRows > 0) res.status(200).send("likeditemAdded");
-          }
-        );
-      }
-    }
-  );
-});
 //get Liked items
 router.get("/cLikedItems/:id", (req, res) => {
   conn.query(
