@@ -33,7 +33,7 @@ router.post("/addLikedItem/:id", (req, res) => {
       } else {
         console.log(result);
 
-        let cLikedItems = JSON.parse(result);
+        var cLikedItems = JSON.parse(result);
         cLikedItems.push(req.body.product_id);
       }
     }
