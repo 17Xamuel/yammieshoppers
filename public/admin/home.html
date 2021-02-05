@@ -101,58 +101,9 @@
             >
               <div class="row align-items">
                 <div class="col-md-4 mb-0 text-light py-3">
-                  <!-- Example single danger button -->
-                  <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-danger dropdown-toggle"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Addresses
-                    </button>
-                    <div class="dropdown-menu">
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-target="#addZone"
-                        data-toggle="modal"
-                        >Add Zone</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-target="#editZone"
-                        data-toggle="modal"
-                        >Edit Zone</a
-                      >
-
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-target="#viewAddress"
-                        data-toggle="modal"
-                        >View Addresses</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#addAddress"
-                        >Add Zone Addresses</a
-                      >
-
-                      <div class="dropdown-divider"></div>
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-target="#editAddress"
-                        data-toggle="modal"
-                        >Edit Zone Address</a
-                      >
-                    </div>
-                  </div>
+                  <a href="address.html"
+                    ><button class="btn btn-danger">Addresses</button></a
+                  >
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
@@ -188,210 +139,6 @@
       </div>
     </nav>
     <!-- End Navbar -->
-
-    <!-- Zone Modal -->
-    <div class="modal fade" id="addZone">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add Zone</h5>
-          </div>
-          <div class="modal-body text-center" id="zoneMessage">
-            <form id="zone-form">
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Zone Name"
-                  id="zoneName"
-                  autocomplete="off"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="number"
-                  class="form-control"
-                  placeholder="Enter Zone Weight"
-                  id="zoneWeight"
-                  autocomplete="off"
-                />
-              </div>
-              <button
-                type="submit"
-                class="btn btn-primary btn-block text-light"
-              >
-                Submit
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm autoReload">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Zone Modal -->
-
-    <!-- view Address -->
-    <div class="modal fade" id="viewAddress">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">View Zone Addresses</h5>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <select class="form-control zonal" id="viewing">
-                <option value="">Select a Zone</option>
-              </select>
-            </div>
-            <span id="load"></span>
-            <ul class="list-group" id="view"></ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm autoReload">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- end -->
-
-    <!-- Zone Address -->
-    <div class="modal fade" id="addAddress">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add Zone Addresses</h5>
-          </div>
-          <div class="modal-body text-center" id="addressMessage">
-            <form id="zoneAddress">
-              <div class="form-group">
-                <select required class="form-control zonal" id="zonal">
-                  <option value="">Select a Zone</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  autocomplete="off"
-                  class="form-control"
-                  id="addressName"
-                  placeholder="Enter Address Name"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-block btn-primary">
-                Submit
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm autoReload">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Address -->
-
-    <!-- Address Edit -->
-    <div class="modal fade" id="editAddress">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Eidt Address</h5>
-          </div>
-          <div class="modal-body text-center" id="aMessage">
-            <form id="editAddress">
-              <div class="form-group">
-                <select id="zonningA" required class="form-control zonal">
-                  <option value="">Select a Zone</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <select id="myAdd" class="form-control" required>
-                  <option value="">Select Address to Edit</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  autocomplete="off"
-                  class="form-control"
-                  id="newAddress"
-                  placeholder="Enter New Address Name"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-block btn-primary">
-                Update
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm autoReload">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Edit Address -->
-
-    <!-- Zone Edit -->
-    <div class="modal fade" id="editZone">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Eidt Zone</h5>
-          </div>
-          <div class="modal-body text-center" id="eMessage">
-            <form id="editZone">
-              <div class="form-group">
-                <select id="zonning" required class="form-control zonal">
-                  <option value="">Select a Zone to Edit</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  autocomplete="off"
-                  class="form-control"
-                  id="newName"
-                  placeholder="Enter New Zone Name"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  autocomplete="off"
-                  class="form-control"
-                  id="newWeight"
-                  placeholder="Enter New Zone Weight"
-                  required
-                />
-              </div>
-              <input type="hidden" id="auth" />
-              <button type="submit" class="btn btn-block btn-primary">
-                Update
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm autoReload">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Edit Zone -->
 
     <!-- Logout Modal -->
     <div class="modal fade" id="sign-out">
@@ -528,7 +275,7 @@
                     </nav>
                     <div class="table-responsive">
                       <table
-                        class="table table-striped bg-light text-center my-3"
+                        class="table table-striped bg-light text-left my-3"
                       >
                         <thead>
                           <tr class="text-muted">
@@ -563,7 +310,7 @@
                       Pending Sellers <span id="seln"></span>
                     </h5>
                     <div class="table-responsive">
-                      <table class="table table-dark table-hover text-center">
+                      <table class="table table-dark table-hover text-left">
                         <thead>
                           <tr class="text-muted">
                             <th>Name</th>
@@ -598,7 +345,7 @@
                       Finished Orders <span id="fon"></span>
                     </h5>
                     <div class="table-responsive">
-                      <table class="table table-striped bg-light text-center">
+                      <table class="table table-striped bg-light text-left">
                         <thead>
                           <tr class="text-muted">
                             <th>OrderNumber</th>
@@ -611,6 +358,57 @@
                     </div>
 
                     <div id="forderLoading" class="text-center"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row mb-5">
+          <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
+            <div class="row align-items-center">
+              <div class="col-xl-11 mx-auto">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <nav class="navbar navbar-light bg-light">
+                      <div class="container-fluid">
+                        <a class="navbar-brand"
+                          >Sellers <span id="snum"></span
+                        ></a>
+                        <form class="d-flex">
+                          <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Seller Name"
+                            aria-label="Search"
+                            id="sseller"
+                          />
+                        </form>
+                        <a href="../seller/register.html">
+                          <button class="btn btn-outline-success" type="submit">
+                            Add Seller
+                          </button></a
+                        >
+                      </div>
+                    </nav>
+                    <div class="table-responsive">
+                      <table class="table table-striped bg-light text-left">
+                        <thead>
+                          <tr class="text-muted">
+                            <th>Name</th>
+                            <th>Phonenumber</th>
+                            <th>Location</th>
+                            <th>Details</th>
+                          </tr>
+                        </thead>
+                        <tbody id="fsellers"></tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -915,7 +713,8 @@
           if (xhr1.responseText == "") {
             document.getElementById("sellers").innerHTML = 0;
           } else {
-            document.getElementById("sellers").innerHTML = xhr1.responseText;
+            let sellers = JSON.parse(xhr1.responseText);
+            document.getElementById("sellers").innerHTML = sellers.length;
           }
         }
       };
@@ -1079,50 +878,6 @@
       fOrder.open("GET", `/api/admin/getFinishedOrders`, true);
       fOrder.send();
 
-      let addZone = document.getElementById("zone-form");
-      addZone.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let zone = {};
-        zone.zoneName = document.getElementById("zoneName").value;
-        zone.zoneWeight = document.getElementById("zoneWeight").value;
-        let zoneString = JSON.stringify(zone);
-        const zonning = new XMLHttpRequest();
-        zonning.onreadystatechange = () => {
-          if (zonning.readyState < 4) {
-            document.getElementById(
-              "zoneMessage"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if (zonning.readyState == 4 && zonning.status == 200) {
-            document.getElementById("zoneMessage").innerHTML =
-              zonning.responseText;
-          }
-        };
-        zonning.open("POST", `/api/admin/addZone`, true);
-        zonning.setRequestHeader("Content-Type", "application/json");
-        zonning.send(zoneString);
-      });
-
-      const getZone = new XMLHttpRequest();
-      getZone.onreadystatechange = () => {
-        if (getZone.readyState == 4 && getZone.status == 200) {
-          let zones = JSON.parse(getZone.responseText);
-
-          let data = "";
-          zones.forEach((zone) => {
-            data += `<option value=${zone.zone_name.replace(/ /g, "_")}>${
-              zone.zone_name
-            }</option>`;
-          });
-          let selectedZones = document.querySelectorAll(".zonal");
-          selectedZones.forEach((selectedZone) => {
-            selectedZone.innerHTML += data;
-          });
-        }
-      };
-      getZone.open("GET", `/api/admin/getZone`, true);
-      getZone.send();
-
       const income = new XMLHttpRequest();
       income.onreadystatechange = function () {
         if (income.readyState < 4) {
@@ -1142,138 +897,54 @@
       income.open("GET", `/api/admin/income`, true);
       income.send();
 
-      let address = document.getElementById("zoneAddress");
-      address.addEventListener("submit", (e) => {
+      const _sell = new XMLHttpRequest();
+      _sell.onreadystatechange = () => {
+        if (_sell.readyState == 4 && _sell.status == 200) {
+          let results = JSON.parse(_sell.responseText);
+          document.getElementById("snum").innerHTML = results.length;
+          let rows = "";
+          results.forEach((result) => {
+            rows += `
+            <tr>
+              <td>${result.username}</td>
+              <td>${result.phonenumber}</td>
+              <td>${result.location}</td>
+              <td><a href="seller.html?seller=${result.id}">
+                <button class="btn btn-sm btn-info">Details</button>
+              </a>
+            </tr>`;
+          });
+          document.getElementById("fsellers").innerHTML = rows;
+        }
+      };
+      _sell.open("GET", `/api/admin/allSellers`, true);
+      _sell.send();
+
+      document.getElementById("sseller").addEventListener("keyup", (e) => {
         e.preventDefault();
-        let zoneAddress = {};
-        zoneAddress.zone_name = document.getElementById("zonal").value;
-        zoneAddress.addressName = document.getElementById("addressName").value;
-        let string = JSON.stringify(zoneAddress);
-        const addressing = new XMLHttpRequest();
-        addressing.onreadystatechange = () => {
-          if (addressing.readyState < 4) {
-            document.getElementById(
-              "addressMessage"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if (addressing.readyState == 4 && addressing.status == 200) {
-            document.getElementById("addressMessage").innerHTML =
-              addressing.responseText;
-          }
-        };
-        addressing.open("POST", `/api/admin/addAdresses`, true);
-        addressing.setRequestHeader("Content-Type", "application/json");
-        addressing.send(string);
-      });
-
-      let reload = document.querySelectorAll(".autoReload");
-      reload.forEach((reloading) => {
-        reloading.addEventListener("click", (e) => {
-          window.location.reload("home.html");
-        });
-      });
-
-      let zoneChange = document.getElementById("zonning");
-      zoneChange.addEventListener("change", (e) => {
-        let selectedZone = document.getElementById("zonning").value;
-        const gettingZone = new XMLHttpRequest();
-        gettingZone.onreadystatechange = () => {
-          if (gettingZone.readyState == 4 && gettingZone.status == 200) {
-            let [result] = JSON.parse(gettingZone.responseText);
-            document.getElementById("newName").value = result.zone_name;
-            document.getElementById("newWeight").value = result.zone_weight;
-            document.getElementById("auth").value = result.zone_id;
-          }
-        };
-        gettingZone.open("GET", `/api/admin/zoneGet/${selectedZone}`, true);
-        gettingZone.send();
-      });
-
-      let editZone = document.getElementById("editZone");
-      editZone.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let edit = {};
-        let zonename = document.getElementById("zonning").value;
-        edit.newName = document.getElementById("newName").value;
-        edit.newWeight = document.getElementById("newWeight").value || 0;
-        let editString = JSON.stringify(edit);
-
-        let data = new XMLHttpRequest();
-        data.onreadystatechange = () => {
-          if (data.readyState < 4) {
-            document.getElementById(
-              "eMessage"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning fa-2x"></i>`;
-          }
-          if (data.readyState == 4 && data.status == 200) {
-            document.getElementById("eMessage").innerHTML = data.responseText;
-          }
-        };
-        data.open("POST", `/api/admin/zoneEdit/${zonename}`, true);
-        data.setRequestHeader("Content-Type", "application/json");
-        data.send(editString);
-      });
-
-      let addressGet = document.getElementById("zonningA");
-      addressGet.addEventListener("change", (e) => {
-        let = zone = document.getElementById("zonningA").value;
-        let myAdd = new XMLHttpRequest();
-        myAdd.onreadystatechange = function () {
-          if (myAdd.readyState == 4 && myAdd.status == 200) {
-            let outcome = JSON.parse(myAdd.responseText);
-            let data = "";
-            outcome.forEach((out) => {
-              data += `<option value=${out.address_id}>${out.address_name}</option>`;
-            });
-            document.getElementById("myAdd").innerHTML += data;
-          }
-        };
-        myAdd.open("GET", `/api/admin/getAddress/${zone}`, true);
-        myAdd.send();
-      });
-
-      let editAddress = document.getElementById("editAddress");
-      editAddress.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let original = document.getElementById("myAdd").value;
-        let newAddress = {};
-        newAddress.newName = document.getElementById("newAddress").value;
-        let edit = new XMLHttpRequest();
-        edit.onreadystatechange = function () {
-          if (edit.readyState < 4) {
-            document.getElementById(
-              "aMessage"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if (edit.readyState == 4 && edit.status == 200) {
-            document.getElementById("aMessage").innerHTML = edit.responseText;
-          }
-        };
-        edit.open("POST", `/api/admin/editAddress/${original}`, true);
-        edit.setRequestHeader("Content-Type", "application/json");
-        edit.send(JSON.stringify(newAddress));
-      });
-
-      document.getElementById("viewing").addEventListener("change", (e) => {
-        let zone = document.getElementById("viewing").value;
-        let zonedata = new XMLHttpRequest();
-        zonedata.onreadystatechange = function () {
-          if (zonedata.readyState < 4) {
-            document.getElementById("load").innerHTML =
-              "Loading Addresses.....";
-          }
-          if (zonedata.readyState == 4 && zonedata.status == 200) {
-            let results = JSON.parse(zonedata.responseText);
+        let svalue = document.getElementById("sseller").value;
+        let searching = new XMLHttpRequest();
+        searching.onreadystatechange = () => {
+          if (searching.status == 200 && searching.readyState == 4) {
+            let results = JSON.parse(searching.responseText);
+            document.getElementById("snum").innerHTML = results.length;
             let rows = "";
             results.forEach((result) => {
-              rows += `<li class="list-group-item">${result.address_name}</li>`;
+              rows += `
+            <tr>
+              <td>${result.username}</td>
+              <td>${result.phonenumber}</td>
+              <td>${result.location}</td>
+              <td><a href="seller.html?seller=${result.id}">
+                <button class="btn btn-sm btn-info">Details</button>
+              </a>
+            </tr>`;
             });
-            document.getElementById("view").innerHTML = rows;
-            document.getElementById("load").innerHTML = "";
+            document.getElementById("fsellers").innerHTML = rows;
           }
         };
-        zonedata.open("GET", `/api/admin/myAddresses/${zone}`, true);
-        zonedata.send();
+        searching.open("GET", `/api/admin/searchSeller/${svalue}`, true);
+        searching.send();
       });
     </script>
     <!-- End Scripts -->

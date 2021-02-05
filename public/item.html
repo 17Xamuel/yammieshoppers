@@ -1019,7 +1019,7 @@
           _cdb(`/api/user/customer/cart/${yammie}`, {
             cart: cartItems,
             cartNumber: localStorage.getItem("cartNumber"),
-            delete: false,
+            delete: false
           });
         }
 
@@ -1227,7 +1227,7 @@
                   let cartItem = {
                     cartItemAdded: item.id,
                     specs,
-                    inCartNumber: 0,
+                    inCartNumber: 0
                   };
                   cartNumbers(cartItem);
                   wait();
@@ -1314,14 +1314,6 @@
 
             //for the image pop-up end
             document.querySelector(".-cart").addEventListener("click", (e) => {
-<<<<<<< HEAD
-              let cartItem = {
-                cartItemAdded: item.id,
-                inCartNumber: 0
-              };
-              cartNumbers(cartItem);
-              wait();
-=======
               if (
                 Object.keys(_sp).find(
                   (elem) => typeof _sp[elem] == "object" && _sp[elem] != null
@@ -1331,12 +1323,11 @@
               } else {
                 let cartItem = {
                   cartItemAdded: item.id,
-                  inCartNumber: 0,
+                  inCartNumber: 0
                 };
                 cartNumbers(cartItem);
                 wait();
               }
->>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
             });
           }
         };

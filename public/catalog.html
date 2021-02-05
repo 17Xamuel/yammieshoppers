@@ -642,7 +642,6 @@
     </script>
   </head>
   <body>
-<<<<<<< HEAD
     <!-- Google Tag Manager (noscript) -->
     <noscript
       ><iframe
@@ -653,11 +652,11 @@
       ></iframe
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
-=======
+    =======
     <div id="pop-up-overlay-var"></div>
     <form class="var" id="var_form"></form>
     <!-- _variation -->
->>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
+    >>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
     <!--add c popup-->
     <div id="pop-up-overlay"></div>
     <div class="popup">
@@ -1866,15 +1865,6 @@
               }
 
               btns.forEach((btn) => {
-<<<<<<< HEAD
-                btn.addEventListener("click", (e) => {
-                  let cartItem = {
-                    cartItemAdded: e.target.dataset.item,
-                    inCartNumber: 0
-                  };
-                  cartNumbers(cartItem);
-                  wait();
-=======
                 btn.addEventListener("click", async (e) => {
                   if (e.target.dataset.sp == "true") {
                     let _itm = await itemCollect(e.target.dataset.item);
@@ -1884,12 +1874,11 @@
                     console.log("this: ", this);
                     let cartItem = {
                       cartItemAdded: e.target.dataset.item,
-                      inCartNumber: 0,
+                      inCartNumber: 0
                     };
                     cartNumbers(cartItem);
                     wait();
                   }
->>>>>>> cf50b8d91d9650ce9a6dcacbd21a10a11b0d4433
                 });
               });
               function wait() {
@@ -2117,7 +2106,7 @@
                   let cartItem = {
                     cartItemAdded: _i,
                     specs,
-                    inCartNumber: 0,
+                    inCartNumber: 0
                   };
                   cartNumbers(cartItem);
                   wait();
