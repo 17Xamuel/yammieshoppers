@@ -359,7 +359,7 @@ router.get("/finishOrder/:id", async (req, res) => {
                     (err5, res5) => {
                       if (err5) throw err5;
                       conn.query(
-                        `DELETE FROM seller_orders WHERE product_id='${items.cartItemAdded}'
+                        `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'
                         AND order_status='Pending'`,
                         (err6, res6) => {
                           if (err6) throw err6;
@@ -401,13 +401,92 @@ router.get("/finishOrder/:id", async (req, res) => {
 });
 
 router.post("/cancelOrder/:id", async (req, res) => {
+  let { reason } = req.body;
   conn.query(
     `SELECT * FROM pending_orders WHERE order_id=?`,
     [req.params.id],
     (err1, res1) => {
       if (err1) throw err1;
       let items = Object.values(JSON.parse(res1[0].order_items));
-      items.forEach((item) => {});
+      items.forEach((item) => {
+        conn.query(
+          `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'
+           AND order_status='Pending'`,
+          (err2, res2) => {
+            if (err2) throw err2;
+            let qtyChange = parseInt(res2[0].order_qty) - item.inCartNumber;
+            if (qtyChange == 0) {
+              conn.query(
+                `DELETE FROM seller_orders WHERE product_id = '${res2[0].product_id}' 
+                AND order_status='Pending'`,
+                (err3, res3) => {
+                  if (err3) throw err3;
+                  conn.query(
+                    `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
+                    (err4, res4) => {
+                      if (err4) throw err4;
+                      let qtyReset =
+                        parseInt(res4[0].quantity) + item.inCartNumber;
+                      conn.query(
+                        `UPDATE products SET quantity =${qtyReset} WHERE id='${item.cartItemAdded}'`,
+                        (err5, res5) => {
+                          if (err5) throw err5;
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            } else {
+              conn.query(
+                `UPDATE seller_orders SET order_qty=${qtyChange} WHERE 
+                product_id='${res2[0].product_id}'
+                AND order_status='Pending'`,
+                (err6, res6) => {
+                  if (err6) throw err6;
+                  conn.query(
+                    `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
+                    (err7, res7) => {
+                      if (err7) throw err7;
+                      let _qtty =
+                        parseInt(res7[0].quantity) + item.inCartNumber;
+                      conn.query(
+                        `UPDATE products SET quantity=${_qtty} WHERE id='${item.cartItemAdded}'`,
+                        (err8, res8) => {
+                          if (err8) throw err8;
+                        }
+                      );
+                    }
+                  );
+                }
+              );
+            }
+          }
+        );
+      });
+      conn.query(
+        `UPDATE pending_orders SET order_status='Cancelled' WHERE order_id=?`,
+        [req.params.id],
+        (err9, res9) => {
+          if (err9) throw err9;
+          conn.query(
+            `SELECT c_email,c_last_name FROM  customers WHERE c_id='${res1[0].c_id}'`,
+            (errs, qres) => {
+              if (errs) throw errs;
+              let _email = {
+                from: '"Yammie Shoppers" <info@yammieshoppers.com',
+                to: `${qres[0].c_email}`,
+                subject: `Yammie Cancel Order ${res1[0].order_number}`,
+                text: `Hello ${qres[0].c_last_name}, your order ${res1[0].order_number} has been cancelled because ${reason}.Thanks for Shopping with Yammie Shoppers.`
+              };
+              transporter.sendMail(_email, (mailErr, response) => {
+                if (mailErr) throw mailErr;
+                res.status(200).send("ok");
+              });
+            }
+          );
+        }
+      );
     }
   );
 });

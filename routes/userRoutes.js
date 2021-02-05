@@ -401,13 +401,15 @@ router.post("/customer/order", async (req, res) => {
                                   );
                                 } else if (result_0.length > 0) {
                                   conn.query(
-                                    `SELECT order_qty FROM seller_orders WHERE product_id='${item.cartItemAdded}'`,
+                                    `SELECT order_qty FROM seller_orders WHERE product_id='${item.cartItemAdded}' AND 
+                                    order_status='Pending'`,
                                     (err_0, res_0) => {
                                       if (err_0) throw err_0;
                                       let finalQuantity =
                                         res_0[0].order_qty + item.inCartNumber;
                                       conn.query(
-                                        `UPDATE seller_orders SET order_qty = ${finalQuantity} WHERE product_id='${item.cartItemAdded}'`,
+                                        `UPDATE seller_orders SET order_qty = ${finalQuantity} WHERE product_id='${item.cartItemAdded}'
+                                        AND  order_status = 'Pending'`,
                                         (err_1, res_1) => {
                                           if (err_1) throw err_1;
                                         }
@@ -767,7 +769,7 @@ router.post("/checkout/cart/:id", (req, res) => {
                 if (cart_arr.length == i + 1) {
                   res.send({
                     shipping: total_charge,
-                    total_price: result[0].c_cart_amount,
+                    total_price: result[0].c_cart_amount
                   });
                 }
               }

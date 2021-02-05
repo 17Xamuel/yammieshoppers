@@ -286,6 +286,7 @@
                   cols="30"
                   rows="3"
                   class="form-control"
+                  placeholder="Enter Reason"
                 ></textarea>
               </div>
               <button type="submit" class="btn btn-danger btn-block">
@@ -670,11 +671,14 @@
           if (_co.readyState < 4) {
             document.getElementById(
               "cancelMessage"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x"></i>`;
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
           }
           if (_co.readyState == 4 && _co.status == 200) {
             if (_co.responseText == "ok") {
               window.location.assign("home.html");
+            } else {
+              document.getElementById("cancelMessage").innerHTML =
+                _co.responseText;
             }
           }
         };
