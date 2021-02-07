@@ -11,13 +11,102 @@ router.post("/updateCart/:id", (req, res) => {
     [
       {
         c_cart: req.body.cart,
-        c_cart_number: parseInt(req.body.cartNumber),
+        c_cart_number: parseInt(req.body.cartNumber)
       },
-      req.params.id,
+      req.params.id
     ],
     (err, result) => {
       if (err) throw err;
       if (result.affectedRows > 0) res.status(200).send("cart amount upated");
+    }
+  );
+});
+
+router.post("/likedItems/:id", async (req, res) => {
+  conn.query(
+    `SELECT c_liked_items FROM customers WHERE c_id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      let items = [];
+      if (result[0].c_liked_items !== null) {
+        let _items = JSON.parse(result[0].c_liked_items);
+        _items.forEach((item) => {
+          items.push(item);
+        });
+        items.push(req.body.product_id);
+        conn.query(
+          `UPDATE customers SET ? WHERE c_id=?`,
+          [
+            {
+              c_liked_items: JSON.stringify(items)
+            },
+            req.params.id
+          ],
+          (err1, res1) => {
+            if (err1) throw err;
+            res.send(true);
+          }
+        );
+      } else {
+        items.push(req.body.product_id);
+        conn.query(
+          `UPDATE customers SET ? WHERE c_id=?`,
+          [
+            {
+              c_liked_items: JSON.stringify(items)
+            },
+            req.params.id
+          ],
+          (err2, res2) => {
+            if (err2) throw err2;
+            res.send(true);
+          }
+        );
+      }
+    }
+  );
+});
+
+router.get("/getLikedItems/:id", async (req, res) => {
+  conn.query(
+    `SELECT c_liked_items  FROM customers WHERE c_id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.post("/removeLikedItem/:id", async (req, res) => {
+  conn.query(
+    `SELECT c_liked_items FROM  customers WHERE c_id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      let products = [];
+      if (result[0].c_liked_items !== null) {
+        let items = JSON.parse(result[0].c_liked_items);
+        items.forEach((item) => {
+          if (item !== req.body.product_id) {
+            products.push(item);
+          }
+        });
+        conn.query(
+          `UPDATE customers SET ? WHERE c_id=?`,
+          [
+            {
+              c_liked_items: JSON.stringify(products)
+            },
+            req.params.id
+          ],
+          (err1, res1) => {
+            if (err1) throw err;
+            res.send(true);
+          }
+        );
+      }
     }
   );
 });
@@ -61,7 +150,7 @@ router.get("/checkout/cart/:id", (req, res) => {
                   fragile: (product.Fragile == "Yes" ? true : false) || false,
                   location: "Lira",
                   weight: product.Weight || "Light",
-                  user: result[0].zone,
+                  user: result[0].zone
                 };
 
                 let fee = new charge(charge_obj).total;
@@ -87,9 +176,9 @@ router.post("/customer/cart/amount/:id", (req, res) => {
       {
         c_cart_amount: parseInt(req.body.total),
         c_cart: req.body.cartItems,
-        c_cart_number: parseInt(req.body.inCart),
+        c_cart_number: parseInt(req.body.inCart)
       },
-      req.params.id,
+      req.params.id
     ],
     (err, result) => {
       if (err) throw err;
