@@ -333,6 +333,20 @@
         outline: none;
       }
       /*media*/
+      ._cart-itm-undef {
+        font-size: 20px;
+        font-weight: 400;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+      ._cart-itm-undef > .remove {
+        font-size: 16px;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+      }
       @media screen and (max-width: 1024px) {
         .cart-itm-sm {
           display: block;
@@ -568,9 +582,15 @@
               class="icon-button"
               ><i class="fab fa-facebook-f"></i
             ></a>
-            <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg" class="icon-button"><i class="fab fa-youtube"></i></a>
             <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
           </div>
         </div>
@@ -1002,10 +1022,20 @@
         <div class="ftr-official">
           &copy; <span class="_yr"></span> Yammie. All rights reserved
           <div class="social-icons">
-            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+            <a
+              href="https://www.facebook.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+           <a href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg" class="icon-button"><i class="fab fa-youtube"></i></a>
             <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
           </div>
         </div>
@@ -1059,35 +1089,36 @@
           }
           Object.values(cartItems).forEach(async (key) => {
             let item = await itemCollect(key.cartItemAdded);
-            let _var = key.specs ? true : false;
-            let str = "";
-            let in_price = 0;
-            let size_ing = false;
-            if (_var == true) {
-              let _sp = JSON.parse(item.specifications);
-              Object.keys(key.specs).forEach((spec) => {
-                if (spec == "Ingredients") {
-                  size_ing = true;
-                  let str_in = "";
-                  key.specs[spec].forEach((i) => {
-                    str_in += ` ${i.descriptions}: ${i.qtty} `;
-                    in_price += parseInt(i.price);
-                  });
-                  str += `<div class="cart-spec">${spec}: ${str_in}</div>`;
-                } else if (spec == "Sizes") {
-                  size_ing = true;
-                  in_price += parseInt(
-                    key.specs[spec][Object.keys(key.specs[spec])[0]]
-                  );
-                  str += `<div class="cart-spec">${spec}: ${
-                    Object.keys(key.specs[spec])[0]
-                  }</div>`;
-                } else {
-                  str += `<div class="cart-spec">${spec}: ${key.specs[spec]}</div>`;
-                }
-              });
-            }
-            cartDom.innerHTML += `
+            if (item.id != undefined) {
+              let _var = key.specs ? true : false;
+              let str = "";
+              let in_price = 0;
+              let size_ing = false;
+              if (_var == true) {
+                let _sp = JSON.parse(item.specifications);
+                Object.keys(key.specs).forEach((spec) => {
+                  if (spec == "Ingredients") {
+                    size_ing = true;
+                    let str_in = "";
+                    key.specs[spec].forEach((i) => {
+                      str_in += ` ${i.descriptions}: ${i.qtty} `;
+                      in_price += parseInt(i.price);
+                    });
+                    str += `<div class="cart-spec">${spec}: ${str_in}</div>`;
+                  } else if (spec == "Sizes") {
+                    size_ing = true;
+                    in_price += parseInt(
+                      key.specs[spec][Object.keys(key.specs[spec])[0]]
+                    );
+                    str += `<div class="cart-spec">${spec}: ${
+                      Object.keys(key.specs[spec])[0]
+                    }</div>`;
+                  } else {
+                    str += `<div class="cart-spec">${spec}: ${key.specs[spec]}</div>`;
+                  }
+                });
+              }
+              cartDom.innerHTML += `
         <div class="cart-itm">
           <div class="cart-itm-sm">
             <div class="ct-sm-top">
@@ -1252,7 +1283,15 @@
           </div>
         </div>
             `;
-
+            } else {
+              cartDom.innerHTML += `<div class="cart-itm _cart-itm-undef">
+           THIS PRODUCT WAS DELETED. JUST REMOVE IT
+             <span class="itm-r-lg remove" data-id=${key.cartItemAdded}>
+                  <i class="fas fa-trash"></i>
+                  Remove From Cart
+              </span>
+        </div>`;
+            }
             const _ms = document.getElementsByClassName("minus");
             for (let i = 0; i < _ms.length; i++) {
               _ms[i].addEventListener("click", (e) => {
