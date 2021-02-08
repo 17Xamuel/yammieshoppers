@@ -202,13 +202,13 @@ router.get("/checkout/cart/:id", (req, res) => {
                 if (JSON.parse(result_0[0].specifications) != null) {
                   if (key.specs != undefined || key.specs != null) {
                     Object.keys(key.specs).forEach((spec) => {
-                      if (spec == "Ingredients" && spec != null) {
+                      if (spec == "Ingredients" && specs[spec] != null) {
                         has_specs = true;
                         key.specs[spec].forEach((i) => {
                           in_price += parseInt(i.price);
                         });
                       }
-                      if (spec == "Sizes" && spec != null) {
+                      if (spec == "Sizes" && specs[spec] != null) {
                         has_specs = true;
                         in_price += parseInt(
                           key.specs[spec][Object.keys(key.specs[spec])[0]]
