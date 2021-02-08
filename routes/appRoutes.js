@@ -192,7 +192,6 @@ router.get("/checkout/cart/:id", (req, res) => {
               if (error) {
                 throw error;
               } else {
-                console.log(result_0[0]);
                 let _charge = 0;
                 let product =
                   JSON.parse(result_0[0].specifications) == null
@@ -203,17 +202,17 @@ router.get("/checkout/cart/:id", (req, res) => {
                 if (JSON.parse(result_0[0].specifications) != null) {
                   if (key.specs != undefined || key.specs != null) {
                     Object.keys(key.specs).forEach((spec) => {
-                      if (spec == "Ingredients") {
+                      if (spec == "Ingredients" && spec != null) {
                         has_specs = true;
                         key.specs[spec].forEach((i) => {
                           in_price += parseInt(i.price);
                         });
-                      } else if (spec == "Sizes") {
+                      }
+                      if (spec == "Sizes" && spec != null) {
                         has_specs = true;
                         in_price += parseInt(
                           key.specs[spec][Object.keys(key.specs[spec])[0]]
                         );
-                      } else {
                       }
                     });
                   }
