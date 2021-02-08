@@ -132,7 +132,8 @@
         }
       } */
 
-      #pop-up-overlay.active {
+      #pop-up-overlay.active,
+      #pop-up-overlay-product.active {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -145,7 +146,8 @@
       #text-add {
         margin: 15px 0px;
       }
-      .close-pp {
+      .close-pp,
+      .close-pp-product {
         position: absolute;
         top: 5px;
         right: 15px;
@@ -157,7 +159,8 @@
         background-color: #fff;
       }
 
-      .popup {
+      .popup,
+      .popup-product {
         background-color: white;
         width: 35%;
         height: 30%;
@@ -173,7 +176,8 @@
         max-width: 90%;
         z-index: 35;
       }
-      .popup.pp-active {
+      .popup.pp-active,
+      .popup-product.pp-active {
         transform: translate(-50%, -50%) scale(1);
       }
       .pp-content > a > button,
@@ -339,7 +343,6 @@
         height: 120px;
         display: flex;
         align-items: center;
-        visibility: hidden;
         position: relative;
       }
       ._cart-itm-undef > .remove {
@@ -414,9 +417,11 @@
           width: 100%;
         }
         /*pop-up*/
-        .popup {
-          width: 75%;
-          height: 30%;
+        .popup,
+        .popup-product {
+          padding: 5px 15px;
+          width: 97%;
+          height: 35%;
         }
         /*pop-up*/
       }
@@ -453,6 +458,23 @@
         <a href="./account/login">
           <button class="check-ct">Login</button>
         </a>
+      </div>
+    </div>
+    <div id="pop-up-overlay-product"></div>
+    <div class="popup-product">
+      <button class="close-pp-product" onclick="imageDialogCloseProduct()">
+        &times;
+      </button>
+      <div class="pp-content">
+        <h2 id="text-add">Update Cart</h2>
+        <div id="text-add-m">
+          Remove one or more products from your cart to continue
+          <br />
+          Products maybe Out Of Stock
+        </div>
+        <button class="check-ct" onclick="imageDialogCloseProduct()">
+          Close
+        </button>
       </div>
     </div>
 
@@ -1289,7 +1311,48 @@
                   </div>
                 `;
             } else if (item.id != undefined && item.quantity < 1) {
-              cartDom.innerHTML += `<div class="cart-itm" style="opacity:0.75">
+              cartDom.innerHTML += `
+                    <div class="cart-itm _remove" style="opacity:0.75">
+                      <div class="cart-itm-sm">
+                      <div class="ct-sm-top">
+                        <div class="ct-sm-img">
+                          <img
+                            src="${JSON.parse(item.images)[0]}"
+                            alt="cart-item"
+                            width="100px"
+                            height="100px"
+                          />
+                        </div>
+                        <div class="ct-sm-name-price">
+                          <div>
+                              <span style="font-weight:bold;font-size:17px";>
+                                ${item.product}
+                              </span>
+                            -
+                            ${item.description}
+                          </div>
+                          <div>
+                            <button class="qty">
+                              <i class="fas fa-ban"></i>
+                              <span style="padding-left:5px">
+                                Out of Stock
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ct-sm-bottom">
+                        <div class="ct-sm-b-left">
+                          <span class="itm-r-sm" data-id=${key.cartItemAdded}>
+                            <i class="fas fa-trash"></i>
+                            Remove From Cart
+                          </span>
+                        </div>
+                        <div class="ct-sm-b-right">
+                           
+                        </div>
+                      </div>
+                    </div>
                         <div class="ct-itm-name">
                           <div class="ct-left">
                             <img
@@ -1327,7 +1390,7 @@
                         </div>
                     </div>`;
             } else {
-              cartDom.innerHTML += `<div class="cart-itm _cart-itm-undef">
+              cartDom.innerHTML += `<div class="cart-itm _cart-itm-undef _remove">
            THIS PRODUCT WAS DELETED. JUST REMOVE IT
              <span class="itm-r-lg remove" data-id=${key.cartItemAdded}>
                   <i class="fas fa-trash"></i>
@@ -1366,30 +1429,40 @@
             //st-ony
             let st = document.querySelector("#-o-st");
             st.addEventListener("click", () => {
-              if (yammie) {
-                let req = JSON.stringify([
-                  totalAmount(),
-                  yammie,
-                  localStorage.getItem("cartItems"),
-                  cartNumber,
-                ]);
-                let xhr2 = new XMLHttpRequest();
-                xhr2.open(
-                  "POST",
-                  `/api/user/customer/cart/amount/${yammie}`,
-                  true
-                );
-                xhr2.setRequestHeader("Content-type", "application/json");
-                xhr2.send(req);
-                window.location.assign("orders/checkout");
-              } else {
-                function checkLogin() {
-                  document
-                    .querySelector("#pop-up-overlay")
-                    .classList.add("active");
-                  document.querySelector(".popup").classList.add("pp-active");
+              const _remove = document.querySelectorAll("._remove");
+              if (_remove.length == 0) {
+                if (yammie) {
+                  let req = JSON.stringify([
+                    totalAmount(),
+                    yammie,
+                    localStorage.getItem("cartItems"),
+                    cartNumber,
+                  ]);
+                  let xhr2 = new XMLHttpRequest();
+                  xhr2.open(
+                    "POST",
+                    `/api/user/customer/cart/amount/${yammie}`,
+                    true
+                  );
+                  xhr2.setRequestHeader("Content-type", "application/json");
+                  xhr2.send(req);
+                  window.location.assign("orders/checkout");
+                } else {
+                  function checkLogin() {
+                    document
+                      .querySelector("#pop-up-overlay")
+                      .classList.add("active");
+                    document.querySelector(".popup").classList.add("pp-active");
+                  }
+                  checkLogin();
                 }
-                checkLogin();
+              } else {
+                document
+                  .querySelector("#pop-up-overlay-product")
+                  .classList.add("active");
+                document
+                  .querySelector(".popup-product")
+                  .classList.add("pp-active");
               }
             });
             //st-ony
@@ -1400,6 +1473,7 @@
             ) {
               document.querySelector("#ldr-overlay").style.display = "none";
             }
+            //zero-qty
           });
           function minus(id) {
             for (const item in cartItems) {
@@ -1677,8 +1751,8 @@
       });
       if (screen.availWidth <= 768) {
         document.querySelector("#logo").src = "./resources/cartlink.png";
-        document.querySelector("#logo").style.width = "60px";
-        document.querySelector("#logo").style.height = "30px";
+        document.querySelector("#logo").style.width = "50px";
+        document.querySelector("#logo").style.height = "50px";
       }
       let acc = document.querySelector(".-acc");
       let hp = document.querySelector(".-hp");
@@ -1726,6 +1800,12 @@
       function imageDialogClose() {
         document.querySelector(".popup").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay").classList.remove("active");
+      }
+      function imageDialogCloseProduct() {
+        document.querySelector(".popup-product").classList.remove("pp-active");
+        document
+          .querySelector("#pop-up-overlay-product")
+          .classList.remove("active");
       }
 
       document
