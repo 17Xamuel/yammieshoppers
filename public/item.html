@@ -115,9 +115,11 @@
         <a href="./cart">
           <button class="-b-pp">Check Cart</button>
         </a>
-        <button class="-b-pp" onclick="imageDialogClose()">
-          Continue Shopping
-        </button>
+        <a href="">
+          <button class="-b-pp" onclick="imageDialogClose()">
+            Continue Shopping
+          </button>
+        </a>
       </div>
     </div>
     <!--add c popup-->
@@ -1029,6 +1031,9 @@
               ...cartItems,
               [item.cartItemAdded]: item,
             };
+          }
+          if (item.specs && cartItems[item.cartItemAdded].specs) {
+            cartItems[item.cartItemAdded].specs = item.specs;
           }
           cartItems[item.cartItemAdded].inCartNumber += 1;
         } else {

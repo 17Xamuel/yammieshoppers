@@ -502,6 +502,17 @@ input[type="range"]::-webkit-slider-thumb {
 }
 /*no qty*/
 @media screen and (max-width: 768px) {
+  /*_var-small screen*/
+  .var_ctr {
+    width: 98%;
+    margin: 10px auto;
+    padding: 5px;
+  }
+  ._var {
+    margin: 20px 0px;
+    padding: 0px 5px;
+  }
+  /*_var-small screen*/
   .popup {
     width: 320px;
     height: 40%;
@@ -517,6 +528,7 @@ input[type="range"]::-webkit-slider-thumb {
     margin: 10px 10px 10px 0px;
     width: 80%;
   }
+
   .search-input {
     display: none;
   }

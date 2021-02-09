@@ -1950,6 +1950,9 @@
                       [item.cartItemAdded]: item,
                     };
                   }
+                  if (item.specs && cartItems[item.cartItemAdded].specs) {
+                    cartItems[item.cartItemAdded].specs = item.specs;
+                  }
                   cartItems[item.cartItemAdded].inCartNumber += 1;
                 } else {
                   item.inCartNumber = 1;

@@ -1198,11 +1198,22 @@
                             <button
                               class="btn-i minus"
                               data-id=${key.cartItemAdded}
+                              style=${
+                                key.inCartNumber <= 1
+                                  ? "background-color:#aaa;pointer-events:none"
+                                  : ""
+                              }
                             >&minus;</button>
                             <span class="ct-number">${key.inCartNumber}</span>
                             <button
                               class="plus"
                               data-id=${key.cartItemAdded}
+                              style=${
+                                item.quantity <= key.inCartNumber ||
+                                key.inCartNumber >= 10
+                                  ? "background-color:#aaa;pointer-events:none"
+                                  : ""
+                              }
                             >&plus;</button>
                           </div>
                         </div>
@@ -1241,11 +1252,22 @@
                         <button
                           class="btn-i minus"
                           data-id=${key.cartItemAdded}
+                          style=${
+                            key.inCartNumber <= 1
+                              ? "background-color:#aaa;pointer-events:none"
+                              : ""
+                          }
                         >&minus;</button>
                         <span class="ct-number">${key.inCartNumber}</span>
                         <button
                           class="plus"
                           data-id=${key.cartItemAdded}
+                          style=${
+                            item.quantity <= key.inCartNumber ||
+                            key.inCartNumber >= 10
+                              ? "background-color:#aaa;pointer-events:none"
+                              : ""
+                          }
                         >&plus;</button>
                       </div>
                     </div>
@@ -1501,7 +1523,7 @@
               }, 500);
             }
           }
-          function plus(id) {
+          function plus(id, qty) {
             for (const item in cartItems) {
               if (item == id) {
                 if (cartItems[id].inCartNumber < 10) {
@@ -1524,7 +1546,7 @@
                   cartNumber: cartNumber,
                   delete: false,
                 });
-              }, 1500);
+              }, 500);
             }
           }
           function _ri(id) {

@@ -179,7 +179,6 @@ router.get("/checkout/cart/:id", (req, res) => {
         throw err;
       } else {
         let cart = JSON.parse(result[0].c_cart);
-        console.log(cart);
         let total_charge = 0;
         let total_price = 0;
         let cart_arr = Object.values(cart);
@@ -192,7 +191,6 @@ router.get("/checkout/cart/:id", (req, res) => {
               if (error) {
                 throw error;
               } else {
-                console.log(result_0[0].specifications);
                 let _charge = 0;
                 let product =
                   JSON.parse(result_0[0].specifications) == null
