@@ -331,7 +331,6 @@ app.post("/editProduct", async (req, res) => {
     product,
     price,
     description,
-    subcategory,
     discount,
     seller_id,
     quantity,
@@ -357,12 +356,19 @@ app.post("/editProduct", async (req, res) => {
         });
       } else if (res1.length == 0) {
         conn.query(
-          `UPDATE products SET product='${product}', price=${price},description='${description}',
-        subcategory=${subcategory},discount=${parseInt(
-            discount
-          )},seller_id='${seller_id}',quantity=${quantity}, 
-        detailedDescription='${detailedDescription}' WHERE id=?`,
-          [id],
+          `UPDATE products SET ? WHERE id=?`,
+          [
+            {
+              product: product,
+              discount: parseInt(discount),
+              quantity: quantity,
+              detailedDescription: detailedDescription,
+              description: description,
+              seller_id: seller_id,
+              price: price
+            },
+            id
+          ],
           (err1, res1) => {
             if (err1) throw err1;
             res.redirect("./admin/products.html");
@@ -401,24 +407,72 @@ app.post("/addImages", async (req, res) => {
   });
 });
 
-app.post("/addSubcategoryImage", async (req, res) => {
-  let upload = getUploadFile(uuid.v4());
+app.post("/addSubCategory", async (req, res) => {
+  let imageId = uuid.v4();
+  let upload = getUploadFile(imageId);
   upload(req, res, (err) => {
     if (err) throw err;
     let image = [];
     req.files.forEach((file) => {
       image.push(
-        "https://yammieuploads.nyc3.digitaloceanspaces.com/" + file.key
+        "http://yammieuploads.nyc3.digitaloceanspaces.com/" + file.key
       );
     });
     let path = JSON.stringify(image);
+    let { category, subcategory } = req.body;
+    conn.query(
+      `SELECT * FROM category WHERE category_name=?`,
+      [category.replace(/_/g, " ")],
+      (err1, res1) => {
+        if (err1) throw err1;
+        conn.query(
+          `INSERT INTO subCategories SET ? `,
+          {
+            subCategoryName: subcategory,
+            category_id: res1[0].category_id,
+            image: path
+          },
+          (err2, res2) => {
+            if (err2) throw err2;
+            res.redirect("./admin/categories.html");
+          }
+        );
+      }
+    );
+  });
+});
+
+app.post("/editSubcategoryImage", async (req, res) => {
+  let upload = getUploadFile(uuid.v4());
+  upload(req, res, (err) => {
+    if (err) throw err;
+    let _image = [];
+    req.files.forEach((file) => {
+      _image.push(
+        "https://yammieuploads.nyc3.digitaloceanspaces.com/" + file.key
+      );
+    });
     let { sub } = req.body;
     conn.query(
-      `UPDATE subCategories SET image='${path}' WHERE subCategoryName = ?`,
+      `SELECT image FROM subCategories WHERE subCategoryName = ? `,
       [sub.replace(/_/g, " ")],
-      (err, results) => {
-        if (err) throw err;
-        res.redirect("./admin/products.html");
+      (error, result) => {
+        if (error) throw error;
+        if (result.length > 0) {
+          let images = JSON.parse(result[0].image);
+          images.forEach((image) => {
+            _deleteUploadFile(image.slice(50, image.length));
+          });
+          let path = JSON.stringify(_image);
+          conn.query(
+            `UPDATE subCategories SET image='${path}' WHERE subCategoryName = ?`,
+            [sub.replace(/_/g, " ")],
+            (err, results) => {
+              if (err) throw err;
+              res.redirect("./admin/categories.html");
+            }
+          );
+        }
       }
     );
   });

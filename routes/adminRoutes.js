@@ -333,14 +333,14 @@ router.get("/finishOrder/:id", async (req, res) => {
       let items = Object.values(JSON.parse(res1[0].order_items));
       items.forEach((item) => {
         conn.query(
-          `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'
-           AND order_status='Approved'`,
+          `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}' AND
+           order_status='Approved'`,
           (err2, res2) => {
             if (err2) throw err2;
             if (res2.length == 0) {
               conn.query(
-                `UPDATE seller_orders SET order_status='Approved' WHERE 
-                product_id='${item.cartItemAdded}'`,
+                `UPDATE seller_orders SET order_status='Approved' WHERE product_id=
+              '${res2[0].product_id}' AND order_status='Pending'`,
                 (err3, res3) => {
                   if (err3) throw err3;
                 }
@@ -351,22 +351,43 @@ router.get("/finishOrder/:id", async (req, res) => {
               AND order_status='Pending'`,
                 (err4, res4) => {
                   if (err4) throw err4;
-                  let qtyChange =
-                    parseInt(res2[0].order_qty) + parseInt(res4[0].order_qty);
-                  conn.query(
-                    `UPDATE seller_orders SET order_qty =${qtyChange} WHERE 
-                    product_id='${item.cartItemAdded}' AND order_status='Approved'`,
-                    (err5, res5) => {
-                      if (err5) throw err5;
-                      conn.query(
-                        `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'
+                  let _qty = parseInt(res4[0].order_qty) - item.inCartNumber;
+                  if (_qty == 0 && res2[0].specification === null) {
+                    let update =
+                      item.inCartNumber + parseInt(res2[0].order_qty);
+                    conn.query(
+                      `UPDATE seller_orders SET order_qty=${update} WHERE product_id=
+                      '${item.cartItemAdded}' AND order_status='Approved'`,
+                      (err5, res5) => {
+                        if (err5) throw err5;
+                        conn.query(
+                          `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'
                         AND order_status='Pending'`,
-                        (err6, res6) => {
-                          if (err6) throw err6;
-                        }
-                      );
-                    }
-                  );
+                          (err6, res6) => {
+                            if (err6) throw err6;
+                          }
+                        );
+                      }
+                    );
+                  } else if (_qty > 0 && res2[0].specification === null) {
+                    let _update =
+                      parseInt(res2[0].order_qty) + item.inCartNumber;
+                    conn.query(
+                      `UPDATE seller_orders SET order_qty=${_update} WHERE product_id=
+                      '${item.cartItemAdded}' AND order_status='Approved'`,
+                      (err7, res7) => {
+                        if (err7) throw err7;
+                      }
+                    );
+                  } else if (res2[0].specification !== null) {
+                    conn.query(
+                      `UPDATE seller_orders SET order_status='Approved' WHERE product_id = 
+                    '${res2[0].product_id}' AND order_status='Pending'`,
+                      (_err, _res) => {
+                        if (_err) throw _err;
+                      }
+                    );
+                  }
                 }
               );
             }
@@ -465,7 +486,7 @@ router.post("/cancelOrder/:id", async (req, res) => {
         );
       });
       conn.query(
-        `UPDATE pending_orders SET order_status='Cancelled' WHERE order_id=?`,
+        `UPDATE pending_orders SET order_status='cancelled' WHERE order_id=?`,
         [req.params.id],
         (err9, res9) => {
           if (err9) throw err9;
@@ -554,39 +575,6 @@ router.get("/getCategory", async (req, res) => {
     if (err) throw err;
     res.send(result);
   });
-});
-
-router.post("/addSubCategory", async (req, res) => {
-  let { categoryName, subName } = req.body;
-  conn.query(
-    `SELECT * FROM subCategories WHERE subCategoryName=?`,
-    [subName],
-    (err1, res1) => {
-      if (err1) throw err1;
-      if (res1.length > 0) {
-        return res.send("SubCategory Already Exists");
-      } else {
-        conn.query(
-          `SELECT category_id FROM category WHERE category_name=?`,
-          [categoryName.replace(/_/g, " ")],
-          (err, result) => {
-            if (err) throw err;
-            conn.query(
-              `INSERT INTO subCategories SET ?`,
-              {
-                category_id: result[0].category_id,
-                subCategoryName: subName
-              },
-              (error, results) => {
-                if (error) throw error;
-                res.send("SubCategory Added Successfully");
-              }
-            );
-          }
-        );
-      }
-    }
-  );
 });
 
 router.get("/subCategories", async (req, res) => {
@@ -678,6 +666,40 @@ router.get("/mzone/:id", async (req, res) => {
   } else {
     conn.query(
       `SELECT * FROM zones WHERE zone_name LIKE '%${req.params.id}%'`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  }
+});
+
+router.get("/searchCategory/:id", async (req, res) => {
+  let pattern = /\W/g;
+  let check = pattern.test(req.params.id);
+  if (check === true) {
+    res.send([]);
+    return;
+  } else {
+    conn.query(
+      `SELECT * FROM category WHERE category_name LIKE '%${req.params.id}%'`,
+      (err, result) => {
+        if (err) throw err;
+        res.send(result);
+      }
+    );
+  }
+});
+
+router.get("/searchSub/:id", async (req, res) => {
+  let pattern = /\W/g;
+  let check = pattern.test(req.params.id);
+  if (check === true) {
+    res.send([]);
+    return;
+  } else {
+    conn.query(
+      `SELECT * FROM subCategories WHERE subCategoryName LIKE '%${req.params.id}%'`,
       (err, result) => {
         if (err) throw err;
         res.send(result);
@@ -853,6 +875,17 @@ router.post("/editCategory/:id", async (req, res) => {
     (err, result) => {
       if (err) throw err;
       res.send("Category Edited Successfully");
+    }
+  );
+});
+
+router.get("/getCat/:id", async (req, res) => {
+  conn.query(
+    `SELECT category_name FROM category WHERE category_id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
     }
   );
 });

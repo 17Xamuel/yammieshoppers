@@ -389,6 +389,8 @@ router.post("/customer/order", async (req, res) => {
                                       order_product: qresult[0].product,
                                       order_discount: qresult[0].discount,
                                       order_qty: item.inCartNumber,
+                                      specification:
+                                        JSON.stringify(item.specs) || null,
                                       order_status: "Pending",
                                       order_amount:
                                         qresult[0].price -
@@ -399,7 +401,10 @@ router.post("/customer/order", async (req, res) => {
                                       if (error) throw error;
                                     }
                                   );
-                                } else if (result_0.length > 0) {
+                                } else if (
+                                  result_0.length > 0 &&
+                                  result_0[0].specification === null
+                                ) {
                                   conn.query(
                                     `SELECT order_qty FROM seller_orders WHERE product_id='${item.cartItemAdded}' AND 
                                     order_status='Pending'`,
@@ -414,6 +419,27 @@ router.post("/customer/order", async (req, res) => {
                                           if (err_1) throw err_1;
                                         }
                                       );
+                                    }
+                                  );
+                                } else if (result_0[0].specification !== null) {
+                                  conn.query(
+                                    `INSERT INTO seller_orders SET ?`,
+                                    {
+                                      id: uuid.v4(),
+                                      product_id: item.cartItemAdded,
+                                      order_product: qresult[0].product,
+                                      order_price: qresult[0].price,
+                                      order_discount: qresult[0].discount,
+                                      specification: JSON.stringify(item.specs),
+                                      order_qty: item.inCartNumber,
+                                      order_status: "Pending",
+                                      order_amount:
+                                        qresult[0].price -
+                                        (qresult[0].discount / 100) *
+                                          qresult[0].price
+                                    },
+                                    (serr, sres) => {
+                                      if (serr) throw serr;
                                     }
                                   );
                                 }

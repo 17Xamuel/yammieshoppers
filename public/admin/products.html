@@ -26,11 +26,7 @@
     ></script>
 
     <!-- End Scripts -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.css"
-    />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
@@ -127,62 +123,9 @@
             >
               <div class="row align-items">
                 <div class="col-md-4 mb-0 text-light py-3">
-                  <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-danger dropdown-toggle"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Categories
-                    </button>
-                    <div class="dropdown-menu">
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-target="#newCategory"
-                        data-toggle="modal"
-                        >Add Category</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#newSubCategory"
-                        >Add SubCategory</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-toggle="modal"
-                        data-target="#viewSubCategory"
-                        >View SubCategories</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-target="#editCategory"
-                        data-toggle="modal"
-                        >Edit Category</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-target="#editSubCategory"
-                        data-toggle="modal"
-                        >Edit SubCategory</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-target="#subImg"
-                        data-toggle="modal"
-                        >SubCategory Image</a
-                      >
-                    </div>
-                  </div>
+                  <a href="categories.html"
+                    ><button class="btn btn-danger">categories</button>
+                  </a>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
@@ -243,265 +186,6 @@
     </div>
     <!-- End Modal -->
 
-    <!-- Category Modal  -->
-    <div class="modal fade" id="newCategory">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add Category</h5>
-          </div>
-          <div class="modal-body text-center" id="catFeedBack">
-            <form id="catForm">
-              <div class="form-group">
-                <input
-                  type="text"
-                  autocomplete="off"
-                  class="form-control"
-                  id="catname"
-                  placeholder="Enter Category Name"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-block btn-primary">
-                Submit
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-success btn btn-sm auto">
-              Ok
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Category -->
-
-    <!-- Edit SubCategory -->
-    <div class="modal fade" id="editSubCategory">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit SubCategory</h5>
-          </div>
-          <div class="modal-body text-center" id="edittingSub">
-            <form id="editSub">
-              <div class="form-group">
-                <select id="myCate" class="form-control catSelection" required>
-                  <option value="">Select Category</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <select class="form-control" id="mySubCate" required>
-                  <option value="">Select SubCategory</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="New SubCategory Name"
-                  id="newSname"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">
-                Update
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm auto">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End -->
-
-    <!--Sub Category Modal  -->
-    <div class="modal fade" id="newSubCategory">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add Sub Category</h5>
-          </div>
-          <div class="modal-body text-center" id="subCatFeedBack">
-            <form id="SubCatForm">
-              <div class="form-group">
-                <label for="Category">Select Category</label>
-                <select
-                  required
-                  class="form-control catSelection"
-                  id="selCat"
-                ></select>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  autocomplete="off"
-                  class="form-control"
-                  id="subCatname"
-                  placeholder="Enter SubCategory Name"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-block btn-primary">
-                Submit
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-success btn btn-sm auto">
-              Ok
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Sub Category -->
-
-    <!-- SubCategory Images -->
-    <div class="modal fade" id="subImg">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add SubCategory Image</h5>
-          </div>
-          <div class="modal-body text-left">
-            <form
-              action="/addSubcategoryImage"
-              method="POST"
-              enctype="multipart/form-data"
-            >
-              <div class="form-group">
-                <select
-                  required
-                  class="form-control catSelection"
-                  id="selCatImg"
-                >
-                  <option value="">Select Category</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <select
-                  class="form-control"
-                  id="imgSubCat"
-                  required=""
-                  name="sub"
-                >
-                  <option value="">Select SubCategory</option>
-                </select>
-              </div>
-              <div style="width: 400px">
-                <div class="custom-file-container" data-upload-id="myUpload">
-                  <label for="Fileupload">
-                    Image
-                    <a
-                      href="javascript:void(0)"
-                      class="custom-file-container__image-clear"
-                      >&times;</a
-                    ></label
-                  >
-                  <label class="custom-file-container__custom-file"
-                    ><input
-                      type="file"
-                      class="custom-file-container__custom-file__custom-file-input filing"
-                      accept="image/*"
-                      name="images"
-                    />
-
-                    <span
-                      class="custom-file-container__custom-file__custom-file-control"
-                    ></span>
-                  </label>
-                  <div
-                    class="custom-file-container__image-preview"
-                    style="overflow: hidden"
-                  ></div>
-                </div>
-              </div>
-              <button class="btn btn-block btn-primary">Submit</button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-success btn btn-sm auto">
-              Ok
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End -->
-
-    <!-- Edit Category -->
-    <div class="modal fade" id="editCategory">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Edit Category</h5>
-          </div>
-          <div class="modal-body text-center" id="eCategory">
-            <form id="editCat">
-              <div class="form-group">
-                <select
-                  class="form-control catSelection"
-                  required
-                  id="selc"
-                ></select>
-              </div>
-              <div class="form-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter New Category Name"
-                  id="newCatName"
-                />
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">
-                Update
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-success btn btn-sm auto">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End  -->
-
-    <!-- View SubCategories -->
-    <div class="modal fade" id="viewSubCategory">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">View SubCategories</h5>
-          </div>
-          <div class="modal-body text-left">
-            <form id="viewSub">
-              <div class="form-group">
-                <select class="form-control catSelection" id="viewS">
-                  <option value="">Please Select a Category</option>
-                </select>
-              </div>
-            </form>
-            <span id="myView"></span>
-            <ul class="list-group" id="li"></ul>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn-success btn btn-sm auto">
-              OK
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End View -->
-
     <section>
       <div class="container-fluid">
         <div class="row mb-3">
@@ -558,9 +242,6 @@
                             aria-label="Search"
                             id="sproduct"
                           />
-                          <!-- <button class="btn btn-outline-success" type="submit">
-                            Search
-                          </button> -->
                         </form>
                       </div>
                     </nav>
@@ -590,32 +271,6 @@
         </div>
       </div>
     </section>
-
-    <div class="modal fade" id="deletingOnline">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Delete Product</h5>
-          </div>
-          <div class="modal-body text-center" id="onlin">
-            Want to Delete <span id="oname"></span> from Online Products?
-            <br />Press OK to continue
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success btn-sm" id="okB">
-              OK
-            </button>
-            <button
-              type="button"
-              class="btn-danger btn-sm"
-              data-dismiss="modal"
-            >
-              NO
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div class="modal fade" id="dPending">
       <div class="modal-dialog">
@@ -695,10 +350,8 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
     <script src="scripts/account.js"></script>
     <script>
-      const upload = new FileUploadWithPreview("myUpload");
       const xhr = new XMLHttpRequest();
       xhr.onreadystatechange = () => {
         if (xhr.readyState < 4) {
@@ -832,141 +485,6 @@
       load.open("GET", `/api/admin/getOnlineProducts`, true);
       load.send();
 
-      let catForm = document.getElementById("catForm");
-      catForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let category = {};
-        category.catName = document.getElementById("catname").value;
-
-        const catSubmit = new XMLHttpRequest();
-        catSubmit.onreadystatechange = () => {
-          if (catSubmit.readyState < 4) {
-            document.getElementById(
-              "catFeedBack"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if (catSubmit.readyState == 4 && catSubmit.status == 200) {
-            document.getElementById("catFeedBack").innerHTML =
-              catSubmit.responseText;
-          }
-        };
-        let catString = JSON.stringify(category);
-        catSubmit.open("POST", "/api/admin/addCategory", true);
-        catSubmit.setRequestHeader("Content-Type", "application/json");
-        catSubmit.send(catString);
-      });
-
-      const catGet = new XMLHttpRequest();
-      catGet.onreadystatechange = () => {
-        if (catGet.readyState == 4 && catGet.status == 200) {
-          let categories = JSON.parse(catGet.responseText);
-          let cat = "";
-          categories.forEach((cats) => {
-            cat += `<option value="${cats.category_name.replace(/ /g, "_")}">${
-              cats.category_name
-            }</option>`;
-          });
-          let getting = document.querySelectorAll(".catSelection");
-          getting.forEach((get) => {
-            get.innerHTML += cat;
-          });
-        }
-      };
-      catGet.open("GET", "/api/admin/getCategory", true);
-      catGet.send();
-
-      let SubCatForm = document.getElementById("SubCatForm");
-      SubCatForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let SubCategory = {};
-        SubCategory.categoryName = document.getElementById("selCat").value;
-        SubCategory.subName = document.getElementById("subCatname").value;
-        let subCatSubmit = new XMLHttpRequest();
-        subCatSubmit.onreadystatechange = () => {
-          if (subCatSubmit.readyState < 4) {
-            document.getElementById(
-              "subCatFeedBack"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if ((subCatSubmit.readyState == 4) & (subCatSubmit.status == 200)) {
-            document.getElementById("subCatFeedBack").innerHTML =
-              subCatSubmit.responseText;
-          }
-        };
-        let subString = JSON.stringify(SubCategory);
-        subCatSubmit.open("POST", "/api/admin/addSubCategory", true);
-        subCatSubmit.setRequestHeader("Content-Type", "application/json");
-        subCatSubmit.send(subString);
-      });
-
-      let editCat = document.getElementById("editCat");
-      editCat.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let editting = {};
-        let originalName = document.getElementById("selc").value;
-        editting.newName = document.getElementById("newCatName").value;
-        let string = JSON.stringify(editting);
-        let data = new XMLHttpRequest();
-        data.onreadystatechange = () => {
-          if (data.readyState < 4) {
-            document.getElementById(
-              "eCategory"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if (data.readyState == 4 && data.status == 200) {
-            document.getElementById("eCategory").innerHTML = data.responseText;
-          }
-        };
-        data.open("POST", `/api/admin/editCategory/${originalName}`, true);
-        data.setRequestHeader("Content-Type", "application/json");
-        data.send(string);
-      });
-
-      let viewSub = document.getElementById("viewSub");
-      viewSub.addEventListener("change", (e) => {
-        e.preventDefault();
-        let category = document.getElementById("viewS").value;
-        let myData = new XMLHttpRequest();
-        myData.onreadystatechange = () => {
-          if (myData.readyState < 4) {
-            document.getElementById("myView").innerHTML =
-              "Loading SubCategories...";
-          }
-          if (myData.readyState == 4 && myData.status == 200) {
-            let result = JSON.parse(myData.responseText);
-            let outcome = "";
-            for (let i = 0; i < result.length; i++) {
-              outcome += `<li class="list-group-item">${result[i].subCategoryName}</li>`;
-            }
-            document.getElementById("li").innerHTML = outcome;
-            document.getElementById("myView").innerHTML = "";
-          }
-        };
-        myData.open("GET", `/api/sellers/subCategory/${category}`, true);
-        myData.send();
-      });
-
-      let selCatImg = document.getElementById("selCatImg");
-      selCatImg.addEventListener("change", (e) => {
-        let myCategory = document.getElementById("selCatImg").value;
-        let data = new XMLHttpRequest();
-        data.onreadystatechange = () => {
-          if (data.readyState == 4 && data.status == 200) {
-            let results = JSON.parse(data.responseText);
-            let row = "";
-            results.forEach((result) => {
-              row += `<option value=${result.subCategoryName.replace(
-                / /g,
-                "_"
-              )}>${result.subCategoryName}</option>`;
-            });
-            document.getElementById("imgSubCat").innerHTML += row;
-          }
-        };
-        data.open("GET", `/api/sellers/subCategory/${myCategory}`, true);
-        data.send();
-      });
-
       let searchProduct = document.getElementById("sproduct");
       searchProduct.addEventListener("keyup", (e) => {
         e.preventDefault();
@@ -1010,61 +528,6 @@
         data.open("GET", `/api/admin/searchProduct/${myValue}`, true);
         data.send();
       });
-
-      let myCate = document.getElementById("myCate");
-      myCate.addEventListener("change", (e) => {
-        let category = document.getElementById("myCate").value;
-        let myData = new XMLHttpRequest();
-        myData.onreadystatechange = () => {
-          if (myData.readyState == 4 && myData.status == 200) {
-            let outcomes = JSON.parse(myData.responseText);
-            let row = "";
-            outcomes.forEach((outcome) => {
-              row += `<option value=${outcome.subCategoryName.replace(
-                / /g,
-                "_"
-              )}>${outcome.subCategoryName}</option>`;
-            });
-            document.getElementById("mySubCate").innerHTML += row;
-          }
-        };
-        myData.open("GET", `/api/sellers/subCategory/${category}`, true);
-        myData.send();
-      });
-
-      let editSub = document.getElementById("editSub");
-      editSub.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let original = document.getElementById("mySubCate").value;
-        let newSub = {};
-        newSub.newSubName = document.getElementById("newSname").value;
-
-        let data = new XMLHttpRequest();
-        data.onreadystatechange = () => {
-          if (data.readyState < 4) {
-            document.getElementById(
-              "edittingSub"
-            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
-          }
-          if (data.readyState == 4 && data.status == 200) {
-            document.getElementById("edittingSub").innerHTML =
-              data.responseText;
-          }
-        };
-        data.open("POST", `/api/admin/editSubCategory/${original}`, true);
-        data.setRequestHeader("Content-Type", "application/json");
-        data.send(JSON.stringify(newSub));
-      });
-
-      function reloading() {
-        let reloads = document.querySelectorAll(".auto");
-        reloads.forEach((reloadPage) => {
-          reloadPage.addEventListener("click", (e) => {
-            window.location.reload("products.html");
-          });
-        });
-      }
-      reloading();
     </script>
     <!-- End Scripts -->
   </body>

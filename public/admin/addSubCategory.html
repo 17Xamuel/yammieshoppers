@@ -11,6 +11,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.css"
+    />
     <script>
       if (document.referrer == "") {
         self.location = "index";
@@ -39,7 +44,7 @@
     />
     <link rel="stylesheet" href="../admin/styles/home.css" />
 
-    <title>Yammie | Add Question</title>
+    <title>Yammie | Add SubCategory</title>
   </head>
 
   <body>
@@ -67,7 +72,7 @@
                 <a href="#" class="text-white">Hello <span id="user"></span></a>
               </div>
               <ul class="navbar-nav flex-column mt-4">
-                <li class="nav-item current">
+                <li class="nav-item">
                   <a href="home" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
@@ -79,7 +84,7 @@
                     >Sales</a
                   >
                 </li>
-                <li class="nav-item">
+                <li class="nav-item current">
                   <a href="products.html" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
@@ -168,20 +173,6 @@
     </div>
     <!-- End Modal -->
 
-    <div class="modal fade" id="qns">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Adding Question</h5>
-          </div>
-          <div class="modal-body text-center" id="qm"></div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-info btn-sm">OK</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <section>
       <div class="container-fluid">
         <div class="row">
@@ -190,32 +181,63 @@
               <div class="col-xl-8 mx-auto">
                 <div class="card rounded my-5">
                   <div class="card-body">
-                    <h5 class="text-center text-muted m-3">Add Question</h5>
-                    <form id="addQuestion">
+                    <h5 class="text-center text-muted m-3">Add SubCategory</h5>
+                    <form
+                      action="/addSubCategory"
+                      method="POST"
+                      enctype="multipart/form-data"
+                    >
                       <div class="form-group">
-                        <textarea
-                          id="question"
-                          cols="30"
-                          rows="4"
-                          class="form-control"
-                          placeholder="Enter Question Eg How to Order?"
-                        ></textarea>
+                        <select
+                          name="category"
+                          class="form-control catSelection"
+                          required
+                        >
+                          <option value="" hidden>Select Category</option>
+                        </select>
                       </div>
                       <div class="form-group">
-                        <textarea
-                          id="answer"
-                          cols="30"
-                          rows="7"
-                          class="form-control"
-                          placeholder="Enter Answer"
-                        ></textarea>
+                        <input
+                          type="text"
+                          class="form-control my-3"
+                          autocomplete="off"
+                          name="subcategory"
+                          required
+                          placeholder="Enter SubCategory Name"
+                        />
                       </div>
-                      <button
-                        type="submit"
-                        class="btn btn-success btn-block my-3"
-                        data-target="#qns"
-                        data-toggle="modal"
-                      >
+                      <div class="mx-auto" style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUpload"
+                        >
+                          <label for="Fileupload">
+                            Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input filing"
+                              accept="image/*"
+                              name="images"
+                              required
+                            />
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
+                      <button class="btn btn-success btn-block my-3">
                         Submit
                       </button>
                     </form>
@@ -281,30 +303,29 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
 
     <script src="scripts/account.js"></script>
     <script>
-      document.getElementById("addQuestion").addEventListener("submit", (e) => {
-        e.preventDefault();
-        let _question = {};
-        _question.qns = document.getElementById("question").value;
-        _question.ans = document.getElementById("answer").value;
-        let data = new XMLHttpRequest();
-        data.onreadystatechange = () => {
-          if (data.readyState < 4) {
-            document.getElementById("qm").innerHTML =
-              "Adding Question Please Wait...";
-          }
-          if (data.readyState == 4 && data.status == 200) {
-            if (data.responseText == "ok") {
-              window.location.assign("home.html");
-            }
-          }
-        };
-        data.open("POST", `/api/admin/addQuestion`, true);
-        data.setRequestHeader("Content-Type", "application/json");
-        data.send(JSON.stringify(_question));
-      });
+      const upload = new FileUploadWithPreview("myUpload");
+      const catGet = new XMLHttpRequest();
+      catGet.onreadystatechange = () => {
+        if (catGet.readyState == 4 && catGet.status == 200) {
+          let categories = JSON.parse(catGet.responseText);
+          let cat = "";
+          categories.forEach((cats) => {
+            cat += `<option value="${cats.category_name.replace(/ /g, "_")}">${
+              cats.category_name
+            }</option>`;
+          });
+          let getting = document.querySelectorAll(".catSelection");
+          getting.forEach((get) => {
+            get.innerHTML += cat;
+          });
+        }
+      };
+      catGet.open("GET", "/api/admin/getCategory", true);
+      catGet.send();
     </script>
 
     <!-- End Scripts -->

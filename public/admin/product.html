@@ -454,7 +454,7 @@
             }
             if (_delete.readyState == 4 && _delete.status == 200) {
               if (_delete.responseText == "OK") {
-                window.location.reload("products.html");
+                window.location.assign("products.html");
               }
             }
           };

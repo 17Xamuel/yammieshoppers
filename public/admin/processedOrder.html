@@ -519,9 +519,11 @@
               let ingredients = "";
               function ing(obj) {
                 ingredients += `
-              <li class="list-inline-item">${obj.descriptions}</li>,
-              <li class="list-inline-item">${obj.qtty}</li>,
-              <li class="list-inline-item">${obj.price} UGX</li>`;
+             <ul class="list-group">
+              <li class="list-group-item">
+                ${obj.qtty} ${obj.descriptions} UGX ${obj.price}
+              </li>
+             </ul>"`;
               }
               if (
                 item.specs.Ingredients === null ||
@@ -544,7 +546,7 @@
                   let productDis = parseInt(mproduct.discount);
                   let price;
                   totalPrice !== 0
-                    ? (price = totalPrice)
+                    ? (price = totalPrice * item.inCartNumber)
                     : (price =
                         (productPrice - (productDis / 100) * productPrice) *
                         item.inCartNumber);
@@ -569,15 +571,18 @@
                           </ul>
                           <span class="font-weight-bold">Specifications</span> :
                            <ul class="list-inline mb-3">
-                           <li class="list-inline-item">Color : ${color}</li>
-                            <li class="list-inline-item">Flavor : ${flavor}</li>
-                          <li class="list-inline-item">Sizes : ${size} </li>
-                         </ul>
-                         <span class="font-weight-bold">Ingredients</span>:
-                         <ul class="list-inline mb-3">
-                           ${ingredients}
-                          </ul>
-                          <span class="btn btn-info float-end"
+                           <li class="list-inline-item"> ${
+                             color == "No Color" ? "" : "Color :" + color
+                           }</li>
+                            <li class="list-inline-item"> ${
+                              flavor == "No Flavor" ? "" : "Flavor :" + flavor
+                            }</li>
+                          <li class="list-inline-item"> ${
+                            size == "No Size" ? "" : "Size :" + size
+                          } </li>
+                         </ul>   
+                           ${ingredients == "No Ingredients" ? "" : ingredients}
+                          <span class="btn btn-info my-2 float-end"
                           data-target="#sellerInfo" data-toggle="modal"
                           data-it="${item.cartItemAdded}">
                         Contact Seller</span>
