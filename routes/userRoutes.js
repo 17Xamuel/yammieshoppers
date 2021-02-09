@@ -447,7 +447,14 @@ router.post("/customer/order", async (req, res) => {
                   ]);
               })
               .catch((err) => {
-                console.log("Error Ocurred!!!");
+                res
+                  .status(200)
+                  .send([
+                    req.body.payment_method,
+                    orderNumber,
+                    req.body._ttp + req.body._shp,
+                  ]);
+                console.log("Error Ocurred!!!", err);
               });
           }
         );
@@ -710,19 +717,6 @@ router.get("/product/:ct/:id", (req, res) => {
     );
   }
 });
-//for checkout page
-// router.get("/checkout/cart/:id", (req, res) => {
-//   conn.query(
-//     `SELECT c_cart_amount,c_cart,c_cart_number FROM customers WHERE c_id = ?`,
-//     req.params.id,
-//     (err, results) => {
-//       if (err) {
-//         throw err;
-//       } else {
-//       }
-//     }
-//   );
-// });
 router.post("/checkout/cart/:id", (req, res) => {
   conn.query(
     `SELECT c_cart_amount,c_cart,c_cart_number,zone 

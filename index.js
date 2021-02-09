@@ -14,7 +14,6 @@ app.use("/api/user/", require("./routes/userRoutes"));
 app.use("/api/app/", require("./routes/appRoutes"));
 app.use("/api/sellers/", require("./routes/sellerRoutes"));
 app.use("/api/products/", require("./routes/products"));
-app.use("/api/orders/", require("./routes/orders"));
 app.use("/api/users/", require("./routes/users"));
 
 app.use(express.static("public", { extensions: ["html", "htm"] }));
@@ -26,7 +25,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
 });
 
 function getUpload(id) {
@@ -37,8 +36,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -51,8 +50,8 @@ function getUploadFile(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -60,7 +59,7 @@ function getUploadFile(id) {
 function _deleteFile(i) {
   var params = {
     Bucket: "yammie",
-    Key: i
+    Key: i,
   };
   s3.deleteObject(params, function (err, data) {
     if (err) console.log(err, err.stack);
@@ -71,7 +70,7 @@ function _deleteFile(i) {
 function _deleteUploadFile(i) {
   var params = {
     Bucket: "yammieuploads",
-    Key: i
+    Key: i,
   };
   s3.deleteObject(params, function (err, data) {
     if (err) console.log(err, err.stack);
@@ -113,7 +112,7 @@ app.post("/addProduct", async (req, res) => {
       ingridient,
       ingridientPrice,
       ingridientdiscount,
-      flavor
+      flavor,
     } = req.body;
     if (color !== undefined) {
       var colors = [];
@@ -219,7 +218,7 @@ app.post("/addProduct", async (req, res) => {
           myVariations.push({
             descriptions: mydescription[j],
             getPrice: pricing[j],
-            getDiscount: discounting[j]
+            getDiscount: discounting[j],
           });
         }
         return myVariations;
@@ -264,8 +263,8 @@ app.post("/addProduct", async (req, res) => {
                   ingridients,
                   ingridientPrices,
                   ingridientdiscounts
-                ) || null
-            })
+                ) || null,
+            }),
           },
           (err, results) => {
             if (err) {
@@ -335,7 +334,7 @@ app.post("/editProduct", async (req, res) => {
     discount,
     seller_id,
     quantity,
-    detailedDescription
+    detailedDescription,
   } = req.body;
 
   conn.query(
@@ -391,7 +390,7 @@ app.post("/addImages", async (req, res) => {
       {
         image_id: imageId,
         image_path: pathing,
-        destination: Uploads
+        destination: Uploads,
       },
       (error, results) => {
         if (error) throw error;

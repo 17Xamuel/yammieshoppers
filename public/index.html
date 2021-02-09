@@ -418,6 +418,7 @@
         alert("Please Update Your browser To Continue With Yammie");
       }
       document.addEventListener("DOMContentLoaded", (e) => {
+        _slider();
         cnd(
           localStorage.getItem("cartNumber"),
           document.querySelector("#cartNumberItems")
@@ -826,11 +827,10 @@
             <div class="numbertext">1 / 6</div>
             <div class="_pl-p-image">
               <img
-                data-src="./resources/ct-clothing-1.jpg"
                 src="./resources/placeholder.png"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
-                class="_ctg-image-load"
+                class="_ctg-image-load-slider"
               />
             </div>
             <div style="text-align: center" class="text">
@@ -841,11 +841,10 @@
             <div class="numbertext">2 / 6</div>
             <div class="_pl-p-image">
               <img
-                data-src="./resources/image-slider/slider-image-2.jpg"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
+                class="_ctg-image-load-slider"
               />
             </div>
             <div style="text-align: center" class="text">Buy from Yammie</div>
@@ -856,8 +855,7 @@
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
-                data-src="./resources/image-slider/slider-image-3.jpg"
+                class="_ctg-image-load-slider"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
               />
@@ -871,8 +869,7 @@
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
-                data-src="./resources/image-slider/slider-image-4.jpg"
+                class="_ctg-image-load-slider"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
               />
@@ -886,8 +883,7 @@
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
-                data-src="./resources/image-slider/slider-image-5.jpg"
+                class="_ctg-image-load-slider"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
               />
@@ -901,8 +897,7 @@
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
-                data-src="./resources/image-slider/slider-image-6.jpg"
+                class="_ctg-image-load-slider"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
               />
@@ -959,7 +954,7 @@
       <div class="-ct -b-x">
         <div class="-ch-all -ch-all-index -ch-all-w">
           <span>Welcome To Yammie</span>
-          <span class="none -d-none">Shop our Best Products</span>
+          <span class="none -d-none">Shop The Best Products</span>
         </div>
         <div class="-scroll -ct -ct-index">
           <a class="" href="./catalog?q=foods">
@@ -1047,7 +1042,7 @@
               <img
                 src="./resources/placeholder.png"
                 class="_ctg-image-load"
-                data-src="./resources/image-slider/shoe.jpg"
+                data-src="./resources/airmax.jpg"
                 alt="Shoes On Yammie"
                 width="120"
                 height="100"
@@ -1821,7 +1816,7 @@
               src="./resources/yammie.png"
               alt="YAMMIE"
               width="320px"
-              height="100px"
+              height="70px"
             />
           </div>
           <div class="ftr-message">
@@ -2291,8 +2286,34 @@
             }
           };
         });
+      //sliders
+      function _slider() {
+        let _s = new XMLHttpRequest();
+        _s.open("GET", "/api/user/images/SliderImages", true);
+        _s.send();
+        _s.onreadystatechange = () => {
+          if (_s.readyState == 4 && _s.status == 200) {
+            let _sr = JSON.parse(JSON.parse(_s.responseText)[0].image_path);
+            console.log(_sr);
+            let _i = document.querySelectorAll("._ctg-image-load-slider");
+            for (let i = 0; i < _i.length; i++) {
+              _load(_i[i], _sr[i]);
+              console.log(_i[i], _sr[i]);
+            }
+            function _load(i, d) {
+              let image_true = new Image();
+              image_true.onload = function () {
+                i.src = this.src;
+              };
+              image_true.src = d;
+            }
+          }
+        };
+      }
+      //sliders
     </script>
-    <script defer async src="../ym.min.js"></script>
+    <script defer async src="./ym.min.js"></script>
+    <script src="./y.index.js"></script>
     <!--scripts-->
     <!-- Cloudflare Web Analytics -->
     <script
