@@ -10,33 +10,41 @@ class Deduct {
     }
   }
   qty() {
-    if (this.product.qty == "few") {
-      return this.product.price * 0.05;
+    if (this.product.qty == true) {
+      return this.product.price * 0.03;
     } else {
       return this.product.price * 0.01;
     }
   }
   size() {
-    if (this.product.size == "Big") {
+    if (this.product.size == true) {
       return this.product.price * 0.02;
     } else {
       return this.product.price * 0.01;
     }
   }
   weight() {
-    if (this.product.weight == "Heavy") {
+    if (this.product.weight == true) {
       return this.product.price * 0.02;
     } else {
       return this.product.price * 0.01;
     }
   }
   fragile() {
-    if (this.product.fragile == true) return this.product.price * 0.02;
-    else return this.product.price * 0.01;
+    if (this.product.fragile == true) {
+      return this.product.price * 0.02;
+    } else {
+      return this.product.price * 0.01;
+    }
   }
   location() {
-    if (this.product.location == "kla") return this.product.price * 0.05;
-    else return this.product.price * 0.02;
+    if (this.product.location == "Kampala") {
+      return this.product.price * 0.05;
+    } else if (this.product.location == "Lira") {
+      return this.product.price * 0.03;
+    } else {
+      return this.product.price * 0.02;
+    }
   }
   userLocation() {
     let delivery = 0;
@@ -90,25 +98,26 @@ class Deduct {
       this.qty() +
       this.urgency() +
       this.size() +
-      this.userLocation()
+      this.userLocation() +
+      this.weight()
     );
   }
   index() {
     let index;
     if (this.product.price >= 5000 && this.product.price <= 20000) {
-      index = this.factorPrice * 0.9;
-    } else if (this.product.price >= 20001 && this.product.price <= 100000) {
       index = this.factorPrice * 0.8;
-    } else if (this.product.price >= 100001 && this.product.price <= 250000) {
+    } else if (this.product.price >= 20001 && this.product.price <= 100000) {
       index = this.factorPrice * 0.7;
-    } else if (this.product.price >= 250001 && this.product.price <= 600000) {
+    } else if (this.product.price >= 100001 && this.product.price <= 250000) {
       index = this.factorPrice * 0.6;
-    } else if (this.product.price >= 600001 && this.product.price <= 1000000) {
+    } else if (this.product.price >= 250001 && this.product.price <= 600000) {
       index = this.factorPrice * 0.5;
+    } else if (this.product.price >= 600001 && this.product.price <= 1000000) {
+      index = this.factorPrice * 0.4;
     } else if (this.product.price >= 1000001 && this.product.price <= 1500000) {
-      index = this.factorPrice * 0.4;
+      index = this.factorPrice * 0.3;
     } else if (this.product.price > 1500000) {
-      index = this.factorPrice * 0.4;
+      index = this.factorPrice * 0.2;
     } else {
       index = this.factorPrice * 1;
     }

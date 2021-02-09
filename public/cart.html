@@ -132,7 +132,8 @@
         }
       } */
 
-      #pop-up-overlay.active {
+      #pop-up-overlay.active,
+      #pop-up-overlay-product.active {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -145,7 +146,8 @@
       #text-add {
         margin: 15px 0px;
       }
-      .close-pp {
+      .close-pp,
+      .close-pp-product {
         position: absolute;
         top: 5px;
         right: 15px;
@@ -157,7 +159,8 @@
         background-color: #fff;
       }
 
-      .popup {
+      .popup,
+      .popup-product {
         background-color: white;
         width: 35%;
         height: 30%;
@@ -173,7 +176,8 @@
         max-width: 90%;
         z-index: 35;
       }
-      .popup.pp-active {
+      .popup.pp-active,
+      .popup-product.pp-active {
         transform: translate(-50%, -50%) scale(1);
       }
       .pp-content > a > button,
@@ -333,6 +337,20 @@
         outline: none;
       }
       /*media*/
+      ._cart-itm-undef {
+        font-size: 20px;
+        font-weight: 400;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        position: relative;
+      }
+      ._cart-itm-undef > .remove {
+        font-size: 16px;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+      }
       @media screen and (max-width: 1024px) {
         .cart-itm-sm {
           display: block;
@@ -399,9 +417,11 @@
           width: 100%;
         }
         /*pop-up*/
-        .popup {
-          width: 75%;
-          height: 30%;
+        .popup,
+        .popup-product {
+          padding: 5px 15px;
+          width: 97%;
+          height: 35%;
         }
         /*pop-up*/
       }
@@ -438,6 +458,23 @@
         <a href="./account/login">
           <button class="check-ct">Login</button>
         </a>
+      </div>
+    </div>
+    <div id="pop-up-overlay-product"></div>
+    <div class="popup-product">
+      <button class="close-pp-product" onclick="imageDialogCloseProduct()">
+        &times;
+      </button>
+      <div class="pp-content">
+        <h2 id="text-add">Update Cart</h2>
+        <div id="text-add-m">
+          Remove one or more products from your cart to continue
+          <br />
+          Products maybe Out Of Stock
+        </div>
+        <button class="check-ct" onclick="imageDialogCloseProduct()">
+          Close
+        </button>
       </div>
     </div>
 
@@ -568,9 +605,19 @@
               class="icon-button"
               ><i class="fab fa-facebook-f"></i
             ></a>
-            <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg"
+              class="icon-button"
+              ><i class="fab fa-youtube"></i
+            ></a>
             <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
           </div>
         </div>
@@ -1002,10 +1049,24 @@
         <div class="ftr-official">
           &copy; <span class="_yr"></span> Yammie. All rights reserved
           <div class="social-icons">
-            <a href="" class="icon-button"><i class="fab fa-facebook-f"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-twitter"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-instagram"></i></a>
-            <a href="" class="icon-button"><i class="fab fa-youtube"></i></a>
+            <a
+              href="https://www.facebook.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg"
+              class="icon-button"
+              ><i class="fab fa-youtube"></i
+            ></a>
             <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
           </div>
         </div>
@@ -1059,200 +1120,306 @@
           }
           Object.values(cartItems).forEach(async (key) => {
             let item = await itemCollect(key.cartItemAdded);
-            let _var = key.specs ? true : false;
-            let str = "";
-            let in_price = 0;
-            let size_ing = false;
-            if (_var == true) {
-              let _sp = JSON.parse(item.specifications);
-              Object.keys(key.specs).forEach((spec) => {
-                if (spec == "Ingredients") {
-                  size_ing = true;
-                  let str_in = "";
-                  key.specs[spec].forEach((i) => {
-                    str_in += ` ${i.descriptions}: ${i.qtty} `;
-                    in_price += parseInt(i.price);
-                  });
-                  str += `<div class="cart-spec">${spec}: ${str_in}</div>`;
-                } else if (spec == "Sizes") {
-                  size_ing = true;
-                  in_price += parseInt(
-                    key.specs[spec][Object.keys(key.specs[spec])[0]]
-                  );
-                  str += `<div class="cart-spec">${spec}: ${
-                    Object.keys(key.specs[spec])[0]
-                  }</div>`;
-                } else {
-                  str += `<div class="cart-spec">${spec}: ${key.specs[spec]}</div>`;
-                }
-              });
+            if (item.id != undefined && item.quantity > 0) {
+              let _var = key.specs ? true : false;
+              let str = "";
+              let in_price = 0;
+              let size_ing = false;
+              if (_var == true) {
+                let _sp = JSON.parse(item.specifications);
+                Object.keys(key.specs).forEach((spec) => {
+                  if (spec == "Ingredients") {
+                    size_ing = true;
+                    let str_in = "";
+                    key.specs[spec].forEach((i) => {
+                      str_in += ` ${i.descriptions}: ${i.qtty} `;
+                      in_price += parseInt(i.price);
+                    });
+                    str += `<div class="cart-spec">${spec}: ${str_in}</div>`;
+                  } else if (spec == "Sizes") {
+                    size_ing = true;
+                    in_price += parseInt(
+                      key.specs[spec][Object.keys(key.specs[spec])[0]]
+                    );
+                    str += `<div class="cart-spec">${spec}: ${
+                      Object.keys(key.specs[spec])[0]
+                    }</div>`;
+                  } else {
+                    str += `<div class="cart-spec">${spec}: ${key.specs[spec]}</div>`;
+                  }
+                });
+              }
+              cartDom.innerHTML += `
+                  <div class="cart-itm">
+                    <div class="cart-itm-sm">
+                      <div class="ct-sm-top">
+                        <div class="ct-sm-img">
+                          <img
+                            src="${JSON.parse(item.images)[0]}"
+                            alt="cart-item"
+                            width="100px"
+                            height="100px"
+                          />
+                        </div>
+                        <div class="ct-sm-name-price">
+                          <div>
+                              <span style="font-weight:bold;font-size:17px";>
+                                ${item.product}
+                              </span>
+                            -
+                            ${item.description}
+                          </div>
+                          UGX
+                          <span class="cart-t-price l-t-price">${
+                            _var == true
+                              ? size_ing == false
+                                ? key.inCartNumber *
+                                  (item.discount
+                                    ? (item.price * (100 - item.discount)) / 100
+                                    : item.price)
+                                : key.inCartNumber * in_price
+                              : key.inCartNumber *
+                                (item.discount
+                                  ? (item.price * (100 - item.discount)) / 100
+                                  : item.price)
+                          }</span>
+                          <div class="_sp">${str}</div>
+                        </div>
+                      </div>
+                      <div class="ct-sm-bottom">
+                        <div class="ct-sm-b-left">
+                          <span class="itm-r-sm" data-id=${key.cartItemAdded}>
+                            <i class="fas fa-trash"></i>
+                            Remove From Cart
+                          </span>
+                        </div>
+                        <div class="ct-sm-b-right">
+                          <div class="ct-qty-center">
+                            <button
+                              class="btn-i minus"
+                              data-id=${key.cartItemAdded}
+                              style=${
+                                key.inCartNumber <= 1
+                                  ? "background-color:#aaa;pointer-events:none"
+                                  : ""
+                              }
+                            >&minus;</button>
+                            <span class="ct-number">${key.inCartNumber}</span>
+                            <button
+                              class="plus"
+                              data-id=${key.cartItemAdded}
+                              style=${
+                                item.quantity <= key.inCartNumber ||
+                                key.inCartNumber >= 10
+                                  ? "background-color:#aaa;pointer-events:none"
+                                  : ""
+                              }
+                            >&plus;</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ct-itm-name">
+                      <div class="ct-left">
+                        <img
+                          src="${JSON.parse(item.images)[0]}"
+                          alt="${item.product}"
+                          width="120px"
+                          height="100px"
+                        />
+                      </div>
+                      <div class="ct-right">
+                        <div class="ct-itm">
+                          <span>
+                              <span style="font-weight:bold;font-size:20px;">
+                                ${item.product}
+                              </span>
+                            -
+                            ${item.description}
+                          </span>
+                        </div>
+                        <div class="_sp">${str}</div>
+                        <div class="like-remove">
+                          <span class="itm-r-lg" data-id=${key.cartItemAdded}>
+                            <i class="fas fa-trash"></i>
+                            Remove From Cart
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ct-itm-qty">
+                      <div class="ct-qty-center">
+                        <button
+                          class="btn-i minus"
+                          data-id=${key.cartItemAdded}
+                          style=${
+                            key.inCartNumber <= 1
+                              ? "background-color:#aaa;pointer-events:none"
+                              : ""
+                          }
+                        >&minus;</button>
+                        <span class="ct-number">${key.inCartNumber}</span>
+                        <button
+                          class="plus"
+                          data-id=${key.cartItemAdded}
+                          style=${
+                            item.quantity <= key.inCartNumber ||
+                            key.inCartNumber >= 10
+                              ? "background-color:#aaa;pointer-events:none"
+                              : ""
+                          }
+                        >&plus;</button>
+                      </div>
+                    </div>
+                    <div class="ct-itm-unit-price">
+                      <div class="ct-a-price">
+                        <span class="cart-t-price">UGX ${
+                          _var == true
+                            ? size_ing == false
+                              ? item.discount
+                                ? (item.price * (100 - item.discount)) / 100
+                                : item.price
+                              : in_price
+                            : item.discount
+                            ? (item.price * (100 - item.discount)) / 100
+                            : item.price
+                        }</span>
+                      </div>
+                      <div class="ct-discount-s">
+                        <div class="discount">${
+                          _var == true
+                            ? size_ing == false
+                              ? item.discount
+                                ? item.discount + "%"
+                                : ""
+                              : ""
+                            : item.discount
+                            ? item.discount + "%"
+                            : ""
+                        }</div>
+                        <div class="save">
+                          ${
+                            _var == true
+                              ? size_ing == false
+                                ? item.discount
+                                  ? "Save: UGX " +
+                                    (item.price * item.discount) / 100
+                                  : ""
+                                : ""
+                              : item.discount
+                              ? "Save: UGX " +
+                                (item.price * item.discount) / 100
+                              : ""
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="ct-itm-sub-total">
+                      <span style="font-size:20px; padding-right:5px;">UGX</span>
+                      <span class="cart-t-price l-t-price">${
+                        _var == true
+                          ? size_ing == false
+                            ? key.inCartNumber *
+                              (item.discount
+                                ? (item.price * (100 - item.discount)) / 100
+                                : item.price)
+                            : key.inCartNumber * in_price
+                          : key.inCartNumber *
+                            (item.discount
+                              ? (item.price * (100 - item.discount)) / 100
+                              : item.price)
+                      }</span>
+                    </div>
+                  </div>
+                `;
+            } else if (item.id != undefined && item.quantity < 1) {
+              cartDom.innerHTML += `
+                    <div class="cart-itm _remove" style="opacity:0.75">
+                      <div class="cart-itm-sm">
+                      <div class="ct-sm-top">
+                        <div class="ct-sm-img">
+                          <img
+                            src="${JSON.parse(item.images)[0]}"
+                            alt="cart-item"
+                            width="100px"
+                            height="100px"
+                          />
+                        </div>
+                        <div class="ct-sm-name-price">
+                          <div>
+                              <span style="font-weight:bold;font-size:17px";>
+                                ${item.product}
+                              </span>
+                            -
+                            ${item.description}
+                          </div>
+                          <div>
+                            <button class="qty">
+                              <i class="fas fa-ban"></i>
+                              <span style="padding-left:5px">
+                                Out of Stock
+                              </span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="ct-sm-bottom">
+                        <div class="ct-sm-b-left">
+                          <span class="itm-r-sm" data-id=${key.cartItemAdded}>
+                            <i class="fas fa-trash"></i>
+                            Remove From Cart
+                          </span>
+                        </div>
+                        <div class="ct-sm-b-right">
+                           
+                        </div>
+                      </div>
+                    </div>
+                        <div class="ct-itm-name">
+                          <div class="ct-left">
+                            <img
+                              src="${JSON.parse(item.images)[0]}"
+                              alt="${item.product}"
+                              width="120px"
+                              height="100px"
+                            />
+                          </div>
+                                <div class="ct-right">
+                        <div class="ct-itm">
+                          <span>
+                              <span style="font-weight:bold;font-size:20px;">
+                                ${item.product}
+                              </span>
+                            -
+                            ${item.description}
+                          </span>
+                        </div>
+                        <div class="like-remove">
+                          <span class="itm-r-lg" data-id=${key.cartItemAdded}>
+                            <i class="fas fa-trash"></i>
+                            Remove From Cart
+                          </span>
+                        </div>
+                      </div>
+                        </div>
+                        <div class="ct-itm-qty" style="opacity:1">
+                          <button class="qty">
+                            <i class="fas fa-ban"></i>
+                            <span style="padding-left:5px">
+                              Out of Stock
+                            </span>
+                          </button>
+                        </div>
+                    </div>`;
+            } else {
+              cartDom.innerHTML += `<div class="cart-itm _cart-itm-undef _remove">
+           THIS PRODUCT WAS DELETED. JUST REMOVE IT
+             <span class="itm-r-lg remove" data-id=${key.cartItemAdded}>
+                  <i class="fas fa-trash"></i>
+                  Remove From Cart
+              </span>
+        </div>`;
             }
-            cartDom.innerHTML += `
-        <div class="cart-itm">
-          <div class="cart-itm-sm">
-            <div class="ct-sm-top">
-              <div class="ct-sm-img">
-                <img
-                  src="${JSON.parse(item.images)[0]}"
-                  alt="cart-item"
-                  width="100px"
-                  height="100px"
-                />
-              </div>
-              <div class="ct-sm-name-price">
-                 <div>
-                    <span style="font-weight:bold;font-size:17px";>
-                      ${item.product}
-                    </span>
-                   -
-                  ${item.description}
-                </div>
-                UGX
-                <span class="cart-t-price l-t-price">${
-                  _var == true
-                    ? size_ing == false
-                      ? key.inCartNumber *
-                        (item.discount
-                          ? (item.price * (100 - item.discount)) / 100
-                          : item.price)
-                      : key.inCartNumber * in_price
-                    : key.inCartNumber *
-                      (item.discount
-                        ? (item.price * (100 - item.discount)) / 100
-                        : item.price)
-                }</span>
-                <div class="_sp">${str}</div>
-              </div>
-            </div>
-            <div class="ct-sm-bottom">
-              <div class="ct-sm-b-left">
-                <span class="itm-r-sm" data-id=${key.cartItemAdded}>
-                  <i class="fas fa-trash"></i>
-                  Remove From Cart
-                </span>
-              </div>
-              <div class="ct-sm-b-right">
-                <div class="ct-qty-center">
-                  <button
-                    class="btn-i minus"
-                    data-id=${key.cartItemAdded}
-                  >&minus;</button>
-                  <span class="ct-number">${key.inCartNumber}</span>
-                  <button
-                    class="plus"
-                    data-id=${key.cartItemAdded}
-                  >&plus;</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="ct-itm-name">
-            <div class="ct-left">
-              <img
-                src="${JSON.parse(item.images)[0]}"
-                alt="${item.product}"
-                width="120px"
-                height="100px"
-              />
-            </div>
-            <div class="ct-right">
-              <div class="ct-itm">
-                <span>
-                    <span style="font-weight:bold;font-size:20px;">
-                      ${item.product}
-                    </span>
-                   -
-                  ${item.description}
-                </span>
-              </div>
-              <div class="_sp">${str}</div>
-              <div class="like-remove">
-                <span class="itm-r-lg" data-id=${key.cartItemAdded}>
-                  <i class="fas fa-trash"></i>
-                  Remove From Cart
-                </span>
-                <button class="qty">
-                  <i class="fas fa-ban"></i>
-                    <span style="padding-left:5px">
-                      Out of Stock
-                    </span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="ct-itm-qty">
-            <div class="ct-qty-center">
-              <button
-                class="btn-i minus"
-                data-id=${key.cartItemAdded}
-              >&minus;</button>
-              <span class="ct-number">${key.inCartNumber}</span>
-              <button
-                class="plus"
-                data-id=${key.cartItemAdded}
-              >&plus;</button>
-            </div>
-          </div>
-          <div class="ct-itm-unit-price">
-            <div class="ct-a-price">
-              <span class="cart-t-price">UGX ${
-                _var == true
-                  ? size_ing == false
-                    ? item.discount
-                      ? (item.price * (100 - item.discount)) / 100
-                      : item.price
-                    : in_price
-                  : item.discount
-                  ? (item.price * (100 - item.discount)) / 100
-                  : item.price
-              }</span>
-            </div>
-            <div class="ct-discount-s">
-              <div class="discount">${
-                _var == true
-                  ? size_ing == false
-                    ? item.discount
-                      ? item.discount + "%"
-                      : ""
-                    : ""
-                  : item.discount
-                  ? item.discount + "%"
-                  : ""
-              }</div>
-              <div class="save">
-                ${
-                  _var == true
-                    ? size_ing == false
-                      ? item.discount
-                        ? "Save: UGX " + (item.price * item.discount) / 100
-                        : ""
-                      : ""
-                    : item.discount
-                    ? "Save: UGX " + (item.price * item.discount) / 100
-                    : ""
-                }
-              </div>
-            </div>
-          </div>
-          <div class="ct-itm-sub-total">
-            <span style="font-size:20px; padding-right:5px;">UGX</span>
-            <span class="cart-t-price l-t-price">${
-              _var == true
-                ? size_ing == false
-                  ? key.inCartNumber *
-                    (item.discount
-                      ? (item.price * (100 - item.discount)) / 100
-                      : item.price)
-                  : key.inCartNumber * in_price
-                : key.inCartNumber *
-                  (item.discount
-                    ? (item.price * (100 - item.discount)) / 100
-                    : item.price)
-            }</span>
-          </div>
-        </div>
-            `;
-
             const _ms = document.getElementsByClassName("minus");
             for (let i = 0; i < _ms.length; i++) {
               _ms[i].addEventListener("click", (e) => {
@@ -1284,30 +1451,40 @@
             //st-ony
             let st = document.querySelector("#-o-st");
             st.addEventListener("click", () => {
-              if (yammie) {
-                let req = JSON.stringify([
-                  totalAmount(),
-                  yammie,
-                  localStorage.getItem("cartItems"),
-                  cartNumber,
-                ]);
-                let xhr2 = new XMLHttpRequest();
-                xhr2.open(
-                  "POST",
-                  `/api/user/customer/cart/amount/${yammie}`,
-                  true
-                );
-                xhr2.setRequestHeader("Content-type", "application/json");
-                xhr2.send(req);
-                window.location.assign("orders/checkout");
-              } else {
-                function checkLogin() {
-                  document
-                    .querySelector("#pop-up-overlay")
-                    .classList.add("active");
-                  document.querySelector(".popup").classList.add("pp-active");
+              const _remove = document.querySelectorAll("._remove");
+              if (_remove.length == 0) {
+                if (yammie) {
+                  let req = JSON.stringify([
+                    totalAmount(),
+                    yammie,
+                    localStorage.getItem("cartItems"),
+                    cartNumber,
+                  ]);
+                  let xhr2 = new XMLHttpRequest();
+                  xhr2.open(
+                    "POST",
+                    `/api/user/customer/cart/amount/${yammie}`,
+                    true
+                  );
+                  xhr2.setRequestHeader("Content-type", "application/json");
+                  xhr2.send(req);
+                  window.location.assign("orders/checkout");
+                } else {
+                  function checkLogin() {
+                    document
+                      .querySelector("#pop-up-overlay")
+                      .classList.add("active");
+                    document.querySelector(".popup").classList.add("pp-active");
+                  }
+                  checkLogin();
                 }
-                checkLogin();
+              } else {
+                document
+                  .querySelector("#pop-up-overlay-product")
+                  .classList.add("active");
+                document
+                  .querySelector(".popup-product")
+                  .classList.add("pp-active");
               }
             });
             //st-ony
@@ -1318,6 +1495,7 @@
             ) {
               document.querySelector("#ldr-overlay").style.display = "none";
             }
+            //zero-qty
           });
           function minus(id) {
             for (const item in cartItems) {
@@ -1345,7 +1523,7 @@
               }, 500);
             }
           }
-          function plus(id) {
+          function plus(id, qty) {
             for (const item in cartItems) {
               if (item == id) {
                 if (cartItems[id].inCartNumber < 10) {
@@ -1368,7 +1546,7 @@
                   cartNumber: cartNumber,
                   delete: false,
                 });
-              }, 1500);
+              }, 500);
             }
           }
           function _ri(id) {
@@ -1595,8 +1773,8 @@
       });
       if (screen.availWidth <= 768) {
         document.querySelector("#logo").src = "./resources/cartlink.png";
-        document.querySelector("#logo").style.width = "60px";
-        document.querySelector("#logo").style.height = "30px";
+        document.querySelector("#logo").style.width = "50px";
+        document.querySelector("#logo").style.height = "50px";
       }
       let acc = document.querySelector(".-acc");
       let hp = document.querySelector(".-hp");
@@ -1644,6 +1822,12 @@
       function imageDialogClose() {
         document.querySelector(".popup").classList.remove("pp-active");
         document.querySelector("#pop-up-overlay").classList.remove("active");
+      }
+      function imageDialogCloseProduct() {
+        document.querySelector(".popup-product").classList.remove("pp-active");
+        document
+          .querySelector("#pop-up-overlay-product")
+          .classList.remove("active");
       }
 
       document
