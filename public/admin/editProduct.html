@@ -42,41 +42,6 @@
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
-    <style>
-      .product_pic {
-        border-radius: 50%;
-        height: 150px;
-        width: 150px;
-        background-size: cover;
-        background-position: center;
-        background-blend-mode: multiply;
-        vertical-align: middle;
-        text-align: center;
-        color: transparent;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      .product_pic:hover {
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 10000;
-        color: #fff;
-        transition: all 0.3s ease;
-        text-decoration: none;
-      }
-
-      .product_pic span {
-        display: inline-block;
-        padding-top: 4.5em;
-        padding-bottom: 4.5em;
-      }
-
-      input[type="file"] {
-        display: none;
-        cursor: pointer;
-      }
-    </style>
   </head>
 
   <body class="bg-light">
@@ -331,19 +296,25 @@
                   </div>
                   <br />
 
+                  <label for="Detailed Description"
+                    >Product Detailed Description</label
+                  >
+                  <div class="form-group">
+                    <textarea
+                      class="form-control"
+                      required
+                      placeholder="Detailed Description"
+                      name="detailedDescription"
+                      cols="30"
+                      rows="4"
+                      id="detail"
+                    ></textarea>
+                  </div>
+
                   <div class="form-row">
                     <div class="form-group col-md-6">
-                      <label for="category"
-                        >Category
-                        <button
-                          type="button"
-                          class="btn btn-sm btn-warning text-light"
-                          data-target="#editCat"
-                          data-toggle="modal"
-                        >
-                          Edit Category
-                        </button></label
-                      >
+                      <label for="category">Category </label>
+
                       <input
                         class="form-control"
                         required
@@ -367,56 +338,22 @@
                   </div>
 
                   <br />
-                  <label for="Detailed Description"
-                    >Product Detailed Description</label
-                  >
-                  <div class="form-group">
-                    <textarea
-                      class="form-control"
-                      required
-                      placeholder="Detailed Description"
-                      name="detailedDescription"
-                      cols="30"
-                      rows="4"
-                      id="detail"
-                    ></textarea>
-                  </div>
-
-                  <button
-                    type="button"
-                    class="btn btn-warning text-light my-3"
-                    id="editSpecification"
-                  >
-                    Edit Specifications
-                  </button>
-
-                  <br />
-
-                  <div class="row">
-                    <div class="col-xl-3 col-sm-6">
-                      <label for="fileToUpload">
-                        <div class="product_pic" id="img1"></div>
-                      </label>
-                      <input type="File" name="" id="fileToUpload1" />
-                    </div>
-                    <div class="col-xl-3 col-sm-6">
-                      <label for="fileToUpload">
-                        <div class="product_pic" id="img2"></div>
-                      </label>
-                      <input type="File" name="" id="fileToUpload" />
-                    </div>
-                    <div class="col-xl-3 col-sm-6">
-                      <label for="fileToUpload">
-                        <div class="product_pic" id="img3"></div>
-                      </label>
-                      <input type="File" name="" id="fileToUpload" />
-                    </div>
-                    <div class="col-xl-3 col-sm-6">
-                      <label for="fileToUpload">
-                        <div class="product_pic" id="img4"></div>
-                      </label>
-                      <input type="File" name="" id="fileToUpload" />
-                    </div>
+                  <div class="text-center">
+                    <button
+                      type="button"
+                      class="btn btn-success btn-sm stext-light my-3"
+                      id="editSpecification"
+                    >
+                      Edit Specifications
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm text-light"
+                      data-target="#editCat"
+                      data-toggle="modal"
+                    >
+                      Edit Category
+                    </button>
                   </div>
 
                   <input type="hidden" id="seller" name="seller_id" />
@@ -504,20 +441,6 @@
           document.getElementById("subCat").value = result.subCategoryName;
           document.getElementById("seller").value = result.seller_id;
           document.getElementById("subCate").value = result.subcategory_id;
-
-          let myImages = JSON.parse(result.images);
-          document.getElementById(
-            "img1"
-          ).style.backgroundImage = `url(${myImages[0]})`;
-          document.getElementById(
-            "img2"
-          ).style.backgroundImage = `url(${myImages[1]})`;
-          document.getElementById(
-            "img3"
-          ).style.backgroundImage = `url(${myImages[2]})`;
-          document.getElementById(
-            "img4"
-          ).style.backgroundImage = `url(${myImages[3]})`;
         }
       };
       data.open("GET", `/api/admin/productDetails/${product}`, true);

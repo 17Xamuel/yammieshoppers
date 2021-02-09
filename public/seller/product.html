@@ -288,9 +288,27 @@
               <div class="col-xl-11 mx-auto">
                 <div class="card rounded my-3">
                   <div class="card-body">
-                    <h5 class="text-center text-danger my-3">
-                      Approved Products <span id="apn"></span>
-                    </h5>
+                    <nav class="navbar navbar-light bg-light">
+                      <div class="container-fluid">
+                        <a class="navbar-brand"
+                          >Products <span id="apn"></span
+                        ></a>
+                        <form class="d-flex">
+                          <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Product Name"
+                            aria-label="Search"
+                            id="sp"
+                          />
+                        </form>
+                        <a href="addProduct.html">
+                          <button class="btn btn-outline-success" type="submit">
+                            Add Product
+                          </button></a
+                        >
+                      </div>
+                    </nav
                     <div class="table-responsive">
                       <table class="table table-striped bg-light text-left">
                         <thead>
@@ -529,6 +547,49 @@
       };
       rejProducts.open("GET", `/api/sellers/getRejProducts/${sellerId}`, true);
       rejProducts.send();
+
+      let searchProduct = document.getElementById("sp");
+      searchProduct.addEventListener("keyup", (e) => {
+        e.preventDefault();
+        let myValue = document.getElementById("sp").value;
+        let data = new XMLHttpRequest();
+        data.onreadystatechange = () => {
+          if (data.readyState < 4) {
+            document.getElementById(
+              "icon2"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
+          }
+          if (data.readyState == 4 && data.status == 200) {
+            let online = JSON.parse(data.responseText);
+            let row = "";
+            online.forEach((onlineProduct) => {
+              let images = JSON.parse(onlineProduct.images);
+              row += `<tr>
+                      <td>
+                        <img
+                          src="${images[0]}"
+                          width="50"
+                          height="50"
+                          class="rounded-circle"
+                        />
+                      </td>
+                      <td>${onlineProduct.product}</td>
+                      <td>${onlineProduct.price}</td>
+                      <td>
+                   <a href="product.html?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
+                       data-pp="${onlineProduct.id}">
+                          Details
+                        </button></a>
+                        </td>
+                    </tr>`;
+            });
+            document.getElementById("products").innerHTML = row;
+            document.getElementById("icon2").innerHTML = "";
+          }
+        };
+        data.open("GET", `/api/admin/searchProduct/${myValue}`, true);
+        data.send();
+      });
 
       function lg() {
         let lg = document.getElementById("slg");

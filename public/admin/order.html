@@ -459,7 +459,7 @@
                               </li>
                               <li class="list-inline-item mx-3">
                                 <span class="font-weight-bold">OriginalPrice:</span>
-                                ${_product.price} UGX
+                               UGX ${_product.price} 
                               </li>
                                <li class="list-inline-item mx-3">
                                 <span class="font-weight-bold">Discount:</span>
@@ -471,7 +471,7 @@
                               </li>
                                <li class="list-inline-item mr-3">
                                 <span class="font-weight-bold">TotalPrice:</span>
-                                ${Math.round(total)} UGX
+                              UGX ${Math.round(total)} 
                               </li>
                              </ul>
                              <span class="btn btn-info float-end mt-3" data-target="#sellerInfo"
@@ -530,16 +530,17 @@
                 size = "No Size";
               } else {
                 for (let [key, value] of Object.entries(item.specs.Sizes)) {
-                  size = `${key}-${value}`;
+                  size = `${key}- UGX ${value}`;
                   totalPrice += parseInt(`${value}`);
                 }
               }
               let ingredients = "";
               function ing(obj) {
-                ingredients += `
-              <li class="list-inline-item">${obj.descriptions}</li>,
-              <li class="list-inline-item">${obj.qtty}</li>,
-              <li class="list-inline-item">${obj.price} UGX</li>`;
+                ingredients += `<ul class=list-group>
+                                   <li class="list-group-item">
+                                  ${obj.qtty} ${obj.descriptions}    UGX ${obj.price}
+                                   </li>
+                                </ul>`;
               }
               if (
                 item.specs.Ingredients === null ||
@@ -562,7 +563,7 @@
                   let productDis = parseInt(mproduct.discount);
                   let price;
                   totalPrice !== 0
-                    ? (price = totalPrice)
+                    ? (price = totalPrice * item.inCartNumber)
                     : (price =
                         (productPrice - (productDis / 100) * productPrice) *
                         item.inCartNumber);
@@ -574,7 +575,7 @@
                               ${mproduct.product}</li>,
                             <li class="list-inline-item mx-3"><span
                               class="font-weight-bold">OriginalPrice</span> :
-                              ${mproduct.price} UGX</li>,
+                             UGX ${mproduct.price}</li>,
                             <li class="list-inline-item mx-3"><span
                                class="font-weight-bold">Discount</span> :
                                ${mproduct.discount} %</li>,
@@ -583,19 +584,22 @@
                               ${item.inCartNumber}</li>
                               <li class="list-inline-item mr-3 mt-2"><span
                               class="font-weight-bold">TotalPrice</span> :
-                              ${price} UGX</li>
+                              UGX ${price} </li>
                           </ul>
                           <span class="font-weight-bold">Specifications</span> :
                            <ul class="list-inline mb-3">
-                           <li class="list-inline-item">Color : ${color}</li>
-                            <li class="list-inline-item">Flavor : ${flavor}</li>
-                          <li class="list-inline-item">Sizes : ${size} </li>
+                           <li class="list-inline-item"> ${
+                             color == "No Color" ? "" : "Color :" + color
+                           }</li>
+                            <li class="list-inline-item">${
+                              flavor == "No Flavor" ? "" : "Flavor :" + flavor
+                            }</li>
+                          <li class="list-inline-item">${
+                            size == "No Size" ? "" : "Size :" + size
+                          } </li>
                          </ul>
-                         <span class="font-weight-bold">Ingredients</span>:
-                         <ul class="list-inline mb-3">
-                           ${ingredients}
-                          </ul>
-                          <span class="btn btn-info float-end"
+                           ${ingredients == "No Ingredients" ? "" : ingredients}
+                          <span class="btn btn-info float-end my-2"
                           data-target="#sellerInfo" data-toggle="modal"
                           data-it="${item.cartItemAdded}">
                         Contact Seller</span>
