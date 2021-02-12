@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-KNRCTV3");
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-74SV9XV7X5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-74SV9XV7X5");
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="./resources/cartlink.png"
+      type="image/x-icon"
+    />
+    <title>Yammie | Today's Gift For You</title>
+    <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <link rel="stylesheet" href="./styles/catalog.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./styles/products.css" />
+    <link rel="stylesheet" href="./styles/footer2.css" />
+
+    <script>
+      let yammie = localStorage.getItem(
+        "https://yammieshoppers.com/useLocalStorage/Storage"
+      );
+      document.addEventListener("DOMContentLoaded", (e) => {
+        cnd(
+          localStorage.getItem("cartNumber"),
+          document.querySelector("#cartNumberItems")
+        );
+        sch(document.querySelector("#-is"), document.querySelector(".-sh"));
+      });
+    </script>
+    <style>
+      .gift-ctr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KNRCTV3"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="sidenav">
+      <span class="-c-side" style="font-size: 35px">&times;</span>
+      <ul class="s-n-1">
+        <h3 class="sn-categories">Categories</h3>
+        <li class="n-l-itm">
+          <a href="./easy-market">
+            <i class="fas fa-shopping-basket ctg-icon"></i>
+            EasyMarket with Yammie
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="quick-foods">
+            <i class="fas fa-pizza-slice ctg-icon"></i>
+            Fast Foods &amp; Drinks
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="phones">
+            <i class="fas fa-headphones-alt ctg-icon"></i>
+            Phones &amp; Accessories
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./electronics">
+            <i class="fas fa-charging-station ctg-icon"></i>
+            Electronics
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./computing">
+            <i class="fas fa-desktop ctg-icon"></i>
+            Computing &amp; Accessories
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./stationery">
+            <i class="fas fa-paperclip ctg-icon"></i>
+            Stationery
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./clothing">
+            <i class="fas fa-tshirt ctg-icon"></i>
+            Clothes &amp; Shoes
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./kitchen">
+            <i class="fas fa-utensils ctg-icon"></i>
+            Kitchen stuff &amp; Utensils
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./kids">
+            <i class="fas fa-child ctg-icon"></i>
+            Kid's Section
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="./diy">
+            <img src="./resources/clean-hands.png" alt="" />
+            Cleaning, Healthy &amp; Beauty
+          </a>
+        </li>
+        <li class="n-l-itm">
+          <a href="">
+            <i class="fas fa-layer-group ctg-icon"></i>
+            All Items
+          </a>
+        </li>
+      </ul>
+      <ul class="s-n-4">
+        <h3>My Account</h3>
+        <li>
+          <i class="fas fa-user"></i>
+          <span><a href="./account/profile">My Profile</a></span>
+        </li>
+        <li>
+          <i class="fas fa-box"></i>
+          <span><a href="./account/orders">My Orders</a></span>
+        </li>
+
+        <li>
+          <i class="fas fa-dolly-flatbed"></i>
+          <span><a href="./account/pending-orders">Pending Orders</a></span>
+        </li>
+        <li>
+          <i class="fas fa-thumbs-up"></i>
+          <span><a href="/">Liked Items</a></span>
+        </li>
+        <li>
+          <i class="fas fa-address-card"></i>
+          <span><a href="./account/address"> My Address</a></span>
+        </li>
+        <li>
+          <i class="fas fa-user-edit"></i>
+          <span><a href="./account/edit">Edit My Profile</a></span>
+        </li>
+        <button class="s-n-logout -lg-o">LOG IN/OUT</button>
+      </ul>
+      <ul class="s-n-2">
+        <h3 class="s-n-how">Products &amp; Groceries</h3>
+        <li><a href="./404">Special Order</a></li>
+        <li><a href="./404">Delivery Time</a></li>
+        <li><a href="./404">Payment Methods</a></li>
+        <li><a href="./support/request">Request An Item</a></li>
+        <li><a href="./404">Report an Item</a></li>
+        <li><a href="./404">Return Policy</a></li>
+      </ul>
+      <ul class="s-n-3">
+        <h3 class="s-n-how">Explore Yammie</h3>
+        <li><a href="./404">About Yammie</a></li>
+        <li><a href="./404">How to Order</a></li>
+        <li><a href="./404">Our Partners</a></li>
+        <li><a href="./support/terms">Terms &amp; Conditions For Use</a></li>
+        <li><a href="./support/privacy-policy">Privacy Policy</a></li>
+      </ul>
+      <div class="ftr-down">
+        <div class="ftr-official" style="color: black !important">
+          &copy; <span class="_yr"></span> Yammie. All rights reserved
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg"
+              class="icon-button"
+              ><i class="fab fa-youtube"></i
+            ></a>
+            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="banner">
+      <div class="-b-ctr">banner</div>
+    </div>
+    <div class="nav">
+      <div class="search-nav">
+        <div class="logo">
+          <div class="menu">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+          </div>
+          <a href="./">
+            <img
+              src="./resources/yammie.png"
+              alt="YAMMIE"
+              width="200"
+              height="95%"
+              id="logo"
+            />
+          </a>
+        </div>
+        <div class="search">
+          <form
+            id="f-search"
+            autocomplete="off"
+            action="./catalog"
+            method="GET"
+          >
+            <input
+              type="text"
+              name="q"
+              placeholder="Search Groceries...."
+              class="-ns"
+              id="v-search"
+            />
+            <button type="submit" class="search-button">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+        <div class="-help -user -dp">
+          <button class="-dropdown -hp">
+            <i class="far fa-question-circle"></i>
+            <span class="-c-text">Help</span>
+            <i class="fas fa-chevron-down chev"></i>
+          </button>
+          <ul class="-help-list -hlp">
+            <a href="./404">
+              <li class="-help">
+                <i class="fas fa-clock"></i>
+                How to Order
+              </li>
+            </a>
+            <a href="./404">
+              <li class="-help">
+                <i class="fas fa-truck-loading"></i>
+                Delivery Times
+              </li>
+            </a>
+            <a href="./404">
+              <li class="-help">
+                <i class="far fa-question-circle"></i>
+                FAQs
+              </li>
+            </a>
+            <li class="-help">
+              <button class="-a-btn" style="width: 100%">
+                <i class="fas fa-sign-out-alt"></i>
+                Help Center
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="-account -user focus">
+          <button class="-dropdown -acc">
+            <i class="far fa-user"></i>
+            <span class="-c-text -acc-name">My Account</span>
+            <i class="fas fa-chevron-down chev-acc"></i>
+          </button>
+          <ul class="-help-list -acc-l">
+            <a href="./account/profile">
+              <li class="-help">
+                <i class="far fa-user"></i>
+                My Profile
+              </li>
+            </a>
+            <a href="./cart">
+              <li class="-help">
+                <i class="fas fa-shopping-cart"></i>
+                My Cart
+              </li>
+            </a>
+            <a href="./account/orders">
+              <li class="-help">
+                <i class="fas fa-gift"></i>
+                My Orders
+              </li>
+            </a>
+            <a href="./account/edit">
+              <li class="-help">
+                <i class="fas fa-user-edit"></i>
+                Edit Profile
+              </li>
+            </a>
+            <li class="-help">
+              <button class="-a-btn -lg" style="width: 100%">
+                <i class="fas fa-sign-out-alt"></i>
+                Log Out
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="-user -user-cart">
+          <!--for small screens-->
+          <div class="-icon-sm" id="-is">
+            <i class="fas fa-search"></i>
+          </div>
+          <a href="./cart" style="position: relative">
+            <img
+              src="../resources/shopping-cart.svg"
+              alt=""
+              width="25px"
+              height="25px"
+            />
+            <span class="cart-number" id="cartNumberItems">0</span>
+            <span class="cart-label" style="padding-bottom: 10px"> Cart </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="-sh">
+      <form
+        autocomplete="off"
+        action="./catalog"
+        method="GET"
+        class=""
+        id="-sm-s"
+      >
+        <input
+          type="text"
+          name="q"
+          placeholder="Search Groceries...."
+          class="-ns"
+        />
+        <button type="submit" class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+    <div class="m-ctr">
+      <div class="gift-ctr">
+        <div class="gift-im">
+          <img
+            src="./resources/ct-clothing-1.jpg"
+            alt=""
+            width="75%"
+            height="75%"
+          />
+        </div>
+        <div class="gift-c">
+          <div class="description">
+            Buy 2 Kg, Get Free Delivery to your Home
+          </div>
+          <button class="btn">Add to Cart</button>
+        </div>
+      </div>
+      <div class="-ct -b-x">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all">
+          <span>Children's Wear</span>
+          <a href="./catalog?q=24&name=kids-wear">
+            <span class="-ch-all-t">
+              Check
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
+        </div>
+        <div class="-scroll -ct -ct-kids-wear">
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="-ct -b-x">
+        <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
+        <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
+
+        <div class="-ch-all">
+          <span>Kids Food</span>
+          <a href="./catalog?q=25&name=kids-food">
+            <span class="-ch-all-t">
+              Check
+              <i class="fas fa-chevron-right"></i>
+            </span>
+          </a>
+        </div>
+        <div class="-scroll -ct -ct-kids-food">
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+          <div class="item -ct-item -lazy">
+            <img
+              src="./resources/cart-link.png"
+              alt=""
+              width="100px"
+              height="75px"
+              style="opacity: 0.1"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="pop-up-overlay-var"></div>
+    <form class="var" id="var_form"></form>
+    <div id="pop-up-overlay"></div>
+    <div class="popup">
+      <button class="close-pp" onclick="imageDialogClose()">&times;</button>
+      <div class="pp-content">
+        <h2 id="text-add">Item added to your Cart.</h2>
+        <div id="text-add-m">
+          Thank You.
+          <br />
+          Click Check Cart to Continue OR continue Shopping
+        </div>
+        <a href="./cart">
+          <button class="-b-pp">Check Cart</button>
+        </a>
+        <button class="-b-pp" onclick="imageDialogClose()">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="ftr-up">
+        <div class="ftr-u-first">
+          <div class="ftr-logo">
+            <img
+              src="./resources/yammie.png"
+              alt="YAMMIE"
+              width="320px"
+              height="100px"
+            />
+          </div>
+          <div class="ftr-message">
+            <p>
+              Your online Market Store For Groceries, <br />
+              Food Items, Clothings, Gadgets And Many More.
+            </p>
+          </div>
+          <div class="ftr-app">
+            <h3>Get Our App On . . . .</h3>
+            <div class="ftr-app-stores" style="margin-top: 15px">
+              <a href="">
+                <img
+                  src="./resources/play-store-3.jpg"
+                  alt=""
+                  height="45"
+                  width="150"
+                  style="margin-right: 5px"
+                />
+              </a>
+              <a href="">
+                <img
+                  src="./resources/apple-store.jpg"
+                  alt=""
+                  height="45"
+                  width="150"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="ftr-u-second">
+          <h4 class="footer-h4">Explore Yammie</h4>
+          <ul class="footer-list">
+            <li><a href="#">About Yammie</a></li>
+            <li><a href="#">How to Order</a></li>
+            <li><a href="#">Help &amp; FAQs</a></li>
+            <li><a href="#">Our Partners</a></li>
+            <li>
+              <a href="./support/terms">Terms &amp; Conditions For Use</a>
+            </li>
+            <li><a href="./support/privacy-policy">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="ftr-u-third">
+          <h4 class="footer-h4">Contact Us</h4>
+          <ul class="footer-list">
+            <li class="second-list">
+              <a href="/">
+                <i class="fas fa-cart-plus"></i>
+                Yammie Shoppers
+              </a>
+            </li>
+            <li class="second-list">
+              <a href="mailto:info@yammieshoppers.com">
+                <i class="fas fa-envelope"></i>
+                info@yammieshoppers.com
+              </a>
+            </li>
+            <li class="second-list">
+              <a href="https://g.page/yammie-shoppers?share" target="_blank">
+                <i class="fas fa-map-marker-alt"></i>
+                Lira Campus
+              </a>
+            </li>
+          </ul>
+          <form id="user_comment" autocomplete="off">
+            <input
+              required
+              type="text"
+              name="_comment"
+              id="comment"
+              placeholder="How do you feel?"
+            />
+            <br />
+            <input
+              type="text"
+              name="_contact"
+              id="customer-email"
+              placeholder="Email or Phone Number(Optional)"
+            />
+            <br />
+            <button class="footer-form-button">submit</button>
+            <br />
+            <span
+              class="_r-comment"
+              style="
+                color: red;
+                opacity: 0;
+                margin-left: 5px;
+                transition: all 0.4s ease-in-out;
+              "
+            >
+            </span>
+          </form>
+        </div>
+        <div class="ftr-u-fourth">
+          <h4 class="footer-h4">Products &amp; Groceries</h4>
+          <ul class="footer-list">
+            <li><a href="#">Special Order</a></li>
+            <li><a href="#">Delivery Time</a></li>
+            <li><a href="#">Payment Methods</a></li>
+            <li><a href="./support/terms">Request An Item</a></li>
+            <li><a href="#">Report an Item</a></li>
+            <li><a href="#">Return Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ftr-down">
+        <div class="ftr-official">
+          &copy; <span class="_yr"></span> Yammie. All rights reserved
+          <div class="social-icons">
+            <a
+              href="https://www.facebook.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
+              ><i class="fab fa-twitter"></i
+            ></a>
+            <a
+              href="https://www.instagram.com/yammieshoppers"
+              class="icon-button"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a
+              href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg"
+              class="icon-button"
+              ><i class="fab fa-youtube"></i
+            ></a>
+            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="./catalog.min.js"></script>
+    <script>
+      function _cdb(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+          }
+        };
+      }
+      let yammieUsr = "";
+      if (yammie) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            [yammieUsr] = JSON.parse(xhr.responseText);
+            let account = document.querySelector(".-acc-name");
+            account.innerHTML = "Hi, " + yammieUsr.c_first_name;
+          }
+        };
+        xhr.open("GET", `/api/user/customer/${yammie}`, true);
+        xhr.send();
+      }
+
+      function ctg(c, url) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let _c = JSON.parse(xhr.responseText),
+              group = "";
+            _c.forEach((item) => {
+              group += `
+                     <a class="item -ct-item" href="./item?item=${item.id}">
+                      <div class="-d">
+                        ${
+                          item.discount != 0 && item.discount !== null
+                            ? "-" + item.discount + "%"
+                            : ""
+                        }
+                      </div>
+                      <div class="_image">
+                        <img
+                          src="./resources/placeholder.png"
+                          data-src="${JSON.parse(item.images)[0]}"
+                          alt="${item.product}"
+                          width="100%"
+                          height="100%"
+                          class="_ctg-image-load"
+                        />
+                      </div>
+                      <div class="-i-dtl">
+                        <div class="it-nm">
+                          ${item.product} - ${item.description}
+                        </div>
+                        <div class="it-pr pr price-current">${
+                          "UGX " +
+                          (item.discount
+                            ? (item.price * (100 - item.discount)) / 100
+                            : item.price)
+                        }</div>
+                         <div class="pre-it-pr pr price-prev">${
+                           item.discount ? "UGX " + item.price : ""
+                         }</div>
+                      </div>
+                    </a>
+                    `;
+            });
+            c.innerHTML = group;
+            document.querySelectorAll(".-d").forEach((item) => {
+              if (item.innerText == "") item.style.display = "none";
+            });
+            let images = document.images;
+            for (let i = 0; i < images.length; i++) {
+              if (images[i].className == "_ctg-image-load") {
+                _load(images[i], images[i].dataset.src);
+              }
+            }
+            function _load(i, d) {
+              let image_true = new Image();
+              image_true.onload = function () {
+                i.src = this.src;
+              };
+              image_true.src = d;
+            }
+          }
+        };
+        xhr.open("GET", url, true);
+        xhr.send();
+      }
+      function scr(b) {
+        b.forEach((sc) => {
+          sc.addEventListener("click", (e) => {
+            e.target.parentNode.querySelector(".-scroll").scrollBy({
+              top: 0,
+              left: -250,
+              behavior: "smooth",
+            });
+          });
+        });
+      }
+      function scl(b) {
+        b.forEach((sc) => {
+          sc.addEventListener("click", (e) => {
+            e.target.parentNode.querySelector(".-scroll").scrollBy({
+              top: 0,
+              left: 250,
+              behavior: "smooth",
+            });
+          });
+        });
+      }
+      //depends on the url
+      ctg(document.querySelector(".-ct-kids-food"), "/api/user/ct/6/25");
+      ctg(document.querySelector(".-ct-kids-wear"), "/api/user/ct/6/24");
+
+      scl(document.querySelectorAll(".-sc-n"));
+      scr(document.querySelectorAll(".-sc-b"));
+      //new header
+      const sch = (i, sch) => {
+        i.addEventListener("click", () => {
+          sch.classList.toggle("sch-s");
+          window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
+        });
+      };
+      function cnd(i, c) {
+        i = parseInt(i);
+        c.textContent = i ? i : 0;
+        c.style.display = c.textContent == "0" ? "none" : "block";
+      }
+
+      const closeSide = document.querySelector(".-c-side");
+      const menu = document.querySelector(".menu");
+      const sidenav = document.querySelector("#sidenav");
+      menu.addEventListener("click", () => {
+        sidenav.classList.add("active");
+      });
+      closeSide.addEventListener("click", () => {
+        sidenav.classList.remove("active");
+      });
+      if (screen.availWidth <= 768) {
+        document.querySelector("#logo").src = "./resources/cartlink.png";
+        document.querySelector("#logo").style.width = "50px";
+        document.querySelector("#logo").style.height = "50px";
+      }
+      let acc = document.querySelector(".-acc");
+      let hp = document.querySelector(".-hp");
+      //check toggle a class
+      acc.addEventListener("focus", (e) => {
+        if (!yammie) {
+          window.location.assign("./account/login");
+        } else {
+          e.target.style.color = "#ffbb00";
+          document
+            .querySelector(".chev-acc")
+            .classList.replace("fa-chevron-down", "fa-chevron-up");
+          document.querySelector(".-acc-l").style.display = "flex";
+        }
+      });
+
+      acc.addEventListener("blur", (e) => {
+        setTimeout(() => {
+          e.target.style.color = "#000";
+          document
+            .querySelector(".chev-acc")
+            .classList.replace("fa-chevron-up", "fa-chevron-down");
+          document.querySelector(".-acc-l").style.display = "none";
+        }, 200);
+      });
+      hp.addEventListener("focus", (e) => {
+        e.target.style.color = "#ffbb00";
+        document
+          .querySelector(".chev")
+          .classList.replace("fa-chevron-down", "fa-chevron-up");
+        document.querySelector(".-hlp").style.display = "flex";
+      });
+      hp.addEventListener("blur", (e) => {
+        setTimeout(() => {
+          e.target.style.color = "#000";
+          document
+            .querySelector(".chev")
+            .classList.replace("fa-chevron-up", "fa-chevron-down");
+          document.querySelector(".-hlp").style.display = "none";
+        }, 200);
+      });
+
+      //new header
+    </script>
+    <script>
+      function imageDialogClose() {
+        document.querySelector(".popup").classList.remove("pp-active");
+        document.querySelector("#pop-up-overlay").classList.remove("active");
+        window.location.reload();
+      }
+
+      document
+        .querySelector("#user_comment")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          document.querySelector("._r-comment").innerHTML =
+            "Sending Comment...";
+          document.querySelector("._r-comment").style.opacity = "0.8";
+          let form = new FormData(document.querySelector("#user_comment"));
+          let comment = {};
+          form.forEach((value, key) => {
+            comment[key] = value;
+          });
+          let xhr = new XMLHttpRequest();
+          xhr.open("POST", "/api/user/f-comment", true);
+          xhr.setRequestHeader("Content-type", "application/json");
+          xhr.send(JSON.stringify(comment));
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              document.querySelector("._r-comment").innerHTML =
+                "Comment Received...";
+              document.querySelector("._r-comment").style.opacity = "0.8";
+              setTimeout(() => {
+                document.querySelector("._r-comment").style.opacity = "0";
+              }, 2000);
+            }
+          };
+        });
+    </script>
+    <script src="./ym.min.js"></script>
+  </body>
+</html>

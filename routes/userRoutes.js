@@ -926,9 +926,9 @@ router.get("/images/:category", (req, res) => {
 });
 router.get("/gift", (req, res) => {
   conn.query(
-    `SELECT * FROM gift_tbl 
+    `SELECT * FROM gifts_tbl 
       JOIN products 
-      ON products.id = gift_tbl.id`,
+      ON products.id = gifts_tbl.id`,
     (err, result) => {
       if (err) {
         throw err;
