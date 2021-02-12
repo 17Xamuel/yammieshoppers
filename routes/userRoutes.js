@@ -436,7 +436,7 @@ router.post("/customer/order", async (req, res) => {
                                       order_amount:
                                         qresult[0].price -
                                         (qresult[0].discount / 100) *
-                                          qresult[0].price
+                                          qresult[0].price,
                                     },
                                     (serr, sres) => {
                                       if (serr) throw serr;
@@ -915,6 +915,20 @@ router.get("/images/:category", (req, res) => {
   conn.query(
     `SELECT * FROM appImages WHERE destination = ?`,
     req.params.category,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+router.get("/gift", (req, res) => {
+  conn.query(
+    `SELECT * FROM gift_tbl 
+      JOIN products 
+      ON products.id = gift_tbl.id`,
     (err, result) => {
       if (err) {
         throw err;

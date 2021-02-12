@@ -188,7 +188,18 @@
 .-icon-sm {
   display: none;
 }
+._logo-s {
+  display: none;
+}
 @media screen and (max-width: 768px) {
+  /*logo*/
+  ._logo-l {
+    display: none;
+  }
+  ._logo-s {
+    display: inline;
+  }
+  /*logo*/
   .-b-ctr {
     width: 100%;
     margin: 0px;

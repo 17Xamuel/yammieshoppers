@@ -364,9 +364,9 @@ app.post("/editProduct", async (req, res) => {
               detailedDescription: detailedDescription,
               description: description,
               seller_id: seller_id,
-              price: price
+              price: price,
             },
-            id
+            id,
           ],
           (err1, res1) => {
             if (err1) throw err1;
@@ -429,13 +429,44 @@ app.post("/addSubCategory", async (req, res) => {
           {
             subCategoryName: subcategory,
             category_id: res1[0].category_id,
-            image: path
+            image: path,
           },
           (err2, res2) => {
             if (err2) throw err2;
             res.redirect("./admin/categories.html");
           }
         );
+      }
+    );
+  });
+});
+
+app.post("/gift", async (req, res) => {
+  let gift_id = uuid.v4();
+  let upload = getUploadFile(gift_id);
+  upload(req, res, (err) => {
+    if (err) throw err;
+    let images = [];
+    req.files.forEach((file) => {
+      images.push(
+        "https://yammieuploads.nyc3.digitaloceanspaces.com/" + file.key
+      );
+    });
+    let gift_image = JSON.stringify(images);
+    let { Uploads } = req.body;
+    conn.query(
+      `INSERT INTO gifts_tbl SET ?`,
+      {
+        gift_id: gift_id,
+        id: req.body.product_id,
+        gift_image: gift_image,
+        gift_name: req.body.gift_name,
+        gift_description: req.body.gift_description,
+        gift_discount: req.body.gift_discount,
+      },
+      (error, results) => {
+        if (error) throw error;
+        res.redirect("./admin/home");
       }
     );
   });
