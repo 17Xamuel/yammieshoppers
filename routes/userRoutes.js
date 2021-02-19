@@ -436,7 +436,7 @@ router.post("/customer/order", async (req, res) => {
                                       order_amount:
                                         qresult[0].price -
                                         (qresult[0].discount / 100) *
-                                          qresult[0].price,
+                                          qresult[0].price
                                     },
                                     (serr, sres) => {
                                       if (serr) throw serr;
@@ -473,18 +473,14 @@ router.post("/customer/order", async (req, res) => {
                   ]);
               })
               .catch((err) => {
-<<<<<<< HEAD
-                console.log("Error Ocurred!!!" + err);
-=======
                 res
                   .status(200)
                   .send([
                     req.body.payment_method,
                     orderNumber,
-                    req.body._ttp + req.body._shp,
+                    req.body._ttp + req.body._shp
                   ]);
                 console.log("Error Ocurred!!!", err);
->>>>>>> b4d7e69437d86f4e56707a89cba5eb35557e3ebe
               });
           }
         );
