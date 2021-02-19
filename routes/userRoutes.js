@@ -436,7 +436,7 @@ router.post("/customer/order", async (req, res) => {
                                       order_amount:
                                         qresult[0].price -
                                         (qresult[0].discount / 100) *
-                                          qresult[0].price
+                                          qresult[0].price,
                                     },
                                     (serr, sres) => {
                                       if (serr) throw serr;
@@ -473,7 +473,18 @@ router.post("/customer/order", async (req, res) => {
                   ]);
               })
               .catch((err) => {
+<<<<<<< HEAD
                 console.log("Error Ocurred!!!" + err);
+=======
+                res
+                  .status(200)
+                  .send([
+                    req.body.payment_method,
+                    orderNumber,
+                    req.body._ttp + req.body._shp,
+                  ]);
+                console.log("Error Ocurred!!!", err);
+>>>>>>> b4d7e69437d86f4e56707a89cba5eb35557e3ebe
               });
           }
         );
@@ -736,19 +747,6 @@ router.get("/product/:ct/:id", (req, res) => {
     );
   }
 });
-//for checkout page
-// router.get("/checkout/cart/:id", (req, res) => {
-//   conn.query(
-//     `SELECT c_cart_amount,c_cart,c_cart_number FROM customers WHERE c_id = ?`,
-//     req.params.id,
-//     (err, results) => {
-//       if (err) {
-//         throw err;
-//       } else {
-//       }
-//     }
-//   );
-// });
 router.post("/checkout/cart/:id", (req, res) => {
   conn.query(
     `SELECT c_cart_amount,c_cart,c_cart_number,zone 
@@ -921,6 +919,20 @@ router.get("/images/:category", (req, res) => {
   conn.query(
     `SELECT * FROM appImages WHERE destination = ?`,
     req.params.category,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+router.get("/gift", (req, res) => {
+  conn.query(
+    `SELECT * FROM gifts_tbl 
+      JOIN products 
+      ON products.id = gifts_tbl.id`,
     (err, result) => {
       if (err) {
         throw err;

@@ -37,9 +37,7 @@
       href="./resources/cartlink.png"
       type="image/x-icon"
     />
-    <title>
-      Yammie | Clothings and fashion - Online Store for your fashion
-    </title>
+    <title>Yammie | Today's Gift For You</title>
     <link rel="stylesheet" href="./font-awesome/css/all.css" />
     <link rel="stylesheet" href="./styles/catalog.css" />
     <link rel="stylesheet" href="./styles/header.css" />
@@ -59,6 +57,13 @@
         sch(document.querySelector("#-is"), document.querySelector(".-sh"));
       });
     </script>
+    <style>
+      .gift-ctr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -365,32 +370,36 @@
       </form>
     </div>
     <div class="m-ctr">
-      <div class="-p-img-l -ct-img">
-        <a href="#" class="">
+      <div class="gift-ctr">
+        <div class="gift-im">
           <img
-            src="./resources/rect-placeholder.png"
-            alt="YAMMIE CLOTHINGS"
-            style="border-radius: 10px; object-fit: cover"
-            width="100%"
-            height="100%"
-            class="_imgl"
+            src="./resources/ct-clothing-1.jpg"
+            alt=""
+            width="75%"
+            height="75%"
           />
-        </a>
+        </div>
+        <div class="gift-c">
+          <div class="description">
+            Buy 2 Kg, Get Free Delivery to your Home
+          </div>
+          <button class="btn">Add to Cart</button>
+        </div>
       </div>
-      <div class="-ct">
+      <div class="-ct -b-x">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
 
         <div class="-ch-all">
-          <span>For Men</span>
-          <a href="./catalog?q=11&name=men's-wear">
+          <span>Children's Wear</span>
+          <a href="./catalog?q=24&name=kids-wear">
             <span class="-ch-all-t">
               Check
               <i class="fas fa-chevron-right"></i>
             </span>
           </a>
         </div>
-        <div class="-scroll -ct -ct-men">
+        <div class="-scroll -ct -ct-kids-wear">
           <div class="item -ct-item -lazy">
             <img
               src="./resources/cart-link.png"
@@ -447,20 +456,20 @@
           </div>
         </div>
       </div>
-      <div class="-ct">
+      <div class="-ct -b-x">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
 
         <div class="-ch-all">
-          <span>Women's</span>
-          <a href="./catalog?q=8&name=women-fashion">
+          <span>Kids Food</span>
+          <a href="./catalog?q=25&name=kids-food">
             <span class="-ch-all-t">
               Check
               <i class="fas fa-chevron-right"></i>
             </span>
           </a>
         </div>
-        <div class="-scroll -ct -ct-women">
+        <div class="-scroll -ct -ct-kids-food">
           <div class="item -ct-item -lazy">
             <img
               src="./resources/cart-link.png"
@@ -515,103 +524,6 @@
               style="opacity: 0.1"
             />
           </div>
-        </div>
-      </div>
-      <div class="-img-ls">
-        <a href="#" class="">
-          <img
-            src="./resources/placeholder.png"
-            alt="yammie"
-            style="border-radius: 5px; object-fit: cover"
-            width="100%"
-            height="100%"
-            class="_imgs"
-          />
-        </a>
-        <a href="#" class="">
-          <img
-            src="./resources/placeholder.png"
-            alt="yammie"
-            style="border-radius: 5px; object-fit: cover"
-            width="100%"
-            height="100%"
-            class="_imgs"
-          />
-        </a>
-      </div>
-      <div class="ctlg-ctr" id="ctlg-ctr">
-        <div class="ctlg-itm-ctr">
-          <div class="a-search">
-            <span class="items-got">Fashion For You:</span>
-          </div>
-          <div class="itms-ctr" id="s-itms-ctr"></div>
-        </div>
-        <button class="-sort-s open">Expand Sorting Panel</button>
-        <div class="ctlg-sort" id="ctlg-sort">
-          <h3>Sort By Price</h3>
-          <form id="sort-price-form" class="price-form">
-            <div class="price-slide">
-              <input
-                type="range"
-                name=""
-                id="input-slide-left"
-                min="0"
-                max="100"
-                value="0"
-                title="Slide to Set Price"
-              />
-              <input
-                type="range"
-                name=""
-                id="input-slide-right"
-                min="0"
-                max="100"
-                value="100"
-                title="Slide to Set Price"
-              />
-              <div class="slider">
-                <div class="track"></div>
-                <div class="range"></div>
-                <div class="thumb left"></div>
-                <div class="thumb right"></div>
-              </div>
-            </div>
-            <div class="display-price -stv">
-              <input type="text" id="lower-p" value="0" name="lp" />
-              <input type="text" id="higher-p" name="hp" />
-            </div>
-            <button class="sort-btn" type="submit" id="_sbp">Apply</button>
-          </form>
-          <h3>Sort By Discount</h3>
-          <form id="_sdiscount">
-            <ul class="sort-list">
-              <li class="input-field">
-                <input type="radio" name="_discount" id="" value="1" />
-                <label for="discount"> &lt; 10%</label>
-              </li>
-              <li class="input-field">
-                <input type="radio" name="_discount" id="" value="2" />
-                <label for="discount">10% - 20%</label>
-              </li>
-              <li class="input-field">
-                <input type="radio" name="_discount" id="" value="3" />
-                <label for="discount">20% - 30%</label>
-              </li>
-              <li class="input-field">
-                <input type="radio" name="_discount" id="" value="4" />
-                <label for="discount">30% - 40%</label>
-              </li>
-              <li class="input-field">
-                <input type="radio" name="_discount" id="" value="5" />
-                <label for="discount">40% - 50%</label>
-              </li>
-              <li class="input-field">
-                <input type="radio" name="_discount" id="" value="6" />
-                <label for="discount"> &gt; 50%</label>
-              </li>
-            </ul>
-            <button class="sort-btn" type="submit">Apply</button>
-          </form>
         </div>
       </div>
     </div>
@@ -746,7 +658,7 @@
             <li><a href="#">Special Order</a></li>
             <li><a href="#">Delivery Time</a></li>
             <li><a href="#">Payment Methods</a></li>
-            <li><a href="./support/request">Request An Item</a></li>
+            <li><a href="./support/terms">Request An Item</a></li>
             <li><a href="#">Report an Item</a></li>
             <li><a href="#">Return Policy</a></li>
           </ul>
@@ -899,119 +811,11 @@
         });
       }
       //depends on the url
-      ctg(document.querySelector(".-ct-men"), "/api/user/ct/2/11");
-      ctg(document.querySelector(".-ct-women"), "/api/user/ct/2/8");
+      ctg(document.querySelector(".-ct-kids-food"), "/api/user/ct/6/25");
+      ctg(document.querySelector(".-ct-kids-wear"), "/api/user/ct/6/24");
 
       scl(document.querySelectorAll(".-sc-n"));
       scr(document.querySelectorAll(".-sc-b"));
-
-      let validSearch = "2";
-      window.addEventListener("DOMContentLoaded", () => {
-        search(`/api/user/ct/search/min-max?q=${validSearch}`);
-      });
-
-      let _sp = document.querySelector("#sort-price-form");
-      _sp.addEventListener("submit", (e) => {
-        e.preventDefault();
-        l = document.querySelector("#lower-p").value;
-        h = document.querySelector("#higher-p").value;
-        search(`/api/user/ct/search/${l}-${h}?q=${validSearch}`);
-      });
-      let _sd = document.querySelector("#_sdiscount");
-      _sd.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let value =
-          Array.from(document.getElementsByName("_discount")).find(
-            (item) => item.checked
-          ).value || 120;
-        if (value == 1) {
-          search(`/api/user/ct/search/${0}-${0.09}?q=${validSearch}`);
-        } else if (value == 2) {
-          search(`/api/user/ct/search/${0.1}-${0.19}?q=${validSearch}`);
-        } else if (value == 3) {
-          search(`/api/user/ct/search/${0.2}-${0.29}?q=${validSearch}`);
-        } else if (value == 4) {
-          search(`/api/user/ct/search/${0.3}-${0.39}?q=${validSearch}`);
-        } else if (value == 5) {
-          search(`/api/user/ct/search/${0.4}-${0.49}?q=${validSearch}`);
-        } else {
-          search(`/api/user/ct/search/${0.5}-${1}?q=${validSearch}`);
-          console.log(value);
-        }
-      });
-
-      //search end
-      //price slider
-      let inputLeft = document.getElementById("input-slide-left");
-      let inputRight = document.getElementById("input-slide-right");
-
-      let thumbLeft = document.querySelector(".slider > .thumb.left");
-      let thumbRight = document.querySelector(".slider > .thumb.right");
-      let range = document.querySelector(".slider > .range");
-
-      //Prices
-      let maxPrice = 800000;
-      let higherPrice = document.getElementById("higher-p");
-      higherPrice.value = maxPrice;
-
-      inputLeft.addEventListener("input", () => {
-        let _this = inputLeft,
-          min = parseInt(_this.min),
-          max = parseInt(_this.max);
-        _this.value = Math.min(
-          parseInt(_this.value),
-          parseInt(inputRight.value) - 1
-        );
-        let percent = ((_this.value - min) / (max - min)) * 100;
-        thumbLeft.style.left = percent + "%";
-        range.style.left = percent + "%";
-        let lowerPrice = document.getElementById("lower-p");
-        lowerPrice.value = parseInt((maxPrice / 100) * percent);
-      });
-      inputRight.addEventListener("input", () => {
-        let _this = inputRight,
-          min = parseInt(_this.min),
-          max = parseInt(_this.max);
-        _this.value = Math.max(
-          parseInt(_this.value),
-          parseInt(inputLeft.value) + 1
-        );
-        let percent = ((_this.value - min) / (max - min)) * 100;
-        thumbRight.style.right = 100 - percent + "%";
-        range.style.right = 100 - percent + "%";
-        higherPrice.value = parseInt((maxPrice / 100) * percent);
-      });
-      inputLeft.addEventListener("mouseover", () => {
-        thumbLeft.classList.add("hover");
-      });
-      inputLeft.addEventListener("mouseout", () => {
-        thumbLeft.classList.remove("hover");
-      });
-      inputLeft.addEventListener("mousedown", () => {
-        thumbLeft.classList.add("active");
-      });
-      inputLeft.addEventListener("mouseup", () => {
-        thumbLeft.classList.remove("active");
-      });
-      inputRight.addEventListener("mouseover", () => {
-        thumbRight.classList.add("hover");
-      });
-      inputRight.addEventListener("mouseout", () => {
-        thumbRight.classList.remove("hover");
-      });
-      inputRight.addEventListener("mousedown", () => {
-        thumbRight.classList.add("active");
-      });
-      inputRight.addEventListener("mouseup", () => {
-        thumbRight.classList.remove("active");
-      });
-
-      let sort = document.querySelector("#ctlg-sort");
-      let btnSort = document.querySelector(".-sort-s.open");
-      btnSort.addEventListener("click", (e) => {
-        sort.classList.toggle("s-sort");
-      });
-      //price slider end
       //new header
       const sch = (i, sch) => {
         i.addEventListener("click", () => {
@@ -1120,12 +924,6 @@
             }
           };
         });
-    </script>
-    <script>
-      let _imgl = document.querySelectorAll("._imgl");
-      let _imgs = document.querySelectorAll("._imgs");
-      _images("clothing_large", _imgl);
-      _images("clothing_small", _imgs);
     </script>
     <script src="./ym.min.js"></script>
   </body>

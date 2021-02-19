@@ -253,6 +253,9 @@
                       >
                         EditProduct
                       </button>
+                      <button type="button" class="btn btn-success _gift_nav">
+                        Gift
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -461,6 +464,15 @@
           _delete.open("DELETE", `/deleteProduct/${product}`, true);
           _delete.send({});
         });
+    </script>
+    <script>
+      document.querySelector("._gift_nav").addEventListener("click", (e) => {
+        window.location.assign(
+          `./gift?i=${new URLSearchParams(window.location.search).get(
+            "product"
+          )}`
+        );
+      });
     </script>
     <!-- End Scripts -->
   </body>

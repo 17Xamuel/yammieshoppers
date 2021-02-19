@@ -39,9 +39,9 @@
     <link rel="stylesheet" href="./styles/home.css" />
 
     <title>Yammie | Uploads</title>
-    <script>
+    <!-- <script>
       if (document.referrer == "") window.location.assign("./index");
-    </script>
+    </script> -->
   </head>
 
   <body>
@@ -77,7 +77,7 @@
 
                 <li class="nav-item">
                   <a
-                    href="sales"
+                    href="sales.html"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
@@ -86,7 +86,7 @@
 
                 <li class="nav-item">
                   <a
-                    href="products"
+                    href="products.html"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
@@ -198,52 +198,50 @@
                 <div class="card rounded my-5">
                   <div class="card-body">
                     <form
-                      action="/addImages"
+                      action="/gift"
                       method="POST"
                       enctype="multipart/form-data"
                     >
                       <div class="form-group">
-                        <label for="destination"
-                          >Select Upload Destination</label
-                        >
-
+                        <label for="">Gift Name</label>
                         <input
-                          name="Uploads"
+                          name="gift_name"
+                          type="text"
                           required
                           class="form-control"
-                          list="_ct"
+                          autocomplete="off"
                         />
-                        <datalist id="_ct">
-                          <option value="" selected hidden>
-                            Select Destination
-                          </option>
-                          <option value="Banners">Banners</option>
-                          <option value="SliderImages">Slider Images</option>
-                          <option value="Fast Food & Drinks">
-                            Fast Food & Drinks
-                          </option>
-                          <option value="Phone & Accessories">
-                            Phone & Acessories
-                          </option>
-                          <option value="Computing & Accessories">
-                            Computing & Acessories
-                          </option>
-                          <option value="Clothing & Shoes">
-                            Clothing & Shoes
-                          </option>
-                          <option value="Electronics">Electronics</option>
-                          <option value="Kitchen stuff & Utensils">
-                            Kitchen stuff & Utensils
-                          </option>
-                          <option value="Easy Market With Yammie">
-                            Easy Market With Yammie
-                          </option>
-                          <option value="Cleaning,Health & Beauty">
-                            Cleaning,Health & Beauty
-                          </option>
-                          <option value="Kid's Section">Kid's Section</option>
-                          <option value="Stationery">Stationery</option>
-                        </datalist>
+                      </div>
+                      <div class="form-group">
+                        <label for="">Product ID</label>
+                        <input
+                          name="product_id"
+                          type="text"
+                          required
+                          class="form-control"
+                          readonly
+                          autocomplete="off"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="">Gift Description</label>
+                        <input
+                          name="gift_description"
+                          type="text"
+                          required
+                          class="form-control"
+                          autocomplete="off"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="">Gift Discount</label>
+                        <input
+                          name="gift_discount"
+                          type="text"
+                          required
+                          class="form-control"
+                          autocomplete="off"
+                        />
                       </div>
                       <div>
                         <div style="width: 400px; margin: 20px auto 20px auto">
@@ -359,6 +357,12 @@
     <script src="scripts/account.js"></script>
     <script>
       const upload = new FileUploadWithPreview("Upload");
+
+      //set product id
+      let search_params = new URLSearchParams(window.location.search);
+      document.querySelector(
+        "input[name=product_id]"
+      ).value = search_params.get("i");
     </script>
     <!-- End Scripts -->
   </body>

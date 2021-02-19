@@ -32,6 +32,10 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="google-site-verification"
+      content="JxIXUEJseq0SAAqSPKG_OWyz4-378XpYjDXVSoP9368"
+    />
     <meta name="keywords" content="yammieshoppers, yammie lira uganda" />
     <meta name="keywords" content="yammie, uganda online shop in uganda" />
     <link rel="shortcut icon" href="./resources/cartlink.png" />
@@ -418,6 +422,7 @@
         alert("Please Update Your browser To Continue With Yammie");
       }
       document.addEventListener("DOMContentLoaded", (e) => {
+        _slider();
         cnd(
           localStorage.getItem("cartNumber"),
           document.querySelector("#cartNumberItems")
@@ -584,13 +589,21 @@
             <div class="line2"></div>
             <div class="line3"></div>
           </div>
-          <a href="./">
+          <a href="./" class="_logo-l">
             <img
               src="./resources/yammie.png"
               alt="YAMMIE"
               width="200"
               height="95%"
               id="logo"
+            />
+          </a>
+          <a href="./" class="_logo-s">
+            <img
+              src="./resources/cartlink.png"
+              alt="YAMMIE"
+              width="50px"
+              height="50px"
             />
           </a>
         </div>
@@ -748,6 +761,14 @@
               </a>
             </span>
           </li>
+          <li class="ctg-item">
+            <span class="ctg-name">
+              <a href="">
+                <i class="fas fa-layer-group ctg-icon"></i>
+                Supermarket
+              </a>
+            </span>
+          </li>
           <li class="ctg-item" id="ctg-phones">
             <span class="ctg-name">
               <a href="phones">
@@ -812,25 +833,16 @@
               </a>
             </span>
           </li>
-          <li class="ctg-item">
-            <span class="ctg-name">
-              <a href="">
-                <i class="fas fa-layer-group ctg-icon"></i>
-                All Items
-              </a>
-            </span>
-          </li>
         </ul>
         <div class="slideshow-container">
           <div class="mySlides fade">
             <div class="numbertext">1 / 6</div>
             <div class="_pl-p-image">
               <img
-                data-src="./resources/ct-clothing-1.jpg"
                 src="./resources/placeholder.png"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
-                class="_ctg-image-load"
+                class="_ctg-image-load-slider"
               />
             </div>
             <div style="text-align: center" class="text">
@@ -841,11 +853,10 @@
             <div class="numbertext">2 / 6</div>
             <div class="_pl-p-image">
               <img
-                data-src="./resources/image-slider/slider-image-2.jpg"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
+                class="_ctg-image-load-slider"
               />
             </div>
             <div style="text-align: center" class="text">Buy from Yammie</div>
@@ -856,8 +867,7 @@
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
-                data-src="./resources/image-slider/slider-image-3.jpg"
+                class="_ctg-image-load-slider"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
               />
@@ -871,8 +881,7 @@
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
-                data-src="./resources/image-slider/slider-image-4.jpg"
+                class="_ctg-image-load-slider"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
               />
@@ -886,8 +895,7 @@
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
-                data-src="./resources/image-slider/slider-image-5.jpg"
+                class="_ctg-image-load-slider"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
               />
@@ -901,8 +909,7 @@
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
-                class="_ctg-image-load"
-                data-src="./resources/image-slider/slider-image-6.jpg"
+                class="_ctg-image-load-slider"
                 style="width: 100%; border-radius: 5px; object-fit: cover"
                 height="100%"
               />
@@ -959,7 +966,7 @@
       <div class="-ct -b-x">
         <div class="-ch-all -ch-all-index -ch-all-w">
           <span>Welcome To Yammie</span>
-          <span class="none -d-none">Shop our Best Products</span>
+          <span class="none -d-none">Shop The Best Products</span>
         </div>
         <div class="-scroll -ct -ct-index">
           <a class="" href="./catalog?q=foods">
@@ -1047,7 +1054,7 @@
               <img
                 src="./resources/placeholder.png"
                 class="_ctg-image-load"
-                data-src="./resources/image-slider/shoe.jpg"
+                data-src="./resources/airmax.jpg"
                 alt="Shoes On Yammie"
                 width="120"
                 height="100"
@@ -1821,7 +1828,7 @@
               src="./resources/yammie.png"
               alt="YAMMIE"
               width="320px"
-              height="100px"
+              height="70px"
             />
           </div>
           <div class="ftr-message">
@@ -2123,12 +2130,6 @@
       }
     </script>
     <script>
-      if (screen.availWidth <= 768) {
-        document.querySelector("#logo").src = "./resources/cartlink.png";
-        document.querySelector("#logo").style.width = "50px";
-        document.querySelector("#logo").style.height = "50px";
-      }
-
       //scrolling through
       scl(document.querySelectorAll(".-sc-n"));
       scr(document.querySelectorAll(".-sc-b"));
@@ -2291,8 +2292,32 @@
             }
           };
         });
+      //sliders
+      function _slider() {
+        let _s = new XMLHttpRequest();
+        _s.open("GET", "/api/user/images/SliderImages", true);
+        _s.send();
+        _s.onreadystatechange = () => {
+          if (_s.readyState == 4 && _s.status == 200) {
+            let _sr = JSON.parse(JSON.parse(_s.responseText)[0].image_path);
+            let _i = document.querySelectorAll("._ctg-image-load-slider");
+            for (let i = 0; i < _i.length; i++) {
+              _load(_i[i], _sr[i]);
+            }
+            function _load(i, d) {
+              let image_true = new Image();
+              image_true.onload = function () {
+                i.src = this.src;
+              };
+              image_true.src = d;
+            }
+          }
+        };
+      }
+      //sliders
     </script>
-    <script defer async src="../ym.min.js"></script>
+    <script defer async src="./ym.min.js"></script>
+    <script src="./y.index.js"></script>
     <!--scripts-->
     <!-- Cloudflare Web Analytics -->
     <script
