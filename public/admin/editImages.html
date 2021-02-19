@@ -12,12 +12,20 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
     />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.css"
+    />
+
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
       crossorigin="anonymous"
     />
+
     <!-- Scripts -->
     <script
       defer
@@ -25,26 +33,21 @@
       integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
       crossorigin="anonymous"
     ></script>
-
     <!-- End Scripts -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.css"
-    />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Yammie | Uploads</title>
+    <title>Yammie | Edit Product Images</title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
   </head>
 
-  <body>
+  <body class="bg-light">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light">
       <button
@@ -84,7 +87,7 @@
                   >
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item current">
                   <a
                     href="products"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
@@ -92,7 +95,7 @@
                     >Products</a
                   >
                 </li>
-                <li class="nav-item current">
+                <li class="nav-item">
                   <a
                     href="upload"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
@@ -117,8 +120,8 @@
               class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
             >
               <div class="row align-items">
-                <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
-                  <h4>Dashboard</h4>
+                <div class="col-md-4 mb-0 text-light py-3">
+                  <h4>DASHBOARD</h4>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
@@ -179,116 +182,159 @@
     </div>
     <!-- End Modal -->
 
-    <!-- Uploading -->
-    <div class="modal fade" id="uploading">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-body text-center">Uploading Please Wait...</div>
-        </div>
-      </div>
-    </div>
-    <!-- Ending Uploading -->
-
     <section>
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
-              <div class="col-xl-8 mx-auto">
-                <div class="card rounded my-5">
-                  <div class="card-body">
-                    <form
-                      action="/addImages"
-                      method="POST"
-                      enctype="multipart/form-data"
-                    >
-                      <div class="form-group">
-                        <label for="destination"
-                          >Select Upload Destination</label
+              <div class="col-xl-10 m-auto">
+                <h4 class="text-center m-3">Edit Product Images</h4>
+                <form
+                  action="/editImages"
+                  method="POST"
+                  enctype="multipart/form-data"
+                >
+                  <div class="row">
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUpload"
                         >
-                        <select name="Uploads" required class="form-control">
-                          <option value="" selected hidden>
-                            Select Destination
-                          </option>
-                          <option value="Banners">Banners</option>
-                          <option value="SliderImages">Slider Images</option>
-                          <option value="Fast Food & Drinks">
-                            Fast Food & Drinks
-                          </option>
-                          <option value="Phone & Accessories">
-                            Phone & Acessories
-                          </option>
-                          <option value="Computing & Accessories">
-                            Computing & Acessories
-                          </option>
-                          <option value="Clothing & Shoes">
-                            Clothing & Shoes
-                          </option>
-                          <option value="Electronics">Electronics</option>
-                          <option value="Kitchen stuff & Utensils">
-                            Kitchen stuff & Utensils
-                          </option>
-                          <option value="Easy Market With Yammie">
-                            Easy Market With Yammie
-                          </option>
-                          <option value="Cleaning,Health & Beauty">
-                            Cleaning,Health & Beauty
-                          </option>
-                          <option value="Kid's Section">Kid's Section</option>
-                          <option value="Stationery">Stationery</option>
-                        </select>
-                      </div>
-                      <div>
-                        <div style="width: 400px; margin: 20px auto 20px auto">
-                          <div
-                            class="custom-file-container"
-                            data-upload-id="Upload"
+                          <label for="Fileupload"
+                            >Main Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
                           >
-                            <label for="File Upload"
-                              >Image Uploads
-                              <a
-                                href="javascript:void(0)"
-                                class="custom-file-container__image-clear"
-                                >&times;</a
-                              ></label
-                            >
-                            <label class="custom-file-container__custom-file"
-                              ><input
-                                type="file"
-                                class="custom-file-container__custom-file__custom-file-input"
-                                name="images"
-                                accept="images/*"
-                                multiple
-                                aria
-                                label="Multiple Select Files"
-                              />
-                              <input
-                                type="hidden"
-                                name="MAX_FILE_SIZE"
-                                value="10485760"
-                              />
-                              <span
-                                class="custom-file-container__custom-file__custom-file-control"
-                              ></span>
-                            </label>
-                            <div
-                              class="custom-file-container__image-preview"
-                              style="overflow: hidden"
-                            ></div>
-                          </div>
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input filing"
+                              accept="image/*"
+                              name="images"
+                            />
+
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
                         </div>
-                        <button
-                          type="submit"
-                          class="btn btn-warning btn-block text-light"
-                          data-target="#uploading"
-                          data-toggle="modal"
-                        >
-                          Upload
-                        </button>
                       </div>
-                    </form>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUploads"
+                        >
+                          <label for="Fileupload"
+                            >Other Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input"
+                              accept="image/*"
+                              name="images"
+                            />
+
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUploading"
+                        >
+                          <label for="Fileupload"
+                            >Other Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input"
+                              accept="image/*"
+                              name="images"
+                            />
+
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="Upload"
+                        >
+                          <label for="Fileupload"
+                            >Other Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input file"
+                              accept="image/*"
+                              name="images"
+                            />
+
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" name="id" id="edt" />
+                  <button class="btn-warning btn-block my-3 btn text-white">
+                    Update
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -349,9 +395,16 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
+
     <script src="scripts/account.js"></script>
     <script>
-      const upload = new FileUploadWithPreview("Upload");
+      const upload = new FileUploadWithPreview("myUpload");
+      const uploads = new FileUploadWithPreview("myUploads");
+      const uploading = new FileUploadWithPreview("myUploading");
+      const Upload = new FileUploadWithPreview("Upload");
+
+      let product = new URLSearchParams(window.location.search).get("images");
+      document.getElementById("edt").value = `${product}`;
     </script>
     <!-- End Scripts -->
   </body>

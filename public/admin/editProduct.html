@@ -12,12 +12,14 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
     />
+
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
       crossorigin="anonymous"
     />
+
     <!-- Scripts -->
     <script
       defer
@@ -25,13 +27,8 @@
       integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
       crossorigin="anonymous"
     ></script>
-
     <!-- End Scripts -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.css"
-    />
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
@@ -77,7 +74,7 @@
 
                 <li class="nav-item">
                   <a
-                    href="sales.html"
+                    href="sales"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
@@ -86,7 +83,7 @@
 
                 <li class="nav-item current">
                   <a
-                    href="products.html"
+                    href="products"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
@@ -117,8 +114,32 @@
               class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
             >
               <div class="row align-items">
-                <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
-                  <h4>Dashboard</h4>
+                <div class="col-md-4 mb-0 text-light py-3">
+                  <div class="btn-group">
+                    <button
+                      type="button"
+                      class="btn btn-danger dropdown-toggle"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      More Edit
+                    </button>
+                    <div class="dropdown-menu">
+                      <a
+                        class="dropdown-item"
+                        href="#"
+                        data-target="#editCat"
+                        data-toggle="modal"
+                        >Edit Category</a
+                      >
+                      <a class="dropdown-item" id="editSpecification"
+                        >Edit Specifications</a
+                      >
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" id="editImage">Edit Images</a>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
@@ -338,26 +359,8 @@
                   </div>
 
                   <br />
-                  <div class="text-center">
-                    <button
-                      type="button"
-                      class="btn btn-success btn-sm stext-light my-3"
-                      id="editSpecification"
-                    >
-                      Edit Specifications
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-primary btn-sm text-light"
-                      data-target="#editCat"
-                      data-toggle="modal"
-                    >
-                      Edit Category
-                    </button>
-                  </div>
 
                   <input type="hidden" id="seller" name="seller_id" />
-                  <input type="hidden" id="subCate" name="subcategory" />
                   <input type="hidden" id="product_id" name="id" />
                   <button class="btn btn-warning text-light btn-block my-3">
                     Update Product
@@ -422,7 +425,7 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <script src="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.js"></script>
+
     <script src="scripts/account.js"></script>
     <script>
       let product = new URLSearchParams(window.location.search).get("product");
@@ -440,7 +443,6 @@
           document.getElementById("category").value = result.category_name;
           document.getElementById("subCat").value = result.subCategoryName;
           document.getElementById("seller").value = result.seller_id;
-          document.getElementById("subCate").value = result.subcategory_id;
         }
       };
       data.open("GET", `/api/admin/productDetails/${product}`, true);
@@ -513,10 +515,12 @@
       document
         .getElementById("editSpecification")
         .addEventListener("click", (e) => {
-          window.location.assign(
-            `editSpecification.html?specifications=${product}`
-          );
+          window.location.assign(`editSpecification?specifications=${product}`);
         });
+
+      document.getElementById("editImage").addEventListener("click", (e) => {
+        window.location.assign(`editImages?images=${product}`);
+      });
     </script>
     <!-- End Scripts -->
   </body>

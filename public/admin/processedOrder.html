@@ -68,13 +68,13 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="sales.html" class="nav-link text-white p-3 mb-2"
+                  <a href="sales" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="products.html" class="nav-link text-white p-3 mb-2"
+                  <a href="products" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
                   >
@@ -191,7 +191,7 @@
                             <td>
                               No of Items Ordered:<span id="items"></span>
                             </td>
-                            <td>Order Date: <span id="date"></span></td>
+                            <td>Delivery Method: <span id="dmthd"></span></td>
                           </tr>
 
                           <tr>
@@ -203,7 +203,13 @@
                             <td>Shipping Fee: <span id="sfee"></span></td>
                           </tr>
                           <tr>
-                            <td>Delivery Method: <span id="dmthd"></span></td>
+                            <td>Order Place Date: <span id="date"></span></td>
+                            <td>
+                              Order Process Date: <span id="fdate"></span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Processed By: <span id="admin"></span></td>
                           </tr>
                         </tbody>
                       </table>
@@ -221,74 +227,6 @@
       </div>
     </section>
     <!-- End details -->
-
-    <!-- Finish Modal -->
-    <div class="modal fade" id="fOrder">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Want to Finish Order?</h5>
-          </div>
-          <div class="modal-body text-center" id="finishMessage">
-            Press Ok to Continue
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-success btn-sm"
-              id="finishOrder"
-            >
-              Ok
-            </button>
-            <button
-              type="button"
-              class="btn btn-danger btn-sm"
-              data-dismiss="modal"
-            >
-              No
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Finish -->
-
-    <!-- cancelOrder -->
-    <div class="modal fade" id="cOrder">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Want to Cancel Order?</h5>
-          </div>
-          <div class="modal-body text-center" id="cancelMessage">
-            <form id="co">
-              <div class="form-group">
-                <textarea
-                  id="cancelReason"
-                  cols="30"
-                  rows="3"
-                  class="form-control"
-                  placeholder="Enter Reason"
-                ></textarea>
-              </div>
-              <button type="submit" class="btn btn-danger btn-block">
-                Cancel
-              </button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-info btn-sm"
-              data-dismiss="modal"
-            >
-              No
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- End Cancel -->
 
     <!-- seller Modal -->
     <div class="modal fade" id="sellerInfo">
@@ -394,6 +332,8 @@
           let [pendingOrders] = JSON.parse(orders.responseText);
           let info = JSON.parse(pendingOrders.order_info);
           document.getElementById("sfee").innerHTML = info.shipping;
+          document.getElementById("fdate").innerHTML = info.date.slice(0, 10);
+          document.getElementById("admin").innerHTML = info.admin;
           document.getElementById("dmthd").innerHTML =
             info.order_delivery_method;
           let date = pendingOrders.order_date.slice(0, 10);

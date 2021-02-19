@@ -33,11 +33,8 @@
 
     <title>Yammie | Seller Dashboard</title>
     <script>
-      // if (document.referrer == "") {
-      //   self.location = "login.html";
-      // }
       if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
-        self.location = "login.html";
+        self.location = "login";
       }
     </script>
   </head>
@@ -68,7 +65,7 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item current">
-                  <a href="index.html" class="nav-link text-white p-3 mb-2"
+                  <a href="index" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
                   >
@@ -467,11 +464,11 @@
           ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
         }
         if (sales.readyState == 4 && sales.status == 200) {
-          let [res] = JSON.parse(sales.responseText);
-          if (!res.Sales) {
+          if (sales.responseText == "") {
             document.getElementById("sales").innerHTML = "UGX " + 0;
           } else {
-            document.getElementById("sales").innerHTML = "UGX " + res.Sales;
+            document.getElementById("sales").innerHTML =
+              "UGX " + sales.responseText;
           }
         }
       };
@@ -507,7 +504,7 @@
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("login.html");
+          window.location.assign("login");
         });
       }
       lg();

@@ -271,8 +271,39 @@ app.post("/addProduct", async (req, res) => {
             if (err) {
               console.log(err);
             } else {
-              res.redirect("./seller/product.html");
+              res.redirect("./seller/product");
             }
+          }
+        );
+      }
+    );
+  });
+});
+
+app.post("/editImages", async (req, res) => {
+  let upload = getUpload(uuid.v4());
+  upload(req, res, (err) => {
+    if (err) throw err;
+    let _images = [];
+    req.files.forEach((file) => {
+      _images.push("https://yammie.nyc3.digitaloceanspaces.com/" + file.key);
+    });
+    let _str = JSON.stringify(_images);
+    conn.query(
+      `SELECT * FROM products WHERE id=?`,
+      [req.body.id],
+      (err1, res1) => {
+        if (err1) throw err1;
+        let images = JSON.parse(res1[0].images);
+        images.forEach((image) => {
+          _deleteFile(image.slice(43, image.length));
+        });
+        conn.query(
+          `UPDATE products SET images='${_str}' WHERE id=?`,
+          [req.body.id],
+          (err2, res2) => {
+            if (err2) throw err2;
+            res.redirect("./admin/products");
           }
         );
       }
@@ -350,7 +381,7 @@ app.post("/editProduct", async (req, res) => {
             [id],
             (err3, res3) => {
               if (err3) throw err3;
-              res.redirect("./admin/products.html");
+              res.redirect("./admin/products");
             }
           );
         });
@@ -371,7 +402,7 @@ app.post("/editProduct", async (req, res) => {
           ],
           (err1, res1) => {
             if (err1) throw err1;
-            res.redirect("./admin/products.html");
+            res.redirect("./admin/products");
           }
         );
       }
@@ -393,15 +424,35 @@ app.post("/addImages", async (req, res) => {
     let pathing = JSON.stringify(images);
     let { Uploads } = req.body;
     conn.query(
-      `INSERT INTO appImages SET ?`,
-      {
-        image_id: imageId,
-        image_path: pathing,
-        destination: Uploads
-      },
-      (error, results) => {
-        if (error) throw error;
-        res.redirect("./admin/upload.html");
+      `SELECT * FROM appImages WHERE destination='${Uploads}'`,
+      (err, result) => {
+        if (err) throw err;
+        if (result.length == 0) {
+          conn.query(
+            `INSERT INTO appImages SET ?`,
+            {
+              image_id: imageId,
+              image_path: pathing,
+              destination: Uploads
+            },
+            (error, results) => {
+              if (error) throw error;
+              res.redirect("./admin/upload");
+            }
+          );
+        } else {
+          let images = JSON.parse(result[0].image_path);
+          images.forEach((image) => {
+            _deleteUploadFile(image.slice(50, image.length));
+          });
+          conn.query(
+            `UDATE appImages SET image='${pathing}' WHERE destination='${Uploads}'`,
+            (err1, res1) => {
+              if (err1) throw err1;
+              res.redirect("./admin/uploads");
+            }
+          );
+        }
       }
     );
   });
@@ -434,7 +485,7 @@ app.post("/addSubCategory", async (req, res) => {
           },
           (err2, res2) => {
             if (err2) throw err2;
-            res.redirect("./admin/categories.html");
+            res.redirect("./admin/categories");
           }
         );
       }
@@ -469,7 +520,7 @@ app.post("/editSubcategoryImage", async (req, res) => {
             [sub.replace(/_/g, " ")],
             (err, results) => {
               if (err) throw err;
-              res.redirect("./admin/categories.html");
+              res.redirect("./admin/categories");
             }
           );
         }

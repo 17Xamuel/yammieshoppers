@@ -82,7 +82,7 @@
 
                 <li class="nav-item">
                   <a
-                    href="sales.html"
+                    href="sales"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
@@ -91,7 +91,7 @@
 
                 <li class="nav-item current">
                   <a
-                    href="products.html"
+                    href="products"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
@@ -428,7 +428,7 @@
                             SubCategories
                           </button>
                           <div class="dropdown-menu">
-                            <a class="dropdown-item" href="addSubCategory.html"
+                            <a class="dropdown-item" href="addSubCategory"
                               >Add SubCategory</a
                             >
                             <a
@@ -439,9 +439,7 @@
                               >Edit SubCategory</a
                             >
                             <div class="dropdown-divider"></div>
-                            <a
-                              class="dropdown-item"
-                              href="editSubCategoryImage.html"
+                            <a class="dropdown-item" href="editSubCategoryImage"
                               >Edit Image</a
                             >
                           </div>
@@ -863,7 +861,7 @@
         let reloads = document.querySelectorAll(".auto");
         reloads.forEach((reloadPage) => {
           reloadPage.addEventListener("click", (e) => {
-            window.location.reload("products.html");
+            window.location.reload("products");
           });
         });
       }

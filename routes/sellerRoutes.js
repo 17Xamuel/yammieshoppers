@@ -336,12 +336,21 @@ router.get("/doneOrdernumber/:id", async (req, res) => {
 
 router.get("/sales/:id", async (req, res) => {
   conn.query(
-    `SELECT order_qty,order_amount,specification FROM seller_orders JOIN
+    `SELECT order_qty,order_amount,variation FROM seller_orders JOIN
   products ON seller_orders.product_id=products.id JOIN sellers ON sellers.id=
   products.seller_id WHERE sellers.id=? AND order_status='Approved'`,
     [req.params.id],
-    (err, result) => {
+    (err, results) => {
       if (err) throw err;
+      let total = 0;
+      results.forEach((result) => {
+        if (result.order_amount === null) {
+          total += parseInt(result.variation);
+        } else {
+          total += parseInt(result.order_amount) * parseInt(result.order_qty);
+        }
+      });
+      res.json(total);
     }
   );
 });

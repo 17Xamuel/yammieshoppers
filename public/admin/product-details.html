@@ -80,7 +80,7 @@
 
                 <li class="nav-item current">
                   <a
-                    href="products.html"
+                    href="products"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
@@ -498,7 +498,7 @@
           }
           if (accept.readyState == 4 && accept.status == 200) {
             if (accept.responseText == "Product Accepted") {
-              window.location.assign("products.html");
+              window.location.assign("products");
             }
           }
         };
@@ -549,7 +549,7 @@
       function reject() {
         let rej = document.getElementById("reBtn");
         rej.addEventListener("click", (e) => {
-          window.location.assign("products.html");
+          window.location.assign("products");
         });
       }
       reject();
@@ -557,7 +557,7 @@
       function editting() {
         let edit = document.getElementById("edit");
         edit.addEventListener("click", (e) => {
-          window.location.assign(`editProduct.html?product=${pId}`);
+          window.location.assign(`editProduct?product=${pId}`);
         });
       }
       editting();

@@ -12,11 +12,8 @@
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
     />
     <script>
-      // if (document.referrer == "") {
-      //   self.location = "index";
-      // }
-      if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
-        self.location = "login.html";
+      if (document.referrer == "") {
+        self.location = "index";
       }
     </script>
     <!-- Bootstrap -->
@@ -77,13 +74,13 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="sales.html" class="nav-link text-white p-3 mb-2"
+                  <a href="sales" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="products.html" class="nav-link text-white p-3 mb-2"
+                  <a href="products" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
                   >
