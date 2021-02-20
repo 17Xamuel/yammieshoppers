@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const uuid = require("uui");
+const uuid = require("uuid");
 const conn = require("./database/db.js");
 const aws = require("aws-sdk");
 const multerS3 = require("multer-s3");
