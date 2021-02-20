@@ -50,11 +50,8 @@
       rel="stylesheet"
     />
     <script>
-      // if (document.referrer == "") {
-      //   self.location = "index";
-      // }
       if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
-        self.location = "login.html";
+        self.location = "login";
       }
     </script>
     <style>
@@ -93,7 +90,7 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a href="index.html" class="nav-link text-white p-3 mb-2"
+                  <a href="index" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
                   >
@@ -302,13 +299,13 @@
                             id="sp"
                           />
                         </form>
-                        <a href="addProduct.html">
+                        <a href="addProduct">
                           <button class="btn btn-outline-success" type="submit">
                             Add Product
                           </button></a
                         >
                       </div>
-                    </nav
+                    </nav>
                     <div class="table-responsive">
                       <table class="table table-striped bg-light text-left">
                         <thead>
@@ -595,7 +592,7 @@
         let lg = document.getElementById("slg");
         lg.addEventListener("click", (e) => {
           localStorage.removeItem("yammie/useLocalstorage/storage");
-          window.location.assign("login.html");
+          window.location.assign("login");
         });
       }
       lg();

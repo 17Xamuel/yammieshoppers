@@ -68,13 +68,13 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="sales.html" class="nav-link text-white p-3 mb-2"
+                  <a href="sales" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="products.html" class="nav-link text-white p-3 mb-2"
+                  <a href="products" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
                   >
@@ -648,8 +648,11 @@
       orders.open("GET", `/api/admin/pendingOrders/${orderId}`, true);
       orders.send();
 
+      let _admin = JSON.parse(localStorage.getItem("admin/yammie"));
       let finishOrder = document.getElementById("finishOrder");
       finishOrder.addEventListener("click", (e) => {
+        let fo = {};
+        fo.name = _admin[0];
         const orderFinish = new XMLHttpRequest();
         orderFinish.onreadystatechange = () => {
           if (orderFinish.readyState < 4) {
@@ -659,16 +662,18 @@
           }
           if (orderFinish.readyState == 4 && orderFinish.status == 200) {
             if (orderFinish.responseText == "ok") {
-              window.location.assign("home.html");
+              window.location.assign("home");
             }
           }
         };
-        orderFinish.open("GET", `/api/admin/finishOrder/${orderId}`, true);
-        orderFinish.send();
+        orderFinish.open("POST", `/api/admin/finishOrder/${orderId}`, true);
+        orderFinish.setRequestHeader("Content-Type", "application/json");
+        orderFinish.send(JSON.stringify(fo));
       });
 
       document.getElementById("co").addEventListener("submit", (e) => {
         let co = {};
+        co.name = _admin[0];
         co.reason = document.getElementById("cancelReason").value;
         let _co = new XMLHttpRequest();
         _co.onreadystatechange = () => {
@@ -679,7 +684,7 @@
           }
           if (_co.readyState == 4 && _co.status == 200) {
             if (_co.responseText == "ok") {
-              window.location.assign("home.html");
+              window.location.assign("home");
             } else {
               document.getElementById("cancelMessage").innerHTML =
                 _co.responseText;

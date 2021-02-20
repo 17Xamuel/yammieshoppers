@@ -96,7 +96,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-5">
+          <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
@@ -120,6 +120,7 @@
     <section>
       <div class="login-form text-center">
         <form id="loginForm">
+          <h2 class="text-center">Login</h2>
           <div class="form-group">
             <input
               type="text"
@@ -306,7 +307,7 @@
                 xhr.responseText
               );
 
-              window.location.assign("index.html");
+              window.location.assign("index");
             }
           }
         };

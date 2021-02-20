@@ -38,16 +38,6 @@
       if (document.referrer == "") window.location.assign("./index");
     </script>
   </head>
-  <style>
-    @media (max-width: 768px) {
-      .pBtn {
-        width: 100%;
-        margin-top: 10px;
-        position: static;
-        height: auto;
-      }
-    }
-  </style>
 
   <body>
     <!-- Navbar -->
@@ -82,7 +72,7 @@
 
                 <li class="nav-item">
                   <a
-                    href="sales.html"
+                    href="sales"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
@@ -91,7 +81,7 @@
 
                 <li class="nav-item current">
                   <a
-                    href="products.html"
+                    href="products"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
@@ -426,7 +416,7 @@
                   }
                   if (_xhr.readyState == 4 && _xhr.status == 200) {
                     if (_xhr.responseText == "OK") {
-                      window.location.reload("products.html");
+                      window.location.reload("products");
                     }
                   }
                 };
@@ -465,7 +455,7 @@
                       <td>${onlineProduct.price}</td>
                       <td>${onlineProduct.quantity}</td>
                       <td>
-                   <a href="product.html?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
+                   <a href="product?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
                        data-pp="${onlineProduct.id}">
                           Details
                         </button></a>
@@ -514,7 +504,7 @@
                       <td>${onlineProduct.price}</td>
                        <td>${onlineProduct.quantity}</td>
                       <td>
-                   <a href="product.html?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
+                   <a href="product?product=${onlineProduct.id}"><button type="button" class="btn btn-info btn-sm"
                        data-pp="${onlineProduct.id}">
                           Details
                         </button></a>

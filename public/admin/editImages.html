@@ -7,47 +7,47 @@
       href="../resources/cartlink.png"
       type="image/x-icon"
     />
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
     />
+
     <link
       rel="stylesheet"
       type="text/css"
       href="https://unpkg.com/file-upload-with-preview@4.0.2/dist/file-upload-with-preview.min.css"
     />
-    <script>
-      if (document.referrer == "") {
-        self.location = "index";
-      }
-    </script>
-    <!-- Bootstrap -->
+
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
-    />
+
+    <!-- Scripts -->
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
       integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
       crossorigin="anonymous"
     ></script>
+    <!-- End Scripts -->
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="../admin/styles/home.css" />
+    <link rel="stylesheet" href="./styles/home.css" />
 
-    <title>Yammie | Add SubCategory</title>
+    <title>Yammie | Edit Product Images</title>
+    <script>
+      if (document.referrer == "") window.location.assign("./index");
+    </script>
   </head>
 
-  <body>
+  <body class="bg-light">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light">
       <button
@@ -73,31 +73,40 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a href="home" class="nav-link text-white p-3 mb-2"
+                  <a href="home" class="nav-link text-white p-3 mb-2 current"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
                 </li>
 
                 <li class="nav-item">
-                  <a href="sales" class="nav-link text-white p-3 mb-2"
+                  <a
+                    href="sales"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
                   >
                 </li>
+
                 <li class="nav-item current">
-                  <a href="products" class="nav-link text-white p-3 mb-2"
+                  <a
+                    href="products"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="upload" class="nav-link text-white p-3 mb-2"
+                  <a
+                    href="upload"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
                     >Uploads</a
                   >
                 </li>
                 <li class="nav-item">
-                  <a href="profile" class="nav-link text-white p-3 mb-2"
+                  <a
+                    href="profile"
+                    class="nav-link text-white p-3 mb-2 sidebar-link"
                     ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
                   >
                 </li>
@@ -119,13 +128,13 @@
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">0</span
+                        ><span class="text-white icon-bullet">4</span
                         ><i class="fas fa-comments text-muted fa-2x"></i
                       ></a>
                     </li>
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">0</span
+                        ><span class="text-white icon-bullet">5</span
                         ><i class="fas fa-bell text-muted fa-2x"></i
                       ></a>
                     </li>
@@ -178,44 +187,22 @@
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
             <div class="row pt-md-5 mt-md-3 align-items-center">
-              <div class="col-xl-8 mx-auto">
-                <div class="card rounded my-5">
-                  <div class="card-body">
-                    <h5 class="text-center text-muted m-3">
-                      Edit SubCategory Image
-                    </h5>
-                    <form
-                      action="/editSubCategoryImage"
-                      method="POST"
-                      enctype="multipart/form-data"
-                    >
-                      <div class="form-group">
-                        <select
-                          name="category"
-                          id="_c"
-                          class="form-control catSelection"
-                          required
-                        >
-                          <option value="" hidden>Select Category</option>
-                        </select>
-                      </div>
-                      <div class="form-group">
-                        <select
-                          name="sub"
-                          id="subC"
-                          required
-                          class="form-control"
-                        >
-                          <option value="" hidden>Select SubCategory</option>
-                        </select>
-                      </div>
-                      <div class="mx-auto" style="width: 400px">
+              <div class="col-xl-10 m-auto">
+                <h4 class="text-center m-3">Edit Product Images</h4>
+                <form
+                  action="/editImages"
+                  method="POST"
+                  enctype="multipart/form-data"
+                >
+                  <div class="row">
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
                         <div
                           class="custom-file-container"
                           data-upload-id="myUpload"
                         >
-                          <label for="Fileupload">
-                            Image
+                          <label for="Fileupload"
+                            >Main Image
                             <a
                               href="javascript:void(0)"
                               class="custom-file-container__image-clear"
@@ -228,8 +215,8 @@
                               class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
-                              required
                             />
+
                             <span
                               class="custom-file-container__custom-file__custom-file-control"
                             ></span>
@@ -240,12 +227,114 @@
                           ></div>
                         </div>
                       </div>
-                      <button class="btn btn-success btn-block my-3">
-                        Submit
-                      </button>
-                    </form>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUploads"
+                        >
+                          <label for="Fileupload"
+                            >Other Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input"
+                              accept="image/*"
+                              name="images"
+                            />
+
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  <div class="row">
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="myUploading"
+                        >
+                          <label for="Fileupload"
+                            >Other Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input"
+                              accept="image/*"
+                              name="images"
+                            />
+
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xl-6 col-12">
+                      <div style="width: 400px">
+                        <div
+                          class="custom-file-container"
+                          data-upload-id="Upload"
+                        >
+                          <label for="Fileupload"
+                            >Other Image
+                            <a
+                              href="javascript:void(0)"
+                              class="custom-file-container__image-clear"
+                              >&times;</a
+                            ></label
+                          >
+                          <label class="custom-file-container__custom-file"
+                            ><input
+                              type="file"
+                              class="custom-file-container__custom-file__custom-file-input file"
+                              accept="image/*"
+                              name="images"
+                            />
+
+                            <span
+                              class="custom-file-container__custom-file__custom-file-control"
+                            ></span>
+                          </label>
+                          <div
+                            class="custom-file-container__image-preview"
+                            style="overflow: hidden"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <input type="hidden" name="id" id="edt" />
+                  <button class="btn-warning btn-block my-3 btn text-white">
+                    Update
+                  </button>
+                </form>
               </div>
             </div>
           </div>
@@ -290,7 +379,6 @@
     <!-- End Footer -->
 
     <!-- Scripts -->
-
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
@@ -311,49 +399,13 @@
     <script src="scripts/account.js"></script>
     <script>
       const upload = new FileUploadWithPreview("myUpload");
-      const catGet = new XMLHttpRequest();
-      catGet.onreadystatechange = () => {
-        if (catGet.readyState == 4 && catGet.status == 200) {
-          let categories = JSON.parse(catGet.responseText);
-          let cat = "";
-          categories.forEach((cats) => {
-            cat += `<option value="${cats.category_name.replace(/ /g, "_")}">${
-              cats.category_name
-            }</option>`;
-          });
-          let getting = document.querySelectorAll(".catSelection");
-          getting.forEach((get) => {
-            get.innerHTML += cat;
-          });
-        }
-      };
-      catGet.open("GET", "/api/admin/getCategory", true);
-      catGet.send();
+      const uploads = new FileUploadWithPreview("myUploads");
+      const uploading = new FileUploadWithPreview("myUploading");
+      const Upload = new FileUploadWithPreview("Upload");
 
-      document.getElementById("_c").addEventListener("change", (e) => {
-        let subCategory = new XMLHttpRequest();
-        subCategory.onreadystatechange = () => {
-          if (subCategory.readyState == 4 && subCategory.status == 200) {
-            let results = JSON.parse(subCategory.responseText);
-            let row = "";
-            results.forEach((result) => {
-              row += `<option value="${result.subCategoryName.replace(
-                / /g,
-                "_"
-              )}">${result.subCategoryName}</option>`;
-            });
-            document.getElementById("subC").innerHTML += row;
-          }
-        };
-        subCategory.open(
-          "GET",
-          `/api/sellers/subCategory/${document.getElementById("_c").value}`,
-          true
-        );
-        subCategory.send();
-      });
+      let product = new URLSearchParams(window.location.search).get("images");
+      document.getElementById("edt").value = `${product}`;
     </script>
-
     <!-- End Scripts -->
   </body>
 </html>

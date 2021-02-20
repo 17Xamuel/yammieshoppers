@@ -25,7 +25,7 @@ router.post("/login", (req, res) => {
     email == "yammieshoppers@gmail.com" &&
     password == "yammieshoppersadmin"
   ) {
-    user = ["Yammie", "0756234512", "Technician", "yammieshoppers@gmail.com"];
+    user = ["Samuel", "0756234512", "Technician", "yammieshoppers@gmail.com"];
     res.send(user);
   } else if (
     email == "admin@yammieshoppers.com" &&
@@ -324,69 +324,216 @@ router.get("/getOnlineProducts", async (req, res) => {
   });
 });
 
-router.get("/finishOrder/:id", async (req, res) => {
+router.post("/finishOrder/:id", async (req, res) => {
   conn.query(
     `SELECT * FROM pending_orders WHERE order_id=?`,
     [req.params.id],
     (err1, res1) => {
       if (err1) throw err1;
+      let total = 0;
+
+      let newInfo = JSON.parse(res1[0].order_info);
+
+      _info = JSON.stringify({
+        shipping: newInfo.shipping,
+        order_urgent: newInfo.order_urgent,
+        address: newInfo.address,
+        order_delivery_method: newInfo.order_delivery_method,
+        admin: req.body.name,
+        date: new Date()
+      });
+
       let items = Object.values(JSON.parse(res1[0].order_items));
       items.forEach((item) => {
         conn.query(
-          `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}' AND
-           order_status='Approved'`,
+          `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}' AND 
+         order_status='Approved'`,
           (err2, res2) => {
             if (err2) throw err2;
             if (res2.length == 0) {
               conn.query(
-                `UPDATE seller_orders SET order_status='Approved' WHERE product_id=
-              '${res2[0].product_id}' AND order_status='Pending'`,
-                (err3, res3) => {
-                  if (err3) throw err3;
+                `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'
+              AND order_status='Pending'`,
+                (err_9, res_9) => {
+                  if (err_9) throw err_9;
+                  if (res_9[0].specification !== null) {
+                    let _cart = 0;
+                    res_9.forEach((result) => {
+                      _cart += result.order_qty;
+                      let spec = JSON.parse(result.specification);
+                      if (
+                        (spec.Sizes === null || spec.Sizes === undefined) &&
+                        (spec.Ingredients === null ||
+                          spec.Ingredients === undefined)
+                      ) {
+                        total += 0;
+                      } else if (
+                        (spec.Sizes === null || spec.Sizes === undefined) &&
+                        (spec.Ingredients !== null ||
+                          spec.Ingredients !== undefined)
+                      ) {
+                        for (let i = 0; i < spec.Ingredients.length; i++) {
+                          total += spec.Ingredients[i].price;
+                        }
+                      } else if (
+                        (spec.Sizes !== null || spec.Sizes !== undefined) &&
+                        (spec.Ingredients === undefined ||
+                          spec.Ingredients === null)
+                      ) {
+                        for (let [key, value] of Object.entries(spec.Sizes)) {
+                          total += parseInt(`${value}`);
+                        }
+                      } else if (
+                        (spec.Sizes !== null || spec.Sizes !== undefined) &&
+                        (spec.Ingredients !== null ||
+                          spec.Ingredients !== undefined)
+                      ) {
+                        for (let [key, value] of Object.entries(spec.Sizes)) {
+                          total += parseInt(`${value}`);
+                        }
+                        for (let i = 0; i < spec.Ingredients.length; i++) {
+                          total += spec.Ingredients[i].price;
+                        }
+                      }
+                    });
+                    conn.query(
+                      `INSERT INTO seller_orders SET?`,
+                      {
+                        id: uuid.v4(),
+                        product_id: `${item.cartItemAdded}`,
+                        order_qty: `${_cart}`,
+                        order_product: `${res_9[0].order_product}`,
+                        order_amount: `${null}`,
+                        order_status: "Approved",
+                        order_price: `${res_9[0].order_price}`,
+                        order_discount: `${res_9[0].order_discount}`,
+                        variation: `${total}`
+                      },
+                      (merr, mres) => {
+                        if (merr) throw merr;
+                        conn.query(
+                          `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'
+                        AND order_status='Pending'`,
+                          (_merr, _mres) => {
+                            if (_merr) throw _merr;
+                          }
+                        );
+                      }
+                    );
+                  } else {
+                    conn.query(
+                      `UPDATE seller_orders SET order_status='Approved' WHERE product_id='${item.cartItemAdded}'
+               AND order_status='Pending'`,
+                      (err3, res3) => {
+                        if (err3) throw err3;
+                      }
+                    );
+                  }
                 }
               );
             } else {
               conn.query(
                 `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'
-              AND order_status='Pending'`,
-                (err4, res4) => {
-                  if (err4) throw err4;
-                  let _qty = parseInt(res4[0].order_qty) - item.inCartNumber;
-                  if (_qty == 0 && res2[0].specification === null) {
-                    let update =
-                      item.inCartNumber + parseInt(res2[0].order_qty);
+               AND order_status='Pending'`,
+                (err6, res6) => {
+                  if (err6) throw err6;
+                  if (res6.length == 0) {
                     conn.query(
-                      `UPDATE seller_orders SET order_qty=${update} WHERE product_id=
-                      '${item.cartItemAdded}' AND order_status='Approved'`,
-                      (err5, res5) => {
-                        if (err5) throw err5;
+                      `UPDATE seller_orders SET order_status='Approved' WHERE product_id=
+                    '${item.cartItemAdded}'`,
+                      (querr, qures) => {
+                        if (querr) throw querr;
+                      }
+                    );
+                  } else {
+                    let mqty = parseInt(res2[0].order_qty);
+                    if (res6[0].specification === null) {
+                      let qty = parseInt(res6[0].order_qty) - item.inCartNumber;
+                      if (qty == 0) {
+                        let update =
+                          item.inCartNumber + parseInt(res2[0].order_qty);
                         conn.query(
-                          `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'
-                        AND order_status='Pending'`,
-                          (err6, res6) => {
-                            if (err6) throw err6;
+                          `UPDATE seller_orders SET order_qty=${update} WHERE product_id =
+                        '${item.cartItemAdded}'`,
+                          (err7, res7) => {
+                            if (err7) throw err7;
+                            conn.query(
+                              `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'
+                          AND order_status='Pending'`,
+                              (err8, res8) => {
+                                if (err8) throw err8;
+                              }
+                            );
+                          }
+                        );
+                      } else {
+                        let _update =
+                          item.inCartNumber + parseInt(res2[0].order_qty);
+                        conn.query(
+                          `UPDATE seller_orders SET order_qty=${_update} WHERE product_id = 
+                        '${item.cartItemAdded}' AND order_status='Approved'`,
+                          (err9, res9) => {
+                            if (err9) throw err9;
                           }
                         );
                       }
-                    );
-                  } else if (_qty > 0 && res2[0].specification === null) {
-                    let _update =
-                      parseInt(res2[0].order_qty) + item.inCartNumber;
-                    conn.query(
-                      `UPDATE seller_orders SET order_qty=${_update} WHERE product_id=
-                      '${item.cartItemAdded}' AND order_status='Approved'`,
-                      (err7, res7) => {
-                        if (err7) throw err7;
-                      }
-                    );
-                  } else if (res2[0].specification !== null) {
-                    conn.query(
-                      `UPDATE seller_orders SET order_status='Approved' WHERE product_id = 
-                    '${res2[0].product_id}' AND order_status='Pending'`,
-                      (_err, _res) => {
-                        if (_err) throw _err;
-                      }
-                    );
+                    } else {
+                      res6.forEach((result) => {
+                        mqty += parseInt(result.order_qty);
+                        let spec = JSON.parse(result.specification);
+                        if (
+                          (spec.Sizes === null || spec.Sizes === undefined) &&
+                          (spec.Ingredients === null ||
+                            spec.Ingredients === undefined)
+                        ) {
+                          total += parseInt(result.order_amount);
+                        } else if (
+                          (spec.Sizes === null || spec.Sizes === undefined) &&
+                          (spec.Ingredients !== null ||
+                            spec.Ingredients !== undefined)
+                        ) {
+                          for (let i = 0; i < spec.Ingredients.length; i++) {
+                            total += spec.Ingredients[i].price;
+                          }
+                        } else if (
+                          (spec.Sizes !== null || spec.Sizes !== undefined) &&
+                          (spec.Ingredients === undefined ||
+                            spec.Ingredients === null)
+                        ) {
+                          for (let [key, value] of Object.entries(spec.Sizes)) {
+                            total += parseInt(`${value}`);
+                          }
+                        } else if (
+                          (spec.Sizes !== null || spec.Sizes !== undefined) &&
+                          (spec.Ingredients !== null ||
+                            spec.Ingredients !== undefined)
+                        ) {
+                          for (let [key, value] of Object.entries(spec.Sizes)) {
+                            total += parseInt(`${value}`);
+                          }
+                          for (let i = 0; i < spec.Ingredients.length; i++) {
+                            total += spec.Ingredients[i].price;
+                          }
+                        }
+                      });
+                      let _total = total + parseInt(res2[0].variation);
+                      conn.query(
+                        `UPDATE seller_orders SET order_qty=${mqty},order_amount=${null},variation=${_total} WHERE
+                    product_id='${
+                      item.cartItemAdded
+                    }' AND order_status='Approved'`,
+                        (err0, res0) => {
+                          if (err0) throw err0;
+                          conn.query(
+                            `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'
+                        AND order_status='Pending'`,
+                            (err, result) => {
+                              if (err) throw err;
+                            }
+                          );
+                        }
+                      );
+                    }
                   }
                 }
               );
@@ -395,21 +542,22 @@ router.get("/finishOrder/:id", async (req, res) => {
         );
       });
       conn.query(
-        `UPDATE pending_orders SET order_status='finished' WHERE order_id=?`,
+        `UPDATE pending_orders SET order_info='${_info}',order_status='finished' WHERE
+      order_id=?`,
         [req.params.id],
-        (err8, res8) => {
-          if (err8) throw err8;
+        (error, results) => {
+          if (error) throw error;
           conn.query(
             `SELECT c_email,c_last_name FROM  customers WHERE c_id='${res1[0].c_id}'`,
             (errs, qres) => {
               if (errs) throw errs;
-              let email = {
-                from: '"Yammie Shoppers" <info@yammieshoppers.com',
+              let _email = {
+                from: '"Yammie Shoppers" <info@yammieshoppers.com>',
                 to: `${qres[0].c_email}`,
-                subject: `Yammie Finish Order ${res1[0].order_number}`,
+                subject: `Finish Order ${res1[0].order_number}`,
                 text: `Hello ${qres[0].c_last_name}, your order ${res1[0].order_number} has been successfully finished.Thanks for Shopping with Yammie Shoppers.`
               };
-              transporter.sendMail(email, (mailErr, response) => {
+              transporter.sendMail(_email, (mailErr, response) => {
                 if (mailErr) throw mailErr;
                 res.status(200).send("ok");
               });
@@ -422,63 +570,186 @@ router.get("/finishOrder/:id", async (req, res) => {
 });
 
 router.post("/cancelOrder/:id", async (req, res) => {
-  let { reason } = req.body;
   conn.query(
     `SELECT * FROM pending_orders WHERE order_id=?`,
     [req.params.id],
     (err1, res1) => {
       if (err1) throw err1;
+
+      let total = 0;
+
+      let newInfo = JSON.parse(res1[0].order_info);
+
+      _info = JSON.stringify({
+        shipping: newInfo.shipping,
+        order_urgent: newInfo.order_urgent,
+        address: newInfo.address,
+        order_delivery_method: newInfo.order_delivery_method,
+        admin: req.body.name,
+        date: new Date()
+      });
+
       let items = Object.values(JSON.parse(res1[0].order_items));
       items.forEach((item) => {
         conn.query(
-          `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'
-           AND order_status='Pending'`,
+          `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}' AND 
+        order_status='Pending'`,
           (err2, res2) => {
             if (err2) throw err2;
-            let qtyChange = parseInt(res2[0].order_qty) - item.inCartNumber;
-            if (qtyChange == 0) {
-              conn.query(
-                `DELETE FROM seller_orders WHERE product_id = '${res2[0].product_id}' 
-                AND order_status='Pending'`,
-                (err3, res3) => {
-                  if (err3) throw err3;
+            if (res2.length > 0) {
+              if (res2[0].specification === null) {
+                let qty = parseInt(res2[0].order_qty) - item.inCartNumber;
+                if (qty == 0) {
                   conn.query(
                     `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
-                    (err4, res4) => {
-                      if (err4) throw err4;
-                      let qtyReset =
-                        parseInt(res4[0].quantity) + item.inCartNumber;
+                    (err3, res3) => {
+                      if (err3) throw err3;
+                      let _qty = parseInt(res3[0].quantity) + item.inCartNumber;
                       conn.query(
-                        `UPDATE products SET quantity =${qtyReset} WHERE id='${item.cartItemAdded}'`,
-                        (err5, res5) => {
-                          if (err5) throw err5;
+                        `UPDATE products SET quantity =${_qty} WHERE id='${item.cartItemAdded}'`,
+                        (err4, res4) => {
+                          if (err4) throw err4;
+                          conn.query(
+                            `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'`,
+                            (err5, res5) => {
+                              if (err5) throw err5;
+                            }
+                          );
+                        }
+                      );
+                    }
+                  );
+                } else {
+                  conn.query(
+                    `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
+                    (err6, res6) => {
+                      if (err6) throw err6;
+                      let qty_ = parseInt(res6[0].quantity) + item.inCartNumber;
+                      conn.query(
+                        `UPDATE products SET quantity =${qty_} WHERE id='${item.cartItemAdded}'`,
+                        (err7, res7) => {
+                          if (err7) throw err7;
+                          conn.query(
+                            `UPDATE seller_orders SET order_qty=${qty} WHERE product_id=
+                          '${item.cartItemAdded}'`,
+                            (error, results) => {
+                              if (error) throw error;
+                            }
+                          );
                         }
                       );
                     }
                   );
                 }
-              );
+              } else {
+                let mqty = 0;
+                res2.forEach((result) => {
+                  mqty += parseInt(res2[0].order_qty);
+                });
+                conn.query(
+                  `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}' AND
+                order_status='Pending'`,
+                  (err8, res8) => {
+                    if (err8) throw err8;
+                    conn.query(
+                      `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
+                      (err9, res9) => {
+                        if (err9) throw err9;
+                        let myqty = parseInt(res9[0].quantity) + mqty;
+                        conn.query(
+                          `UPDATE products SET quantity=${myqty} WHERE id='${item.cartItemAdded}'`,
+                          (err0, res0) => {
+                            if (err0) throw err0;
+                          }
+                        );
+                      }
+                    );
+                  }
+                );
+              }
             } else {
+              let spec = item.specs;
+
+              if (
+                (spec.Sizes === null || spec.Sizes === undefined) &&
+                (spec.Ingredients === null || spec.Ingredients === undefined)
+              ) {
+                total += 0;
+              } else if (
+                (spec.Sizes === null || spec.Sizes === undefined) &&
+                (spec.Ingredients !== null || spec.Ingredients !== undefined)
+              ) {
+                for (let i = 0; i < spec.Ingredients.length; i++) {
+                  total += spec.Ingredients[i].price;
+                }
+              } else if (
+                (spec.Sizes !== null || spec.Sizes !== undefined) &&
+                (spec.Ingredients === undefined || spec.Ingredients === null)
+              ) {
+                for (let [key, value] of Object.entries(spec.Sizes)) {
+                  total += parseInt(`${value}`);
+                }
+              } else if (
+                (spec.Sizes !== null || spec.Sizes !== undefined) &&
+                (spec.Ingredients !== null || spec.Ingredients !== undefined)
+              ) {
+                for (let [key, value] of Object.entries(spec.Sizes)) {
+                  total += parseInt(`${value}`);
+                }
+                for (let i = 0; i < spec.Ingredients.length; i++) {
+                  total += spec.Ingredients[i].price;
+                }
+              }
+
               conn.query(
-                `UPDATE seller_orders SET order_qty=${qtyChange} WHERE 
-                product_id='${res2[0].product_id}'
-                AND order_status='Pending'`,
-                (err6, res6) => {
-                  if (err6) throw err6;
-                  conn.query(
-                    `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
-                    (err7, res7) => {
-                      if (err7) throw err7;
-                      let _qtty =
-                        parseInt(res7[0].quantity) + item.inCartNumber;
-                      conn.query(
-                        `UPDATE products SET quantity=${_qtty} WHERE id='${item.cartItemAdded}'`,
-                        (err8, res8) => {
-                          if (err8) throw err8;
-                        }
-                      );
-                    }
-                  );
+                `SELECT * FROM seller_orders WHERE product_id='${item.cartItemAdded}'`,
+                (err_0, res_0) => {
+                  if (err_0) throw err_0;
+                  let amountChange = res_0[0].variation - total;
+                  let qty_m = parseInt(res_0[0].order_qty) - item.inCartNumber;
+                  if (qty_m == 0) {
+                    conn.query(
+                      `SELECT quantity FROM products   WHERE id='${item.cartItemAdded}'`,
+                      (err_1, res_1) => {
+                        if (err_1) throw err_1;
+                        let pqty = parseInt(res_1[0].quantity) + cart;
+                        conn.query(
+                          `UPDATE products SET quantity=${pqty} WHERE id='${item.cartItemAdded}'`,
+                          (err_2, res_2) => {
+                            if (err_2) throw err_2;
+                            conn.query(
+                              `DELETE FROM seller_orders WHERE product_id='${item.cartItemAdded}'`,
+                              (err_3, res_3) => {
+                                if (err_3) throw err_3;
+                              }
+                            );
+                          }
+                        );
+                      }
+                    );
+                  } else if (qty_m > 0) {
+                    conn.query(
+                      `UPDATE seller_orders SET order_amount=${amountChange},order_qty=${qty_m}
+                     WHERE product_id='${item.cartItemAdded}'`,
+                      (err_4, res_4) => {
+                        if (err_4) throw err_4;
+                        conn.query(
+                          `SELECT quantity FROM products WHERE id='${item.cartItemAdded}'`,
+                          (err_5, res_5) => {
+                            if (err_5) throw err_5;
+                            let tqty =
+                              parseInt(res_5[0].quantity) + item.inCartNumber;
+                            conn.query(
+                              `UPDATE products SET quantity=${tqty} WHERE id='${item.cartItemAdded}'`,
+                              (err_6, res_6) => {
+                                if (err_6) throw err_6;
+                              }
+                            );
+                          }
+                        );
+                      }
+                    );
+                  }
                 }
               );
             }
@@ -486,22 +757,22 @@ router.post("/cancelOrder/:id", async (req, res) => {
         );
       });
       conn.query(
-        `UPDATE pending_orders SET order_status='cancelled' WHERE order_id=?`,
+        `UPDATE pending_orders SET order_info='${_info}',order_status='cancelled' WHERE order_id=?`,
         [req.params.id],
-        (err9, res9) => {
-          if (err9) throw err9;
+        (_err, _res) => {
+          if (_err) throw _err;
           conn.query(
-            `SELECT c_email,c_last_name FROM  customers WHERE c_id='${res1[0].c_id}'`,
-            (errs, qres) => {
-              if (errs) throw errs;
-              let _email = {
-                from: '"Yammie Shoppers" <info@yammieshoppers.com',
+            `SELECT c_email,c_last_name FROM customers WHERE c_id='${res1[0].c_id}'`,
+            (qerr, qres) => {
+              if (qerr) throw qerr;
+              let cancelMail = {
+                from: '"Yammie Shoppers" <info@yammieshoppers.com>',
                 to: `${qres[0].c_email}`,
-                subject: `Yammie Cancel Order ${res1[0].order_number}`,
-                text: `Hello ${qres[0].c_last_name}, your order ${res1[0].order_number} has been cancelled because ${reason}.Thanks for Shopping with Yammie Shoppers.`
+                subject: `Cancel Order ${res1[0].order_number}`,
+                text: `Hello ${qres[0].c_last_name}, your order has been cancelled because ${req.body.reason} but thanks for shopping with Yammie Shoppers`
               };
-              transporter.sendMail(_email, (mailErr, response) => {
-                if (mailErr) throw mailErr;
+              transporter.sendMail(cancelMail, (merr, result_0) => {
+                if (merr) throw "Error" + merr;
                 res.status(200).send("ok");
               });
             }

@@ -41,11 +41,8 @@
 
     <title>Yammie | Add Your Product</title>
     <script>
-      // if (document.referrer == "") {
-      //   self.location = "index";
-      // }
       if (!localStorage.getItem("yammie/useLocalstorage/storage")) {
-        self.location = "login.html";
+        self.location = "login";
       }
     </script>
     <style>
@@ -85,9 +82,7 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a
-                    href="index.html"
-                    class="nav-link text-white p-3 mb-2 current"
+                  <a href="index" class="nav-link text-white p-3 mb-2 current"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i
                     >Dashboard</a
                   >
@@ -320,7 +315,6 @@
                         class="form-control"
                         autocomplete="off"
                         name="netWeight"
-                        required
                       />
                     </div>
                   </div>
@@ -552,6 +546,7 @@
                               class="custom-file-container__custom-file__custom-file-input filing"
                               accept="image/*"
                               name="images"
+                              required
                             />
 
                             <span
