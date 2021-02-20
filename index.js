@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const uuid = require("uuid");
+const uuid = require("uui");
 const conn = require("./database/db.js");
 const aws = require("aws-sdk");
 const multerS3 = require("multer-s3");
@@ -25,7 +25,7 @@ const spacesEndpoint = new aws.Endpoint("nyc3.digitaloceanspaces.com");
 const s3 = new aws.S3({
   endpoint: spacesEndpoint,
   accessKeyId: "47H74K3ZGEGOYZS5ERRL",
-  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE"
+  secretAccessKey: "eoNqWeUucKi5VA7kNzTE5F3jg6jHvJhcpowKpu9rngE",
 });
 
 function getUpload(id) {
@@ -36,8 +36,8 @@ function getUpload(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -50,8 +50,8 @@ function getUploadFile(id) {
       acl: "public-read",
       key: function (request, file, cb) {
         cb(null, id + "-" + file.originalname);
-      }
-    })
+      },
+    }),
   }).array("images");
   return upload;
 }
@@ -59,7 +59,7 @@ function getUploadFile(id) {
 function _deleteFile(i) {
   var params = {
     Bucket: "yammie",
-    Key: i
+    Key: i,
   };
   s3.deleteObject(params, function (err, data) {
     if (err) console.log(err, err.stack);
@@ -70,7 +70,7 @@ function _deleteFile(i) {
 function _deleteUploadFile(i) {
   var params = {
     Bucket: "yammieuploads",
-    Key: i
+    Key: i,
   };
   s3.deleteObject(params, function (err, data) {
     if (err) console.log(err, err.stack);
@@ -112,7 +112,7 @@ app.post("/addProduct", async (req, res) => {
       ingridient,
       ingridientPrice,
       ingridientdiscount,
-      flavor
+      flavor,
     } = req.body;
     if (color !== undefined) {
       var colors = [];
@@ -218,7 +218,7 @@ app.post("/addProduct", async (req, res) => {
           myVariations.push({
             descriptions: mydescription[j],
             getPrice: pricing[j],
-            getDiscount: discounting[j]
+            getDiscount: discounting[j],
           });
         }
         return myVariations;
@@ -263,8 +263,8 @@ app.post("/addProduct", async (req, res) => {
                   ingridients,
                   ingridientPrices,
                   ingridientdiscounts
-                ) || null
-            })
+                ) || null,
+            }),
           },
           (err, results) => {
             if (err) {
@@ -364,7 +364,7 @@ app.post("/editProduct", async (req, res) => {
     discount,
     seller_id,
     quantity,
-    detailedDescription
+    detailedDescription,
   } = req.body;
 
   conn.query(
@@ -395,9 +395,9 @@ app.post("/editProduct", async (req, res) => {
               detailedDescription: detailedDescription,
               description: description,
               seller_id: seller_id,
-              price: price
+              price: price,
             },
-            id
+            id,
           ],
           (err1, res1) => {
             if (err1) throw err1;
@@ -432,7 +432,7 @@ app.post("/addImages", async (req, res) => {
             {
               image_id: imageId,
               image_path: pathing,
-              destination: Uploads
+              destination: Uploads,
             },
             (error, results) => {
               if (error) throw error;
@@ -480,7 +480,7 @@ app.post("/addSubCategory", async (req, res) => {
           {
             subCategoryName: subcategory,
             category_id: res1[0].category_id,
-            image: path
+            image: path,
           },
           (err2, res2) => {
             if (err2) throw err2;
@@ -513,7 +513,7 @@ app.post("/gift", async (req, res) => {
         gift_image: gift_image,
         gift_name: req.body.gift_name,
         gift_description: req.body.gift_description,
-        gift_discount: req.body.gift_discount
+        gift_discount: req.body.gift_discount,
       },
       (error, results) => {
         if (error) throw error;
@@ -559,6 +559,10 @@ app.post("/editSubcategoryImage", async (req, res) => {
   });
 });
 
+app.use(function (req, res, next) {
+  res.status(503);
+  res.render("Service Unavailable, Please Try Again Few Minutes Later....");
+});
 app.use(function (req, res, next) {
   res.status(404);
   res.redirect("/404");
