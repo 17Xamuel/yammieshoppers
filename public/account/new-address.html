@@ -190,7 +190,7 @@
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="/">
+          <a href="">
             <i class="fas fa-layer-group ctg-icon"></i>
             All Items
           </a>
@@ -200,16 +200,16 @@
         <h3>My Account</h3>
         <li>
           <i class="fas fa-user"></i>
-          <span><a href="../account/profile">My Profile</a></span>
+          <span><a href="./profile">My Profile</a></span>
         </li>
         <li>
           <i class="fas fa-box"></i>
-          <span><a href="../account/orders">My Orders</a></span>
+          <span><a href="./orders">My Orders</a></span>
         </li>
 
         <li>
           <i class="fas fa-dolly-flatbed"></i>
-          <span><a href="../account/pending-orders">Pending Orders</a></span>
+          <span><a href="./pending-orders">Pending Orders</a></span>
         </li>
         <li>
           <i class="fas fa-thumbs-up"></i>
@@ -217,17 +217,17 @@
         </li>
         <li>
           <i class="fas fa-address-card"></i>
-          <span><a href="../account/address"> My Address</a></span>
+          <span><a href="./address"> My Address</a></span>
         </li>
         <li>
           <i class="fas fa-user-edit"></i>
-          <span><a href="../account/edit">Edit My Profile</a></span>
+          <span><a href="./edit">Edit My Profile</a></span>
         </li>
         <button class="s-n-logout -lg-o">LOG IN/OUT</button>
       </ul>
       <ul class="s-n-2">
         <h3 class="s-n-how">Products &amp; Groceries</h3>
-        <li><a href="../404">Special Order</a></li>
+        <li><a href="../seller/login">Sell On Yammie</a></li>
         <li><a href="../404">Delivery Time</a></li>
         <li><a href="../404">Payment Methods</a></li>
         <li><a href="../support/request.html">Request An Item</a></li>
@@ -248,23 +248,27 @@
           <div class="social-icons">
             <a
               href="https://www.facebook.com/yammieshoppers"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-facebook-f"></i
             ></a>
-            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
-              ><i class="fab fa-twitter"></i
+            <a
+              href="https://www.twitter.com/yammieshoppers"
+              class="icon-button-side"
+              ><i class="fab fa-twitter-side"></i
             ></a>
             <a
               href="https://www.instagram.com/yammieshoppers"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-instagram"></i
             ></a>
             <a
               href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-youtube"></i
             ></a>
-            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+            <a href="" class="icon-button-side"
+              ><i class="fab fa-linkedin"></i
+            ></a>
           </div>
         </div>
       </div>
@@ -277,13 +281,21 @@
             <div class="line2"></div>
             <div class="line3"></div>
           </div>
-          <a href="/">
+          <a href="/" class="_logo-l">
             <img
               src="../resources/yammie.png"
               alt="YAMMIE"
               width="200"
               height="95%"
               id="logo"
+            />
+          </a>
+          <a href="/" class="_logo-s">
+            <img
+              src="../resources/cartlink.png"
+              alt="YAMMIE"
+              width="50px"
+              height="50px"
             />
           </a>
         </div>
@@ -472,7 +484,7 @@
           <div class="ftr-app">
             <h3>Get Our App On . . . .</h3>
             <div class="ftr-app-stores" style="margin-top: 15px">
-              <a href="">
+              <a href="../download">
                 <img
                   src="../resources/play-store-3.jpg"
                   alt=""
@@ -481,7 +493,7 @@
                   style="margin-right: 5px"
                 />
               </a>
-              <a href="">
+              <a href="../download">
                 <img
                   src="../resources/apple-store.jpg"
                   alt=""
@@ -560,7 +572,7 @@
         <div class="ftr-u-fourth">
           <h4 class="footer-h4">Products &amp; Groceries</h4>
           <ul class="footer-list">
-            <li><a href="#">Special Order</a></li>
+            <li><a href="/seller/login">Sell On Yammie</a></li>
             <li><a href="#">Delivery Time</a></li>
             <li><a href="#">Payment Methods</a></li>
             <li><a href="../support/request.html">Request An Item</a></li>
@@ -642,11 +654,7 @@
       closeSide.addEventListener("click", () => {
         sidenav.classList.remove("active");
       });
-      if (screen.availWidth <= 768) {
-        document.querySelector("#logo").src = "./resources/cartlink.png";
-        document.querySelector("#logo").style.width = "50px";
-        document.querySelector("#logo").style.height = "50px";
-      }
+
       let acc = document.querySelector(".-acc");
       let hp = document.querySelector(".-hp");
       //check toggle a class
@@ -850,11 +858,7 @@
       closeSide.addEventListener("click", () => {
         sidenav.classList.remove("active");
       });
-      if (screen.availWidth <= 768) {
-        document.querySelector("#logo").src = "../resources/cartlink.png";
-        document.querySelector("#logo").style.width = "50px";
-        document.querySelector("#logo").style.height = "50px";
-      }
+
       let acc = document.querySelector(".-acc");
       let hp = document.querySelector(".-hp");
       //check toggle a class

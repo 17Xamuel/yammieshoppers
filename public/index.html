@@ -304,6 +304,16 @@
         animation: letters 1.5s 2s infinite reverse;
         -webkit-animation: letters 1.5s 2s infinite reverse;
       }
+      ._btn-timer {
+        text-transform: uppercase;
+        color: #ffbb00;
+        padding: 5px 10px;
+        cursor: pointer;
+        margin: 5px;
+        border-radius: 3px;
+        border: 0px;
+        outline: 0px;
+      }
 
       ._timer {
         font-size: 17px;
@@ -404,7 +414,47 @@
           display: none;
         }
       }
-
+      .-dd-app-banner {
+        width: 100vw;
+        height: 75vh;
+        position: fixed;
+        bottom: 0;
+        background-color: #ffbb00;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        display: none;
+      }
+      .download-text {
+        font-size: 18.5px;
+        font-weight: 550;
+        text-align: center;
+      }
+      .download-m-ctr {
+        background-color: #fff;
+        margin: 75px 20px;
+        height: 75%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+      }
+      .close-android {
+        position: absolute;
+        right: 15px;
+        top: 5px;
+        color: white;
+        font-size: 32px;
+      }
+      .download-app-line-like {
+        height: 5px;
+        border-radius: 2px;
+        width: 150px;
+        position: absolute;
+        top: 5px;
+        left: 35%;
+        background-color: #fff;
+      }
       @media screen and (max-width: 500px) {
         .container1 {
           height: 30vh;
@@ -422,7 +472,11 @@
         alert("Please Update Your browser To Continue With Yammie");
       }
       document.addEventListener("DOMContentLoaded", (e) => {
-        _slider();
+        // _slider();
+        _slider(
+          "SliderImages",
+          document.querySelectorAll("._ctg-image-load-slider")
+        );
         cnd(
           localStorage.getItem("cartNumber"),
           document.querySelector("#cartNumberItems")
@@ -536,7 +590,7 @@
       </ul>
       <ul class="s-n-2">
         <h3 class="s-n-how">Products &amp; Groceries</h3>
-        <li><a href="./404">Special Order</a></li>
+        <li><a href="./seller/login">Sell On Yammie</a></li>
         <li><a href="./404">Delivery Time</a></li>
         <li><a href="./404">Payment Methods</a></li>
         <li><a href="./support/request">Request An Item</a></li>
@@ -557,23 +611,27 @@
           <div class="social-icons">
             <a
               href="https://www.facebook.com/yammieshoppers"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-facebook-f"></i
             ></a>
-            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
+            <a
+              href="https://www.twitter.com/yammieshoppers"
+              class="icon-button-side"
               ><i class="fab fa-twitter"></i
             ></a>
             <a
               href="https://www.instagram.com/yammieshoppers"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-instagram"></i
             ></a>
             <a
               href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-youtube"></i
             ></a>
-            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+            <a href="" class="icon-button-side"
+              ><i class="fab fa-linkedin"></i
+            ></a>
           </div>
         </div>
       </div>
@@ -737,7 +795,12 @@
     </div>
     <div class="d-app" id="d-app">
       <span>
-        <a href="#"> Download Our App <span class="here">Here</span></a>
+        <a
+          href="https://yammieuploads.nyc3.digitaloceanspaces.com/Yammie.apk"
+          download="Yammie"
+        >
+          Download Our App <span class="here">Here</span></a
+        >
         For Better Shopping.
       </span>
       <i class="fas fa-times close-icon"></i>
@@ -946,17 +1009,22 @@
               />
             </div>
           </a>
-          <a class="down-container" href="./404">
+          <a
+            class="down-container"
+            href="#"
+            title="Gift Not Available today..."
+          >
             <li>
               <div class="_gift-ctr">
                 <img
                   src="./resources/gift_1.png"
                   alt=""
-                  width="100px"
-                  height="100px"
+                  width="85px"
+                  height="85px"
                 />
                 <div class="_day-gift">Gift of the Day</div>
                 <div class="_timer" id="_timer">Starting....</div>
+                <button class="_btn-timer">Get Gift</button>
               </div>
             </li>
           </a>
@@ -1840,7 +1908,7 @@
           <div class="ftr-app">
             <h3>Get Our App On . . . .</h3>
             <div class="ftr-app-stores" style="margin-top: 15px">
-              <a href="">
+              <a href="./download">
                 <img
                   src="./resources/play-store-3.jpg"
                   alt=""
@@ -1849,7 +1917,7 @@
                   style="margin-right: 5px"
                 />
               </a>
-              <a href="">
+              <a href="./download">
                 <img
                   src="./resources/apple-store.jpg"
                   alt=""
@@ -1928,7 +1996,7 @@
         <div class="ftr-u-fourth">
           <h4 class="footer-h4">Products &amp; Groceries</h4>
           <ul class="footer-list">
-            <li><a href="#">Special Order</a></li>
+            <li><a href="/seller/login">Sell On Yammie</a></li>
             <li><a href="#">Delivery Time</a></li>
             <li><a href="#">Payment Methods</a></li>
             <li><a href="./support/request">Request An Item</a></li>
@@ -1964,7 +2032,60 @@
         </div>
       </div>
     </footer>
+    <div class="-dd-app-banner" id="android">
+      <div class="close-android">&times;</div>
+      <div class="download-app-line-like"></div>
+      <div class="download-m-ctr">
+        <span class="download-text">
+          Hello There, Download our app for a good shopping Experience
+          <br />
+          Tap The button below
+        </span>
+        <span style="text-align: center">
+          (For android...)
+          <br />
+          (Our App is Not harmful)
+        </span>
+        <img src="./resources/download.gif" alt="Download From Yammie" />
+        <a
+          href="https://yammieuploads.nyc3.digitaloceanspaces.com/Yammie.apk"
+          download="Yammie"
+        >
+          <button class="btn">Download Button</button>
+        </a>
+      </div>
+    </div>
     <!--scripts-->
+    <script>
+      //andriod
+      //app banner
+      const closeAppBanner = document.querySelector(".close-icon");
+      const AppBanner = document.getElementById("d-app");
+      closeAppBanner.addEventListener("click", () => {
+        AppBanner.style.display = "none";
+        localStorage.setItem("appbanner", "true");
+      });
+      if (localStorage.getItem("appbanner")) {
+        AppBanner.style.display = "none";
+      }
+      document.querySelector(".close-android").addEventListener("click", () => {
+        localStorage.setItem("clAndroid", "true");
+        document.getElementById("android").style.display = "none";
+      });
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!localStorage.getItem("clAndroid")) {
+          let ua = navigator.userAgent.toLowerCase();
+          let isAndroid = ua.indexOf("android") > -1;
+          if (isAndroid) {
+            let android = document.getElementById("android");
+            android.style.display = "block";
+            android.animate([{ height: "0vh" }, { height: "75vh" }], {
+              duration: 1000,
+            });
+          }
+        }
+      });
+    </script>
     <script>
       //yammie
       let yammie = localStorage.getItem(
@@ -2025,10 +2146,6 @@
       closeSide.addEventListener("click", () => {
         sidenav.classList.remove("active");
       });
-      //app banner
-      const closeAppBanner = document.querySelector(".close-icon");
-      const AppBanner = document.getElementById("d-app");
-
       // Promotions timer
       const timerFunc = () => {
         let _gift = document.getElementById("_timer");
@@ -2061,9 +2178,6 @@
       timerFunc();
     </script>
     <script>
-      closeAppBanner.addEventListener("click", () => {
-        AppBanner.style.display = "none";
-      });
       function cnd(i, c) {
         i = parseInt(i);
         c.textContent = i ? i : 0;
@@ -2293,16 +2407,36 @@
           };
         });
       //sliders
-      function _slider() {
+      // function _slider() {
+      //   let _s = new XMLHttpRequest();
+      //   _s.open("GET", "/api/user/images/SliderImages", true);
+      //   _s.send();
+      //   _s.onreadystatechange = () => {
+      //     if (_s.readyState == 4 && _s.status == 200) {
+      //       let _sr = JSON.parse(JSON.parse(_s.responseText)[0].image_path);
+      //       let _i = document.querySelectorAll("._ctg-image-load-slider");
+      //       for (let i = 0; i < _i.length; i++) {
+      //         _load(_i[i], _sr[i]);
+      //       }
+      //       function _load(i, d) {
+      //         let image_true = new Image();
+      //         image_true.onload = function () {
+      //           i.src = this.src;
+      //         };
+      //         image_true.src = d;
+      //       }
+      //     }
+      //   };
+      // }
+      function _slider(i, c) {
         let _s = new XMLHttpRequest();
-        _s.open("GET", "/api/user/images/SliderImages", true);
+        _s.open("GET", `/api/user/images/${i}`, true);
         _s.send();
         _s.onreadystatechange = () => {
           if (_s.readyState == 4 && _s.status == 200) {
             let _sr = JSON.parse(JSON.parse(_s.responseText)[0].image_path);
-            let _i = document.querySelectorAll("._ctg-image-load-slider");
-            for (let i = 0; i < _i.length; i++) {
-              _load(_i[i], _sr[i]);
+            for (let i = 0; i < c.length; i++) {
+              _load(c[i], _sr[i]);
             }
             function _load(i, d) {
               let image_true = new Image();

@@ -32,211 +32,17 @@
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="/resources/cartlink.png" />
-    <link rel="stylesheet" href="/styles/footer2.css" />
-    <link rel="stylesheet" href="/styles/header.css" />
-    <link rel="stylesheet" href="/styles/main.css" />
-    <link rel="stylesheet" href="/font-awesome/css/all.css" />
-    <link rel="stylesheet" href="../styles/products.css" />
-    <title>Yammie | online Store</title>
-    <style>
-      .pf-m-ctr {
-        width: 75vw;
-        margin: 30px auto;
-      }
-      .pf-ctr {
-        width: 100%;
-        display: flex;
-        min-height: fit-content;
-      }
-      .left {
-        flex: 1;
-        background-color: #fff;
-        margin-right: 10px;
-        border-radius: 5px;
-        list-style-type: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-        padding-left: 10px;
-        padding-right: 10px;
-        height: 60vh;
-      }
-      .left > a > li {
-        padding: 10px;
-        border-radius: 5px;
-      }
-      .left > a > li:hover {
-        background-color: #c3c3c3;
-      }
-      .left > a > li.active {
-        background-color: #ffbb00;
-        color: white;
-      }
-      .left > a > li > .fas {
-        margin-right: 5px;
-      }
-      .right {
-        flex: 3;
-        background-color: #fff;
-        margin-left: 10px;
-        border-radius: 5px;
-        position: relative;
-      }
-      .right > h2 {
-        border-bottom: 1px solid #e5e5e5;
-        padding: 10px 20px;
-      }
-
-      #logout {
-        padding: 10px 5px;
-        width: 90%;
-        font-size: 17px;
-        border: none;
-        outline: none;
-        background-color: #ffbb00;
-        color: white;
-        border-radius: 5px;
-        box-shadow: 2px 2px 5px #c3c3c3;
-        transform: translateY(-4px);
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-      }
-      #logout:hover {
-        transform: translateY(-7px);
-        box-shadow: 5px 5px 7px #c3c3c3;
-      }
-      .pf-start-spg {
-        padding: 15px 5px;
-        width: 100%;
-        font-size: 18px;
-        border: none;
-        outline: none;
-        background-color: #ffbb00;
-        color: white;
-        border-radius: 5px;
-        box-shadow: 2px 2px 5px #c3c3c3;
-        transform: translateY(-4px);
-        cursor: pointer;
-        transition: all 0.3s ease-in-out;
-      }
-      .pf-start-spg:hover {
-        transform: translateY(-7px);
-        box-shadow: 5px 5px 7px #c3c3c3;
-      }
-      .orders-ctr {
-        padding: 10px;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        column-gap: 1.5rem;
-        row-gap: 2rem;
-      }
-      .order-content {
-        padding: 10px;
-      }
-      .order-content > div {
-        padding: 5px;
-      }
-      .order-ctr {
-        margin: 10px;
-        height: fit-content;
-        border: 1px solid rgb(0, 0, 0, 0.1);
-        border-radius: 5px;
-      }
-      .-pdf-h {
-        padding: 10px;
-        font-weight: bold;
-        border-bottom: 1px solid #e5e5e5;
-      }
-      .-pfd {
-        border: 1px solid #e5e5e5;
-        border-radius: 5px;
-        height: 200px;
-      }
-      .pf-d {
-        padding: 5px 10px;
-        margin-bottom: 10px;
-      }
-      #p-in-name,
-      #p-in-email,
-      #p-in-phone {
-        border: 0;
-        outline: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-        font-size: 17px;
-      }
-      /*order details*/
-      .-order {
-        display: none;
-      }
-      .-order.-o-active {
-        display: block;
-      }
-      ._check-item {
-        border-top: 1px solid rgb(0, 0, 0, 0.1);
-        border-bottom: 1px solid rgb(0, 0, 0, 0.1);
-        display: flex;
-        margin: 5px;
-        padding: 5px;
-      }
-      ._check-item > .img {
-        width: 120px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      ._check-item > .img > div {
-        background-color: rgba(0, 0, 0, 0.1);
-        width: 85px;
-        height: 85px;
-      }
-      .-item {
-        height: fit-content;
-      }
-      .-item > div {
-        padding-top: 5px;
-      }
-      .-st > .-st-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 10px 0px;
-        font-size: 15px;
-      }
-
-      /*order details*/
-      @media screen and (max-width: 1024px) {
-        .pf-m-ctr {
-          width: 95vw;
-          margin: 30px auto;
-        }
-        .pf-ctr {
-          display: flex;
-          height: fit-content;
-        }
-        .left {
-          display: none;
-        }
-      }
-      @media screen and (max-width: 768px) {
-        .pf-m-ctr {
-          width: 95vw;
-          margin: 30px auto;
-        }
-        .pf-ctr {
-          display: flex;
-          height: fit-content;
-        }
-      }
-    </style>
+    <link rel="shortcut icon" href="./resources/cartlink.png" />
+    <link rel="stylesheet" href="./styles/footer2.css" />
+    <link rel="stylesheet" href="./styles/header.css" />
+    <link rel="stylesheet" href="./styles/catalog.css" />
+    <link rel="stylesheet" href="./styles/item.css" />
+    <link rel="stylesheet" href="./styles/products.css" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <link rel="stylesheet" href="./font-awesome/css/all.css" />
+    <link rel="stylesheet" href="./styles/catalog.css" />
+    <title>Yammie | Online Store for Groceries and Home Items</title>
     <script>
-      if (
-        !localStorage.getItem(
-          "https://yammieshoppers.com/useLocalStorage/Storage"
-        )
-      ) {
-        window.location.replace("/");
-      }
       document.addEventListener("DOMContentLoaded", (e) => {
         sch(document.querySelector("#-is"), document.querySelector(".-sh"));
         cnd(
@@ -245,6 +51,52 @@
         );
       });
     </script>
+    <style>
+      .gift-ctr-content {
+        width: 720px;
+        margin: 5px auto;
+      }
+      .gift-im {
+        position: relative;
+        height: 400px;
+      }
+      ._gifts-timer {
+        text-transform: uppercase;
+        color: green;
+        font-size: 24px;
+        width: 120px;
+        padding: 5px 10px;
+        text-align: center;
+        border-radius: 3px;
+        position: absolute;
+        bottom: -15px;
+        right: 40%;
+        background-color: white;
+      }
+      .gift-c {
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        padding: 25px 0px;
+        margin-top: 25px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+      }
+      ._gift-btn {
+        margin: 10px 0px;
+      }
+      .gift-comment {
+        margin: 25px 0px;
+      }
+      .-is-gift {
+        width: 100%;
+      }
+      .btn {
+        box-shadow: 0px 0px 10px #9b9a9a;
+        /* box-shadow: 0px 0px 5px ; */
+      }
+    </style>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -257,67 +109,94 @@
       ></iframe
     ></noscript>
     <!-- End Google Tag Manager (noscript) -->
+    <!-- _variation -->
+    <div id="pop-up-overlay-var"></div>
+    <form class="var" id="var_form"></form>
+    <!-- _variation -->
+    <!--image dialog div-->
+    <!--add c popup-->
+    <div id="pop-up-overlay"></div>
+    <div class="popup">
+      <button class="close-pp" onclick="imageDialogClose()">&times;</button>
+      <div class="pp-content">
+        <h2 id="text-add">Item added to your Cart.</h2>
+        <div id="text-add-m">
+          Thank You.
+          <br />
+          Click Check Cart to Continue OR continue Shopping
+        </div>
+        <a href="./cart">
+          <button class="-b-pp">Check Cart</button>
+        </a>
+        <a href="">
+          <button class="-b-pp" onclick="imageDialogClose()">
+            Continue Shopping
+          </button>
+        </a>
+      </div>
+    </div>
+    <!--add c popup-->
     <div id="sidenav">
       <span class="-c-side" style="font-size: 35px">&times;</span>
       <ul class="s-n-1">
         <h3 class="sn-categories">Categories</h3>
         <li class="n-l-itm">
-          <a href="../easy-market">
+          <a href="./easy-market">
             <i class="fas fa-shopping-basket ctg-icon"></i>
             EasyMarket with Yammie
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../quick-foods">
+          <a href="quick-foods">
             <i class="fas fa-pizza-slice ctg-icon"></i>
             Fast Foods &amp; Drinks
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../phones">
+          <a href="phones">
             <i class="fas fa-headphones-alt ctg-icon"></i>
             Phones &amp; Accessories
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../electronics">
+          <a href="./electronics">
             <i class="fas fa-charging-station ctg-icon"></i>
             Electronics
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../computing">
+          <a href="./computing">
             <i class="fas fa-desktop ctg-icon"></i>
             Computing &amp; Accessories
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../stationery">
+          <a href="./stationery">
             <i class="fas fa-paperclip ctg-icon"></i>
             Stationery
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../clothing">
+          <a href="./clothing">
             <i class="fas fa-tshirt ctg-icon"></i>
             Clothes &amp; Shoes
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../kitchen">
+          <a href="./kitchen">
             <i class="fas fa-utensils ctg-icon"></i>
             Kitchen stuff &amp; Utensils
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../kids">
+          <a href="./kids">
             <i class="fas fa-child ctg-icon"></i>
             Kid's Section
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="../diy">
-            <img src="../resources/clean-hands.png" alt="" />
+          <a href="./diy">
+            <img src="./resources/clean-hands.png" alt="" />
             Cleaning, Healthy &amp; Beauty
           </a>
         </li>
@@ -332,16 +211,16 @@
         <h3>My Account</h3>
         <li>
           <i class="fas fa-user"></i>
-          <span><a href="./profile">My Profile</a></span>
+          <span><a href="./account/profile">My Profile</a></span>
         </li>
         <li>
           <i class="fas fa-box"></i>
-          <span><a href="./orders">My Orders</a></span>
+          <span><a href="./account/orders">My Orders</a></span>
         </li>
 
         <li>
           <i class="fas fa-dolly-flatbed"></i>
-          <span><a href="./pending-orders">Pending Orders</a></span>
+          <span><a href="./account/pending-orders">Pending Orders</a></span>
         </li>
         <li>
           <i class="fas fa-thumbs-up"></i>
@@ -349,30 +228,30 @@
         </li>
         <li>
           <i class="fas fa-address-card"></i>
-          <span><a href="./address"> My Address</a></span>
+          <span><a href="./account/address"> My Address</a></span>
         </li>
         <li>
           <i class="fas fa-user-edit"></i>
-          <span><a href="./edit">Edit My Profile</a></span>
+          <span><a href="./account/edit">Edit My Profile</a></span>
         </li>
         <button class="s-n-logout -lg-o">LOG IN/OUT</button>
       </ul>
       <ul class="s-n-2">
         <h3 class="s-n-how">Products &amp; Groceries</h3>
-        <li><a href="../404">Special Order</a></li>
-        <li><a href="../404">Delivery Time</a></li>
-        <li><a href="../404">Payment Methods</a></li>
-        <li><a href="../support/request.html">Request An Item</a></li>
-        <li><a href="../404">Report an Item</a></li>
-        <li><a href="../404">Return Policy</a></li>
+        <li><a href="./seller/login">Sell On Yammie</a></li>
+        <li><a href="./404">Delivery Time</a></li>
+        <li><a href="./404">Payment Methods</a></li>
+        <li><a href="./support/request">Request An Item</a></li>
+        <li><a href="./404">Report an Item</a></li>
+        <li><a href="./404">Return Policy</a></li>
       </ul>
       <ul class="s-n-3">
         <h3 class="s-n-how">Explore Yammie</h3>
-        <li><a href="../404">About Yammie</a></li>
-        <li><a href="../404">How to Order</a></li>
-        <li><a href="../404">Our Partners</a></li>
-        <li><a href="../support/terms">Terms &amp; Conditions For Use</a></li>
-        <li><a href="../support/privacy-policy">Privacy Policy</a></li>
+        <li><a href="./404">About Yammie</a></li>
+        <li><a href="./404">How to Order</a></li>
+        <li><a href="./404">Our Partners</a></li>
+        <li><a href="./support/terms">Terms &amp; Conditions For Use</a></li>
+        <li><a href="./support/privacy-policy">Privacy Policy</a></li>
       </ul>
       <div class="ftr-down">
         <div class="ftr-official" style="color: black !important">
@@ -380,26 +259,33 @@
           <div class="social-icons">
             <a
               href="https://www.facebook.com/yammieshoppers"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-facebook-f"></i
             ></a>
-            <a href="https://www.twitter.com/yammieshoppers" class="icon-button"
+            <a
+              href="https://www.twitter.com/yammieshoppers"
+              class="icon-button-side"
               ><i class="fab fa-twitter"></i
             ></a>
             <a
               href="https://www.instagram.com/yammieshoppers"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-instagram"></i
             ></a>
             <a
               href="https://www.youtube.com/channel/UCxBPjux8GsdZd9Bs5ogPnNg"
-              class="icon-button"
+              class="icon-button-side"
               ><i class="fab fa-youtube"></i
             ></a>
-            <a href="" class="icon-button"><i class="fab fa-linkedin"></i></a>
+            <a href="" class="icon-button-side"
+              ><i class="fab fa-linkedin"></i
+            ></a>
           </div>
         </div>
       </div>
+    </div>
+    <div class="banner">
+      <div class="-b-ctr">banner</div>
     </div>
     <div class="nav">
       <div class="search-nav">
@@ -409,18 +295,18 @@
             <div class="line2"></div>
             <div class="line3"></div>
           </div>
-          <a href="/" class="_logo-l">
+          <a href="./" class="_logo-l">
             <img
-              src="../resources/yammie.png"
+              src="./resources/yammie.png"
               alt="YAMMIE"
               width="200"
               height="95%"
               id="logo"
             />
           </a>
-          <a href="/" class="_logo-s">
+          <a href="./" class="_logo-s">
             <img
-              src="../resources/cartlink.png"
+              src="./resources/cartlink.png"
               alt="YAMMIE"
               width="50px"
               height="50px"
@@ -431,7 +317,7 @@
           <form
             id="f-search"
             autocomplete="off"
-            action="../catalog"
+            action="./catalog"
             method="GET"
           >
             <input
@@ -453,19 +339,19 @@
             <i class="fas fa-chevron-down chev"></i>
           </button>
           <ul class="-help-list -hlp">
-            <a href="../404">
+            <a href="./404">
               <li class="-help">
                 <i class="fas fa-clock"></i>
                 How to Order
               </li>
             </a>
-            <a href="../404">
+            <a href="./404">
               <li class="-help">
                 <i class="fas fa-truck-loading"></i>
                 Delivery Times
               </li>
             </a>
-            <a href="../404">
+            <a href="./404">
               <li class="-help">
                 <i class="far fa-question-circle"></i>
                 FAQs
@@ -486,25 +372,25 @@
             <i class="fas fa-chevron-down chev-acc"></i>
           </button>
           <ul class="-help-list -acc-l">
-            <a href="./profile">
+            <a href="./account/profile">
               <li class="-help">
                 <i class="far fa-user"></i>
                 My Profile
               </li>
             </a>
-            <a href="../cart">
+            <a href="./cart">
               <li class="-help">
                 <i class="fas fa-shopping-cart"></i>
                 My Cart
               </li>
             </a>
-            <a href="../orders">
+            <a href="./account/orders">
               <li class="-help">
                 <i class="fas fa-gift"></i>
                 My Orders
               </li>
             </a>
-            <a href="../edit">
+            <a href="./account/edit">
               <li class="-help">
                 <i class="fas fa-user-edit"></i>
                 Edit Profile
@@ -523,7 +409,7 @@
           <div class="-icon-sm" id="-is">
             <i class="fas fa-search"></i>
           </div>
-          <a href="../cart" style="position: relative">
+          <a href="./cart" style="position: relative">
             <img
               src="../resources/shopping-cart.svg"
               alt=""
@@ -539,7 +425,7 @@
     <div class="-sh">
       <form
         autocomplete="off"
-        action="../catalog"
+        action="./catalog"
         method="GET"
         class=""
         id="-sm-s"
@@ -555,74 +441,51 @@
         </button>
       </form>
     </div>
-    <div class="pf-m-ctr">
-      <div class="pf-ctr">
-        <ul class="left -b-x">
-          <a href="./profile">
-            <li id="pf">
-              <i class="fas fa-user"></i>
-              <span> My Profile </span>
-            </li>
-          </a>
-          <a href="./pending-orders">
-            <li id="pf-pending">
-              <i class="fas fa-dolly-flatbed"></i>
-              <span>Pending Orders</span>
-            </li>
-          </a>
-          <a href="./orders">
-            <li id="pf-orders" class="active">
-              <i class="fas fa-box"></i>
-              <span>My Orders</span>
-            </li>
-          </a>
-          <a href="../cart">
-            <li id="pf-cart">
-              <i class="fas fa-shopping-cart"></i>
-              <span>My Cart</span>
-            </li>
-          </a>
-          <a href="/">
-            <li id="pf-likes">
-              <i class="fas fa-thumbs-up"></i>
-              <span>Liked Items</span>
-            </li>
-          </a>
-          <a href="./address">
-            <li id="pf-address">
-              <i class="fas fa-address-card"></i>
-              <span>My Address</span>
-            </li>
-          </a>
-          <a href="./edit">
-            <li id="pf-edit">
-              <i class="fas fa-user-edit"></i>
-              <span>Edit My Profile</span>
-            </li>
-          </a>
-          <button id="logout">LOG OUT</button>
-        </ul>
-
-        <div class="right myorders -b-x">
-          <h2 class="-pdf-h">
-            <a href="./orders">
-              <i class="fas fa-arrow-left"></i>
-            </a>
-            Order Details
-          </h2>
-          <div class="orders-ctr">
-            <div class="order-ctr"></div>
+    <div class="itm-m-ctr m-ctr">
+      <div class="gift-ctr">
+        <div class="gift-ctr-content">
+          <div class="gift-im">
+            <div class="_gifts-timer">4:09:09</div>
+            <img
+              src="./resources/placeholder.png"
+              alt="TODAY'S PROMOTION ON YAMMIE"
+              width="100%"
+              height="100%"
+              style="object-fit: cover; border-radius: 5px"
+              class="gift_img"
+            />
+          </div>
+          <div class="gift-c">
+            <div class="description">
+              Buy 2 Kg, Get Free Delivery to your Home
+            </div>
+            <button class="btn _gift-btn -cart-gift">Get Your Gift</button>
+          </div>
+          <div class="gift-comment">
+            <div class="" style="text-align: center">
+              What do you say about today's Gift, Comment Below?
+            </div>
+            <textarea
+              name="gift-comment"
+              id="gift-comment"
+              placeholder="Your Comment"
+              cols="30"
+              rows="5"
+              class="-is-nw -is-gift"
+            >
+            </textarea>
+            <button class="btn">Post Comment</button>
           </div>
         </div>
       </div>
-      <div class="-ct -b-x rv-ctr">
+      <div class="-ct rv-ctr -b-x">
         <button class="-sc-b"><i class="fas fa-chevron-left"></i></button>
         <button class="-sc-n"><i class="fas fa-chevron-right"></i></button>
 
         <div class="-ch-all -ch-all-w">
           <span>Recently Viewed</span>
         </div>
-        <div class="-scroll -ct -ct-recentlyviewed_a">
+        <div class="-scroll -ct -ct-recentlyviewed">
           <div class="item -ct-item -lazy">
             <img
               src="../resources/cart-link.png"
@@ -755,10 +618,10 @@
         <div class="ftr-u-first">
           <div class="ftr-logo">
             <img
-              src="../resources/yammie.png"
+              src="./resources/yammie.png"
               alt="YAMMIE"
-              width="250px"
-              height="100px"
+              width="320px"
+              height="70px"
             />
           </div>
           <div class="ftr-message">
@@ -770,18 +633,18 @@
           <div class="ftr-app">
             <h3>Get Our App On . . . .</h3>
             <div class="ftr-app-stores" style="margin-top: 15px">
-              <a href="../download">
+              <a href="./download">
                 <img
-                  src="../resources/play-store-3.jpg"
+                  src="./resources/play-store-3.jpg"
                   alt=""
                   height="45"
                   width="150"
                   style="margin-right: 5px"
                 />
               </a>
-              <a href="../download">
+              <a href="./download">
                 <img
-                  src="../resources/apple-store.jpg"
+                  src="./resources/apple-store.jpg"
                   alt=""
                   height="45"
                   width="150"
@@ -798,9 +661,9 @@
             <li><a href="#">Help &amp; FAQs</a></li>
             <li><a href="#">Our Partners</a></li>
             <li>
-              <a href="../support/terms">Terms &amp; Conditions For Use</a>
+              <a href="./support/terms">Terms &amp; Conditions For Use</a>
             </li>
-            <li><a href="../support/privacy-policy">Privacy Policy</a></li>
+            <li><a href="./support/privacy-policy">Privacy Policy</a></li>
           </ul>
         </div>
         <div class="ftr-u-third">
@@ -861,7 +724,7 @@
             <li><a href="/seller/login">Sell On Yammie</a></li>
             <li><a href="#">Delivery Time</a></li>
             <li><a href="#">Payment Methods</a></li>
-            <li><a href="../support/request.html">Request An Item</a></li>
+            <li><a href="./support/request">Request An Item</a></li>
             <li><a href="#">Report an Item</a></li>
             <li><a href="#">Return Policy</a></li>
           </ul>
@@ -894,91 +757,53 @@
         </div>
       </div>
     </footer>
-    <!--scripts-->
     <script>
-      let numberFormat = new Intl.NumberFormat();
+      //yammie
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
       );
-      _uo(
-        `/api/user/customer/order/${new URLSearchParams(
-          window.location.search
-        ).get("order")}`,
-        new XMLHttpRequest()
-      );
-      cartNumbersDisplay();
-      function cartNumbersDisplay() {
-        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
-        document.querySelector("#cartNumberItems").textContent = cartNumber
-          ? cartNumber
-          : 0;
-      }
-      function _uo(url, _r) {
-        _r.open("GET", url, true);
-        _r.send();
-        _r.onreadystatechange = () => {
-          if (_r.readyState == 4 && _r.status == 200) {
-            let order = JSON.parse(_r.responseText);
-            let order_info = JSON.parse(order.order_info);
-            let order_items = JSON.parse(order.order_items);
-            let cartDom = document.querySelector(".orders-ctr");
-            cartDom.innerHTML = "";
-            async function itemCollect(i) {
-              let res = await fetch(`/api/user/product/${i}`);
-              let item = await res.json();
-              return item;
-            }
-            Object.values(order_items).forEach(async (key) => {
-              //dom
-              let item = await itemCollect(key.cartItemAdded);
-              //dom
-              cartDom.innerHTML += `
-                  <div class="_check-item">
-                    <div class="img">
-                      <div class="">
-                      <img
-                        src="${JSON.parse(item.images)[0]}"
-                        alt=""
-                        width="100%"
-                        height="100%"
-                      />
-                      </div>
-                    </div>
-                    <div class="-item">
-                      <div class="name" style="overflow: hidden">
-                        ${item.product}
-                      </div>
-                      <div class="price _usp">Price: UGX
-                        <span class="item_price">${numberFormat.format(
-                          item.discount
-                            ? (item.price * (100 - item.discount)) / 100
-                            : item.price
-                        )}</span>
-                      </div>
-                      <div class="qty _usq">Quantity: ${key.inCartNumber}</div>
-                    </div>
-                  </div>
-            `;
-            });
-          } else {
-            console.log("none");
-          }
-          let _btns = document.querySelectorAll(".order-details");
-          if (_btns.length > 0) {
-            _btns.forEach((btn) => {
-              btn.addEventListener("click", () => {
-                btn.querySelector(".-order").classList.toggle("-o-active");
-              });
-            });
+      //yammie
+      //get data
+      //   let _gift_req = new XMLHttpRequest();
+      //   _gift_req.open("GET", "/api/user/gift", true);
+      //   _gift_req.send();
+      //   _gift_req.onreadystatechange = () => {
+      //     if (_gift_req.readyState == 4 && _gift_req.status == 200) {
+      //       let gift = JSON.parse(_gift_req.responseText)[0];
+      //       _load(
+      //         document.querySelector(".gift_img"),
+      //         JSON.parse(gift.gift_image)[0]
+      //       );
+      //       function _load(i, d) {
+      //         let image_true = new Image();
+      //         image_true.onload = function () {
+      //           i.src = this.src;
+      //         };
+      //         image_true.src = d;
+      //       }
+      //     }
+      //   };
+      //get data end
+    </script>
+    <script>
+      let yammieUsr = "";
+      if (yammie) {
+        let xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            [yammieUsr] = JSON.parse(xhr.responseText);
+            let account = document.querySelector(".-acc-name");
+            account.innerHTML = "Hi, " + yammieUsr.c_first_name;
           }
         };
+        xhr.open("GET", `/api/user/customer/${yammie}`, true);
+        xhr.send();
       }
-
+      //total
       scl(document.querySelectorAll(".-sc-n"));
       scr(document.querySelectorAll(".-sc-b"));
 
       ctg(document.querySelector(".-ct-rec"), "/api/user/ct/profile/rec");
-
       function scr(b) {
         b.forEach((sc) => {
           sc.addEventListener("click", (e) => {
@@ -1009,7 +834,7 @@
               group = "";
             _c.forEach((item) => {
               group += `
-            <a class="item -ct-item" href="../item?item=${item.id}">
+             <a class="item -ct-item" href="./item?item=${item.id}">
                       <div class="-d">
                         ${
                           item.discount != 0 && item.discount !== null
@@ -1019,9 +844,7 @@
                       </div>
                       <div class="_image">
                         <img
-                         src="../resources/placeholder.png"
-                          data-src="${JSON.parse(item.images)[0]}"
-                          class="_ctg-image-load"
+                          src="${JSON.parse(item.images)[0]}"
                           alt="${item.product}"
                           width="100%"
                           height="100%"
@@ -1042,45 +865,19 @@
                          }</div>
                       </div>
                     </a>
-                    `;
+                    
+            `;
             });
             c.innerHTML = group;
             document.querySelectorAll(".-d").forEach((item) => {
               if (item.innerText == "") item.style.display = "none";
             });
-            let images = document.images;
-            for (let i = 0; i < images.length; i++) {
-              if (images[i].className == "_ctg-image-load") {
-                _load(images[i], images[i].dataset.src);
-              }
-            }
-            function _load(i, d) {
-              let image_true = new Image();
-              image_true.onload = function () {
-                i.src = this.src;
-              };
-              image_true.src = d;
-            }
           }
         };
         xhr.open("GET", url, true);
         xhr.send();
       }
-    </script>
-    <script>
-      let yammieUsr = "";
-      if (yammie) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            [yammieUsr] = JSON.parse(xhr.responseText);
-            let account = document.querySelector(".-acc-name");
-            account.innerHTML = "Hi, " + yammieUsr.c_first_name;
-          }
-        };
-        xhr.open("GET", `/api/user/customer/${yammie}`, true);
-        xhr.send();
-      }
+      //new header
       const sch = (i, sch) => {
         i.addEventListener("click", () => {
           sch.classList.toggle("sch-s");
@@ -1106,13 +903,12 @@
       closeSide.addEventListener("click", () => {
         sidenav.classList.remove("active");
       });
-
       let acc = document.querySelector(".-acc");
       let hp = document.querySelector(".-hp");
       //check toggle a class
       acc.addEventListener("focus", (e) => {
         if (!yammie) {
-          window.location.assign("./login");
+          window.location.assign("./account/login");
         } else {
           e.target.style.color = "#ffbb00";
           document
@@ -1149,12 +945,317 @@
       });
     </script>
     <script>
-      document.querySelector("#logout").addEventListener("click", () => {
-        localStorage.removeItem(
-          "https://yammieshoppers.com/useLocalStorage/Storage"
-        );
-        window.location.assign("/");
-      });
+      //cart
+      function _cdb(url, i) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/json");
+        xhr.send(JSON.stringify(i));
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let cart = JSON.parse(xhr.responseText);
+            localStorage.setItem("cartItems", JSON.stringify(cart.newCart));
+            localStorage.setItem(
+              "cartNumber",
+              JSON.stringify(cart.cart_number)
+            );
+          }
+        };
+      }
+      function wait() {
+        let popUp = document.querySelector(".popup");
+        let pContent = popUp.innerHTML;
+        popUp.innerHTML = `
+              <div>
+              <div id="cartLoader"></div>
+              <br />
+              <div>Adding to Cart . . .
+              </div>
+              </div>`;
+        setTimeout(() => {
+          popUp.innerHTML = pContent;
+        }, 1500);
+      }
+      function cartNumbers(item) {
+        let cartNumber = parseInt(localStorage.getItem("cartNumber"));
+        if (cartNumber) {
+          localStorage.setItem("cartNumber", cartNumber + 1);
+          document.querySelector("#cartNumberItems").textContent =
+            cartNumber + 1;
+        } else {
+          localStorage.setItem("cartNumber", 1);
+          document.querySelector("#cartNumberItems").textContent = 1;
+        }
+        setItem(item);
+      }
+      function setItem(item) {
+        let cartItems = localStorage.getItem("cartItems");
+        cartItems = JSON.parse(cartItems);
+        if (cartItems != null) {
+          if (cartItems[item.cartItemAdded] == undefined) {
+            cartItems = {
+              ...cartItems,
+              [item.cartItemAdded]: item,
+            };
+          }
+          if (item.specs && cartItems[item.cartItemAdded].specs) {
+            cartItems[item.cartItemAdded].specs = item.specs;
+          }
+          cartItems[item.cartItemAdded].inCartNumber += 1;
+        } else {
+          item.inCartNumber = 1;
+          cartItems = {
+            [item.cartItemAdded]: item,
+          };
+        }
+        if (!yammie) {
+          localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        } else {
+          _cdb(`/api/user/customer/cart/${yammie}`, {
+            cart: cartItems,
+            cartNumber: localStorage.getItem("cartNumber"),
+            delete: false,
+          });
+        }
+
+        document.querySelector("#pop-up-overlay").classList.add("active");
+        document.querySelector(".popup").classList.add("pp-active");
+      }
+      function imageDialogClose() {
+        document.querySelector(".popup").classList.remove("pp-active");
+        document.querySelector("#pop-up-overlay").classList.remove("active");
+        window.location.reload();
+      }
+      //item
+      function item(url) {
+        let req = new XMLHttpRequest();
+        req.open("GET", url, true);
+        req.send();
+        req.onreadystatechange = function () {
+          if (req.status == 200 && req.readyState == 4) {
+            let item = JSON.parse(req.responseText)[0];
+            let _sp = JSON.parse(item.specifications);
+
+            if (item.quantity == 0) {
+              let btn = document.querySelector(".-cart-gift");
+              btn.classList.add("no-qty");
+              btn.innerHTML = `<i class="fas fa-ban"></i>
+                               <span style="padding-left:5px">
+                                Out of Stock
+                               </span>`;
+            }
+
+            //variations
+            // if(variations)
+
+            function getVar() {
+              Object.keys(_sp).forEach((item) => {
+                if (typeof _sp[item] == "object" && _sp[item] != null) {
+                  let _varDom = ` <div class="var_ctr">
+                                  <h3 class="_var_heading">
+                                    Please Select Your ${item}
+                                  </h3>`;
+                  if (typeof _sp[item][0] == "string") {
+                    _sp[item].forEach((i) => {
+                      _varDom += `<div class="_var">
+                                  <div class="var_name_chip">${i}</div>
+                                  <div class="var_qty_ctr">
+                                     <input type="radio" value="${i}"  name="${item}">
+                                  </div>
+                                </div>`;
+                    });
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  } else if (item == "Ingredients") {
+                    _sp[item].forEach((i) => {
+                      _varDom += `
+                      <div class="_var">
+                          <div class="var_name">${i.descriptions}</div>
+                          <div class="var_price">
+                            <div class="_n_price">
+                              UGX ${
+                                i.getDiscount <= 0
+                                  ? i.getPrice
+                                  : i.getPrice * ((100 - i.getDiscount) / 100)
+                              }
+                            </div>
+                            <div class="_d_price">${
+                              i.getDiscount <= 0 ? "" : i.getPrice
+                            }</div>
+                          </div>
+                          <div class="var_qty_ctr">
+                            <div class="var_minus ${i.descriptions}">
+                              &minus;
+                            </div>
+                            <input
+                              type="text"
+                              class="var_qty _increase"
+                              name="_${i.descriptions}"
+                              readonly
+                              value="${1}"
+                              />
+                            <input
+                              type="text"
+                              class="var_qty _increase"
+                              name="-${i.descriptions}""
+                              hidden
+                              value="${
+                                i.getDiscount <= 0
+                                  ? i.getPrice
+                                  : i.getPrice * ((100 - i.getDiscount) / 100)
+                              }"
+                              />
+                              <div class="var_plus ${i.descriptions}">
+                                &plus;
+                              </div>
+                            </div>
+                          </div>`;
+                    });
+
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  } else {
+                    _sp[item].forEach((i) => {
+                      let _price =
+                        i.getDiscount <= 0
+                          ? i.getPrice
+                          : i.getPrice * ((100 - i.getDiscount) / 100);
+                      _varDom += `<div class="_var">
+                                  <div class="var_name">${i.descriptions}</div>
+                                  <div class="var_price">
+                                    <div class="_n_price">
+                                      UGX ${_price}
+                                    </div>
+                                    <div class="_d_price">${
+                                      i.getDiscount <= 0 ? "" : i.getPrice
+                                    }</div>
+                                  </div>
+                                  <div class="var_qty_ctr">
+                                    <input type="radio" value="
+                                      ${
+                                        i.descriptions + "_" + _price
+                                      }" name="${item}">
+                                  </div>
+                                </div>`;
+                    });
+                    document.querySelector(".var").innerHTML +=
+                      _varDom + `</div>`;
+                  }
+                }
+                if (
+                  Object.keys(_sp).findIndex((elem) => elem == item) ==
+                  Object.keys(_sp).length - 1
+                ) {
+                  document.querySelector(".var").innerHTML += `
+                <div class="" style="display: flex; justify-content: center; width:100%">
+                  <button class="btn_variation">Add To Cart</button>
+                </div>`;
+                }
+              });
+              document.querySelector(".var").classList.add("var-active");
+              document
+                .querySelector("#pop-up-overlay-var")
+                .classList.add("v-active");
+
+              document.querySelectorAll(".var_minus").forEach((item) => {
+                item.addEventListener("click", (e) => {
+                  let _value = parseInt(
+                    document.querySelector(
+                      `input[name=_${e.target.classList[1]}]`
+                    ).value
+                  );
+                  let newValue = _value < 2 ? _value : _value - 1;
+                  document.querySelector(
+                    `input[name=_${e.target.classList[1]}]`
+                  ).value = newValue;
+                });
+              });
+              document.querySelectorAll(".var_plus").forEach((item) => {
+                item.addEventListener("click", (e) => {
+                  let _value = parseInt(
+                    document.querySelector(
+                      `input[name=_${e.target.classList[1]}]`
+                    ).value
+                  );
+                  let newValue = _value + 1;
+                  document.querySelector(
+                    `input[name=_${e.target.classList[1]}]`
+                  ).value = newValue;
+                });
+              });
+
+              document
+                .querySelector("#var_form")
+                .addEventListener("submit", (e) => {
+                  e.preventDefault();
+                  let _varForm = new FormData(
+                    document.querySelector("#var_form")
+                  );
+                  document.querySelector(".var").classList.remove("var-active");
+                  document
+                    .querySelector("#pop-up-overlay-var")
+                    .classList.remove("v-active");
+                  let specs = {};
+
+                  specs.Ingredients = [];
+                  specs.Sizes = {};
+                  _varForm.forEach((v, k) => {
+                    if (k.charAt(0) !== "-") {
+                      if (k.charAt(0) == "_") {
+                        specs.Ingredients.push({
+                          descriptions: k.slice(1),
+                          qtty: v,
+                          price:
+                            parseInt(v) *
+                            parseInt(_varForm.get(`-${k.slice(1)}`)),
+                        });
+                      } else if (k == "Sizes") {
+                        let arr = v.split("_");
+                        specs.Sizes[arr[0]] = arr[1];
+                      } else {
+                        specs[k] = v;
+                      }
+                    }
+                  });
+                  if (Object.keys(specs.Sizes).length == 0) {
+                    delete specs.Sizes;
+                  }
+                  if (specs.Ingredients.length == 0) {
+                    delete specs.Ingredients;
+                  }
+                  let cartItem = {
+                    cartItemAdded: item.id,
+                    specs,
+                    inCartNumber: 0,
+                  };
+                  cartNumbers(cartItem);
+                  wait();
+                });
+            }
+            document
+              .querySelector(".-cart-gift")
+              .addEventListener("click", (e) => {
+                if (
+                  Object.keys(_sp).find(
+                    (elem) => typeof _sp[elem] == "object" && _sp[elem] != null
+                  )
+                ) {
+                  getVar();
+                } else {
+                  let cartItem = {
+                    cartItemAdded: item.id,
+                    inCartNumber: 0,
+                  };
+                  cartNumbers(cartItem);
+                  wait();
+                }
+              });
+          }
+        };
+      }
+
+      item(`/api/user/gift`);
+      //item
       //comment
 
       document
@@ -1184,99 +1285,8 @@
             }
           };
         });
-
-      function ctg_storage_a(c, url) {
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-          if (xhr.readyState == 4 && xhr.status == 200) {
-            let _c = JSON.parse(xhr.responseText),
-              group = "";
-            _c.forEach((item) => {
-              group += `
-             <a class="item -ct-item" href="../item?item=${item.id}">
-                      <div class="-d">
-                        ${
-                          item.discount != 0 && item.discount !== null
-                            ? "-" + item.discount + "%"
-                            : ""
-                        }
-                      </div>
-                      <div class="_image">
-                        <img
-                          src="../resources/placeholder.png"
-                          data-src="${JSON.parse(item.images)[0]}"
-                          alt="${item.product}"
-                          width="100%"
-                          height="100%"
-                          class="_ctg-image-load"
-                        />
-                      </div>
-                      <div class="-i-dtl">
-                        <div class="it-nm">
-                          ${item.product} - ${item.description}
-                        </div>
-                        <div class="it-pr pr price-current">${
-                          "UGX " +
-                          (item.discount
-                            ? (item.price * (100 - item.discount)) / 100
-                            : item.price)
-                        }</div>
-                         <div class="pre-it-pr pr price-prev">${
-                           item.discount ? "UGX " + item.price : ""
-                         }</div>
-                      </div>
-                    </a>
-                    
-            `;
-            });
-            c.innerHTML += group;
-            document.querySelectorAll(".-d").forEach((item) => {
-              if (item.innerText == "") item.style.display = "none";
-            });
-
-            let images = document.images;
-            for (let i = 0; i < images.length; i++) {
-              if (images[i].className == "_ctg-image-load") {
-                _load(images[i], images[i].dataset.src);
-              }
-            }
-            function _load(i, d) {
-              let image_true = new Image();
-              image_true.onload = function () {
-                i.src = this.src;
-              };
-              image_true.src = d;
-            }
-          }
-        };
-        xhr.open("GET", url, true);
-        xhr.send();
-      }
-
-      function _rv_a() {
-        if (
-          localStorage.getItem("_rv") &&
-          document.querySelector(".-ct-recentlyviewed_a")
-        ) {
-          let _rv = JSON.parse(localStorage.getItem("_rv"));
-          document.querySelector(".-ct-recentlyviewed_a").innerHTML = "";
-          _rv.forEach((item) => {
-            ctg_storage_a(
-              document.querySelector(".-ct-recentlyviewed_a"),
-              `/api/user/product/ct/${item}`
-            );
-          });
-        }
-      }
-      if (
-        !localStorage.getItem("_rv") &&
-        document.querySelector(".rv-ctr") != null
-      ) {
-        document.querySelector(".rv-ctr").style.display = "none";
-      }
-      _rv_a();
     </script>
-    <script src="../ym.min.js"></script>
+    <script src="./ym.min.js"></script>
     <!--scripts-->
   </body>
 </html>

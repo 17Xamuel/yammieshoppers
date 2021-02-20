@@ -63,6 +63,9 @@ body {
 /*no width*/
 .-is-nw {
   outline: none;
+  font-size: 17px;
+  padding: 5px;
+  margin: 5px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
