@@ -559,10 +559,11 @@ app.post("/editSubcategoryImage", async (req, res) => {
   });
 });
 
-app.use(function (req, res, next) {
+app.use(function (err, req, res, next) {
   res.status(503);
-  res.render("Service Unavailable, Please Try Again Few Minutes Later....");
+  res.send("Oops, something went wrong.");
 });
+
 app.use(function (req, res, next) {
   res.status(404);
   res.redirect("/404");
