@@ -4,6 +4,8 @@ const uuid = require("uuid");
 const nodemailer = require("nodemailer");
 const router = express.Router();
 const charge = require("./charges");
+const fs = require("fs");
+const path = require("path");
 
 //for new user
 let newUser = {};
@@ -25,6 +27,13 @@ let transporter = nodemailer.createTransport({
   auth: {
     user: "info@yammieshoppers.com",
     pass: "yammieShoppers@1",
+  },
+  dkim: {
+    domainName: "yammieshoppers.com",
+    keySelector: "1613938400",
+    privateKey: fs.readFileSync("./database/dkim.pem", "utf8"),
+    cacheDir: "/tmp",
+    cacheTreshold: 100 * 1024,
   },
 });
 //mailer
@@ -931,7 +940,7 @@ router.get("/gift", (req, res) => {
       ON products.id = gifts_tbl.id`,
     (err, result) => {
       if (err) {
-        throw err;
+        res.status(400).send("Error");
       } else {
         res.send(result);
       }

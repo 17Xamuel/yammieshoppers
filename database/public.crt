@@ -1,0 +1,5 @@
+1613938400.yammieshoppers._domainkey.yammieshoppers.com. IN TXT (
+        "v=DKIM1;t=s;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDCBxmsihrhIpo7gohPza8nlBTN"
+        "ttTCMUWwJ9KXX1llzwfvYcs+AxXaHVigoGb+sziwaS/LuRm+/bCy2teiBxtnZxb2"
+        "Dul28iS/suuev8it1pXmYK7QiKaPrSEJ1aIzzDY9Bd2eOx425ATbDNvuhHS5F7gd"
+        "s5RaD/7xw4rX5nbEVwIDAQAB")
