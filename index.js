@@ -373,10 +373,10 @@ app.post("/editProduct", async (req, res) => {
     (err1, res1) => {
       if (err1) throw err1;
       if (res1.length > 0) {
-        conn.query(`INSERT INTO products SET?`, res1, (err2, res2) => {
+        conn.query(`INSERT INTO products SET ?`, res1, (err2, res2) => {
           if (err2) throw err2;
           conn.query(
-            `DELETE FROM pending_prodcts WHERE id=?`,
+            `DELETE FROM pending_products WHERE id=?`,
             [id],
             (err3, res3) => {
               if (err3) throw err3;
