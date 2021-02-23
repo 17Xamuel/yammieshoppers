@@ -459,6 +459,50 @@
         left: 35%;
         background-color: #fff;
       }
+      /*start*/
+
+      #pop-up-overlay-start.active {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.55);
+        z-index: 30;
+        transition: all 0.3s ease-in-out;
+      }
+      .start-header {
+        text-align: center;
+        font-size: 24px;
+        font-weight: 500;
+      }
+      .start-msg {
+        text-align: center;
+        font-size: 18.5px;
+      }
+      .popup-start {
+        background-color: white;
+        width: 35vw;
+        height: 50vh;
+        display: flex;
+        justify-content: center;
+        border-radius: 5px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        transition: 200ms ease-in-out;
+        max-width: 90%;
+        z-index: 35;
+      }
+      .popup-start-ctr {
+        position: absolute;
+        top: 5%;
+      }
+      .popup-i.pp-active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      /*start*/
       @media screen and (max-width: 500px) {
         .container1 {
           height: 30vh;
@@ -492,6 +536,22 @@
   </head>
 
   <body>
+    <div id="pop-up-overlay-start"></div>
+    <div class="popup-start">
+      <div class="popup-start-ctr">
+        <img src="./resources/thanks.svg" width="120px" height="120px" alt="" />
+        <div class="start-header">Yammie Shoppers</div>
+        <span class="start-msg">
+          Hello, Welcome to Yammie, A new shopping Experience.
+        </span>
+        <div>
+          Start by looking for products by searching or browsing out categories
+        </div>
+        <div>Add Your Desired Product to cart</div>
+        <div>Then click on Start Your Order and proceed to finish Up</div>
+        <div><button>Start Shopping</button></div>
+      </div>
+    </div>
     <div id="sidenav">
       <span class="-c-side" style="font-size: 35px">&times;</span>
       <ul class="s-n-1">
