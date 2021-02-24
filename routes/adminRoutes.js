@@ -11,8 +11,8 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1"
-  }
+    pass: "yammieShoppers@1",
+  },
 });
 
 router.post("/login", (req, res) => {
@@ -110,7 +110,7 @@ try {
               to: results[0].email,
               subject: `Hello ${results[0].username}`,
               text: `Hello, ${results[0].username}  your email ${results[0].email} has been successfully confirmed you can start adding products to the website.
-              https://www.yammieshoppers.com/seller/addProduct`
+              https://www.yammieshoppers.com/seller/addProduct`,
             };
 
             transporter.sendMail(mailOptions, (error, response) => {
@@ -206,6 +206,13 @@ router.get("/confirmProduct/:id", async (req, res) => {
   );
 });
 
+router.get("/faqs", async (req, res) => {
+  conn.query(`SELECT * FROM faqs`, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
 router.get("/orderNumber", async (req, res) => {
   conn.query(`SELECT * FROM pending_orders`, (err, result) => {
     if (err) throw err;
@@ -299,7 +306,7 @@ router.post("/rejPost/:id", async (req, res) => {
           quantity: quantity,
           images: image,
           seller_id: seller_id,
-          reason: reason
+          reason: reason,
         },
         (error, results) => {
           if (error) throw error;
@@ -340,7 +347,7 @@ router.post("/finishOrder/:id", async (req, res) => {
         address: newInfo.address,
         order_delivery_method: newInfo.order_delivery_method,
         admin: req.body.name,
-        date: new Date()
+        date: new Date(),
       });
 
       let items = Object.values(JSON.parse(res1[0].order_items));
@@ -407,7 +414,7 @@ router.post("/finishOrder/:id", async (req, res) => {
                         order_status: "Approved",
                         order_price: `${res_9[0].order_price}`,
                         order_discount: `${res_9[0].order_discount}`,
-                        variation: `${total}`
+                        variation: `${total}`,
                       },
                       (merr, mres) => {
                         if (merr) throw merr;
@@ -555,7 +562,7 @@ router.post("/finishOrder/:id", async (req, res) => {
                 from: '"Yammie Shoppers" <info@yammieshoppers.com>',
                 to: `${qres[0].c_email}`,
                 subject: `Finish Order ${res1[0].order_number}`,
-                text: `Hello ${qres[0].c_last_name}, your order ${res1[0].order_number} has been successfully finished.Thanks for Shopping with Yammie Shoppers.`
+                text: `Hello ${qres[0].c_last_name}, your order ${res1[0].order_number} has been successfully finished.Thanks for Shopping with Yammie Shoppers.`,
               };
               transporter.sendMail(_email, (mailErr, response) => {
                 if (mailErr) throw mailErr;
@@ -586,7 +593,7 @@ router.post("/cancelOrder/:id", async (req, res) => {
         address: newInfo.address,
         order_delivery_method: newInfo.order_delivery_method,
         admin: req.body.name,
-        date: new Date()
+        date: new Date(),
       });
 
       let items = Object.values(JSON.parse(res1[0].order_items));
@@ -769,7 +776,7 @@ router.post("/cancelOrder/:id", async (req, res) => {
                 from: '"Yammie Shoppers" <info@yammieshoppers.com>',
                 to: `${qres[0].c_email}`,
                 subject: `Cancel Order ${res1[0].order_number}`,
-                text: `Hello ${qres[0].c_last_name}, your order has been cancelled because ${req.body.reason} but thanks for shopping with Yammie Shoppers`
+                text: `Hello ${qres[0].c_last_name}, your order has been cancelled because ${req.body.reason} but thanks for shopping with Yammie Shoppers`,
               };
               transporter.sendMail(cancelMail, (merr, result_0) => {
                 if (merr) throw "Error" + merr;
@@ -805,7 +812,7 @@ router.post("/addQuestion", async (req, res) => {
         {
           faqId: uuid.v4(),
           question: qns,
-          answer: ans
+          answer: ans,
         },
         (error, results) => {
           if (error) throw error;
@@ -829,7 +836,7 @@ router.post("/addCategory", async (req, res) => {
         conn.query(
           `INSERT INTO category SET ? `,
           {
-            category_name: catName
+            category_name: catName,
           },
           (err, result) => {
             if (err) throw err;
@@ -916,7 +923,7 @@ router.post("/addZone", async (req, res) => {
           "INSERT INTO zones SET ?",
           {
             zone_name: zoneName,
-            zone_weight: zoneWeight
+            zone_weight: zoneWeight,
           },
           (err, result) => {
             if (err) throw err;
@@ -1022,7 +1029,7 @@ router.post("/addAdresses", async (req, res) => {
               `INSERT INTO addresses SET ?`,
               {
                 zone_id: result[0].zone_id,
-                address_name: addressName
+                address_name: addressName,
               },
               (error, results) => {
                 if (error) throw error;
@@ -1104,9 +1111,9 @@ router.post("/zoneEdit/:id", async (req, res) => {
     [
       {
         zone_name: newName,
-        zone_weight: newWeight
+        zone_weight: newWeight,
       },
-      req.params.id.replace(/_/g, " ")
+      req.params.id.replace(/_/g, " "),
     ],
     (err, result) => {
       if (err) throw err;
@@ -1121,9 +1128,9 @@ router.post("/editAddress/:id", async (req, res) => {
     `UPDATE addresses SET ? WHERE address_id=?`,
     [
       {
-        address_name: newName
+        address_name: newName,
       },
-      req.params.id
+      req.params.id,
     ],
     (err, result) => {
       if (err) throw err;
@@ -1139,9 +1146,9 @@ router.post("/editCategory/:id", async (req, res) => {
     `UPDATE category SET ? WHERE category_name=?`,
     [
       {
-        category_name: newName
+        category_name: newName,
       },
-      req.params.id.replace(/_/g, " ")
+      req.params.id.replace(/_/g, " "),
     ],
     (err, result) => {
       if (err) throw err;
@@ -1168,9 +1175,9 @@ router.post("/editSubCategory/:id", async (req, res) => {
     `UPDATE subCategories SET? WHERE subCategoryName=?`,
     [
       {
-        subCategoryName: newSubName
+        subCategoryName: newSubName,
       },
-      req.params.id.replace(/_/g, " ")
+      req.params.id.replace(/_/g, " "),
     ],
     (err, result) => {
       if (err) throw err;
@@ -1261,7 +1268,7 @@ router.post("/editSpecifications/:id", async (req, res) => {
     color,
     flavor,
     sizes,
-    ingridients
+    ingridients,
   } = req.body;
 
   let newSpecifications = JSON.stringify({
@@ -1277,7 +1284,7 @@ router.post("/editSpecifications/:id", async (req, res) => {
     TypeOfProduct: typeOfProduct,
     Flavor: flavor || null,
     Sizes: sizes || null,
-    Ingredients: ingridients || null
+    Ingredients: ingridients || null,
   });
 
   conn.query(
