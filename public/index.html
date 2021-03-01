@@ -37,6 +37,14 @@
       content="JxIXUEJseq0SAAqSPKG_OWyz4-378XpYjDXVSoP9368"
     />
     <meta name="keywords" content="yammieshoppers, yammie lira uganda" />
+    <meta
+      name="keywords"
+      content="lira university uganda, yammie lira uganda lira university"
+    />
+    <meta
+      name="keywords"
+      content="lira university yammieshoppers, yammie lira uganda lira university"
+    />
     <meta name="keywords" content="yammie, uganda online shop in uganda" />
     <meta
       http-equiv="Cache-Control"
@@ -459,50 +467,7 @@
         left: 35%;
         background-color: #fff;
       }
-      /*start*/
 
-      #pop-up-overlay-start.active {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: rgba(0, 0, 0, 0.55);
-        z-index: 30;
-        transition: all 0.3s ease-in-out;
-      }
-      .start-header {
-        text-align: center;
-        font-size: 24px;
-        font-weight: 500;
-      }
-      .start-msg {
-        text-align: center;
-        font-size: 18.5px;
-      }
-      .popup-start {
-        background-color: white;
-        width: 35vw;
-        height: 50vh;
-        display: flex;
-        justify-content: center;
-        border-radius: 5px;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        transition: 200ms ease-in-out;
-        max-width: 90%;
-        z-index: 35;
-      }
-      .popup-start-ctr {
-        position: absolute;
-        top: 5%;
-      }
-      .popup-i.pp-active {
-        transform: translate(-50%, -50%) scale(1);
-      }
-      /*start*/
       @media screen and (max-width: 500px) {
         .container1 {
           height: 30vh;
@@ -536,22 +501,6 @@
   </head>
 
   <body>
-    <div id="pop-up-overlay-start"></div>
-    <div class="popup-start">
-      <div class="popup-start-ctr">
-        <img src="./resources/thanks.svg" width="120px" height="120px" alt="" />
-        <div class="start-header">Yammie Shoppers</div>
-        <span class="start-msg">
-          Hello, Welcome to Yammie, A new shopping Experience.
-        </span>
-        <div>
-          Start by looking for products by searching or browsing out categories
-        </div>
-        <div>Add Your Desired Product to cart</div>
-        <div>Then click on Start Your Order and proceed to finish Up</div>
-        <div><button>Start Shopping</button></div>
-      </div>
-    </div>
     <div id="sidenav">
       <span class="-c-side" style="font-size: 35px">&times;</span>
       <ul class="s-n-1">
@@ -617,9 +566,9 @@
           </a>
         </li>
         <li class="n-l-itm">
-          <a href="">
+          <a href="/supermarket">
             <i class="fas fa-layer-group ctg-icon"></i>
-            All Items
+            Supermarket
           </a>
         </li>
       </ul>
@@ -890,7 +839,7 @@
           </li>
           <li class="ctg-item">
             <span class="ctg-name">
-              <a href="">
+              <a href="/supermarket">
                 <i class="fas fa-layer-group ctg-icon"></i>
                 Supermarket
               </a>
@@ -1060,12 +1009,12 @@
           </div>
         </div>
         <div class="categories">
-          <a class="up-container" href="./404">
+          <a class="up-container" href="/catalog?q=rice">
             <div class="_pl-p-image">
               <img
                 src="./resources/placeholder.png"
                 class="_ctg-image-load"
-                data-src="./resources/ct-clothing-1.jpg"
+                data-src="./resources/rice_sale.jpg"
                 alt=""
                 width="100%"
                 height="100%"
@@ -2115,7 +2064,9 @@
           href="https://yammieuploads.nyc3.digitaloceanspaces.com/Yammie.apk"
           download="Yammie"
         >
-          <button class="btn">Download Button</button>
+          <button class="btn" onclick="_androidDismis()">
+            Download Button
+          </button>
         </a>
       </div>
     </div>

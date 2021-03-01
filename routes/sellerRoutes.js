@@ -8,15 +8,14 @@ require("dotenv").config();
 const router = express.Router();
 let newSeller = {};
 let code = Math.floor(Math.random() * 1000000 + 1).toString();
-
 let transporter = nodemailer.createTransport({
   host: "smtp.domain.com",
   secureConnection: false,
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1"
-  }
+    pass: "yammieShoppers@1",
+  },
 });
 
 router.post("/registerSeller", async (req, res) => {
@@ -28,7 +27,7 @@ router.post("/registerSeller", async (req, res) => {
     businessname,
     password,
     passwordConfirm,
-    location
+    location,
   } = req.body;
   let seller_status = "Pending";
 
@@ -72,14 +71,14 @@ router.post("/registerSeller", async (req, res) => {
     location,
     category,
     password,
-    seller_status
+    seller_status,
   };
 
   let mailOptions = {
     from: '"Yammie Shoppers"<info@yammieshoppers.com>',
     to: email,
     subject: `Email Confirmation ${code}`,
-    text: `Hello, ${username} confirm your email with this code ${code}.`
+    text: `Hello, ${username} confirm your email with this code ${code}.`,
   };
 
   transporter.sendMail(mailOptions, (error, response) => {
@@ -110,7 +109,7 @@ router.post("/confirmEmail", async (req, res) => {
         to: "theyammieinc@gmail.com",
         subject: `New Seller ${code}`,
         text:
-          "Hello Admin, yammieshoppers has received a new seller waiting for confirmation. Thanks"
+          "Hello Admin, yammieshoppers has received a new seller waiting for confirmation. Thanks",
       };
 
       transporter.sendMail(mailing, (error, results) => {
