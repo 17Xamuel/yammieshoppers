@@ -213,6 +213,17 @@ router.get("/faqs", async (req, res) => {
   });
 });
 
+router.get("/deleteSeller/:id", async (req, res) => {
+  conn.query(
+    `DELETE FROM sellers WHERE id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send("OK");
+    }
+  );
+});
+
 router.get("/orderNumber", async (req, res) => {
   conn.query(`SELECT * FROM pending_orders`, (err, result) => {
     if (err) throw err;
