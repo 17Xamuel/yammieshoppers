@@ -504,7 +504,7 @@ function category(ct, sbct, res) {
   if (sbct == "recommendedforyou") {
     req = "32";
   } else if (sbct == "gascookers") {
-    req = "20";
+    req = "47";
   } else if (sbct == "yammie-for-you") {
     req = "30";
   } else if (sbct == "recently-added") {
@@ -809,7 +809,6 @@ router.post("/checkout/cart/:id", (req, res) => {
                 let charge_obj = {
                   price,
                   qty: key.inCartNumber < 3 ? true : false,
-                  urgent: true,
                   size: (product.Size == "Big" ? true : false) || false,
                   fragile: (product.Fragile == "Yes" ? true : false) || false,
                   location: "Lira",

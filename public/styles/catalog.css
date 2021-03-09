@@ -212,7 +212,6 @@ input[type="range"]::-webkit-slider-thumb {
 .itm-s-img {
   width: 100%;
   height: 50%;
-  padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -376,7 +375,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 ._img-ctr {
   width: 100%;
-  height: 75%;
+  height: 100%;
 }
 
 /*for varing products*/
