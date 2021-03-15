@@ -26,7 +26,7 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1",
+    pass: "Peter1@&=",
   },
   dkim: {
     domainName: "yammieshoppers.com",
@@ -73,7 +73,7 @@ router.post("/customer/insert", async (req, res) => {
         transporter
           .sendMail(info)
           .then(function (response) {
-            console.log('Email Sent...')
+            console.log("Email Sent...");
             res.status(200).send("ok");
           })
           .catch(function (err) {
@@ -853,6 +853,7 @@ router.post("/f-comment", (req, res) => {
       res.status(200).send("Comment Recieved...");
     })
     .catch((err) => {
+      console.log(err);
       console.log("Error Ocurred!!!");
     });
 });
