@@ -73,6 +73,7 @@ router.post("/customer/insert", async (req, res) => {
         transporter
           .sendMail(info)
           .then(function (response) {
+            console.log('Email Sent...')
             res.status(200).send("ok");
           })
           .catch(function (err) {
