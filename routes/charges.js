@@ -97,21 +97,21 @@ class Deduct {
   index() {
     let index;
     if (this.product.price >= 5000 && this.product.price <= 20000) {
-      index = this.factorPrice * 0.6;
+      index = this.factorPrice * 0.7;
     } else if (this.product.price >= 20001 && this.product.price <= 100000) {
-      index = this.factorPrice * 0.5;
+      index = this.factorPrice * 0.6;
     } else if (this.product.price >= 100001 && this.product.price <= 250000) {
-      index = this.factorPrice * 0.4;
+      index = this.factorPrice * 0.5;
     } else if (this.product.price >= 250001 && this.product.price <= 600000) {
-      index = this.factorPrice * 0.3;
+      index = this.factorPrice * 0.4;
     } else if (this.product.price >= 600001 && this.product.price <= 1000000) {
-      index = this.factorPrice * 0.2;
+      index = this.factorPrice * 0.3;
     } else if (this.product.price >= 1000001 && this.product.price <= 1500000) {
-      index = this.factorPrice * 0.1;
+      index = this.factorPrice * 0.2;
     } else if (this.product.price > 1500000) {
       index = this.factorPrice * 0.1;
     } else {
-      index = this.factorPrice * 1;
+      index = this.factorPrice * 1.5;
     }
     return index;
   }
@@ -131,7 +131,7 @@ class Deduct {
       this.product.price < 25000 &&
       this.product.location == "lira"
     ) {
-      return this.round(parseInt(0.05 * this.product.price + this.index()));
+      return this.round(parseInt(0.1 * this.product.price + this.index()));
     } else {
       return this.round(parseInt(this.index()));
     }
