@@ -223,7 +223,8 @@ router.get("/checkout/cart/:id", (req, res) => {
                       : result_0[0].price
                     : in_price;
                 let charge_obj = {
-                  price,
+                  original_price: price,
+                  price: price * key.inCartNumber,
                   qty: key.inCartNumber < 3 ? true : false,
                   urgent: true,
                   size: (product.Size == "Big" ? true : false) || false,
