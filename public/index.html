@@ -2422,27 +2422,6 @@
           };
         });
       //sliders
-      // function _slider() {
-      //   let _s = new XMLHttpRequest();
-      //   _s.open("GET", "/api/user/images/SliderImages", true);
-      //   _s.send();
-      //   _s.onreadystatechange = () => {
-      //     if (_s.readyState == 4 && _s.status == 200) {
-      //       let _sr = JSON.parse(JSON.parse(_s.responseText)[0].image_path);
-      //       let _i = document.querySelectorAll("._ctg-image-load-slider");
-      //       for (let i = 0; i < _i.length; i++) {
-      //         _load(_i[i], _sr[i]);
-      //       }
-      //       function _load(i, d) {
-      //         let image_true = new Image();
-      //         image_true.onload = function () {
-      //           i.src = this.src;
-      //         };
-      //         image_true.src = d;
-      //       }
-      //     }
-      //   };
-      // }
       function _slider(i, c) {
         let _s = new XMLHttpRequest();
         _s.open("GET", `/api/user/images/${i}`, true);

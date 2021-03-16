@@ -808,7 +808,8 @@ router.post("/checkout/cart/:id", (req, res) => {
                       : result_0[0].price
                     : in_price;
                 let charge_obj = {
-                  price,
+                  original_price: price,
+                  price: price * key.inCartNumber,
                   qty: key.inCartNumber < 3 ? true : false,
                   size: (product.Size == "Big" ? true : false) || false,
                   fragile: (product.Fragile == "Yes" ? true : false) || false,
