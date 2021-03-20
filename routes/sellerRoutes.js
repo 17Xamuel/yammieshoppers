@@ -14,7 +14,7 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1",
+    pass: "Peter1@&=",
   },
 });
 
@@ -294,7 +294,8 @@ router.get("/orders/:id", async (req, res) => {
 
 router.get("/doneOrder/:id", async (req, res) => {
   conn.query(
-    `SELECT seller_orders.order_price,seller_orders.order_amount,seller_orders.specification,
+    `SELECT seller_orders.order_price,seller_orders.order_amount,seller_orders.variation,
+    seller_orders.specification,
   seller_orders.order_product,seller_orders.order_qty,seller_orders.order_discount,
   products.images FROM seller_orders JOIN products ON seller_orders.product_id
   =products.id JOIN sellers ON sellers.id=products.seller_id WHERE sellers.id=? AND 
@@ -335,7 +336,7 @@ router.get("/doneOrdernumber/:id", async (req, res) => {
 
 router.get("/sales/:id", async (req, res) => {
   conn.query(
-    `SELECT order_qty,order_amount,variation FROM seller_orders JOIN
+    `SELECT order_qty,order_amount,variation,order_product FROM seller_orders JOIN
   products ON seller_orders.product_id=products.id JOIN sellers ON sellers.id=
   products.seller_id WHERE sellers.id=? AND order_status='Approved'`,
     [req.params.id],
@@ -343,10 +344,10 @@ router.get("/sales/:id", async (req, res) => {
       if (err) throw err;
       let total = 0;
       results.forEach((result) => {
-        if (result.order_amount === null) {
-          total += parseInt(result.variation);
-        } else {
+        if (result.variation === null) {
           total += parseInt(result.order_amount) * parseInt(result.order_qty);
+        } else {
+          total += parseInt(result.variation) * parseInt(result.order_qty);
         }
       });
       res.json(total);

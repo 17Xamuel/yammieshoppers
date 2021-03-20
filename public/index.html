@@ -1646,7 +1646,7 @@
 
         <div class="-ch-all -ch-all-w">
           <span>Your Veges </span>
-          <a href="./catalog?q=vegetables">
+          <a href="./catalog?q=36&name=vegetables">
             <span class="-ch-all-w-t">
               Check
               <i class="fas fa-chevron-right"></i>
@@ -1811,7 +1811,7 @@
 
         <div class="-ch-all">
           <span>GAS COOKERS</span>
-          <a href="./catalog?q=gascookers">
+          <a href="./catalog?q=gas">
             <span class="-ch-all-t">
               See All
               <i class="fas fa-chevron-right"></i>
@@ -2209,7 +2209,7 @@
 
         let changeSlide = setInterval(() => {
           showSlides((slideIndex += 1));
-        }, 7000);
+        }, 12000);
         // Next/previous controls
         function plusSlides(n) {
           showSlides((slideIndex += n));
@@ -2422,27 +2422,6 @@
           };
         });
       //sliders
-      // function _slider() {
-      //   let _s = new XMLHttpRequest();
-      //   _s.open("GET", "/api/user/images/SliderImages", true);
-      //   _s.send();
-      //   _s.onreadystatechange = () => {
-      //     if (_s.readyState == 4 && _s.status == 200) {
-      //       let _sr = JSON.parse(JSON.parse(_s.responseText)[0].image_path);
-      //       let _i = document.querySelectorAll("._ctg-image-load-slider");
-      //       for (let i = 0; i < _i.length; i++) {
-      //         _load(_i[i], _sr[i]);
-      //       }
-      //       function _load(i, d) {
-      //         let image_true = new Image();
-      //         image_true.onload = function () {
-      //           i.src = this.src;
-      //         };
-      //         image_true.src = d;
-      //       }
-      //     }
-      //   };
-      // }
       function _slider(i, c) {
         let _s = new XMLHttpRequest();
         _s.open("GET", `/api/user/images/${i}`, true);

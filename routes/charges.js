@@ -2,13 +2,6 @@ class Deduct {
   constructor(product) {
     this.product = product;
   }
-  urgency() {
-    if (this.product.urgent == true) {
-      return this.product.price * 0.02;
-    } else {
-      return this.product.price * 0.01;
-    }
-  }
   qty() {
     if (this.product.qty == true) {
       return this.product.price * 0.03;
@@ -96,7 +89,6 @@ class Deduct {
       this.location() +
       this.fragile() +
       this.qty() +
-      this.urgency() +
       this.size() +
       this.userLocation() +
       this.weight()
@@ -104,11 +96,7 @@ class Deduct {
   }
   index() {
     let index;
-    if (this.product.price >= 5000 && this.product.price <= 20000) {
-      index = this.factorPrice * 0.8;
-    } else if (this.product.price >= 20001 && this.product.price <= 100000) {
-      index = this.factorPrice * 0.7;
-    } else if (this.product.price >= 100001 && this.product.price <= 250000) {
+    if (this.product.price >= 100001 && this.product.price <= 250000) {
       index = this.factorPrice * 0.6;
     } else if (this.product.price >= 250001 && this.product.price <= 600000) {
       index = this.factorPrice * 0.5;
@@ -119,7 +107,7 @@ class Deduct {
     } else if (this.product.price > 1500000) {
       index = this.factorPrice * 0.2;
     } else {
-      index = this.factorPrice * 1;
+      index = this.factorPrice * 2;
     }
     return index;
   }
@@ -131,7 +119,7 @@ class Deduct {
     }
   }
   get price() {
-    return this.round(this.product.price);
+    return this.round(this.product.original_price);
   }
   get total() {
     if (
@@ -139,7 +127,7 @@ class Deduct {
       this.product.price < 25000 &&
       this.product.location == "lira"
     ) {
-      return this.round(parseInt(0.05 * this.product.price + this.index()));
+      return this.round(parseInt(0.1 * this.product.price + this.index()));
     } else {
       return this.round(parseInt(this.index()));
     }

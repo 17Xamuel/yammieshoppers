@@ -26,7 +26,7 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "yammieShoppers@1",
+    pass: "Peter1@&=",
   },
   dkim: {
     domainName: "yammieshoppers.com",
@@ -73,6 +73,7 @@ router.post("/customer/insert", async (req, res) => {
         transporter
           .sendMail(info)
           .then(function (response) {
+            console.log("Email Sent...");
             res.status(200).send("ok");
           })
           .catch(function (err) {
@@ -504,7 +505,7 @@ function category(ct, sbct, res) {
   if (sbct == "recommendedforyou") {
     req = "32";
   } else if (sbct == "gascookers") {
-    req = "20";
+    req = "47";
   } else if (sbct == "yammie-for-you") {
     req = "30";
   } else if (sbct == "recently-added") {
@@ -807,9 +808,9 @@ router.post("/checkout/cart/:id", (req, res) => {
                       : result_0[0].price
                     : in_price;
                 let charge_obj = {
-                  price,
+                  original_price: price,
+                  price: price * key.inCartNumber,
                   qty: key.inCartNumber < 3 ? true : false,
-                  urgent: true,
                   size: (product.Size == "Big" ? true : false) || false,
                   fragile: (product.Fragile == "Yes" ? true : false) || false,
                   location: "Lira",
@@ -853,6 +854,7 @@ router.post("/f-comment", (req, res) => {
       res.status(200).send("Comment Recieved...");
     })
     .catch((err) => {
+      console.log(err);
       console.log("Error Ocurred!!!");
     });
 });
