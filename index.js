@@ -445,10 +445,10 @@ app.post("/addImages", async (req, res) => {
             _deleteUploadFile(image.slice(50, image.length));
           });
           conn.query(
-            `UPDATE appImages SET image='${pathing}' WHERE destination='${Uploads}'`,
+            `UPDATE appImages SET image_path ='${pathing}' WHERE destination='${Uploads}'`,
             (err1, res1) => {
               if (err1) throw err1;
-              res.redirect("./admin/uploads");
+              res.redirect("./admin/upload");
             }
           );
         }

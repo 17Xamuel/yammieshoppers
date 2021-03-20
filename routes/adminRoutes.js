@@ -130,21 +130,6 @@ try {
   console.log(qerr);
 }
 
-try {
-  router.get("/deleteSeller/:id", async (req, res) => {
-    conn.query(
-      "DELETE FROM sellers WHERE id=?",
-      [req.params.id],
-      (err, results) => {
-        if (err) throw err;
-        res.send(" Seller Successfully Deleted");
-      }
-    );
-  });
-} catch (error) {
-  console.log(error);
-}
-
 router.get("/pendingProduct", async (req, res) => {
   conn.query(
     "SELECT id,product,price,images,description FROM pending_products",

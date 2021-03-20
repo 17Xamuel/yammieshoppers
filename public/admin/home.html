@@ -763,42 +763,22 @@
         }
         if (orders.status == 200 && orders.readyState == 4) {
           let pendingOrders = JSON.parse(orders.responseText);
-          let orderChecking = Math.round(pendingOrders.length / 2);
-          let email = JSON.parse(localStorage.getItem("admin/yammie"));
+          document.getElementById("on").innerHTML = pendingOrders.length;
           let data = "";
-          if (email[3] == "admin@yammieshoppers.com") {
-            for (let i = 0; i < orderChecking; i++) {
-              data += `
-              <tr>
-              <td>${pendingOrders[i].order_number}</td>
-              <td>${pendingOrders[i].order_amount}</td>
+          pendingOrders.forEach((order) => {
+            data += `
+            <tr>
+              <td>${order.order_number}</td>
+              <td>${order.order_amount}</td>
               <td>
-                <a href="order?order=${pendingOrders[i].order_id}">
+                <a href="order?order=${order.order_id}">
                   <button type="button" class="btn btn-info btn-sm">Details</button>
                 </a>
-              </td></tr>
-              `;
-            }
-            document.getElementById("pendingOrders").innerHTML = data;
-            document.getElementById("on").innerHTML = `(${orderChecking})`;
-          } else if (email[3] == "yammieshoppers@gmail.com") {
-            for (let j = orderChecking; j < pendingOrders.length; j++) {
-              data += `
-              <tr>
-              <td>${pendingOrders[j].order_number}</td>
-              <td>${pendingOrders[j].order_amount}</td>
-              <td>
-                <a href="order?order=${pendingOrders[j].order_id}">
-                  <button type="button" class="btn btn-info btn-sm">Details</button>
-                </a>
-              </td></tr>
-              `;
-            }
-            document.getElementById("pendingOrders").innerHTML = data;
-            let newOrders = pendingOrders.length - orderChecking;
-            document.getElementById("on").innerHTML = `(${newOrders})`;
-          }
-
+              </td>
+            </tr>
+            `;
+          });
+          document.getElementById("pendingOrders").innerHTML = data;
           document.getElementById("orderLoading").innerHTML = "";
         }
       };

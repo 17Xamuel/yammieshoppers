@@ -745,15 +745,23 @@
       );
       document.getElementById("User").innerHTML = seller.username;
       document.getElementById("auth").value = seller.id;
-      let categories = JSON.parse(seller.category);
-      let cat = "";
-      categories.forEach((category) => {
-        cat += `<option value="${category.replace(
-          / /g,
-          "_"
-        )}">${category}</option>`;
-      });
-      document.getElementById("category").innerHTML += cat;
+
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let results = JSON.parse(xhr.responseText);
+          let cat = "";
+          results.forEach((result) => {
+            cat += `<option value="${result.category_name.replace(
+              / /g,
+              "_"
+            )}">${result.category_name}</option>`;
+          });
+          document.getElementById("category").innerHTML += cat;
+        }
+      };
+      xhr.open("GET", `/api/admin/getCategory`, true);
+      xhr.send();
 
       let subCat = document.getElementById("category");
       subCat.addEventListener("change", (e) => {

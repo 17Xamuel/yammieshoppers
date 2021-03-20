@@ -168,25 +168,6 @@
     </div>
     <!-- End Modal -->
 
-    <div class="modal fade" id="removeSeller">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Want to Delete Seller?</h5>
-          </div>
-          <div class="modal-body text-center">
-            Press OK to Continue. This action is not irreversible
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-sm btn-success" id="removing">OK</button>
-            <button class="btn btn-sm btn-danger" data-dismiss="modal">
-              NO
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <section>
       <div class="container-fluid">
         <div class="row">
@@ -222,23 +203,6 @@
                     </table>
                     <h6>Category Of Products</h6>
                     <ul class="list-group" id="cat"></ul>
-                    <div class="text-center my-3">
-                      <span
-                        class="fas fa-trash-alt text-danger fa-2x mr-3"
-                        data-target="#removeSeller"
-                        data-toggle="modal"
-                        data-toggle="tooltip"
-                        data-placement="left"
-                        title="Delete"
-                      ></span>
-                      <span
-                        class="fas fa-edit text-primary fa-2x"
-                        data-toggle="tooltip"
-                        data-placement="right"
-                        title="Edit"
-                        id="editting"
-                      ></span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -326,19 +290,6 @@
       };
       _seller.open("GET", `/api/admin/seller/${seller}`, true);
       _seller.send();
-
-      document.getElementById("removing").addEventListener("click", (e) => {
-        let mseller = new XMLHttpRequest();
-        mseller.onreadystatechange = () => {
-          if (mseller.readyState == 4 && mseller.status == 200) {
-            if (mseller.responseText == "OK") {
-              window.location.assign("home");
-            }
-          }
-        };
-        mseller.open("GET", `/api/admin/deleteSeller/${seller}`, true);
-        mseller.send();
-      });
     </script>
     <script src="scripts/account.js"></script>
 

@@ -306,6 +306,14 @@
         if (xhr.readyState == 4 && xhr.status == 200) {
           let rows = "";
           let results = JSON.parse(xhr.responseText);
+          console.log(results);
+          document.getElementById("pon").innerHTML = `(${results.length})`;
+          if (`${results.length}` == 0) {
+            document.getElementById("icon1").textContent =
+              "No Pending Order at the Moment";
+          } else {
+            document.getElementById("icon1").innerHTML = "";
+          }
           results.forEach((result) => {
             if (result.specification === null) {
               let image = JSON.parse(result.images);
@@ -398,13 +406,6 @@
             }
           });
           document.getElementById("body").innerHTML = rows;
-          document.getElementById("pon").innerHTML = `(${results.length})`;
-          if (`${results.length}` == 0) {
-            document.getElementById("icon1").textContent =
-              "No Pending Order at the Moment";
-          } else {
-            document.getElementById("icon1").innerHTML = "";
-          }
         }
       };
       xhr.open("GET", `/api/sellers/orders/${sellerId}`, true);
