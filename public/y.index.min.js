@@ -22,6 +22,7 @@ function ctg_storage(c, url) {
                           width="100%"
                           height="100%"
                           class="_ctg-image-load-rv"
+                          style="object-fit: cover"
                         />
                       </div>
                       <div class="-i-dtl">
