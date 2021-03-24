@@ -448,7 +448,7 @@ app.post("/addImages", async (req, res) => {
             `UPDATE appImages SET image_path='${pathing}' WHERE destination='${Uploads}'`,
             (err1, res1) => {
               if (err1) throw err1;
-              res.redirect("./admin/uploads");
+              res.redirect("./admin/upload");
             }
           );
         }

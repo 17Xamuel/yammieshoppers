@@ -306,8 +306,18 @@
         if (xhr.readyState == 4 && xhr.status == 200) {
           let rows = "";
           let results = JSON.parse(xhr.responseText);
+          document.getElementById("pon").innerHTML = `(${results.length})`;
+          if (`${results.length}` == 0) {
+            document.getElementById("icon1").textContent =
+              "No Pending Order at the Moment";
+          } else {
+            document.getElementById("icon1").innerHTML = "";
+          }
           results.forEach((result) => {
-            if (result.specification === null) {
+            if (
+              result.specification === null ||
+              result.specification === "null"
+            ) {
               let image = JSON.parse(result.images);
               rows += `<li class=list-group-item>
                        <ul class="list-inline">
@@ -326,6 +336,7 @@
                        </ul>
                      </li>`;
             } else {
+              console.log(result.specification);
               let spec = JSON.parse(result.specification);
               let image = JSON.parse(result.images);
               let totalPrice = 0;
@@ -362,7 +373,7 @@
                   totalPrice += parseInt(spec.Ingredients[i].price);
                 }
               }
-              let price = "";
+              let price;
               totalPrice == 0
                 ? (price = result.order_qty * result.order_amount)
                 : (price = totalPrice * result.order_qty);
@@ -373,7 +384,7 @@
                           <li class="list-inline-item mx-3"><span class="font-weight-bold">
                            Product: </span>${result.order_product}</li>
                             <li class="list-inline-item mx-3"><span class="font-weight-bold">
-                           Price:  </span>UGX${result.order_amount}</li>
+                           Price:  </span>UGX${result.order_price}</li>
                             <li class="list-inline-item mx-3"><span class="font-weight-bold">
                            Quantity: </span>${result.order_qty}</</li>
                             <li class="list-inline-item mx-3"><span class="font-weight-bold">
@@ -398,13 +409,6 @@
             }
           });
           document.getElementById("body").innerHTML = rows;
-          document.getElementById("pon").innerHTML = `(${results.length})`;
-          if (`${results.length}` == 0) {
-            document.getElementById("icon1").textContent =
-              "No Pending Order at the Moment";
-          } else {
-            document.getElementById("icon1").innerHTML = "";
-          }
         }
       };
       xhr.open("GET", `/api/sellers/orders/${sellerId}`, true);
@@ -429,12 +433,14 @@
                         <li class="list-inline-item mx-3"><span class="font-weight-bold">
                           Product: </span>${result.order_product}</li>
                         <li class="list-inline-item mx-3"><span class="font-weight-bold">Price: UGX
-                          </span>${result.order_amount}</li>
+                          </span>${result.order_price}</li>
                            <li class="list-inline-item mx-3"><span class="font-weight-bold">Quantity:
                           </span>${result.order_qty}</li>
                         <li class="list-inline-item mx-3"><span class="font-weight-bold">Amount: 
                         </span>UGX ${
-                          result.order_amount * result.order_qty
+                          result.variation !== null
+                            ? result.variation * result.order_qty
+                            : result.order_amount * result.order_qty
                         }</li>
                        </ul>
                      </li>`;
