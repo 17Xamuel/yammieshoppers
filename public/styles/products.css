@@ -204,6 +204,10 @@
   margin: 5px;
   padding: 3px;
 }
+._ctg-image-load,
+._ctg-image-load-rv {
+  object-fit: cover;
+}
 @media screen and (max-width: 768px) {
   .m-ctr {
     margin: 20px auto;
