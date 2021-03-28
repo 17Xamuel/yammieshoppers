@@ -214,7 +214,10 @@
             ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
           }
           if (xhr.readyState == 4 && xhr.status == 200) {
-            if (xhr.responseText == "Incorrect Email or Password") {
+            if (
+              xhr.responseText == "Incorrect Email or Password" ||
+              xhr.responseText == "All Fields are Required"
+            ) {
               document.getElementById("messages").innerHTML = xhr.responseText;
             } else {
               localStorage.setItem("admin/yammie", xhr.responseText);
