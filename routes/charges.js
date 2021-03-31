@@ -97,14 +97,12 @@ class Deduct {
   index() {
     let index;
     if (this.product.price >= 100001 && this.product.price <= 250000) {
-      index = this.factorPrice * 0.6;
-    } else if (this.product.price >= 250001 && this.product.price <= 600000) {
-      index = this.factorPrice * 0.5;
-    } else if (this.product.price >= 600001 && this.product.price <= 1000000) {
       index = this.factorPrice * 0.4;
-    } else if (this.product.price >= 1000001 && this.product.price <= 1500000) {
+    } else if (this.product.price >= 250001 && this.product.price <= 600000) {
       index = this.factorPrice * 0.3;
-    } else if (this.product.price > 1500000) {
+    } else if (this.product.price >= 600001 && this.product.price <= 1000000) {
+      index = this.factorPrice * 0.3;
+    } else if (this.product.price >= 1000000) {
       index = this.factorPrice * 0.2;
     } else {
       index = this.factorPrice * 2;

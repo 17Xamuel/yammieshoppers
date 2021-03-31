@@ -23,7 +23,7 @@ router.post("/login", (req, res) => {
   let user = [];
   if (
     email == "yammieshoppers@gmail.com" &&
-    password == "yammieshoppersadmin"
+    password == "yammieshoppersadmin@1"
   ) {
     user = ["Samuel", "0756234512", "Technician", "yammieshoppers@gmail.com"];
     res.send(user);
