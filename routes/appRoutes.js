@@ -6,6 +6,7 @@ const router = express.Router();
 const charge = require("./charges");
 
 router.post("/updateCart/:id", (req, res) => {
+  console.log(req.body);
   conn.query(
     "UPDATE customers SET ? where c_id = ?",
     [
