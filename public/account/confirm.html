@@ -112,7 +112,7 @@
       }
       .close-pp {
         position: absolute;
-        top: 5px;
+        top: 2px;
         right: 15px;
         font-size: 2rem;
         border: none;
@@ -201,6 +201,13 @@
       .ldr {
         margin: 20px 0px;
       }
+      @media screen and (max-width: 768px) {
+        .popup {
+          background-color: white;
+          width: 95vw;
+          margin: auto;
+        }
+      }
     </style>
     <script>
       document.addEventListener("DOMContentLoaded", (e) => {
@@ -227,7 +234,7 @@
     <!--pop up-->
     <div id="pop-up-overlay"></div>
     <div class="popup">
-      <button class="close-pp" onclick="imageDialogClose()">x</button>
+      <button class="close-pp" onclick="imageDialogClose()">&times;</button>
       <div class="pp-content">
         <form id="-edit-a" autocomplete="off">
           <b>Please Help Us with your First Address</b>
@@ -728,6 +735,7 @@
     </footer>
     <!--scripts-->
 
+    <script src="../ym.min.js"></script>
     <script>
       let yammie = localStorage.getItem(
         "https://yammieshoppers.com/useLocalStorage/Storage"
