@@ -227,24 +227,7 @@
                   id="cEmail"
                   placeholder="Enter Email"
                   autocomplete="off"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="password"
-                  class="form-control"
-                  id="cPass"
-                  placeholder="Enter New Password"
-                  autocomplete="off"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="password"
-                  class="form-control"
-                  id="new-cPass"
-                  placeholder="Repeat New Password"
-                  autocomplete="off"
+                  required
                 />
               </div>
 
@@ -254,7 +237,11 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger btn-sm" id="logmodal">
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              data-dismiss="modal"
+            >
               OK
             </button>
           </div>
@@ -317,30 +304,27 @@
         xhr.send(sellerString);
       });
 
-      let forgotPassword = document.getElementById("forgetting");
-      forgotPassword.addEventListener("submit", (e) => {
+      document.getElementById("forgetting").addEventListener("submit", (e) => {
         e.preventDefault();
-        let newCrendential = {};
-        newCrendential.email = document.getElementById("cEmail").value;
-        newCrendential.password = document.getElementById("cPass").value;
-        newCrendential.newPass = document.getElementById("new-cPass").value;
-        let string = JSON.stringify(newCrendential);
-
-        const changing = new XMLHttpRequest();
-        changing.onreadystatechange = () => {
-          if (changing.readyState < 4) {
+        let email = document.getElementById("cEmail").value;
+        let sellerChange = new XMLHttpRequest();
+        sellerChange.onreadystatechange = function () {
+          if (sellerChange.readyState < 4) {
             document.getElementById(
               "passwordForget"
             ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"></i>`;
           }
-          if (changing.readyState == 4 && changing.status == 200) {
-            document.getElementById("passwordForget").innerHTML =
-              changing.responseText;
+          if (sellerChange.status == 200 && sellerChange.readyState == 4) {
+            if (sellerChange.responseText === "OK") {
+              window.location.assign("code");
+            } else if (sellerChange.responseText === "Email not Found.") {
+              document.getElementById("passwordForget").innerHTML =
+                sellerChange.responseText;
+            }
           }
         };
-        changing.open("POST", `/api/sellers/forgotPassword`, true);
-        changing.setRequestHeader("Content-Type", "application/json");
-        changing.send(string);
+        sellerChange.open("GET", `/api/sellers/email/${email}`, true);
+        sellerChange.send();
       });
 
       function showPass() {

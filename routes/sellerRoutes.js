@@ -6,6 +6,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const router = express.Router();
+let sellerEmail = "";
 let newSeller = {};
 let code = Math.floor(Math.random() * 1000000 + 1).toString();
 let transporter = nodemailer.createTransport({
@@ -398,29 +399,60 @@ router.get("/subCategory/:id", async (req, res) => {
   );
 });
 
+router.get("/email/:id", async (req, res) => {
+  conn.query(
+    `SELECT * FROM sellers WHERE email = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+
+      if (result.length == 0) {
+        res.send("Email not Found.");
+      } else {
+        sellerEmail = `${result[0].email}`;
+        let email = {
+          from: '"Yammie Shoppers" <info@yammieshoppers.com>',
+          to: `${result[0].email}`,
+          subject: `Change Password ${code}`,
+          text: `Hello ${result[0].username}, here is your code for changing Password
+          ${code}`,
+        };
+
+        transporter.sendMail(email, (error, results) => {
+          if (error) throw error;
+          res.send("OK");
+        });
+      }
+    }
+  );
+});
+
+router.post("/confirmCode", async (req, res) => {
+  if (req.body.fn == code) {
+    res.send("OK");
+  } else {
+    res.send("Code Mismatch");
+  }
+});
+
 router.post("/forgotPassword", async (req, res) => {
-  let { email, password, newPass } = req.body;
-  if (email.length == 0 || password.length == 0 || newPass.length == 0) {
+  let { pass, npass } = req.body;
+  if (pass.length == 0 || npass.length == 0) {
     return res.send("All fields Required");
   }
   conn.query(
-    `SELECT * FROM sellers WHERE email = ?`,
-    [email],
+    `SELECT * FROM sellers WHERE email = '${sellerEmail}'`,
     async (err1, res1) => {
       if (err1) throw err1;
-      if (res1.length == 0) {
-        return res.send("This user is not Found!! Check your Email");
-      }
-      if (password != newPass) {
+      if (pass != npass) {
         return res.send("Password Mismatch");
       }
-      if (password.length < 5) {
+      if (pass.length < 5) {
         return res.send("Password Must be more than 5 characters");
       }
-      let hashPass = await bycrpt.hash(password, 2);
+      let hashPass = await bycrpt.hash(pass, 2);
       conn.query(
-        `UPDATE sellers SET password = '${hashPass}' WHERE email = ?`,
-        [email],
+        `UPDATE sellers SET password = '${hashPass}' WHERE email = '${sellerEmail}'`,
         (err2, res2) => {
           if (err2) throw err2;
           res.send("Password Successfully Changed");
