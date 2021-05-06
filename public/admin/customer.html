@@ -11,16 +11,11 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
     />
-    <!-- Bootstrap -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
       crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
     />
     <script
       defer
@@ -28,18 +23,19 @@
       integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
       crossorigin="anonymous"
     ></script>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
+
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title></title>
+    <title>Yammie | Customer Details</title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
   </head>
-
   <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-md navbar-light">
@@ -66,29 +62,24 @@
               </div>
               <ul class="navbar-nav flex-column mt-4">
                 <li class="nav-item">
-                  <a href="home" class="nav-link text-white p-3 mb-2 current"
+                  <a href="home" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-home text-light fa-lg mr-3"></i>Home</a
                   >
                 </li>
 
                 <li class="nav-item">
-                  <a
-                    href="sales"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                  <a href="sales" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-shopping-cart text-light fa-lg mr-3"></i
                     >Sales</a
                   >
                 </li>
-
                 <li class="nav-item">
-                  <a
-                    href="products"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                  <a href="products" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-wrench text-light fa-lg mr-3"></i
                     >Products</a
                   >
                 </li>
-                <li class="nav-item">
+                <li class="nav-item current">
                   <a
                     href="customers"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
@@ -97,17 +88,13 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a
-                    href="upload"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                  <a href="upload" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-arrow-up text-light fa-lg mr-3"></i
                     >Uploads</a
                   >
                 </li>
-                <li class="nav-item current">
-                  <a
-                    href="profile"
-                    class="nav-link text-white p-3 mb-2 sidebar-link"
+                <li class="nav-item">
+                  <a href="profile" class="nav-link text-white p-3 mb-2"
                     ><i class="fas fa-user text-light fa-lg mr-3"></i>Profile</a
                   >
                 </li>
@@ -121,21 +108,21 @@
               class="col-xl-10 col-lg-9 col-md-8 bg-dark ml-auto fixed-top py-2 top-navbar"
             >
               <div class="row align-items">
-                <div class="col-md-4 mb-0 text-light py-3">
-                  <h4>DASHBOARD</h4>
+                <div class="col-md-4 mb-0 text-light py-3 text-uppercase">
+                  <h4>Dashboard</h4>
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-3 py-2">
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">5</span
+                        ><span class="text-white icon-bullet">4</span
                         ><i class="fas fa-comments text-muted fa-2x"></i
                       ></a>
                     </li>
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">4</span
+                        ><span class="text-white icon-bullet">5</span
                         ><i class="fas fa-bell text-muted fa-2x"></i
                       ></a>
                     </li>
@@ -183,35 +170,55 @@
     </div>
     <!-- End Modal -->
 
+    <!-- Details -->
     <section>
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3 mb-5 align-items-center">
-              <div class="col-xl-8 mx-auto">
-                <div class="card rounded my-5">
-                  <div class="card-body text-center">
-                    <i class="fas fa-user-circle fa-6x"></i>
-                    <table class="table text-left my-2">
-                      <tbody>
+            <div class="row pt-md-5 mt-md-3 align-items-center">
+              <div class="col-xl-10 mx-auto my-5">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <h6 class="text-center text-info">Personal Information</h6>
+                    <div>
+                      <table class="table text-left">
+                        <tbody>
+                          <tr>
+                            <td>
+                              Customer First Name:<span id="fname"></span>
+                            </td>
+                            <td>
+                              Customer Last Name: <span id="lname"></span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Customer Contact:<span id="cphone"></span></td>
+                            <td>Customer Email: <span id="email"></span></td>
+                          </tr>
+                          <tr>
+                            <td>
+                              Customer Location:<span id="location"></span>
+                            </td>
+                            <td>Customer Gender: <span id="gender"></span></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div id="detailLoading" class="text-center"></div>
+                      <h6 class="text-center text-info">Order Information</h6>
+                      <table class="table text-left">
                         <tr>
-                          <td>Name</td>
-                          <td id="am"></td>
+                          <td>Total Orders: <span id="total"></span></td>
                         </tr>
+                      </table>
+                      <ul class="list-group my-3" id="od"></ul>
+                      <table class="table text-left">
                         <tr>
-                          <td>Email Address</td>
-                          <td id="ae"></td>
+                          <td>Products Ordered: <span id="pr"></span></td>
+                          <td></td>
                         </tr>
-                        <tr>
-                          <td>Job Title</td>
-                          <td id="at"></td>
-                        </tr>
-                        <tr>
-                          <td>Mobile Number</td>
-                          <td id="aphn"></td>
-                        </tr>
-                      </tbody>
-                    </table>
+                      </table>
+                      <ul class="list-group my-3" id="po"></ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -220,6 +227,7 @@
         </div>
       </div>
     </section>
+    <!-- End details -->
 
     <!-- Footer -->
     <footer>
@@ -258,7 +266,6 @@
     <!-- End Footer -->
 
     <!-- Scripts -->
-    <script src=" https://ajax/googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
@@ -276,13 +283,98 @@
     ></script>
     <script src="scripts/account.js"></script>
     <script>
-      document.getElementById("user").innerHTML = admin[0];
-      document.getElementById("am").innerHTML = admin[0];
-      document.getElementById("ae").innerHTML = admin[3];
-      document.getElementById("at").innerHTML = admin[2];
-      document.getElementById("aphn").innerHTML = admin[1];
-      document.getElementsByTagName("title")[0].text =
-        admin[0] + " " + "|" + " " + "Admin Yammie Shoppers";
+      let customer = new URLSearchParams(window.location.search).get(
+        "customer"
+      );
+
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState < 4) {
+          document.getElementById(
+            "detailLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin text-warning"></i>`;
+        }
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let [results] = JSON.parse(xhr.responseText);
+          document.getElementById("fname").innerHTML = results.c_first_name;
+          document.getElementById("lname").innerHTML = results.c_last_name;
+          document.getElementById("cphone").innerHTML = results.c_phone;
+          document.getElementById("email").innerHTML = results.c_email;
+          document.getElementById("gender").innerHTML = results.c_gender;
+          document.getElementById("location").innerHTML =
+            results.pickup_address_1;
+          document.getElementById("detailLoading").innerHTML = "";
+        }
+      };
+      xhr.open("GET", `/api/admin/customer/${customer}`, true);
+      xhr.send();
+
+      let data = new XMLHttpRequest();
+      data.onreadystatechange = () => {
+        if (data.readyState == 4 && data.status == 200) {
+          let outcomes = JSON.parse(data.responseText);
+          document.getElementById("total").innerHTML = outcomes.length;
+          let lists = "";
+          outcomes.forEach((outcome) => {
+            lists += `
+            <li class="list-group-item">
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                  <span class="font-weight-bold">Order Date:</span>
+                  ${outcome.order_date.slice(0, 10)}
+                </li>
+                <li class="list-inline-item">
+                  <span class="font-weight-bold">Order Status:</span>
+                  ${outcome.order_status}
+                </li>
+                <li class="list-inline-item">
+                  <span class="font-weight-bold">Order Number:</span>
+                  ${outcome.order_number}
+                </li>
+              </ul>
+            </li>
+            `;
+            let products = Object.values(JSON.parse(outcome.order_items));
+            document.getElementById("pr").innerHTML = Object.keys(
+              products
+            ).length;
+            products.forEach((product) => {
+              let info = new XMLHttpRequest();
+              info.onreadystatechange = () => {
+                if (info.readyState == 4 && info.status == 200) {
+                  let result_1 = JSON.parse(info.responseText);
+                  let list = "";
+                  result_1.forEach((result) => {
+                    let image = JSON.parse(result.images);
+                    list += `<li class=list-group-item>
+                       <ul class="list-inline">
+                        <li class="list-inline-item mr-3 rounded-circle">
+                          <img src="${image[0]}" height="50" width="50"></li>
+                        <li class="list-inline-item mx-3"><span class="font-weight-bold">
+                          Product: </span>${result.product}</li>
+                        <li class="list-inline-item mx-3"><span class="font-weight-bold">Price: UGX
+                          </span>${result.price}</li>
+                           <li class="list-inline-item mx-3"><span class="font-weight-bold">Quantity:
+                          </span>${product.inCartNumber}</li>
+                        <li class="list-inline-item mx-3"><span class="font-weight-bold">Amount: 
+                        </span>UGX ${
+                          product.inCartNumber * result.price
+                        }</li>
+                       </ul>
+                     </li>`;
+                  });
+                  document.getElementById("po").innerHTML += list;
+                }
+              };
+              info.open("GET", `/api/admin/productDetails/${product.cartItemAdded}`, true);
+              info.send();
+            });
+          });
+          document.getElementById("od").innerHTML += lists;
+        }
+      };
+      data.open("GET", `/api/admin/ordersCustomer/${customer}`, true);
+      data.send();
     </script>
     <!-- End Scripts -->
   </body>

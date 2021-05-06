@@ -11,30 +11,29 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0,shrink-to-fit=no"
     />
-    <!-- Bootstrap -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       integrity="sha256-Ww++W3rXBfapN8SZitAvc9jw2Xb+Ixt0rvDsmWmQyTo="
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
-    />
+    <!-- Scripts -->
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.0.10/js/all.js"
       integrity="sha256-m5Awq0wGGRCO7AtN92mhhdGt+TJC70hTou7/t5M11WY="
       crossorigin="anonymous"
     ></script>
+
+    <!-- End Scripts -->
+
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles/home.css" />
 
-    <title></title>
+    <title>Yammie | Customers</title>
     <script>
       if (document.referrer == "") window.location.assign("./index");
     </script>
@@ -88,7 +87,7 @@
                     >Products</a
                   >
                 </li>
-                <li class="nav-item">
+                <li class="nav-item current">
                   <a
                     href="customers"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
@@ -104,7 +103,7 @@
                     >Uploads</a
                   >
                 </li>
-                <li class="nav-item current">
+                <li class="nav-item">
                   <a
                     href="profile"
                     class="nav-link text-white p-3 mb-2 sidebar-link"
@@ -129,13 +128,13 @@
                   <ul class="navbar-nav">
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">5</span
+                        ><span class="text-white icon-bullet">4</span
                         ><i class="fas fa-comments text-muted fa-2x"></i
                       ></a>
                     </li>
                     <li class="list-item icon-parent">
                       <a href="#" class="nav-link"
-                        ><span class="text-white icon-bullet">4</span
+                        ><span class="text-white icon-bullet">5</span
                         ><i class="fas fa-bell text-muted fa-2x"></i
                       ></a>
                     </li>
@@ -187,31 +186,43 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-xl-10 col-lg-9 col-md-8 ml-auto">
-            <div class="row pt-md-5 mt-md-3 mb-5 align-items-center">
-              <div class="col-xl-8 mx-auto">
-                <div class="card rounded my-5">
-                  <div class="card-body text-center">
-                    <i class="fas fa-user-circle fa-6x"></i>
-                    <table class="table text-left my-2">
-                      <tbody>
-                        <tr>
-                          <td>Name</td>
-                          <td id="am"></td>
-                        </tr>
-                        <tr>
-                          <td>Email Address</td>
-                          <td id="ae"></td>
-                        </tr>
-                        <tr>
-                          <td>Job Title</td>
-                          <td id="at"></td>
-                        </tr>
-                        <tr>
-                          <td>Mobile Number</td>
-                          <td id="aphn"></td>
-                        </tr>
-                      </tbody>
-                    </table>
+            <div class="row pt-md-5 mt-md-3 align-items-center">
+              <div class="col-xl-11 mx-auto mt-3">
+                <div class="card rounded">
+                  <div class="card-body">
+                    <nav class="navbar navbar-light bg-light">
+                      <div class="container-fluid">
+                        <a class="navbar-brand"
+                          >Customers <span id="customers"></span
+                        ></a>
+                        <form class="d-flex">
+                          <input
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Customer Name"
+                            aria-label="Search"
+                            id="scustomer"
+                          />
+                        </form>
+                      </div>
+                    </nav>
+                    <div class="table-responsive">
+                      <table
+                        class="table table-striped bg-light text-left my-3"
+                      >
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Contact</th>
+                            <th>Location</th>
+                            <th>Details</th>
+                          </tr>
+                        </thead>
+                        <tbody id="y-customers"></tbody>
+                      </table>
+                    </div>
+
+                    <div id="onlineLoading" class="text-center"></div>
                   </div>
                 </div>
               </div>
@@ -258,7 +269,6 @@
     <!-- End Footer -->
 
     <!-- Scripts -->
-    <script src=" https://ajax/googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
@@ -275,15 +285,81 @@
       crossorigin="anonymous"
     ></script>
     <script src="scripts/account.js"></script>
-    <script>
-      document.getElementById("user").innerHTML = admin[0];
-      document.getElementById("am").innerHTML = admin[0];
-      document.getElementById("ae").innerHTML = admin[3];
-      document.getElementById("at").innerHTML = admin[2];
-      document.getElementById("aphn").innerHTML = admin[1];
-      document.getElementsByTagName("title")[0].text =
-        admin[0] + " " + "|" + " " + "Admin Yammie Shoppers";
-    </script>
     <!-- End Scripts -->
+    <script>
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState < 4) {
+          document.getElementById(
+            "onlineLoading"
+          ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"><i>`;
+        }
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          let results = JSON.parse(xhr.responseText);
+          document.getElementById("customers").innerHTML = results.length;
+          let rows = "";
+
+          results.forEach((result) => {
+            rows += `
+                    <tr>
+                        <td>${result.c_first_name}</td>
+                        <td>${result.c_phone}</td>
+                        <td>${
+                          result.pickup_address_1 == null
+                            ? "Not Specified"
+                            : result.pickup_address_1
+                        }</td>
+                        <td><a href="customer?customer=${
+                          result.c_id
+                        }"><button class="btn btn-sm btn-info" 
+                        data-id=${result.c_id}>Details</button></a></td>
+                    </tr>
+                    `;
+          });
+          document.getElementById("y-customers").innerHTML = rows;
+          document.getElementById("onlineLoading").innerHTML = "";
+        }
+      };
+      xhr.open("GET", "/api/admin/getCustomers", true);
+      xhr.send();
+
+      document.getElementById("scustomer").addEventListener("keyup", (e) => {
+        let cust = document.getElementById("scustomer").value;
+        let search = new XMLHttpRequest();
+        search.onreadystatechange = () => {
+          if (xhr.readyState < 4) {
+            document.getElementById(
+              "onlineLoading"
+            ).innerHTML = `<i class="fas fa-spinner fa-spin fa-2x text-warning"><i>`;
+          }
+          if (search.readyState == 4 && search.status == 200) {
+            let outcomes = JSON.parse(search.responseText);
+            document.getElementById("customers").innerHTML = outcomes.length;
+            let rows = "";
+
+            outcomes.forEach((result) => {
+              rows += `
+                    <tr>
+                        <td>${result.c_first_name}</td>
+                        <td>${result.c_phone}</td>
+                        <td>${
+                          result.pickup_address_1 == null
+                            ? "Not Specified"
+                            : result.pickup_address_1
+                        }</td>
+                        <td><a href="customer?customer=${
+                          result.c_id
+                        }"><button class="btn btn-sm btn-info" 
+                        data-id=${result.c_id}>Details</button></a></td>
+                    </tr>
+                    `;
+            });
+            document.getElementById("y-customers").innerHTML = rows;
+          }
+        };
+        search.open("GET", `/api/admin/customerSearch/${cust}`, true);
+        search.send();
+      });
+    </script>
   </body>
 </html>

@@ -887,6 +887,21 @@ router.get("/orderSearch/:id", async (req, res) => {
   }
 });
 
+router.get("/customerSearch/:id", async (req, res) => {
+  let ch = /\W/;
+  let result = ch.test(req.params.id);
+  if(result==true){
+    res.send([]);
+    return;
+  }else{
+    conn.query(`SELECT pickup_address_1,c_first_name,c_phone,customers.c_id FROM customers JOIN customer_address ON customers.c_id=customer_address.c_id
+    WHERE c_first_name LIKE '${req.params.id}'`,(err,results)=>{
+      if(err) throw err;
+      res.send(results);
+    })
+  }
+});
+
 router.get("/processedOrder/:id", async (req, res) => {
   let pattern = /\W/g;
   let check = pattern.test(req.params.id);
@@ -1366,6 +1381,41 @@ router.get("/least", async (req, res) => {
     (err1, res1) => {
       if (err1) throw err1;
       res.send(res1);
+    }
+  );
+});
+
+router.get("/getCustomers", async (req, res) => {
+  conn.query(
+    `SELECT * FROM customers JOIN customer_address ON
+   customers.c_id=customer_address.c_id`,
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.get("/customer/:id", async (req, res) => {
+  conn.query(
+    `SELECT * FROM customers JOIN customer_address ON 
+  customer_address.c_id = customers.c_id WHERE customers.c_id=?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
+    }
+  );
+});
+
+router.get("/ordersCustomer/:id", async (req, res) => {
+  conn.query(
+    `SELECT * FROM customers JOIN pending_orders ON 
+  customers.c_id = pending_orders.c_id WHERE customers.c_id = ?`,
+    [req.params.id],
+    (err, result) => {
+      if (err) throw err;
+      res.send(result);
     }
   );
 });
