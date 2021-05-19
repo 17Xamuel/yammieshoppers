@@ -26,7 +26,7 @@ let transporter = nodemailer.createTransport({
   port: 465,
   auth: {
     user: "info@yammieshoppers.com",
-    pass: "Peter1@&=",
+    pass: "Qwerty123",
   },
   dkim: {
     domainName: "yammieshoppers.com",
@@ -76,6 +76,7 @@ router.post("/customer/insert", async (req, res) => {
             res.status(200).send("ok");
           })
           .catch(function (err) {
+          console.log("Error Around here");
             console.log(err);
           });
       }
