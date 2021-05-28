@@ -79,6 +79,212 @@ function _deleteUploadFile(i) {
 }
 //spaces for image files
 
+app.post("/addingProduct", async (req, res) => {
+  conn.query(
+    `SELECT id from sellers WHERE email = 'theyammieinc@gmail.com'`,
+    (err, result) => {
+      if (err) throw err;
+      let product = uuid.v4();
+      let _upload = getUpload(product);
+      _upload(req, res, (err) => {
+        if (err) throw err;
+        let path = [];
+        req.files.forEach((file) => {
+          path.push("https://yammie.nyc3.digitaloceanspaces.com/" + file.key);
+        });
+        let imagesPath = JSON.stringify(path);
+        const {
+          product,
+          price,
+          description,
+          subcategory,
+          discount,
+          quantity,
+          detailedDescription,
+          brand,
+          color,
+          weight,
+          fragility,
+          dimensions,
+          size,
+          typeOfProduct,
+          netWeight,
+          mySize,
+          mydiscount,
+          myprice,
+          ingridient,
+          ingridientPrice,
+          ingridientdiscount,
+          flavor,
+        } = req.body;
+
+        if (color !== undefined) {
+          var colors = [];
+          if (typeof color == "string") {
+            colors.push(color.replace(/ /g, "_"));
+            console.log(colors);
+          } else {
+            color.forEach((col) => {
+              colors.push(col.replace(/ /g, "_"));
+            });
+          }
+        }
+
+        if (flavor !== undefined) {
+          var flavors = [];
+          if (typeof flavor == "string") {
+            flavors.push(flavor.replace(/ /g, "_"));
+          } else {
+            flavor.forEach((flav) => {
+              flavors.push(flav.replace(/ /g, "_"));
+            });
+          }
+        }
+
+        if (mySize !== undefined) {
+          var sizes = [];
+          if (typeof mySize == "string") {
+            sizes.push(mySize.replace(/ /g, "_"));
+          } else {
+            mySize.forEach((size) => {
+              sizes.push(size.replace(/ /g, "_"));
+            });
+          }
+        }
+
+        if (myprice !== undefined) {
+          var sizePrices = [];
+          if (typeof myprice == "string") {
+            sizePrices.push(parseInt(myprice));
+          } else {
+            myprice.forEach((sizePrice) => {
+              sizePrices.push(parseInt(sizePrice));
+            });
+          }
+        }
+
+        if (mydiscount !== undefined) {
+          var sizeDiscounts = [];
+          if (typeof mydiscount == "string") {
+            sizeDiscounts.push(parseInt(mydiscount));
+          } else {
+            mydiscount.forEach((sizeDiscount) => {
+              sizeDiscounts.push(parseInt(sizeDiscount));
+            });
+          }
+        } else {
+          sizeDiscounts = [0];
+        }
+
+        if (ingridient !== undefined) {
+          var ingridients = [];
+          if (typeof ingridient == "string") {
+            ingridients.push(ingridient.replace(/ /g, "_"));
+          } else {
+            ingridient.forEach((ing) => {
+              ingridients.push(ing.replace(/ /g, "_"));
+            });
+          }
+        }
+
+        if (ingridientPrice !== undefined) {
+          var ingridientPrices = [];
+          if (typeof ingridientPrice == "string") {
+            ingridientPrices.push(parseInt(ingridientPrice));
+          } else {
+            ingridientPrice.forEach((ingPrice) => {
+              ingridientPrices.push(parseInt(ingPrice));
+            });
+          }
+        }
+
+        if (ingridientdiscount !== undefined) {
+          var ingridientdiscounts = [];
+          if (typeof ingridientdiscount == "string") {
+            ingridientdiscounts.push(parseInt(ingridientdiscount));
+          } else {
+            ingridientdiscount.forEach((ingDis) => {
+              ingridientdiscounts.push(parseInt(ingDis));
+            });
+          }
+        } else {
+          ingridientdiscounts = [0];
+        }
+
+        function getVariations(mydescription, pricing, discounting) {
+          if (
+            mydescription !== undefined &&
+            pricing !== undefined &&
+            discounting !== undefined
+          ) {
+            let myVariations = [];
+            for (let j = 0; j < mydescription.length; j++) {
+              myVariations.push({
+                descriptions: mydescription[j],
+                getPrice: pricing[j],
+                getDiscount: discounting[j],
+              });
+            }
+            return myVariations;
+          } else {
+            return undefined;
+          }
+        }
+        conn.query(
+          `SELECT subcategory_id,category_id FROM subCategories WHERE 
+          subCategoryName = '${subcategory}'`,
+          (error, result) => {
+            if (error) throw err;
+            conn.query(
+              "INSERT INTO products SET ? ",
+              {
+                id: product,
+                product: product,
+                price: price,
+                quantity: quantity,
+                description: description,
+                category: result[0].category_id,
+                subcategory: result[0].subcategory_id,
+                discount: parseInt(discount) || 0,
+                images: imagesPath,
+                seller_id: result[0].id,
+                detailedDescription,
+                specifications: JSON.stringify({
+                  date: Date.now(),
+                  Brand: brand || null,
+                  Color: colors || null,
+                  Weight: weight,
+                  Fragile: fragility,
+                  Dimensions: dimensions || null,
+                  Size: size,
+                  TypeOfProduct: typeOfProduct,
+                  NetWeight: netWeight || null,
+                  Flavor: flavors || null,
+                  Sizes:
+                    getVariations(sizes, sizePrices, sizeDiscounts) || null,
+                  Ingredients:
+                    getVariations(
+                      ingridients,
+                      ingridientPrices,
+                      ingridientdiscounts
+                    ) || null,
+                }),
+              },
+              (err, results) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  res.redirect("./admin/products");
+                }
+              }
+            );
+          }
+        );
+      });
+    }
+  );
+});
+
 app.post("/addProduct", async (req, res) => {
   let productId = uuid.v4();
   let upload = getUpload(productId);
