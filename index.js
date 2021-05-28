@@ -84,8 +84,8 @@ app.post("/addingProduct", async (req, res) => {
     `SELECT id from sellers WHERE email = 'theyammieinc@gmail.com'`,
     (err, result) => {
       if (err) throw err;
-      let product = uuid.v4();
-      let _upload = getUpload(product);
+      let productid = uuid.v4();
+      let _upload = getUpload(productid);
       _upload(req, res, (err) => {
         if (err) throw err;
         let path = [];
@@ -233,18 +233,18 @@ app.post("/addingProduct", async (req, res) => {
         conn.query(
           `SELECT subcategory_id,category_id FROM subCategories WHERE 
           subCategoryName = '${subcategory}'`,
-          (error, result) => {
+          (error, results) => {
             if (error) throw err;
             conn.query(
               "INSERT INTO products SET ? ",
               {
-                id: product,
+                id: productid,
                 product: product,
                 price: price,
                 quantity: quantity,
                 description: description,
-                category: result[0].category_id,
-                subcategory: result[0].subcategory_id,
+                category: results[0].category_id,
+                subcategory: results[0].subcategory_id,
                 discount: parseInt(discount) || 0,
                 images: imagesPath,
                 seller_id: result[0].id,
@@ -544,7 +544,6 @@ app.delete("/deleteProduct/:id", async (req, res) => {
             let _images = JSON.parse(res3[0].images);
             _images.forEach((file) => {
               _deleteFile(file.slice(43, file.length));
-              console.log("Image");
             });
             conn.query(
               `DELETE FROM products WHERE id=?`,

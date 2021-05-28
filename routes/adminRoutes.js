@@ -890,15 +890,18 @@ router.get("/orderSearch/:id", async (req, res) => {
 router.get("/customerSearch/:id", async (req, res) => {
   let ch = /\W/;
   let result = ch.test(req.params.id);
-  if(result==true){
+  if (result == true) {
     res.send([]);
     return;
-  }else{
-    conn.query(`SELECT pickup_address_1,c_first_name,c_phone,customers.c_id FROM customers JOIN customer_address ON customers.c_id=customer_address.c_id
-    WHERE c_first_name LIKE '${req.params.id}'`,(err,results)=>{
-      if(err) throw err;
-      res.send(results);
-    })
+  } else {
+    conn.query(
+      `SELECT pickup_address_1,c_first_name,c_phone,customers.c_id FROM customers JOIN customer_address ON customers.c_id=customer_address.c_id
+    WHERE c_first_name LIKE '${req.params.id}'`,
+      (err, results) => {
+        if (err) throw err;
+        res.send(results);
+      }
+    );
   }
 });
 
